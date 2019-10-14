@@ -1,0 +1,138 @@
+<div class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+      <mat-card>
+        <div class="form_header">
+          <div class="fl">
+            <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+            <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+          </div>
+          <div class="fr">
+            <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+              <button mat-button (click)="backToList()">
+                <mat-icon>list</mat-icon> User Lists
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="cl"></div>
+        <div mat-dialog-content>
+          <form #userform="ngForm" fxLayout="column" novalidate>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="firstName" id="firstName" pattern="[a-zA-Z ]*" [(ngModel)]="userData.firstName"
+                    #firstname="ngModel" type="text" required placeholder="First Name">
+                  <mat-error *ngIf="userform.submitted && firstname.invalid">
+                    <mat-error *ngIf="firstname.errors.required">First Name is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="firstname.errors?.pattern"> Please Enter Only Characters</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="lastName" id="lastName" pattern="[a-zA-Z ]*" [(ngModel)]="userData.lastName"
+                    #lastname="ngModel" type="text" required placeholder="Last Name">
+                  <mat-error *ngIf="userform.submitted && lastname.invalid">
+                    <mat-error *ngIf="lastname.errors.required">Last Name is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="lastname.errors?.pattern"> Please Enter Only Characters</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="departmentIdFK" id="departmentIdFK" [(ngModel)]="userData.departmentIdFK"
+                    #DeptName="ngModel" placeholder="Select Department Name" required>
+                    <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="userform.submitted && DeptName.invalid">
+                    <mat-error *ngIf="DeptName.errors.required">Department Name is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="mobileNumber" id="mobileNumber" minlength="10" maxlength="10" pattern="[0-9]+"
+                    [(ngModel)]="userData.mobileNumber" #mobilenumber="ngModel" type="text" required
+                    placeholder="Mobile Number">
+                  <mat-error *ngIf="userform.submitted && mobilenumber.invalid">
+                    <mat-error *ngIf="mobilenumber.errors.required">Mobile Number is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="mobilenumber.errors?.pattern">
+                    Please add only digits!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="emailId" id="emailId" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    [(ngModel)]="userData.emailId" #emailid="ngModel" matInput type="text" required
+                    placeholder="Email Id">
+                  <mat-error *ngIf="userform.submitted && emailid.invalid">
+                    <mat-error *ngIf="emailid.errors.required">Email Id is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="emailid.errors?.pattern">
+                    Please type your e-mail address in the format <b> name@example.com </b>!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="password" id="password" minlength="6" [(ngModel)]="userData.password" #pass="ngModel"
+                    pattern="[a-zA-Z0-9 ]*" matInput type="password" required placeholder="Password">
+                  <mat-error *ngIf="userform.submitted && pass.invalid">
+                    <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="pass.errors?.minlength">Password must be atleast 6 Characters long! </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.20">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="userRoleIdFK" id="userRoleIdFK" [(ngModel)]="userData.userRoleIdFK"
+                    #UserRoleName="ngModel" placeholder="Select User Role Name" required>
+                    <mat-option *ngFor="let role of userRoleList" [value]="role.userRoleId">{{role.title}}  
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="userform.submitted && UserRoleName.invalid">
+                    <mat-error *ngIf="UserRoleName.errors.required">User Role Name is required</mat-error> 
+                  </mat-error> 
+                </mat-form-field> 
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <div class="md-form">
+                  <label>Profile Image</label>
+                  <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left"> 
+                      <span>Choose file</span>
+                      <input type="file" (change)="imageChange($event.target.files)" accept="image/*">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" name="profileImage" [(ngModel)]="profileImage" type="text" 
+                        placeholder="Upload your User image" required>
+                    </div>
+                    <div class="error hide text-error">{{imageerror}}</div>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <div class="cl"></div>
+            <div class="savebtn">
+              <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+                [matTooltip]="!userform.valid ? 'You must complete all the required fields.' : null" type="submit"
+                [disabled]="!userform.valid" (click)="addUser(userform)">Save User</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+                [disabled]="!userform.valid" (click)="editUser(userform)">Update User</button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

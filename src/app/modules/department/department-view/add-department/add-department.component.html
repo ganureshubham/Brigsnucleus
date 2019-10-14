@@ -1,0 +1,30 @@
+<form #deptForm="ngForm" class="example-form" class="listing_space add_department">
+  <mat-list role="list">
+      <mat-list-item role="listitem">
+          <p class="title_header mat-subheading-2">Add Department</p>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <mat-form-field fxFlex>
+            <mat-select name="parentId" id="parentId" [(ngModel)]="deptData.parentId"
+              #department="ngModel" placeholder="Select Parent Category" required>
+              <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="deptForm.submitted && department.invalid">
+              <mat-error *ngIf="department.errors.required">Supplier name is required</mat-error>       
+            </mat-error>
+          </mat-form-field>    
+          <mat-form-field fxFlex>
+            <input matInput name="departmentTitle" id="departmentTitle" [(ngModel)]="deptData.departmentTitle"
+              #deptTitle="ngModel" type="text" required placeholder="Department Title">
+            <mat-error *ngIf="deptForm.submitted && deptTitle.invalid">
+              <mat-error *ngIf="deptTitle.errors.required">Asset Title is required</mat-error> 
+            </mat-error>
+          </mat-form-field>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+          <button  [color]="'success'" [disabled]="!deptForm.valid" (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save</button>   
+          <button mat-raised-button (click)="closeDialog()"  class="fr">Cancel</button>     
+      </mat-list-item> 
+  </mat-list>
+</form> 

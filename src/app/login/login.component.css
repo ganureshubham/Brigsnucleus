@@ -1,0 +1,3 @@
+::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+ caret-color: #d80166;
+}

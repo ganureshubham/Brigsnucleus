@@ -1,1 +1,541 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/********************************************** Login Page starts**************************************************************/
+
+body {
+  margin: 0px;
+  background: url(./assets/img/background.png);
+  /* background-color: #d6d6d6; */
+  background-size: cover;
+}
+
+.imgwrapper {
+  width: 50px;
+  height: 50px;
+}
+
+.savebtn {
+  margin-top: 46px;
+}
+.mat-success {
+  background-color: #902faa;
+  color: #fff;
+}
+
+.cl {
+  clear: both !important;
+}
+.login_btn {
+  float: right;
+  background-color: #f5f5f5;
+}
+.tac {
+  text-align: center;
+}
+.bg_white,
+.form_card .mat-form-field-appearance-legacy .mat-form-field-underline {
+  background: #fff !important;
+}
+.bg_pink {
+  background: #8e24aa !important;
+}
+.title_color {
+  color: #2d2d2d;
+}
+.box_background {
+  width: 60%;
+  margin: 13% auto;
+  border-radius: 4px;
+  padding: 0px !important;
+  display: flex !important;
+}
+.flex {
+  float: left;
+  width: 50% !important;
+  box-shadow: none !important;
+  border: none;
+  padding: 100px 50px;
+}
+.logo-card {
+  width: 60%;
+  padding-bottom: 18px;
+}
+.title {
+  font-size: 20px;
+  padding-bottom: 14px;
+}
+.form_card .mat-form-field {
+  display: block;
+  padding-bottom: 19px;
+}
+.form_card .mat-form-field input {
+  color: #fff;
+  font-size: 18px;
+  line-height: 22px;
+}
+.form_card .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #ca99d7;
+}
+
+/********************************************** Login Page ends**************************************************************/
+
+/********************************************** Start my css**************************************************************/
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.margin-bottom {
+  margin-bottom: 2%;
+}
+.width_70 {
+  width: 70%;
+}
+.width_80 {
+  width: 80%;
+}
+.width_90 {
+  width: 90%;
+}
+
+.width_100 {
+  width: 100%;
+}
+.margin-left {
+  margin-left: 14px;
+}
+.margin-right {
+  margin-right: 14px;
+}
+
+.mlr-50 {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.ptb-10 {
+  padding: 10px 0 !important;
+}
+
+.db {
+  display: block;
+}
+.header .mat-toolbar-single-row {
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 19px 36px #c289d142;
+  display: inline-block;
+  padding: 0px !important;
+}
+.bg_pink_navy {
+  background: #8c2ca5;
+}
+.text_white {
+  color: #fff !important;
+}
+.admin_profile img {
+  width: 100%;
+}
+.logo img {
+  width: 30%;
+}
+.font-12 {
+  font-size: 12px;
+}
+.right_side {
+  padding: 14px 0px;
+}
+.right_side ul {
+  padding: 0px;
+  margin: 0px;
+}
+.right_side ul li {
+  list-style: none;
+  float: left;
+}
+.admin_profile {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0px 1px 3px #00000042;
+}
+.admin_profile {
+  margin-right: 12px;
+}
+.admin_name {
+  font-size: 13px;
+  color: #8b8b8b;
+  padding: 0px;
+  line-height: 22px;
+}
+.admin_name b {
+  color: #0f0412;
+  font-size: 17px;
+  font-weight: 600;
+}
+.header .mat-toolbar.mat-primary {
+  background: transparent linear-gradient(269deg, #9634b0 0%, #7e2097 100%) 0%
+    0% no-repeat padding-box;
+}
+.header .mat-button {
+  padding: 13px 33px;
+  border-radius: 0px;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.header .mat-button:hover {
+  background: #3f104b;
+}
+.header .mat-button .mat-icon {
+  padding-right: 7px;
+}
+.bg_white_grey {
+  background: #ebebeb;
+}
+.btn_style {
+  box-shadow: 0px 2px 2px #0000003d;
+  color: #8b8b8b;
+}
+.cl {
+  clear: both;
+}
+.innerbody {
+  padding-top: 51px;
+}
+.innerbody .mat-card {
+  width: 90%;
+  margin: 0px auto;
+  padding: 26px 0px;
+}
+.table_header,
+.form_header {
+  padding: 0px 24px;
+}
+.table_header .tabel_heading,
+.form_header .form_heading {
+  font-size: 20px;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.table .mat-header-cell {
+  color: #000;
+  font-size: 16px;
+}
+.table .mat-header-cell .mat-cell {
+  color: #9b9b9b;
+}
+.table .mat-header-cell:last-child {
+  width: 20%;
+}
+.round_squer {
+  border-radius: 20px !important;
+}
+.back .material-icons {
+  font-size: 22px;
+}
+.back.mat-button {
+  margin-left: 23px;
+  line-height: 30px;
+  min-width: 37px;
+}
+.back .mat-icon {
+  height: 22px;
+  width: 22px;
+}
+.form .mat-dialog-content {
+  padding: 0px 24px;
+}
+.form .mat-form-field {
+  float: left;
+  width: 100%;
+  margin: 0px 10px;
+  display: block;
+}
+.logo {
+  padding: 7px 0px;
+}
+
+.title_padding {
+  padding: 11px 24px;
+}
+.auto_margin {
+  margin: 51px auto;
+}
+.error {
+  min-height: 20px;
+}
+.text-error {
+  color: red;
+}
+
+.title_padding .mat-card {
+  padding: 24px !important;
+}
+.manage_form ul {
+  padding: 0px;
+  margin: 0px;
+}
+.manage_form ul li {
+  list-style: none;
+  float: left;
+}
+.title_padding .mat-mini-fab {
+  background: #fff;
+  box-shadow: none;
+  border: 0.5px solid #0f0412;
+  color: #757575;
+}
+.title_padding .mat-mini-fab .mat-button-wrapper {
+  line-height: 21px;
+}
+.manage_form .mat-list-base {
+  display: inline-block;
+}
+.manage_form .mat-list-base .mat-list-item .mat-list-item-content {
+  padding: 0px 12px;
+}
+.manage_form .mat-list-base .mat-list-item:last-child .mat-list-item-content {
+  padding-right: 0px;
+}
+.manage_form .mat-list-base .mat-list-item {
+  width: 33%;
+  display: inline-block;
+  height: 0px;
+}
+
+.view_detail .mat-grid-tile .mat-figure {
+  display: block;
+}
+.view_detail .mat-form-field {
+  display: block;
+}
+.img_label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  font-weight: 500;
+}
+.guid_book .mat-list-item-content .mat-mini-fab {
+  background: #fff;
+  border: none;
+}
+.input_filet_title {
+  font-size: 13px;
+  padding: 5px 0px 8px 0px;
+  display: block;
+}
+.choise_filed input {
+  border-bottom: 1px solid #b4b4b4;
+  padding-bottom: 5px;
+}
+
+/********************************************** Dashboard starts**************************************************************/
+
+.margin_auto {
+  margin: 51px auto;
+}
+
+.right_side ul,
+.dashboard_part ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+.right_side ul li,
+.dashboard_part ul li {
+  list-style: none;
+  float: left;
+}
+
+.dashboard .mat-list-base .mat-list-item {
+  display: inline-block;
+  width: 24.9%;
+  border-right: 2px solid #f1f1f1;
+  height: auto !important;
+}
+
+.dashboard .mat-list-base .mat-list-item .mat-list-item-content {
+  display: block;
+}
+
+.dashboard .mat-list-base .mat-list-item:last-child {
+  border: none;
+}
+
+.dashboard_part {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.dashboard_part ul li:first-child {
+  width: 45px;
+  padding-right: 15px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.dashboard_part ul li:first-child img {
+  opacity: 0.2;
+  width: 75%;
+}
+
+.dashboard_part ul {
+  display: flex;
+  align-items: center;
+}
+
+.dashboard_part ul li:nth-child(2) {
+  width: 200px;
+  padding-right: 15px;
+  color: #6d6c6c;
+  font-size: 17px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.dashboard_part ul li:last-child {
+  width: 114px;
+  text-align: center;
+}
+
+.count {
+  margin: 0px;
+  font-size: 61px;
+  font-weight: 600;
+}
+
+/********************************************** Dashboard Ends**************************************************************/
+
+/********************************************** Department Starts**************************************************************/
+.title_header {
+  margin-bottom: 0px;
+}
+
+.table_header .tabel_heading,
+.form_header .form_heading,
+.title_header {
+    font-size: 25px;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.innnerpage .mat-grid-tile .mat-figure {
+  justify-content: end;
+}
+
+.dfs,
+.innerpage_title .mat-grid-list .mat-grid-tile:first-child .mat-figure,
+.innerpage_title .mat-grid-tile:last-child .mat-figure,
+.checklist_list .mat-list-base .mat-list-item .mat-grid-tile:first-child .mat-figure,
+.asset_view_detail .mat-grid-tile .mat-figure {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dfe,
+.innerpage_title .mat-grid-tile:nth-child(2) .mat-figure,
+.checklist_list .mat-list-base .mat-list-item .mat-grid-tile:last-child .mat-figure,
+.user_guid .mat-grid-list .mat-grid-tile:last-child .mat-figure {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.department .mat-list-base .mat-list-item {
+  display: inline-block;
+}
+
+.department .mat-list-base {
+  width: 100%;
+  color: #8B8B8B;
+}
+
+.department .mat-tree-node {
+  padding-left: 0px !important;
+}
+
+.department .material-icons,
+.checklist_list .checklist_name h4,
+.checklist_list .btns .mat-button,
+.user_guid .btns .mat-button {
+  color: #8B8B8B;
+}
+
+.department .mat-icon-button {
+  margin: 0px 10px;
+}
+
+.department .mat-list-base .mat-list-item:first-child {
+  width: 10%;
+}
+
+.department .mat-list-base .mat-list-item:nth-child(2) {
+  width: 70%;
+}
+
+.department .mat-list-base .mat-list-item:last-child {
+  width: 20%;
+  text-align: right;
+}
+
+.listing_space .mat-list-base .mat-list-item:nth-child(2) {
+  padding: 50px 0px;
+}
+
+/* .cdk-overlay-pane {
+  width: 20%;
+} */
+
+.add_department .mat-form-field {
+  width: 100%;
+}
+
+.add_department .mat-list-base .mat-list-item {
+  height: auto !important;
+}
+
+.add_department .mat-list-base .mat-list-item .mat-list-item-content {
+  display: block;
+}
+
+.innerpage .mat-card {
+  padding-top: 26px;
+  padding-bottom: 39px;
+}
+
+.innerpage_title .total {
+  padding: 0px 50px;
+}
+
+.innerpage_title .total b {
+  padding-right: 4px
+}
+
+.innerpage_title .total span {
+  font-weight: 400;
+  color: #646464;
+}
+
+.innerpage .mat-tab-group.mat-primary .mat-ink-bar {
+  background: #9634B0;
+  height: 3px
+}
+
+.padding_box {
+  padding: 20px;
+}
+
+.btn {
+  padding: 2px 34px !important;
+}
+
+.overflow_box {
+  height: 450px;
+  overflow-y: auto;
+}
+/********************************************** end style**************************************************************/

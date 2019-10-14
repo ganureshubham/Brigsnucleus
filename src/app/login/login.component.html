@@ -1,0 +1,193 @@
+<div class="back_main_background">
+  <form #data="ngForm" novalidate>
+
+    <!-- Login FORM -->
+
+    <div *ngIf="!forgPass && !newPassword && !sendOTPFlag">
+      <mat-card class="box_background form_card">
+        <mat-card-content class="bg_white flex tac">
+          <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
+            <img class="logo-card" src="../../assets/img/logo.png" />
+            <h1 i18n class="title title_color">Intelligent Asset Management Tool</h1>
+          </mat-card-title>
+          <div class="parg">
+            <p i18n>AssetMate monitors your assets and takes care of their regular audits</p>
+          </div>
+        </mat-card-content>
+        <mat-card-content class="bg_pink flex">
+
+          <mat-form-field>
+            <input matInput #emailid="ngModel" placeholder="Email Address"
+              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email_address" id="email_address"
+              [(ngModel)]="email_address" required email>
+            <mat-error *ngIf="emailid.errors?.pattern">
+              Please type your e-mail address in the format <b> name@example.com </b>!
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" autocomplete="off" id="password" name="password" [(ngModel)]="password"
+              placeholder="Password" required>
+          </mat-form-field>
+          <div fxLayout="column" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
+              <a href="javascript:void(0)" mat-button i18n style="color :#E4CCEB" fxFlex="50%" fxFlex.lt-md="none"
+                (click)="forgotPassword()">
+                Forgot Password?
+              </a>
+              <button mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none" style="width : 8.5em"
+                color="primary" (click)="login(data.value)" [disabled]="!data.valid" class="login_btn">
+                Login
+              </button>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Send OTP FORM -->
+
+    <div *ngIf="forgPass && !sendOTPFlag && !newPassword">
+      <mat-card class="box_background form_card">
+        <mat-card-content class="bg_white flex tac">
+          <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
+            <img class="logo-card" src="../../assets/img/logo.png" />
+            <h1 i18n class="title title_color">Forgot Password</h1>
+          </mat-card-title>
+          <div class="parg">
+            <p i18n>Please enter your email.id or mobile number. You will receive a OTP and create a new password</p>
+          </div>
+        </mat-card-content>
+        <mat-card-content class="bg_pink flex">
+          <div>
+            <span>Email Id</span>
+            <mat-slide-toggle (click)="toggle()">Mobile Number</mat-slide-toggle>
+          </div>
+
+          <mat-form-field *ngIf="hide">
+            <input matInput placeholder="Email Address" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email"
+              id="email" [(ngModel)]="email" #EmailId="ngModel" required email>
+            <mat-error *ngIf="data.submitted && EmailId.invalid">
+              <mat-error *ngIf="EmailId.errors.required">Email Id is required</mat-error>
+              <mat-error *ngIf="EmailId.errors?.pattern">
+                Please type your e-mail address in the format <b> name@example.com </b>!
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="show">
+            <input matInput placeholder="Mobile Number" pattern="[0-9]+" minlength="10" maxlength="10"
+              name="mobileNumber" id="mobileNumber" [(ngModel)]="mobileNumber" #MobileNumber="ngModel" required>
+            <mat-error *ngIf="data.submitted && MobileNumber.invalid">
+              <mat-error *ngIf="MobileNumber.errors.required">Mobile Number is required</mat-error>
+              <mat-error *ngIf="MobileNumber.errors?.minlength">
+                Mobile number should be 10 digits!
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
+              <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && !newPassword" style="color :#E4CCEB"
+                fxFlex="50%" fxFlex.lt-md="none" (click)="backToLogin()">
+                Back To Login
+              </a>
+              <button *ngIf="forgPass && !newPassword && show" mat-button i18n type="submit" fxFlex="20%"
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" (click)="sendOtpText(data.value)"
+                class="login_btn">
+                Send OTP
+              </button>
+              <button *ngIf="forgPass && !newPassword && hide" mat-button i18n type="submit" fxFlex="20%"
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" (click)="sendOtpMail(data.value)"
+                class="login_btn">
+                OTP
+              </button>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+    <!-- Verify OTP FORM -->
+
+    <div *ngIf="forgPass && sendOTPFlag">
+      <mat-card class="box_background form_card">
+        <mat-card-content class="bg_white flex tac">
+          <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
+            <img class="logo-card" src="../../assets/img/logo.png" />
+            <h1 i18n class="title title_color">VERIFY OTP</h1>
+          </mat-card-title>
+          <div class="parg">
+            <p i18n>You have received 4 digit code on your registered mobile number/email id.Please enter it and verify.
+            </p>
+          </div>
+        </mat-card-content>
+        <mat-card-content class="bg_pink flex">
+
+          <mat-form-field>
+            <input matInput placeholder="OTP" maxlength="4" name="otp" id="otp" [(ngModel)]="otp" required>
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
+              <button mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
+                fxFlex="50%" fxFlex.lt-md="none" (click)="sendOTP(data.value)">
+                Didn't get the code? RESEND CODE
+              </button>
+              <button *ngIf="forgPass && sendOTPFlag" mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none"
+                style="width : 8.5em" color="primary" (click)="verifyOTP(data.value)" class="login_btn">
+                VERIFY
+              </button>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- New Password Form -->
+
+    <div *ngIf="!sendOTPFlag && newPassword">
+      <mat-card class="box_background form_card">
+        <mat-card-content class="bg_white flex tac">
+          <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
+            <img class="logo-card" src="../../assets/img/logo.png" />
+            <h1 i18n class="title title_color">Password Recovery</h1>
+          </mat-card-title>
+          <div class="parg">
+            <p i18n>AssetMate monitors your assets and takes care of their regular audits</p>
+          </div>
+        </mat-card-content>
+        <mat-card-content class="bg_pink flex">
+
+          <mat-form-field>
+            <input matInput type="password" autocomplete="off" id="new_password" name="new_password"
+              autocomplete="new-password" [(ngModel)]="new_password" placeholder="Enter New Password" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" id="confirm_password" autocomplete="off" name="confirm_password"
+              autocomplete="new-password" [(ngModel)]="confirm_password" placeholder="Enter Confirm Password" required>
+            <div *ngIf="confirm_password">
+              <mat-error *ngIf="confirm_password !== new_password">
+                New and Confirm password not match!
+              </mat-error>
+            </div>
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
+              <button mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none" color="primary"
+                (click)="changePass(data.value)" class="login_btn">
+                CHANGE PASSWORD
+              </button>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+  <div class="cl"></div>
+</div>

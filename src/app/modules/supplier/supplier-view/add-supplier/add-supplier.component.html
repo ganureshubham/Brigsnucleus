@@ -1,0 +1,98 @@
+<div class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+      <mat-card>
+        <div class="form_header">
+          <div class="fl">
+            <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+            <button mat-button (click)="backToList()" matTooltip="Back to Suppliers List"
+              class="back btn_style round_squer bg_pink_navy text_white">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+          </div>
+          <!-- <div class="fr">
+            <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+              <button mat-button (click)="backToList()">
+                <mat-icon>list</mat-icon> Supplier Lists
+              </button>
+            </div>
+          </div> -->
+        </div>
+        <div class="cl"></div>
+        <div mat-dialog-content>
+          <form #supplierform="ngForm" fxLayout="column" novalidate>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="firstName" id="firstName" pattern="[a-zA-Z ]*"
+                    [(ngModel)]="supplierData.firstName" #FirstName="ngModel" type="text" required
+                    placeholder="First Name">
+                  <mat-error *ngIf="supplierform.submitted && FirstName.invalid">
+                    <mat-error *ngIf="FirstName.errors.required">First Name is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="FirstName.errors?.pattern"> Please Enter Only Characters</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="lastName" id="lastName" pattern="[a-zA-Z ]*" [(ngModel)]="supplierData.lastName"
+                    #LastName="ngModel" type="text" required placeholder="Last Name">
+                  <mat-error *ngIf="supplierform.submitted && LastName.invalid">
+                    <mat-error *ngIf="LastName.errors.required">Last Name is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="LastName.errors?.pattern"> Please Enter Only Characters</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="businessName" id="businessName" [(ngModel)]="supplierData.businessName"
+                    #BusinessName="ngModel" type="text" required placeholder="Business Name">
+                  <mat-error *ngIf="supplierform.submitted && BusinessName.invalid">
+                    <mat-error *ngIf="BusinessName.errors.required">Business Name is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="mobileNumber" pattern="[0-9]+" minlength="10" maxlength="10" id="mobileNumber"
+                    [(ngModel)]="supplierData.mobileNumber" #MobileNumber="ngModel" type="text" required
+                    placeholder="Mobile Number">
+                  <mat-error *ngIf="supplierform.submitted && MobileNumber.invalid">
+                    <mat-error *ngIf="MobileNumber.errors.required">Mobile Number is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="MobileNumber.errors?.pattern">
+                    Please add only digits!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="emailId" id="emailId" [(ngModel)]="supplierData.emailId" #EmailId="ngModel"
+                    pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" matInput type="text" required
+                    placeholder="Email Id">
+                  <mat-error *ngIf="supplierform.submitted && EmailId.invalid">
+                    <mat-error *ngIf="EmailId.errors.required">Email Id is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="EmailId.errors?.pattern">
+                    Please type your e-mail address in the format <b> name@example.com </b>!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <div class="cl"></div>
+            <div class="savebtn">
+              <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+                [disabled]="!supplierform.valid"
+                [matTooltip]="!supplierform.valid ? 'You must complete all the required fields.' : null" type="submit"
+                (click)="addSupplier(supplierform.value)">Save Supplier</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+                [disabled]="!supplierform.valid" (click)="editSupplier(supplierform.value)">Update Supplier</button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="innerbody table">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+
+      <mat-card>
+
+        <div class="table_header">
+          <div class="fl">
+            <p class="tabel_heading mat-subheading-2">Alerts List</p>
+          </div>
+          <div *ngIf="loading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar> 
+          </div>
+        </div>
+        <div class="cl"></div>
+        <mat-table [dataSource]="paidDataSource">
+          <ng-container matColumnDef="alertId">
+            <mat-header-cell *matHeaderCellDef>Alert Id </mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell> 
+          </ng-container>
+          <ng-container matColumnDef="alertType">                                                                                       
+            <mat-header-cell *matHeaderCellDef>Alert Type</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.alertType }}</mat-cell> 
+          </ng-container>
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="alertImage">
+            <mat-header-cell *matHeaderCellDef>Alert Image</mat-header-cell>
+            <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive" src="{{visit.alertImage}}"
+                alt="photo"></mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="message">
+            <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.message }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let visit">
+              <div>
+                <mat-menu #dailyPerformanceMenu="matMenu">
+                    <a mat-menu-item (click)="viewAlert(visit.alertId)">  
+                        <mat-icon matListIcon>visibility</mat-icon>
+                        <span i18n>View Asset Detail</span>
+                      </a>
+                  <a mat-menu-item (click)="deleteAlert(visit.alertId)">
+                    <mat-icon matListIcon>delete_outline</mat-icon>
+                    <span i18n>Delete Alert</span>
+                  </a>
+                </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">     
+                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                </button>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <div>
+          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+          </mat-paginator>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div> 

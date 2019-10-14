@@ -1,0 +1,261 @@
+<div class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+      <mat-card>
+        <div class="form_header">
+          <div class="fl">
+            <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+            <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+          </div>
+          <div class="fr">
+            <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+              <button mat-button (click)="backToList()"> 
+                <mat-icon>list</mat-icon> Asset Lists
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="cl"></div>
+        <div mat-dialog-content>
+          <form #assetform="ngForm" fxLayout="column" novalidate>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="assetTitle" id="assetTitle" [(ngModel)]="assetData.assetTitle"
+                    #AssetTitle="ngModel" type="text" required placeholder="Asset Title">
+                  <mat-error *ngIf="assetform.submitted && AssetTitle.invalid">
+                    <mat-error *ngIf="AssetTitle.errors.required">Asset Title is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="modelNumber" id="modelNumber" [(ngModel)]="assetData.modelNumber"
+                    #ModelNumber="ngModel" type="text" required placeholder="Model Number">
+                  <mat-error *ngIf="assetform.submitted && ModelNumber.invalid">
+                    <mat-error *ngIf="ModelNumber.errors.required">Model Number is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="installationDate" id="installationDate" [(ngModel)]="assetData.installationDate"
+                    #InstallDate="ngModel" [matDatepicker]="startDatePicker" (click)="startDatePicker.open()"
+                    placeholder="Installation Date" required>
+                  <mat-error *ngIf="assetform.submitted && InstallDate.invalid">
+                    <mat-error *ngIf="InstallDate.errors.required">Installation Date is required</mat-error>
+                  </mat-error>
+                  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="installationLocationTypeIdFK" id="installationLocationTypeIdFK"
+                    #LocationType="ngModel" [(ngModel)]="assetData.installationLocationTypeIdFK"
+                    placeholder="Select Installation Location Type" required>
+                    <mat-option *ngFor="let loc of locationList" [value]="loc.installationLocationTypeIdFK">
+                      {{loc.title}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && LocationType.invalid">
+                    <mat-error *ngIf="LocationType.errors.required">Installation Location Type is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="installedLocation" id="installedLocation" [(ngModel)]="assetData.installedLocation"
+                    #InstallLoc="ngModel" pattern="[a-zA-Z ]*" matInput type="text" required
+                    placeholder="Installation Location">
+                  <mat-error *ngIf="assetform.submitted && InstallLoc.invalid">
+                    <mat-error *ngIf="InstallLoc.errors.required">Installation Location is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="InstallLoc.errors?.pattern">Please enter only Characters</mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="departmentIdFK" id="departmentIdFK" [(ngModel)]="assetData.departmentIdFK"
+                    #DeptName="ngModel" placeholder="Select Department Name" required>
+                    <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && DeptName.invalid">
+                    <mat-error *ngIf="DeptName.errors.required">Department Name is required</mat-error> 
+                  </mat-error>
+                </mat-form-field> 
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="checkingDuration" pattern="[0-9 ]*" id="checkingDuration"
+                    [(ngModel)]="assetData.checkingDuration" matInput #CheckDur="ngModel" type="text" required
+                    placeholder="Checking Duration">
+                  <mat-error *ngIf="assetform.submitted && CheckDur.invalid">
+                    <mat-error *ngIf="CheckDur.errors.required">Checking Duration is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="durationTypeIdFK" id="durationTypeIdFK" [(ngModel)]="assetData.durationTypeIdFK"
+                    #DurType="ngModel" placeholder="Select Checking Duration Type" required>
+
+                    <mat-option *ngFor="let duration of durationList" [value]="duration.durationTypeId">
+                      {{duration.title}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && DurType.invalid">
+                    <mat-error *ngIf="DurType.errors.required">Duration Type is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input name="warrenty" id="warrenty" pattern="[0-9 ]*" [(ngModel)]="assetData.warrenty" matInput
+                    type="text" required #Warrenty="ngModel" placeholder="Warrenty">
+                  <mat-error *ngIf="assetform.submitted && Warrenty.invalid">
+                    <mat-error *ngIf="Warrenty.errors.required">Warrenty is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1"> 
+                <mat-form-field fxFlex>
+                  <mat-select name="warrantyDurationTypeIdFK" id="warrantyDurationTypeIdFK" #WarrDurType="ngModel"
+                    [(ngModel)]="assetData.warrantyDurationTypeIdFK" placeholder="Select Warrenty Duration Type"
+                    required>
+                    <mat-option *ngFor="let duration of durationList" [value]="duration.durationTypeId">
+                      {{duration.title}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && WarrDurType.invalid">
+                    <mat-error *ngIf="WarrDurType.errors.required">Warrenty Duration Type is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="manufacturerIdFK" id="manufacturerIdFK" [(ngModel)]="assetData.manufacturerIdFK"
+                    #Manuf="ngModel" placeholder="Select Manufacture Name" required>
+                    <mat-option *ngFor="let manuf of manufList" [value]="manuf.manufacturerId">{{manuf.title}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && Manuf.invalid">
+                    <mat-error *ngIf="Manuf.errors.required">Manufacture Name is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="supplierIdFK" id="supplierIdFK" [(ngModel)]="assetData.supplierIdFK"
+                    #Supplier="ngModel" placeholder="Select Supplier name" required>
+                    <mat-option *ngFor="let suppl of suppList" [value]="suppl.supplierId">{{suppl.supplierName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && Supplier.invalid">
+                    <mat-error *ngIf="Supplier.errors.required">Supplier name is required</mat-error> 
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3" rowHeight="1:0.20">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <mat-select name="categoryIdFK" id="categoryIdFK" [(ngModel)]="assetData.categoryIdFK"
+                    #CategName="ngModel" placeholder="Select Category name" required>
+                    <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.title}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="assetform.submitted && CategName.invalid">
+                    <mat-error *ngIf="CategName.errors.required">Category name is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <div class="md-form">
+                  <label>User Guide Book</label>
+                  <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                      <span>Choose file</span>
+                      <input type="file" (change)="pdfChange($event.target.files)" accept="pdf/*" >
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" name="userGuideBook" [(ngModel)]="userGuideBook" type="text" required
+                        placeholder="Upload your userguide file">
+                    </div>
+                  </div>
+                  <div class="error hide text-error">{{pdferror}}</div>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <div class="md-form">
+                  <label>Asset Image</label>
+                  <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                      <span>Choose file</span>
+                      <input type="file" (change)="imageChange($event.target.files)" accept="image/*" >
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" name="assetImage" [(ngModel)]="assetImage" type="text" required
+                        placeholder="Upload your asset image file">
+                    </div>
+                    <div class="error hide text-error">{{imageerror}}</div>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <!-- <input type="file" (change)="fileChange($event.target.files)" accept="image/*" id="wizard-picture"
+                                       aria-describedby="fileHelpBlock" name="..." /> -->
+
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <textarea name="description" id="description" [(ngModel)]="assetData.description" matInput
+                    #desc="ngModel"  placeholder="Description" required></textarea>
+                  <mat-error *ngIf="assetform.submitted && desc.invalid">
+                    <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <!-- <mat-form-field appearance="standard">
+                <mat-label>User Guide Book </mat-label>
+                <ngx-mat-file-input name="userGuideBook" id="userGuideBook" [(ngModel)]="assetData.userGuideBook"
+                  required #GuideBook="ngModel"></ngx-mat-file-input>
+                <mat-icon matSuffix>cloud_upload</mat-icon>
+                <mat-error *ngIf="assetform.submitted && GuideBook.invalid">
+                  <mat-error *ngIf="GuideBook.errors.required">Guide Book is required</mat-error>
+                </mat-error>
+              </mat-form-field>               -->
+            <!-- <mat-form-field appearance="standard">
+                <mat-label>Asset Image </mat-label>
+                <ngx-mat-file-input name="image" id="image" [(ngModel)]="assetImage" valuePlaceholder={{assetImage}}
+                  required #Img="ngModel">
+                </ngx-mat-file-input>
+                <mat-icon matSuffix>cloud_upload</mat-icon>
+                <mat-error *ngIf="assetform.submitted && Img.invalid">
+                  <mat-error *ngIf="Img.errors.required">Asset Image is required</mat-error>
+                </mat-error>
+              </mat-form-field> -->
+            <div class="cl"></div>
+            <div class="savebtn">
+              <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+                [matTooltip]="!assetform.valid ? 'You must complete all the required fields.' : null" type="submit" [disabled]="!assetform.valid"
+                (click)="addAsset(assetform)">Save Asset</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit" [disabled]="!assetform.valid"
+                (click)="editAsset(assetform)">Update Asset</button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

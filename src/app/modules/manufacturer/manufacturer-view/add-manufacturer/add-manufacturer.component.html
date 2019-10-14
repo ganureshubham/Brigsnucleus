@@ -1,0 +1,53 @@
+<div class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+      <mat-card>
+        <div class="form_header">
+          <div class="fl">
+            <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+            <button mat-button (click)="backToList()" matTooltip="Back to Manufacturers List"
+              class="back btn_style round_squer bg_pink_navy text_white">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+          </div>
+          <div class="fr">
+            <!-- <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+              <button mat-button (click)="backToList()">
+                <mat-icon>list</mat-icon> Manufacturer Lists 
+              </button>
+            </div> -->
+          </div>
+        </div>
+        <div class="cl"></div>
+        <div mat-dialog-content>
+          <form #manufacturerform="ngForm" fxLayout="column" novalidate>
+            <mat-grid-list cols="3" rowHeight="1:0.15">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field fxFlex>
+                  <input matInput name="title" id="title" minlength="3" [(ngModel)]="manufacturerData.title"
+                    #ManufacturerTitle="ngModel" type="text" required placeholder="Title">
+                  <mat-error *ngIf="manufacturerform.submitted && ManufacturerTitle.invalid">
+                    <mat-error *ngIf="ManufacturerTitle.errors.required">Manufacturer Title is required</mat-error>
+                  </mat-error>
+                  <mat-error *ngIf="ManufacturerTitle.errors?.minlength">
+                    Title length Must be atleast 3!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <div class="cl"></div>
+            <div class="savebtn">
+              <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+                [disabled]="!manufacturerform.valid"
+                [matTooltip]="!manufacturerform.valid ? 'You must complete all the required fields.' : null"
+                type="submit" (click)="addManufacturer(manufacturerform.value)">Save Manufacturer</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+                [disabled]="!manufacturerform.valid" (click)="editManufacturer(manufacturerform.value)">Update
+                Manufacturer</button>
+            </div>
+          </form>
+        </div>
+      </mat-card> 
+    </div>
+  </div>
+</div>

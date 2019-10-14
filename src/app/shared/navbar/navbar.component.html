@@ -1,0 +1,93 @@
+<div class="header">
+  <mat-toolbar class="bg_white">
+
+    <div class="logo fl">
+      <img src="../../../assets/img/logo.png" alt="">
+    </div>
+    <div class="fr right_side">
+      <div class="admin_img fl">
+        <ul>
+          <li>
+            <div class="admin_profile fl">
+              <img src="../../../assets/img/user.png" alt="user">
+            </div>
+            <div class="admin_name fr">
+              <b>{{displayName}}</b><br>
+              {{displayOrg}}
+            </div>
+          </li>
+          <li>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <a mat-button routerLink="/dashboard">
+            <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
+          </a>
+          <a mat-button [matMenuTriggerFor]="assetMenu" i18n>
+            <mat-icon>assignment</mat-icon>Assetmate
+          </a>
+          <mat-menu #assetMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+            <a mat-menu-item routerLink="/asset">
+              <mat-icon>subdirectory_arrow_right</mat-icon>
+              <span i18n>Asset</span>
+            </a>
+          </mat-menu>
+          <!-- <a mat-button>
+            <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
+          </a> -->
+          <!-- <a mat-button>
+            <mat-icon>work</mat-icon><span i18n>Taskmate</span>
+          </a> -->
+          <a mat-button routerLink="/alert">
+            <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
+          </a>
+          <!-- <a mat-button>
+            <mat-icon>menu_book</mat-icon><span i18n>complaint</span>
+          </a> -->
+          <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
+            <mat-icon>settings_applications</mat-icon>Settings
+          </a>
+          <mat-menu #appsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+            <a mat-menu-item routerLink="/user-role">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>User Role</span>
+            </a>
+            <a mat-menu-item routerLink="/supplier">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>Supplier</span>
+            </a>
+            <a mat-menu-item routerLink="/manufacturer">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>Manufacturer</span>
+            </a>
+            <a mat-menu-item routerLink="/user">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>User</span>
+            </a>
+            <a mat-menu-item routerLink="/department">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>Department</span>
+            </a>
+            <!-- <a mat-menu-item routerLink="/apps/contacts">
+              <mat-icon matListIcon>face</mat-icon>
+              <span i18n>Contact</span>
+            </a> -->
+          </mat-menu>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+  </mat-toolbar>
+</div>
