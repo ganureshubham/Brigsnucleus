@@ -15,12 +15,11 @@ export const AssetmateRoutes: Routes = [
       }
     ]
   },
- 
   {
     path: "",
     children: [
       {
-        path: "assetmate-details",
+        path: "assetmate-details/:categoryId",
         component: AssetmateDetailsComponent   
       }
     ]
@@ -38,7 +37,7 @@ export const AssetmateRoutes: Routes = [
     path: "",
     children: [
       {
-        path: "detail-asset",
+        path: "assetmate-details/:categoryId/asset-details/:assetId",
         component: DetailsAssetComponent   
       }
     ]

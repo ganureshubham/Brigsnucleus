@@ -36,11 +36,11 @@ export class AssetmateViewComponent implements OnInit {
     })
   }
 
-  categoryDetail(categ: any) {
-    let categoryObj=categ;
-    localStorage.setItem('Category-Object',JSON.stringify(categoryObj));
-    this.dataService.changeData(categ);
-    this.router.navigate(['/assetmate/assetmate-details']);
+  categoryDetail(categoryId: any) {
+    // let categoryObj=categ;
+    // localStorage.setItem('Category-Object',JSON.stringify(categoryObj));
+    // this.dataService.changeData(categ);
+    this.router.navigate(['/assetmate/assetmate-details/'+categoryId]);
   }
 
 

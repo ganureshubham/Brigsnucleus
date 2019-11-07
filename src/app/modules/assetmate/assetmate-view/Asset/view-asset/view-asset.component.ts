@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
@@ -45,6 +45,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
 
   constructor(private http: HttpClient,
+    private route: ActivatedRoute,
     private assetmateService: AssetmateService,
     private router: Router,
     public dataService: DataSharingService,
@@ -65,19 +66,22 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.categoryID = res.categoryId;
+
+    this.categoryID = this.route.snapshot.params['categoryId'];
+
+    // this.dataService.currentData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.categoryID = res.categoryId;
         this.getAllAssets(this.categoryID, this.pageNumber);
-      } else {
-        let categorydata = localStorage.getItem('Category-Object');
-        let category = JSON.parse(categorydata);
-        console.log('res from local storage Asset',category);
+      // } else {
+      //   let categorydata = localStorage.getItem('Category-Object');
+      //   let category = JSON.parse(categorydata);
+      //   console.log('res from local storage Asset',category);
         
-        this.getAllAssets(category.categoryId, this.pageNumber);
-        this.categoryID=category.categoryId; 
-      }
-    })
+      //   this.getAllAssets(category.categoryId, this.pageNumber);
+      //   this.categoryID=category.categoryId; 
+      // }
+    // })
   }
 
   ngOnDestroy(): void { } 
@@ -186,7 +190,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     // let AssetId=assetId;
     // localStorage.setItem('Category-Object',JSON.stringify(AssetId));
     this.dataService.saveData(assetId);
-    this.router.navigate(['/assetmate/detail-asset']);
+    this.router.navigate(['/assetmate/assetmate-details/'+this.route.snapshot.params['categoryId']+'/asset-details/'+assetId]);
   }
 
 

@@ -20,13 +20,10 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetHome/categorySearch?keyword=${keyword}`);
   }
 
-
-
   /**********************************************  category Filter ********************************************************************/
 
   filterCategoryList(parentId): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetcategories/assetCategoryList/${parentId}`);
-
   }
 
 
@@ -245,8 +242,8 @@ export class AssetmateService {
 
   /*********************************************************** Get All Assigned User **********************************/
 
-  getAllAssignUsers(pageNo: number): Observable<any> {
-    return this.httpClient.get(ConfigurationService.baseUrl + `userCatAssign/listOfAssignedUsers/${pageNo}`);
+  getAllAssignUsers(pageNo: number, categoryId:number): Observable<any> {
+    return this.httpClient.get(ConfigurationService.baseUrl + `userCatAssign/listOfAssignedUsersByCategoryId/${categoryId}/${pageNo}`);
   }
 
   /*********************************************************** Search Assigned User *******************************************************************/

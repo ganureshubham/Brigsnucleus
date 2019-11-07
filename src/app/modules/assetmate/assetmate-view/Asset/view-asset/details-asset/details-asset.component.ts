@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
 
@@ -18,6 +18,7 @@ export class DetailsAssetComponent implements OnInit {
 
 
   constructor(private router: Router,
+    private route: ActivatedRoute,
      private assetmateService:AssetmateService ,
       private dataService: DataSharingService) { } 
 
@@ -27,16 +28,20 @@ export class DetailsAssetComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") { 
-        this.viewAsset(res);
-      }
-    })
+    console.log(this.route.snapshot.params['categoryId']+" - "+this.route.snapshot.params['assetId']+ ' CatId and AssetId');
+    // this.dataService.mSaveData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") { 
+        this.viewAsset(1);
+      // }
+    // })
     
   }
 
   viewAsset(assetId: number) {
-    this.assetmateService.viewAsset(assetId).subscribe(res => {
+
+    console.log('Asset Id '+this.route.snapshot.params['assetId']);
+
+    this.assetmateService.viewAsset(this.route.snapshot.params['assetId']).subscribe(res => {
       this.assetData = res.asset;
       this.assetcode=res.asset.assetCode;
       this.userGuideBook = res.asset.userGuideBook.split('/').pop().split('?')[0];  
@@ -47,16 +52,16 @@ export class DetailsAssetComponent implements OnInit {
   }
 
   backToList() {
-    let categorydata = localStorage.getItem('Category-Object');
-    this.category = JSON.parse(categorydata);
-    this.dataService.changeData(this.category);
+    // let categorydata = localStorage.getItem('Category-Object');
+    // this.category = JSON.parse(categorydata);
+    // this.dataService.changeData(this.category);
     // this.showFirst = !this.showFirst;
-    this.router.navigate(['/assetmate/assetmate-details']);  
+    this.router.navigate(['/assetmate/assetmate-details/'+this.route.snapshot.params['categoryId']]);  
   }
 
 
   listAsset() {
-     this.router.navigate(['assetmate/assetmate-details']);
+    this.router.navigate(['/assetmate/assetmate-details/'+this.route.snapshot.params['categoryId']]);  
   }
 
   

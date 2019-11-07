@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';  
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
@@ -45,6 +45,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
 
   constructor(
+    private route: ActivatedRoute,
     private assetmateService: AssetmateService,
     public dataService: DataSharingService,
     private toastr: ToastrService,
@@ -61,7 +62,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.categoryID = this.route.snapshot.params['categoryId']
     this.getAllAssignUsers(this.pageNumber);
   }
 
@@ -74,7 +75,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
-    this.assetmateService.getAllAssignUsers(pageNo).subscribe(res => {
+    this.assetmateService.getAllAssignUsers(pageNo, this.categoryID).subscribe(res => {
       this.dataSource = res.assignedUsers;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;

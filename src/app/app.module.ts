@@ -115,7 +115,7 @@ export class MaterialModule { }
     QRCodeModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(AppRoutes),
+    RouterModule.forRoot(AppRoutes, { useHash: true }),
     NavbarModule,
     MaterialFileInputModule,
     ToastrModule.forRoot({
