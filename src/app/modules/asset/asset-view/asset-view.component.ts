@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AssetService } from '../service/asset.service';
 import { DataSharingService } from '../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -21,10 +22,11 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
   count: number;
   pageNumber = 0;
   totalCount = 0;
-  assetData:any={};
+  assetData: any = {};
+  showFirst:boolean=false;
 
   displayedColumns: string[] = ['assetId', 'assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
-  paidDataSource: MatTableDataSource<Asset> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,16 +38,20 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
   constructor(private http: HttpClient,
     private assetService: AssetService,
     private router: Router,
-    public dataService: DataSharingService,
-    private toastr:ToastrService
-    ) {
+    public dataService: DataSharingService, 
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) {
 
   }
 
   ngAfterViewInit(): void {
     // Add paginators to datastore here, because we need the view to
     // have created the paginator elements
-    this.paidDataSource.paginator = this.paginator; 
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.filterPredicate = (data: Asset, filter: string) => {
+      return data.assetTitle == filter;
+    };
   }
 
   ngOnInit() {
@@ -57,19 +63,19 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllAssets(pageNo: any) {
-    this.loading = true;
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.assetService.getAllAssets(pageNo).subscribe(res => {
       console.log(res);
-      
-      this.paidDataSource = res.asset;
+
+      this.dataSource = res.asset;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
-      this.loading = false;
     },
       error => {
-        this.loading = false;
-        console.log(error);
-        this.toastr.error(error.message);
+        this.toastr.error(error.error.error.message);
       }
     );
   }
@@ -82,12 +88,39 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
     this.getAllAssets(this.page);
   }
 
+
+  applyFilter(filterValue: string) {
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
+    this.dataSource.filter = filterValue;
+  }
+
+  /*********************************************************** Search Client *******************************************************************/
+
+  searchClient(page) {
+    setTimeout(() => {
+      this.loading = true;
+      let pageCounter = 0;
+      if (this.page != 0) {
+        let changedPage = this.page - 1;
+        let pages = changedPage;
+        pageCounter = Number(pages);
+      }
+      this.getAllAssets(page);
+    }, 1000);
+
+  }
+
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
+    this.showFirst=!this.showFirst;
     let selectedAsset = null;
     this.dataService.changeData(selectedAsset);
-    this.router.navigate(['/asset/add-asset'])  
-  } 
+    // this.router.navigate(['/asset/add-asset'])
+  }
 
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
@@ -104,9 +137,9 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
-  editAsset(assetId:number) {
+  editAsset(assetId: number) {
     this.dataService.changeData(assetId);
-    this.router.navigate(['/asset/add-asset']); 
+    this.router.navigate(['/asset/add-asset']);
   }
 
   /*********************************************************** View Particular Asset  *******************************************************************/
@@ -116,13 +149,7 @@ export class AssetViewComponent implements AfterViewInit, OnDestroy {
     this.dataService.changeData(assetId);
     this.router.navigate(['/asset/asset-details']);
   }
-
-
-
-
-
-
-
+  
 }
 
 export interface Asset {

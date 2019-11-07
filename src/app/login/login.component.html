@@ -1,9 +1,10 @@
-<div class="back_main_background">
+<ngx-spinner size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
+<div class="back_main_background login-layout">
   <form #data="ngForm" novalidate>
 
     <!-- Login FORM -->
 
-    <div *ngIf="!forgPass && !newPassword && !sendOTPFlag">
+    <div *ngIf="!forgPass && !newPass && !sendOTPFlag">
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
@@ -20,7 +21,7 @@
             <input matInput #emailid="ngModel" placeholder="Email Address"
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email_address" id="email_address"
               [(ngModel)]="email_address" required email>
-            <mat-error *ngIf="emailid.errors?.pattern">
+            <mat-error *ngIf="emailid.errors?.pattern"> 
               Please type your e-mail address in the format <b> name@example.com </b>!
             </mat-error>
           </mat-form-field>
@@ -47,7 +48,7 @@
 
     <!-- Send OTP FORM -->
 
-    <div *ngIf="forgPass && !sendOTPFlag && !newPassword">
+    <div *ngIf="forgPass && !sendOTPFlag && !newPass">
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
@@ -59,9 +60,9 @@
           </div>
         </mat-card-content>
         <mat-card-content class="bg_pink flex">
-          <div>
+          <div style="color :#E4CCEB">
             <span>Email Id</span>
-            <mat-slide-toggle (click)="toggle()">Mobile Number</mat-slide-toggle>
+            <mat-slide-toggle class="toggle" (click)="toggle()">Mobile Number</mat-slide-toggle>
           </div>
 
           <mat-form-field *ngIf="hide">
@@ -88,24 +89,24 @@
 
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
-              <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && !newPassword" style="color :#E4CCEB"
+              <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && !newPass" style="color :#E4CCEB"
                 fxFlex="50%" fxFlex.lt-md="none" (click)="backToLogin()">
                 Back To Login
               </a>
-              <button *ngIf="forgPass && !newPassword && show" mat-button i18n type="submit" fxFlex="20%"
-                fxFlex.lt-md="none" style="width : 8.5em" color="primary" (click)="sendOtpText(data.value)"
+              <button *ngIf="forgPass && !newPass && show" mat-button i18n type="submit" fxFlex="20%"
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="sendOtpText(data.value,0)"
                 class="login_btn">
                 Send OTP
               </button>
-              <button *ngIf="forgPass && !newPassword && hide" mat-button i18n type="submit" fxFlex="20%"
-                fxFlex.lt-md="none" style="width : 8.5em" color="primary" (click)="sendOtpMail(data.value)"
+              <button *ngIf="forgPass && !newPass && hide" mat-button i18n type="submit" fxFlex="20%"
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="sendOtpMail(data.value)"
                 class="login_btn">
-                OTP
+                SEND OTP
               </button>
             </div>
           </div>
 
-        </mat-card-content>
+        </mat-card-content> 
       </mat-card>
     </div>
 
@@ -132,12 +133,16 @@
 
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
-              <button mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
-                fxFlex="50%" fxFlex.lt-md="none" (click)="sendOTP(data.value)">
+                <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
+                fxFlex="50%" fxFlex.lt-md="none" (click)="sendOtp(data.value,1)">
                 Didn't get the code? RESEND CODE
-              </button>
-              <button *ngIf="forgPass && sendOTPFlag" mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none"
-                style="width : 8.5em" color="primary" (click)="verifyOTP(data.value)" class="login_btn">
+              </a>
+              <!-- <button mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
+                fxFlex="50%" fxFlex.lt-md="none" (click)="sendOtp(data.value,1)">
+                Didn't get the code? RESEND CODE
+              </button> -->
+              <button  *ngIf="forgPass && sendOTPFlag" mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none"
+                style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="verifyOTP(data.value)" class="login_btn">
                 VERIFY
               </button>
             </div>
@@ -149,7 +154,7 @@
 
     <!-- New Password Form -->
 
-    <div *ngIf="!sendOTPFlag && newPassword">
+    <div *ngIf="!sendOTPFlag && newPass">
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
@@ -163,14 +168,22 @@
         <mat-card-content class="bg_pink flex">
 
           <mat-form-field>
-            <input matInput type="password" autocomplete="off" id="new_password" name="new_password"
-              autocomplete="new-password" [(ngModel)]="new_password" placeholder="Enter New Password" required>
+            <input matInput type="password" minlength="6" #NewPass="ngModel" autocomplete="off" id="newPassword"
+              name="newPassword" autocomplete="new-password" [(ngModel)]="newPassword" placeholder="Enter New Password"
+              required>
+            <mat-error *ngIf="NewPass.errors?.minlength">
+              Password length Must be atleast 6!
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input matInput type="password" id="confirm_password" autocomplete="off" name="confirm_password"
-              autocomplete="new-password" [(ngModel)]="confirm_password" placeholder="Enter Confirm Password" required>
-            <div *ngIf="confirm_password">
-              <mat-error *ngIf="confirm_password !== new_password">
+            <input matInput type="password" minlength="6" #ConfPass="ngModel" id="confirmPassword" autocomplete="off"
+              name="confirmPassword" autocomplete="new-password" [(ngModel)]="confirmPassword"
+              placeholder="Enter Confirm Password" required>
+            <mat-error *ngIf="ConfPass.errors?.minlength">
+              Password length Must be atleast 6!
+            </mat-error>
+            <div *ngIf="confirmPassword">
+              <mat-error *ngIf="confirmPassword !== newPassword">
                 New and Confirm password not match!
               </mat-error>
             </div>
@@ -178,8 +191,8 @@
 
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
-              <button mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none" color="primary"
-                (click)="changePass(data.value)" class="login_btn">
+              <button mat-button i18n type="submit" [disabled]="!data.valid" fxFlex="20%" fxFlex.lt-md="none"
+                color="primary" (click)="changePass(data.value)" class="login_btn">
                 CHANGE PASSWORD
               </button>
             </div>

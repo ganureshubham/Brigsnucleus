@@ -1,10 +1,16 @@
-<div class="innerbody table">
+<!-- <ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#7e71b1"
+type="line-spin-fade-rotating"         
+></ngx-spinner> -->
+<div  *ngIf="!showFirst" class="innerbody table">    
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
 
       <mat-card>
 
-        <div class="table_header">
+        <!-- <div class="table_header">
           <div class="fl">
             <p class="tabel_heading mat-subheading-2">Assetmate</p>
           </div>
@@ -14,14 +20,28 @@
 
           <div class="fr">
             <div class="example-button-row btn_style">
-              <button mat-button (click)="addAsset()" class="bg_white_grey"> 
+              <button mat-button (click)="addAsset()" class="bg_white_grey">   
                 <mat-icon>add</mat-icon>Add Asset
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
+        <div class="flex_container padding_box align_center"> 
+          <div class="width_50">
+              <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+                          <mat-icon>add</mat-icon>Add Asset
+                      </button>
+          </div>
+          <div class="width_50 dfe">
+              <form class="example-form filter_search">
+                  <mat-form-field class="example-full-width">
+                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">     
+                  </mat-form-field>
+              </form>
+          </div>
+      </div>
         <div class="cl"></div>
-        <mat-table [dataSource]="paidDataSource">
+        <mat-table [dataSource]="dataSource">   
           <ng-container matColumnDef="assetId">
             <mat-header-cell *matHeaderCellDef>Asset Id</mat-header-cell>
             <mat-cell *matCellDef="let visit">{{ visit.assetId }}</mat-cell>
@@ -42,7 +62,7 @@
           </ng-container>
           <ng-container matColumnDef="assetTitle">
             <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell> 
           </ng-container>
           <ng-container matColumnDef="categoryName">
             <mat-header-cell *matHeaderCellDef>Asset Category</mat-header-cell>
@@ -61,7 +81,7 @@
                     <mat-icon matListIcon>visibility</mat-icon>
                     <span i18n>View Asset Detail</span>
                   </a>
-                  <a mat-menu-item (click)="editAsset(visit.assetId)"> 
+                  <a mat-menu-item (click)="editAsset(visit.assetId)">  
                     <mat-icon matListIcon>edit</mat-icon>
                     <span i18n>Edit Asset</span>
                   </a>
@@ -71,13 +91,13 @@
                   </a>
                 </mat-menu>
                 <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon> 
                 </button>
               </div>
             </mat-cell>
           </ng-container> 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> 
         </mat-table>
         <div >
           <mat-paginator 
@@ -90,4 +110,5 @@
       </mat-card>
     </div>
   </div>
-</div>  
+</div> 
+<app-add-asset *ngIf="showFirst" ></app-add-asset>          

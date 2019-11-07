@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ManufacturerService } from '../../service/manufacturer.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-manufacturer',
@@ -18,7 +19,8 @@ export class AddManufacturerComponent implements OnInit {
   constructor(private router: Router,
     private manufacturerService: ManufacturerService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,10 @@ export class AddManufacturerComponent implements OnInit {
   /*********************************************************** Add New Manufacturer *******************************************************************/
 
   addManufacturer(value) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.manufacturerService.addmanufacturer(value).subscribe(res => {
       console.log(res);
       this.toastr.success(res.message);
@@ -56,6 +62,10 @@ export class AddManufacturerComponent implements OnInit {
   /*********************************************************** Edit Selected Manufacturer *******************************************************************/
 
   editManufacturer(value) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.manufacturerService.editmanufacturer(this.manufacturerData.manufacturerId, value).subscribe(res => {
       console.log(res);
       this.toastr.success(res.message);

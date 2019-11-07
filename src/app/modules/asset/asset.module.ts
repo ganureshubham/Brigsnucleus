@@ -9,6 +9,7 @@ import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { AssetDetailsComponent } from './asset-view/asset-details/asset-details.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -18,8 +19,15 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     RouterModule.forChild(AssetRoutes),
     MaterialModule,
     FormsModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    NgxSpinnerModule
 
+  ],
+  exports:[
+    AssetViewComponent,
+    AddAssetComponent,
+    AssetDetailsComponent,
+   
   ]
   
 })

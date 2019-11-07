@@ -1,3 +1,66 @@
-<p>
-  alert-details works!
-</p> 
+<div class="display width_90 auto_margin margin_5">
+  <div class="title_padding">
+    <mat-card class="margin-bottom">
+      <mat-card-title class="title_color uppercase fl">view Alert</mat-card-title>
+      <span>
+        <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </span>
+      <span class="fr">
+        <div class="manage_form">
+          <mat-list>
+            <mat-list-item>
+              <button mat-mini-fab (click)="backToList()">
+                <mat-icon>format_list_bulleted</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </span>
+    </mat-card>
+    <mat-grid-list cols="4" rowHeight="1:2.5">
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <mat-card class="view_detail width_100 margin-right">
+          <form #assetform="ngForm" class="example-form">
+
+            <mat-grid-list cols="2" rowHeight="300px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <span class="db mat-form-field-infix">
+                  <label class="ng-tns-c13-2 ng-star-inserted img_label">Alert Image</label>
+                </span>
+                <img src="{{alertData.alertImage}}" alt="" width="250" height="250">
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="80px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field class="example-full-width margin-right">
+                  <input matInput placeholder="Alert Id" name="alertId" [(ngModel)]="alertData.alertId" disabled>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field class="example-full-width margin-left">
+                  <input matInput placeholder="Alert Title" name="title" [(ngModel)]="alertData.title" disabled>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="80px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field class="example-full-width margin-right">
+                  <input matInput placeholder="Alert Type" name="alertType" [(ngModel)]="alertData.alertType"
+                    disabled>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-form-field class="example-full-width">
+                  <textarea matInput name="message" [(ngModel)]="alertData.message" disabled
+                    placeholder="Message"></textarea>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </form>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

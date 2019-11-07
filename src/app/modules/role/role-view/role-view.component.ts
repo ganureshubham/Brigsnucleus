@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { RoleService } from '../service/role.service';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-role-view',
@@ -35,7 +36,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private roleService: RoleService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -47,7 +49,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getAllRoles(this.pageNumber); 
+    this.getAllRoles(this.pageNumber);
   }
 
 
@@ -59,17 +61,20 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
 
   getAllRoles(pageNo: any) {
-    this.loading = true;
-    this.roleService.getAllRoles(pageNo).subscribe(res => {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+    this.roleService.getAllRoles(pageNo).subscribe(res => { 
       console.log(res);
       this.paidDataSource = res.userroles;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
-      this.loading = false;
+
 
     },
       error => {
-        this.loading = false;
+
         this.toastr.error(error.message);
         console.log(error);
 
@@ -83,7 +88,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getAllRoles(this.page);
+    this.getAllRoles(this.page); 
   }
 
 
@@ -112,7 +117,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   editRole(userRoleId: number) {
     this.dataService.changeData(userRoleId);
-    this.router.navigate(['/user-role/add-user-role']);
+    this.router.navigate(['/user-role/add-user-role']); 
 
 
   }

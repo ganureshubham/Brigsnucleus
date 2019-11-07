@@ -22,4 +22,12 @@ export class AlertService {
   viewAlert(alertId:number):Observable<any>{
     return this.httpClient.get<any>(ConfigurationService.baseUrl+`alerts/viewParticularAlert/${alertId}`);
   }
-}
+
+   /*********************************************************** Delete Selected Alert *******************************************************************/
+
+   deleteAlert(alertId: number): Observable<any> { 
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `alerts/deleteAlert/` + alertId, {});
+
+  }
+
+} 

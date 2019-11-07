@@ -74,7 +74,7 @@ getAlertList(pageNo:number){
  pageChange(pageNo: any) {
   this.loading = true;
   this.page = pageNo.pageIndex;
-  this.getAlertList(this.page);
+  this.getAlertList(this.page);  
 }
 
 /*********************************************************** View Particular Alert  *******************************************************************/
@@ -86,7 +86,22 @@ viewAlert(alertId: number) {
 }
 
 
-  deleteAlert(){}
+/*********************************************************** Delete Particular Alert *******************************************************************/
+
+  deleteAlert(alertId:number){
+    alert('are you sure?');
+    this.alertService.deleteAlert(alertId).subscribe(res=>{
+      console.log(res);
+      this.toastr.success(res.message);
+      this.getAlertList(this.page);
+      
+    },
+    error=>{
+      console.log(error);
+      this.toastr.error(error.message);
+      
+    })
+  }
 
 
   ngOnDestroy(): void { }

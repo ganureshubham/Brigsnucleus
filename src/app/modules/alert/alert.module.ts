@@ -5,13 +5,15 @@ import { AlertDetailsComponent } from './alert-view/alert-details/alert-details.
 import { RouterModule } from '@angular/router';
 import { AlertRoutes } from './alert-routing.module';
 import { MaterialModule } from '../../app.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AlertViewComponent, AlertDetailsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(AlertRoutes),
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ]
 })
 export class AlertModule { }  

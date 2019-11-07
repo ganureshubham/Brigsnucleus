@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ManufacturerService } from '../service/manufacturer.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-manufacturer-view',
@@ -36,7 +37,8 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private manufacturerService: ManufacturerService,
     public dataService: DataSharingService, 
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner:NgxSpinnerService       
   ) {
 
   }
@@ -58,7 +60,10 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Roles *******************************************************************/
 
   getAllmanufacturers(pageNo: any) {
-    this.loading = true;
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.manufacturerService.getAllmanufacturers(pageNo).subscribe(res => {
       console.log(res);
       this.paidDataSource = res.manufacturer;
@@ -105,7 +110,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     })
     error => {
       console.log(error);
-      this.toastr.error(error.message);
+      this.toastr.error(error.message); 
     }
   }
 

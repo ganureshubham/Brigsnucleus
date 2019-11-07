@@ -12,10 +12,19 @@ export class DataSharingService {
 
   private activeStateData  = new BehaviorSubject<any>('null');
   currentActive = this.activeStateData.asObservable();
+
+  
+  private saveDataSource  = new BehaviorSubject<any>('null');
+  mSaveData = this.saveDataSource.asObservable();
+
   constructor() { }
 
   changeData(data:any){
     this.dataSource.next(data);
+  }
+  
+  saveData(data:any){
+    this.saveDataSource.next(data);
   }
 
   aciveState(state:string){

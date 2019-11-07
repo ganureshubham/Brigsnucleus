@@ -4,6 +4,8 @@ import { AssetService } from '../../service/asset.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-asset',
@@ -17,7 +19,7 @@ export class AddAssetComponent implements OnInit {
   locationList: any;
   deptList: any;
   durationList: any;
-  isEdited: boolean = false;
+  isEdited: boolean = false; 
   manufList: any;
   suppList: any;
   photoPath: any;
@@ -27,6 +29,7 @@ export class AddAssetComponent implements OnInit {
   imageerror: any;
   pdferror: any;
   formTitle: string = "Add Asset";
+  showFirst:boolean=false;
 
 
 
@@ -34,6 +37,7 @@ export class AddAssetComponent implements OnInit {
     private assetService: AssetService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
+    private spinner: NgxSpinnerService 
   ) { }
 
   ngOnInit() {
@@ -59,7 +63,7 @@ export class AddAssetComponent implements OnInit {
 
   /*********************************************************** Get Installation Location List *******************************************************************/
 
-  getDetails(assetId) { 
+  getDetails(assetId) {
     this.assetService.getDetails(assetId).subscribe(res => {
       if (res.asset) {
         this.assetData = res.asset;
@@ -110,16 +114,23 @@ export class AddAssetComponent implements OnInit {
 
   addAsset(formData: NgForm) {
     let value = formData.value;
+    value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
+          console.log(JSON.stringify(value));
+
           this.assetService.addAsset(value).subscribe(
             res => {
-              console.log(res);
-              this.toastr.success(res.message);
-              this.router.navigate(['/asset']);
+              this.spinner.show();
+              setTimeout(() => {
+                this.toastr.success(res.message);
+                this.router.navigate(['/asset']);
+                this.spinner.hide();
+              }, 1000);
+           
             },
             error => {
               console.log(error);
@@ -164,6 +175,7 @@ export class AddAssetComponent implements OnInit {
   // on submit of update button send updated data on server 
   editAsset(formData: NgForm) {
     let value = formData.value;
+    value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.image = result;
@@ -171,9 +183,13 @@ export class AddAssetComponent implements OnInit {
           value.userGuideBook = result1;
           this.assetService.editAsset(this.assetData.assetId, value).subscribe(
             res => {
-              console.log(res);
-              this.toastr.success(res.message);
-              this.router.navigate(['/asset']);
+              this.spinner.show();
+              setTimeout(() => {
+                this.toastr.success(res.message);
+                this.router.navigate(['/asset']);
+                this.spinner.hide();
+              }, 1000);
+            
             },
             error => {
               console.log(error);
@@ -223,6 +239,10 @@ export class AddAssetComponent implements OnInit {
 
   /*********************************************************** Add Asset Photo *****************************************************************/
   imageChange(files: FileList) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     var validImageFormats = ['jpg', 'gif', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
@@ -238,15 +258,22 @@ export class AddAssetComponent implements OnInit {
 
   /*********************************************************** Add User Guide Book *****************************************************************/
   pdfChange(files: FileList) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     var validImageFormats = ['pdf', 'docx', 'doc'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
+      this.pdferror="";
       this.fileToUpload1 = files.item(0);
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload1, this.fileToUpload1.name);
       this.userGuideBook = files.item(0).name;
     } else {
-      this.pdferror = "please select pdf only";
+      this.pdferror = "please select Document only";
+      console.log(this.pdferror);
+      
     }
   }
 
@@ -335,7 +362,9 @@ export class AddAssetComponent implements OnInit {
 
 
   backToList() {
-    this.router.navigate(['/asset']);
+    this.showFirst=!this.showFirst;
+    // this.router.navigate(['/asset']);
+    
   }
 
 

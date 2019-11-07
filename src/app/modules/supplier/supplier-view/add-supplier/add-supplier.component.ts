@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SupplierService } from '../../service/supplier.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-supplier',
@@ -17,7 +18,8 @@ export class AddSupplierComponent implements OnInit {
   constructor(private router: Router,
     private supplierService: SupplierService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -40,15 +42,16 @@ export class AddSupplierComponent implements OnInit {
 
   /*********************************************************** Add New Asset *******************************************************************/
   addSupplier(value) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.supplierService.addSupplier(value).subscribe(res => {
       this.toastr.success(res.message);
-      console.log(res);
       this.router.navigate(['/supplier']);
-
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
+        this.toastr.error(error.error.message); 
 
       })
 
@@ -56,15 +59,17 @@ export class AddSupplierComponent implements OnInit {
 
   /*********************************************************** Edit Selected Role *******************************************************************/
   editSupplier(value) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.supplierService.editSupplier(this.supplierData.supplierId, value).subscribe(res => {
       this.toastr.success(res.message);
-      console.log(res);
       this.router.navigate(['/supplier']);
 
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
+        this.toastr.error(error.error.message);
 
       })
   }

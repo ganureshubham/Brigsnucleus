@@ -9,33 +9,34 @@ import { Observable } from 'rxjs';
 export class AssetService {
 
   constructor(private httpClient: HttpClient) { }
+  
   /*********************************************************** Get All Departments *******************************************************************/
 
   getAllAssets(pageNo: number): Observable<any> {
-    return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${pageNo}`); 
+    return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${pageNo}`);
   }
 
   /*********************************************************** Add New Asset *******************************************************************/
 
   addAsset(assetData: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `assets/addAsset`, assetData);
-  } 
+  }
 
   /*********************************************************** Add Asset Photo *****************************************************************/
   photoUpload(photoData: any): Observable<any> {
-    return this.httpClient.post<any>(ConfigurationService.baseUrl + `assets/uploadAssetImage`, photoData); 
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `assets/uploadAssetImage`, photoData);
   }
 
-   /*********************************************************** Add Asset Document *****************************************************************/
-   docUpload(DocData: any): Observable<any> {
+  /*********************************************************** Add Asset Document *****************************************************************/
+  docUpload(DocData: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `assets/uploadAssetDoc`, DocData);
-  } 
+  }
 
 
   /*********************************************************** Edit Particular Asset *******************************************************************/
 
   editAsset(assetId: number, editedAssetData: any): Observable<any> {
-    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/upadateAsset/` + assetId, editedAssetData); 
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/upadateAsset/` + assetId, editedAssetData);
 
   }
 
@@ -68,7 +69,7 @@ export class AssetService {
 
   /***********************************************************Select Manufacturer************************************************************/
 
-  getManufList(): Observable<any> {
+  getManufList(): Observable<any> { 
 
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/selectManufacturer`);
   }
@@ -97,10 +98,11 @@ export class AssetService {
 
   /***********************************************************View Particular Asset************************************************************/
 
-  viewAsset(assetId:number): Observable<any> {
+  viewAsset(assetId: number): Observable<any> {
 
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/viewParticularAsset/${assetId}`);
   }
 
-  
+
 }
+ 

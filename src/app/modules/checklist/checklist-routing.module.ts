@@ -1,10 +1,25 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
+import { ChecklistViewComponent } from './checklist-view/checklist-view.component';
+import { AddChecklistComponent } from './checklist-view/add-checklist/add-checklist.component';
 
-const routes: Routes = [];
+export const ChecklistRoutes: Routes = [
+  {
+    path: "",
+    children: [
+      {
+        path: "",
+        component:ChecklistViewComponent
+      }
+    ]
+  },
+  {
+    path: "",
+    children: [
+      {
+        path: "add-checklist",
+        component: AddChecklistComponent  
+      }
+    ]
+  },
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class ChecklistRoutingModule { }
+];

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { SupplierService } from '../service/supplier.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-supplier-view',
@@ -36,7 +37,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private supplierService: SupplierService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -61,18 +63,17 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
 
   getAllSuppliers(pageNo: any) {
-    this.loading = true;
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.supplierService.getAllSuppliers(pageNo).subscribe(res => {
-      console.log(res);
       this.paidDataSource = res.supplier;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
-      this.loading = false;
     },
       error => {
-        this.loading = false;
-        console.log(error);
-
+        this.toastr.error(error.message);
       })
   }
 
@@ -120,7 +121,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
       this.getAllSuppliers(this.page);
     })
     error => {
-      console.log(error);
       this.toastr.error(error.message);
     }
   }

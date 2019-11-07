@@ -1,5 +1,11 @@
-<div class="innerbody form ">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#7e71b1"
+type="line-spin-fade-rotating"
+></ngx-spinner>
+<div *ngIf="!showFirst" class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px"> 
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
       <mat-card>
         <div class="form_header">
@@ -11,7 +17,7 @@
           </div>
           <div class="fr">
             <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-              <button mat-button (click)="backToList()"> 
+              <button mat-button (click)="backToList()">
                 <mat-icon>list</mat-icon> Asset Lists
               </button>
             </div>
@@ -86,9 +92,9 @@
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="assetform.submitted && DeptName.invalid">
-                    <mat-error *ngIf="DeptName.errors.required">Department Name is required</mat-error> 
+                    <mat-error *ngIf="DeptName.errors.required">Department Name is required</mat-error>
                   </mat-error>
-                </mat-form-field> 
+                </mat-form-field>
               </mat-grid-tile>
             </mat-grid-list>
             <mat-grid-list cols="3" rowHeight="1:0.15">
@@ -127,7 +133,7 @@
               </mat-grid-tile>
             </mat-grid-list>
             <mat-grid-list cols="3" rowHeight="1:0.15">
-              <mat-grid-tile [colspan]="1" [rowspan]="1"> 
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field fxFlex>
                   <mat-select name="warrantyDurationTypeIdFK" id="warrantyDurationTypeIdFK" #WarrDurType="ngModel"
                     [(ngModel)]="assetData.warrantyDurationTypeIdFK" placeholder="Select Warrenty Duration Type"
@@ -161,7 +167,7 @@
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="assetform.submitted && Supplier.invalid">
-                    <mat-error *ngIf="Supplier.errors.required">Supplier name is required</mat-error> 
+                    <mat-error *ngIf="Supplier.errors.required">Supplier name is required</mat-error>
                   </mat-error>
                 </mat-form-field>
               </mat-grid-tile>
@@ -185,11 +191,11 @@
                   <div class="file-field">
                     <div class="btn btn-primary btn-sm float-left">
                       <span>Choose file</span>
-                      <input type="file" (change)="pdfChange($event.target.files)" accept="pdf/*" >
+                      <input type="file" (change)="pdfChange($event.target.files)" >
                     </div>
                     <div class="file-path-wrapper">
-                      <input class="file-path validate" name="userGuideBook" [(ngModel)]="userGuideBook" type="text" required
-                        placeholder="Upload your userguide file">
+                      <input class="file-path validate" name="userGuideBook" [(ngModel)]="userGuideBook" type="text"
+                        required placeholder="Upload your userguide file"> 
                     </div>
                   </div>
                   <div class="error hide text-error">{{pdferror}}</div>
@@ -201,7 +207,7 @@
                   <div class="file-field">
                     <div class="btn btn-primary btn-sm float-left">
                       <span>Choose file</span>
-                      <input type="file" (change)="imageChange($event.target.files)" accept="image/*" >
+                      <input type="file" (change)="imageChange($event.target.files)" accept="image/*">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" name="assetImage" [(ngModel)]="assetImage" type="text" required
@@ -219,7 +225,7 @@
               <mat-grid-tile [colspan]="3" [rowspan]="1">
                 <mat-form-field fxFlex>
                   <textarea name="description" id="description" [(ngModel)]="assetData.description" matInput
-                    #desc="ngModel"  placeholder="Description" required></textarea>
+                    #desc="ngModel" placeholder="Description" required></textarea>
                   <mat-error *ngIf="assetform.submitted && desc.invalid">
                     <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
                   </mat-error>
@@ -248,10 +254,10 @@
             <div class="cl"></div>
             <div class="savebtn">
               <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-                [matTooltip]="!assetform.valid ? 'You must complete all the required fields.' : null" type="submit" [disabled]="!assetform.valid"
-                (click)="addAsset(assetform)">Save Asset</button>
-              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit" [disabled]="!assetform.valid"
-                (click)="editAsset(assetform)">Update Asset</button>
+                [matTooltip]="!assetform.valid ? 'You must complete all the required fields.' : null" type="submit"
+                [disabled]="!assetform.valid" (click)="addAsset(assetform)">Save Asset</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+                [disabled]="!assetform.valid" (click)="editAsset(assetform)">Update Asset</button>
             </div>
           </form>
         </div>
@@ -259,3 +265,4 @@
     </div>
   </div>
 </div>
+<app-asset-view *ngIf="showFirst" ></app-asset-view>       

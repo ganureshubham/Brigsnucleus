@@ -9,7 +9,8 @@ import { DataSharingService } from '../../../../public service/data-sharing.serv
   styleUrls: ['./asset-details.component.css']
 })
 export class AssetDetailsComponent implements OnInit {
-  assetData: any = {}
+  assetData: any = {};
+  userGuideBook: any;
   constructor(private router: Router, private assetService: AssetService, private dataService: DataSharingService) { }
 
 
@@ -31,6 +32,7 @@ export class AssetDetailsComponent implements OnInit {
       console.log("view function",res);
       
       this.assetData = res.asset;
+      this.userGuideBook = res.asset.userGuideBook.split('/').pop().split('?')[0];    
     },
     error=>{
       console.log(error);
@@ -39,12 +41,12 @@ export class AssetDetailsComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate(['/asset']);
+    this.router.navigate(['/asset']);  
   }
 
   addAsset() {
     let selectedAsset = null;
-    this.dataService.changeData(selectedAsset);
+    this.dataService.changeData(selectedAsset); 
     this.router.navigate(['/asset/add-asset']);   
   }
 

@@ -18,8 +18,6 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatButtonToggleModule,
     
-    
-    
   ],
   exports : [NavbarComponent]
 })

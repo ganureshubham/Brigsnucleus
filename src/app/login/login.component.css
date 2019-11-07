@@ -1,3 +1,16 @@
-::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
- caret-color: #d80166;
+::ng-deep .mat-form-field-invalid .mat-input-element,
+.mat-warn .mat-input-element {
+    caret-color: #d80166;
+}
+
+
+
+.box_background {
+    flex-direction: row;
+}
+
+@media (max-width: 768px) {
+    .box_background {
+        flex-direction: column;
+    }
 }

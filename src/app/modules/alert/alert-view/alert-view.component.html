@@ -16,7 +16,7 @@
         <mat-table [dataSource]="paidDataSource">
           <ng-container matColumnDef="alertId">
             <mat-header-cell *matHeaderCellDef>Alert Id </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell> 
+            <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>   
           </ng-container>
           <ng-container matColumnDef="alertType">                                                                                       
             <mat-header-cell *matHeaderCellDef>Alert Type</mat-header-cell>
@@ -43,7 +43,7 @@
                 <mat-menu #dailyPerformanceMenu="matMenu">
                     <a mat-menu-item (click)="viewAlert(visit.alertId)">  
                         <mat-icon matListIcon>visibility</mat-icon>
-                        <span i18n>View Asset Detail</span>
+                        <span i18n>View Alert Detail</span>
                       </a>
                   <a mat-menu-item (click)="deleteAlert(visit.alertId)">
                     <mat-icon matListIcon>delete_outline</mat-icon>

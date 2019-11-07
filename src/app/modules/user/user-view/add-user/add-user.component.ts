@@ -4,6 +4,7 @@ import { DataSharingService } from '../../../../public service/data-sharing.serv
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-user',
@@ -26,6 +27,7 @@ export class AddUserComponent implements OnInit {
     private userService: UserService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
+    private spinner:NgxSpinnerService 
   ) { }
 
   ngOnInit() {
@@ -52,14 +54,15 @@ export class AddUserComponent implements OnInit {
         value.image = result;
         this.userService.addUser(value).subscribe(res => {
           console.log(res);
-          this.toastr.success(res.message);
-          this.router.navigate(['/user']);
-
+          this.spinner.show();
+          setTimeout(() => {
+            this.toastr.success(res.message);
+            this.router.navigate(['/user']);
+            this.spinner.hide();
+          }, 1000);
         },
           error => {
-            console.log(error);
-            this.toastr.error(error.message);
-
+            this.toastr.error(error.error.message);
           })
       })
     }
@@ -94,8 +97,7 @@ export class AddUserComponent implements OnInit {
 
         },
           error => {
-            console.log(error);
-            this.toastr.error(error.message);
+            this.toastr.error(error.error.message);
 
           })
       })

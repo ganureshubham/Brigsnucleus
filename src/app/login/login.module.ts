@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../app.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,7 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule.forChild(LoginRoutes),
     FormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule
+
    
   ]
 })

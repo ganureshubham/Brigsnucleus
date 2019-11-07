@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DashboardRoutes } from './dashboard.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../app.module';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -15,7 +16,8 @@ import { MaterialModule } from '../app.module';
     RouterModule.forChild(DashboardRoutes),
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    NgxSpinnerModule
   ]
 })
 export class DashboardModule { }

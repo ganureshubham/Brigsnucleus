@@ -8,15 +8,20 @@ import { Observable } from 'rxjs';
 })
 export class DepartmentService { 
 
-  constructor(private httpClient: HttpClient) { } 
+  constructor(private httpClient: HttpClient) { }  
 
-  /***********************************************************Select Department************************************************************/
+  /***********************************************************Select Department***************************************************/
 
   getDeptList(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl +`departments/selectDepartment`);
   }
 
+/*********************************************************** Get All Departments ************************************************/
+  getAllDept(parentId :number):Observable<any>{
+    return this.httpClient.get<any>(ConfigurationService.baseUrl +`departments/departmentList/${parentId}`);
+  }
 
+/*********************************************************** Add New Department *************************************************/
   addDept(deptData:any):Observable<any>{
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `departments/addDepartment`,deptData); 
   }

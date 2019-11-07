@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ManufacturerRoutes } from './manufacturer-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [ManufacturerViewComponent, AddManufacturerComponent],
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forChild(ManufacturerRoutes),
     MaterialModule,
     FormsModule,
+    NgxSpinnerModule
   ]
 })
 export class ManufacturerModule { }

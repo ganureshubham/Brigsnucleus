@@ -5,62 +5,63 @@
                 <p class="title_header mat-subheading-2 tal dfs">ALL Department</p>
             </mat-grid-tile>
             <mat-grid-tile class="tar">
-                <button mat-button (click)="openDialog()" class="bg_white_grey btn_style">     
-                <mat-icon>add</mat-icon>Add Department
-            </button>
+                <button mat-button (click)="openDialog()" class="bg_white_grey btn_style adddept">
+                    <mat-icon>add</mat-icon>Add Department
+                </button>
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card>
-    <mat-card class="width_90 margin_auto">
+    <mat-card class="width_90 margin_auto department">
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <button mat-icon-button disabled></button>
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                 <mat-list role="list">
-                    <mat-list-item role="listitem"> <button mat-icon-button disabled></button></mat-list-item>
                     <mat-list-item role="listitem">
-                        <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+                        <button mat-icon-button disabled></button>
+                        {{node.item}}
                     </mat-list-item>
                     <mat-list-item role="listitem">
-                        <button mat-icon-button (click)="openDialog()"><mat-icon>add</mat-icon></button>
-                        <button mat-icon-button (click)="openDialog()"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button><mat-icon>delete</mat-icon></button>  
+                        <button mat-icon-button (click)="openDialog()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openDialog()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-list-item>
+
+
                 </mat-list>
-            </mat-tree-node>
-            <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
-                <button mat-icon-button disabled></button>
 
-                <mat-form-field>
-                    <input matInput #itemValue placeholder="New item...">
-                </mat-form-field>
-                <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
             </mat-tree-node>
-
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-
                 <mat-list role="list">
-                    <mat-list-item role="listitem"> <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                                <mat-icon class="mat-icon-rtl-mirror">
-                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                </mat-icon>
-                              </button></mat-list-item>
                     <mat-list-item role="listitem">
-                        <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+                        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle> 
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        {{node.item}}
+                        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+                        </mat-progress-bar>
                     </mat-list-item>
                     <mat-list-item role="listitem">
-                        <button mat-icon-button (click)="openDialog()"><mat-icon>add</mat-icon></button>
-                        <button mat-icon-button (click)="openDialog()"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button><mat-icon>delete</mat-icon></button>
+                        <button mat-icon-button (click)="openDialog()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openDialog()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-list-item>
                 </mat-list>
 
             </mat-tree-node>
+
         </mat-tree>
-
-
-
     </mat-card>
-
-
-
 </div>

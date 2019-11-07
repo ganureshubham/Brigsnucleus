@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RoleService } from '../../service/role.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-add-role',
@@ -18,7 +19,8 @@ export class AddRoleComponent implements OnInit {
   constructor(private router: Router,
     private roleService: RoleService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,7 @@ export class AddRoleComponent implements OnInit {
       if (res != null && res != "null" && res != "null") {
         console.log("ngonit function", res);
         this.roleData.title = res.title;
-        this.roleData.userRoleId = res.userRoleId;
+        this.roleData.userRoleId = res.userRoleId; 
         this.isEdited = true;
         this.formTitle = `Edit User Role`;
 
@@ -37,16 +39,18 @@ export class AddRoleComponent implements OnInit {
 
   /*********************************************************** Add New Asset *******************************************************************/
   addRole(value) {
-    this.uploadingLoader = true;
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
     this.roleService.addRole(value).subscribe(res => {
       console.log(res);
-      this.uploadingLoader = false;
       this.toastr.success(res.message);
-      this.router.navigate(['/user-role']); 
+      this.router.navigate(['/user-role']);
 
     },
       error => {
-        this.uploadingLoader = false;
+
         console.log(error);
         this.toastr.error(error.message);
 
@@ -58,16 +62,17 @@ export class AddRoleComponent implements OnInit {
   /*********************************************************** Edit Selected Role *******************************************************************/
 
   editRole(value) {
-
-
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
     this.roleService.editRole(this.roleData.userRoleId, value).subscribe(res => {
-      console.log(res);
       this.toastr.success(res.message);
       this.router.navigate(['/user-role']);
 
     },
       error => {
-        console.log();
+        console.log(); 
 
       })
 

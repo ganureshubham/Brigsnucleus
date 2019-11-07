@@ -16,6 +16,7 @@ import { AuthInterceptor } from './guards/auth.interceptor';
 import { MaterialFileInputModule, NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './public service/auth-guard.service';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import {
   MatAutocompleteModule,
@@ -52,6 +53,9 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import { config } from 'rxjs';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+
 
 @NgModule({
   exports: [
@@ -88,8 +92,9 @@ import { config } from 'rxjs';
     MatTooltipModule,
     MatTreeModule,
     
+    
   ],
-  declarations: [],
+  declarations: [ConfirmDialogComponent],
   imports: []
 })
 export class MaterialModule { }
@@ -98,7 +103,8 @@ export class MaterialModule { }
   declarations: [
     AppComponent,
     AdminComponent,
-    AuthComponent
+    AuthComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -106,6 +112,8 @@ export class MaterialModule { }
     MaterialModule,
     HttpClientModule,
     HttpModule,
+    QRCodeModule,
+    NgxSpinnerModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes),
     NavbarModule,

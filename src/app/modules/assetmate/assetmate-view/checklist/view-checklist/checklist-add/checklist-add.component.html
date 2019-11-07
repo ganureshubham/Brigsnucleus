@@ -1,0 +1,81 @@
+<!-- <mat-card>
+  <mat-list role="list">
+    <form #checklistform="ngForm" class="example-form" class="listing_space add_department">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <p class="title_header mat-subheading-2">Add Checklist</p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-form-field>
+            <mat-label>Select Category</mat-label>
+            <mat-select name="categoryIdFK" id="categoryIdFK" [(ngModel)]="checklistData.categoryIdFK" required>
+              <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
+                {{categ.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
+              placeholder="Checklist Title" required>
+            <mat-error *ngIf="checklistform.submitted && title.invalid">
+              <mat-error *ngIf="title.errors.required">Installation Location is required</mat-error>
+            </mat-error>
+            <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <button type="submit" [disabled]="!checklistform.valid" (click)="addChecklist(checklistform.value)"
+            mat-raised-button class="bg_primary text_white btn">Save</button>
+          <button mat-button class="fr btn">Cancel</button>
+        </mat-list-item>
+      </mat-list>
+    </form>
+  </mat-list>
+</mat-card> -->
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
+<div *ngIf="!showFirst" class="innerbody form ">
+  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+      <div class="form_header">
+        <div class="fl">
+          <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+        </div>
+        <div class="fr">
+          <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+            <button mat-button (click)="backToList()">
+              <mat-icon>list</mat-icon> Checklist Lists
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cl"></div>
+      <div mat-dialog-content>
+        <form #checklistform="ngForm" class="example-form" class="listing_space add_department">
+          <mat-form-field>
+            <mat-label>Select Category</mat-label>
+            <mat-select name="categoryId" id="categoryId" [(ngModel)]="checklistData.categoryId" required> 
+              <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
+                {{categ.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
+              placeholder="Checklist Title">
+            <mat-error *ngIf="checklistform.submitted && title.invalid">
+              <mat-error *ngIf="title.errors.required">Installation Location is required</mat-error>
+            </mat-error>
+            <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
+          </mat-form-field>
+          <button type="submit"  *ngIf="!isEdited" [disabled]="!checklistform.valid" (click)="addChecklist(checklistform.value)"
+            mat-raised-button class="bg_primary text_white btn">Save Checklist</button>
+            <button *ngIf="isEdited"  [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+            [disabled]="!assetform.valid" (click)="editChecklist(checklistform.value)">Update Checklist</button> 
+        </form>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-view-checklist *ngIf="showFirst"></app-view-checklist>

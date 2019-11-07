@@ -12,7 +12,7 @@ export const AppRoutes: Routes = [
   },
   {
     path: "",
-    component: AdminComponent,
+    component: AdminComponent, 
     children: [
       {
         path: "dashboard",
@@ -22,7 +22,7 @@ export const AppRoutes: Routes = [
       {
         path: "asset",
         loadChildren: "./modules/asset/asset.module#AssetModule",
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard] 
       },
       {
         path: "asset-category",
@@ -32,7 +32,7 @@ export const AppRoutes: Routes = [
       {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard] 
       },
       {
         path: "supplier",
@@ -50,27 +50,46 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path :"department",
-        loadChildren : "./modules/department/department.module#DepartmentModule",
-        canActivate: [AuthGuard] 
+        path: "department",
+        loadChildren: "./modules/department/department.module#DepartmentModule",
+        canActivate: [AuthGuard]
 
       },
       {
-        path :"alert",
-        loadChildren : "./modules/alert/alert.module#AlertModule",
+        path: "alert",
+        loadChildren: "./modules/alert/alert.module#AlertModule",
+        canActivate: [AuthGuard]
+
+      },
+      {
+        path: "assetmate",
+        loadChildren: "./modules/assetmate/assetmate.module#AssetmateModule",
+        canActivate: [AuthGuard]
+
+      },
+      {
+        path: "checklist",
+        loadChildren: "./modules/checklist/checklist.module#ChecklistModule",
+        canActivate: [AuthGuard]
+
+      },
+      {
+        path: "profile",
+        loadChildren: "./modules/profile/profile.module#ProfileModule",
         canActivate: [AuthGuard]
 
       },
       // {
-      //   path :"",
-      //   loadChildren : "",
+      //   path: "category-Document",
+      //   loadChildren: "./modules/category-document/category-document.module#CategoryDocumentModule",
+      //   canActivate: [AuthGuard]
 
       // },
-      // {
-      //   path :"",
-      //   loadChildren : "",
+      //  {
+      //      path :"assetmate",
+      //      loadChildren : "./modules/assetmate/assetmate.module#AssetmateModule",
 
-      // }
+      //    },
     ]
   },
   {

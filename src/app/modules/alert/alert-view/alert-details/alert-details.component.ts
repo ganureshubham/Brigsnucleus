@@ -15,7 +15,7 @@ export class AlertDetailsComponent implements OnInit {
 
   ngOnInit() { 
     this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
+      if (res != null && res != "null" && res != "null") {  
         
         this.viewAlert(res);
         
@@ -27,10 +27,20 @@ export class AlertDetailsComponent implements OnInit {
   viewAlert(alertId:number){
     this.alertService.viewAlert(alertId).subscribe(res=>{
       console.log('view Function',res);
+      this.alertData=res.alert;  
       
 
+    },
+    error=>{
+      console.log(error); 
+
+      
     })
 
+  }
+
+  backToList(){
+    this.router.navigate(['/alert']);
   }
 
 }

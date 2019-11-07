@@ -1,0 +1,10 @@
+::ng-deep .mat-list-base {
+    display: flex !important;
+    flex-direction: row;
+}
+
+@media (max-width:768px) {
+     ::ng-deep .mat-list-base {
+        flex-direction: column;
+    }
+}

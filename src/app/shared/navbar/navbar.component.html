@@ -21,6 +21,10 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="goToProfile()" >
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>View Profile</span>
+                  </button>
               <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
@@ -36,7 +40,10 @@
           <a mat-button routerLink="/dashboard">
             <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
           </a>
-          <a mat-button [matMenuTriggerFor]="assetMenu" i18n>
+          <a mat-button routerLink="/assetmate">
+            <mat-icon>assignment</mat-icon><span i18n>Assetmate</span>
+          </a>
+          <!-- <a mat-button [matMenuTriggerFor]="assetMenu" i18n>
             <mat-icon>assignment</mat-icon>Assetmate
           </a>
           <mat-menu #assetMenu="matMenu" yPosition="below" [overlapTrigger]="false">
@@ -44,16 +51,16 @@
               <mat-icon>subdirectory_arrow_right</mat-icon>
               <span i18n>Asset</span>
             </a>
-          </mat-menu>
+          </mat-menu> -->
           <!-- <a mat-button>
             <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
           </a> -->
           <!-- <a mat-button>
             <mat-icon>work</mat-icon><span i18n>Taskmate</span>
           </a> -->
-          <a mat-button routerLink="/alert">
+          <!-- <a mat-button routerLink="/alert">
             <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
-          </a>
+          </a> -->
           <!-- <a mat-button>
             <mat-icon>menu_book</mat-icon><span i18n>complaint</span>
           </a> -->
@@ -81,6 +88,10 @@
               <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
               <span i18n>Department</span>
             </a>
+            <!-- <a mat-menu-item routerLink="/category-Document">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon> 
+              <span i18n>Category-Document</span>
+            </a> -->
             <!-- <a mat-menu-item routerLink="/apps/contacts">
               <mat-icon matListIcon>face</mat-icon>
               <span i18n>Contact</span>

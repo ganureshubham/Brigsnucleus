@@ -3,6 +3,7 @@ import { AuthenticationService } from '../public service/authentication.service'
 import { Router } from '@angular/router';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,13 @@ export class LoginComponent implements OnInit {
   mobileNumber: string = null;
   email: string = null;
   password: string = null;
-  newpassword: string = null;
-  confirmpassword: string = null;
+  // newpassword: string = null;
+  // confirmpassword: string = null;
   sendOTPFlag: boolean;
   forgPass: boolean = false;
-  newPassword: boolean;
-  new_password: any;
-  confirm_password: any;
+  newPass: boolean;
+  newPassword: any;
+  confirmPassword: any;
   flag: number = 1;
   otp: any;
   public show: boolean = false;
@@ -28,12 +29,17 @@ export class LoginComponent implements OnInit {
 
   constructor(public authService: AuthenticationService,
     public router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) {
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigate(['/dashboard'])
+    }
+  }
 
   ngOnInit() {
     this.authService.loginLoader = true;
     this.forgPass = false;
-
   }
 
   login() {
@@ -43,8 +49,6 @@ export class LoginComponent implements OnInit {
     body.set("password", this.password);
     body.set("grant_type", "implicit");
     this.authService.login(body);
-    console.log(body);
-
   }
 
 
@@ -58,6 +62,10 @@ export class LoginComponent implements OnInit {
 
 
   forgotPassword() {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     if (this.forgPass) {
       this.forgPass = false;
       this.sendOTPFlag = true;
@@ -69,27 +77,75 @@ export class LoginComponent implements OnInit {
 
   backToLogin() {
     this.forgPass = false;
-    this.newPassword = false;
+    this.newPass = false;
     this.sendOTPFlag = false;
 
 
   }
+  /******************************************************* Resend OTP *****************************************************/
+
+
+  sendOtp(value: any, resend: number) {
+
+
+    this.spinner.show();
+    setTimeout(() => {
+      /** spinner ends after 1 seconds */
+      this.spinner.hide();
+    }, 1000);
+    if (this.show == true && this.hide == false) {
+      console.log(value);
+      let MOBILE = { mobileNumber: this.mobileNumber }
+
+      this.sendOtpText(MOBILE, resend);
+    } else {
+      console.log("else send otp", this.email);
+
+      let EMAIL = { email: this.email }
+      this.sendOtpMail(EMAIL);
+
+    }
+  }
   /******************************************************* Send OTP by Text*****************************************************/
 
-  sendOtpText(value: any) {
+  sendOtpText(value: any, resend: number) {
+    console.log(value);
+
     this.mobileNumber = value.mobileNumber;
-    value.resendFlag = this.flag++;
+    value.resendFlag = resend;
+
 
     this.authService.sendOtpText(value).subscribe(res => {
-      console.log(res);
+      console.log(res.json().status);
+      if (res.json().status) {
+        this.spinner.show();
+        setTimeout(() => {
+          this.toastr.success(res.json().message);
+          this.forgPass = true;
+          this.sendOTPFlag = true;
+          /** spinner ends after 1 seconds */
+          this.spinner.hide();
+        }, 1000);
 
-      this.forgPass = true;
-      this.sendOTPFlag = true;
-      // this.newPassword = true;
+
+      } else {
+        this.spinner.show();
+        setTimeout(() => {
+          this.toastr.show(res.json().message);
+          this.spinner.hide();
+        }, 1000);
+
+
+
+
+      }
+
+
+      // this.newPass = true;
     },
       error => {
         console.log(error);
-        this.toastr.error(error.errors.msg);
+        this.toastr.error(error.json().message);
       });
 
   }
@@ -97,13 +153,34 @@ export class LoginComponent implements OnInit {
   /******************************************************* Send OTP by E-Mail*****************************************************/
 
   sendOtpMail(value: any) {
-    this.email = value.email;
-    value.resendFlag = this.flag++;
+    // value : value must be object {email: "example@gmail.com"}
+    console.log("inside send otp mail func", value);
+    this.email = value.email;  //   assigning input value to global varialble for future use
     this.authService.sendOtpMail(value).subscribe(res => {
-      console.log(res);
-      this.forgPass = true;
-      this.sendOTPFlag = true;
-      // this.newPassword = true;
+      console.log(res.json());
+      if (res.json().status) {
+        this.spinner.show();
+        setTimeout(() => {
+          this.toastr.success(res.json().message);
+          this.forgPass = true;
+          this.sendOTPFlag = true;
+          /** spinner ends after 1 seconds */
+          this.spinner.hide();
+        }, 1000);
+
+
+
+      } else {
+        this.spinner.show();
+        setTimeout(() => {
+          this.toastr.show(res.json().message);
+          this.spinner.hide();
+        }, 1000);
+
+
+      }
+
+      // this.newPass = true;
 
 
     },
@@ -116,44 +193,75 @@ export class LoginComponent implements OnInit {
 
   backToForgot() {
     this.forgPass = false;
-    this.newPassword = false;
+    this.newPass = false;
     this.sendOTPFlag = false;
   }
 
   verifyOTP(value: any) {
+    console.log(value);
+
     if (this.show == true && this.hide == false) {
       value.mobileNumber = this.mobileNumber;
       this.otp = value.otp;
-
       this.authService.verifyOTPText(value).subscribe(res => {
-        console.log(res);
-        // this.toastr.success(res.message);
+        console.log(res.json());
+        if (res.json().status) {
+          this.spinner.show();
+          setTimeout(() => {
+            this.toastr.success(res.json().message);
+            this.forgPass = true;
+            this.newPass = true;
+            this.sendOTPFlag = false;
+            this.spinner.hide();
+          }, 1000);
 
 
-        this.forgPass = true;
-        this.newPassword = true;
-        this.sendOTPFlag = false;
+        } else {
+          this.spinner.show();
+          setTimeout(() => {
+            this.toastr.show(res.json().message);
+            this.spinner.hide();
+          }, 1000);
+        }
       },
         error => {
           console.log(error.json().message);
-          this.toastr.error(error.errors.msg);
-
+          this.toastr.error(error.json().message);
         })
 
     }
     else {
       value.email = this.email;
       this.otp = value.otp;
+
       this.authService.verifyOTPMail(value).subscribe(res => {
         console.log(res);
-        this.forgPass = true;
-        this.newPassword = true;
-        this.sendOTPFlag = false;
+        if (res.json().status) {
+          this.spinner.show();
+          setTimeout(() => {
+            this.toastr.success(res.json().message);
+            this.forgPass = true;
+            this.newPass = true;
+            this.sendOTPFlag = false;
+            this.spinner.hide();
+          }, 1000);
+
+
+        } else {
+          this.spinner.show();
+          setTimeout(() => {
+            this.toastr.show(res.json().message);
+            this.spinner.hide();
+          }, 1000);
+        }
+
+
 
 
       },
         error => {
-          console.log(error);
+          console.log(error.json().message);
+          this.toastr.error(error.json().message);
 
         })
 
@@ -168,7 +276,7 @@ export class LoginComponent implements OnInit {
 
 
     //   this.forgPass = true;
-    //   this.newPassword = true;
+    //   this.newPass = true;
     //   this.sendOTPFlag = false;
     // },
     //   error => {
@@ -180,20 +288,46 @@ export class LoginComponent implements OnInit {
   }
 
   changePass(value: any) {
+    if (this.show == true && this.hide == false) {
+      value.inputType = "mobile";
+      value.inputValue = this.mobileNumber;
+
+    }
+    else {
+      value.inputType = "email";
+      value.inputValue = this.email;
+
+    }
     value.otp = this.otp;
-    value.mobileNumber = this.mobileNumber;
+    value.newPassword = this.newPassword;
+    value.confirmPassword = this.confirmPassword;
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 1 seconds */
+      this.spinner.hide();
+    }, 1000);
     this.authService.changePass(value).subscribe(res => {
       console.log(res);
+      if (res.json().status) {
+        this.toastr.success(res.json().message);
+        this.forgPass = false;
+        this.sendOTPFlag = false;
+        this.newPass = false;
+
+
+      } else {
+        this.toastr.show(res.json().message);
+
+      }
       // this.toastr.success(res.message);
 
-      this.forgPass = false;
-      this.sendOTPFlag = false;
-      this.newPassword = false;
+
 
     },
       error => {
         console.log(error);
-        this.toastr.error(error.errors.msg);
+        this.toastr.error(error.json().message);
 
       })
 

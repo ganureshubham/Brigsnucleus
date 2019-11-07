@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { UserRoutes } from './user-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [UserViewComponent, AddUserComponent],
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild(UserRoutes),
     MaterialModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
     
   ]
 })

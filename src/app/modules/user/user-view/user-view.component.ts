@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DataSharingService } from '../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user-view',
@@ -37,7 +38,9 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     private userService: UserService,
     private router: Router,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner:NgxSpinnerService  
+    
   ) {
 
   }
@@ -57,25 +60,19 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Users *******************************************************************/
 
   getAllUsers(pageNo: any) {
-    this.loading = true;
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.userService.getAllUsers(pageNo).subscribe(res => { 
       console.log(res);
       this.paidDataSource=res.users;
       this.pageNumber=res.currentPage;
       this.totalCount=res.totalCount; 
-      this.loading=false;
-
-
-
-
     },
     error =>{
-      this.loading = false;
-      this.toastr.error(error.message);
-      console.log(error); 
-      
+      this.toastr.error(error.error.message);
     })
-
   }
 
 
@@ -113,7 +110,9 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
 
   addUser() {
-    this.router.navigate(['/user/add-user']);
+    let selectedUser = null;
+    this.dataService.changeData(selectedUser);
+    this.router.navigate(['/user/add-user']); 
   }
 
 
