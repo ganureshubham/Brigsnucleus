@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';  
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
@@ -30,7 +30,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   result: string = '';
 
 
-  displayedColumns: string[] = ['documentId', 'title', 'description','Actions'];
+  displayedColumns: string[] = ['documentId', 'title', 'description', 'Actions'];
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;
@@ -40,7 +40,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   animal: any;
   filepath: any;
-  filedata: any={};
+  filedata: any = {};
 
 
 
@@ -48,6 +48,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   constructor(private http: HttpClient,
     private assetmateService: AssetmateService,
     private router: Router,
+    private route: ActivatedRoute,
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
@@ -63,41 +64,44 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.categoryID = res.categoryId;
-        this.getAllDocuments(this.categoryID, this.pageNumber);
-      } else {
-        let categorydata = localStorage.getItem('Category-Object');
-        let category = JSON.parse(categorydata);
-        console.log('res from local storage Asset',category);
-        
-        this.getAllDocuments(category.categoryId, this.pageNumber);
-        this.categoryID=category.categoryId; 
-      }
-    })
 
-    //this.getAllDocuments(this.pageNumber);
+    this.categoryID = this.route.snapshot.params['categoryId'];
+
+    // this.dataService.currentData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.categoryID = res.categoryId;
+    //     this.getAllDocuments(this.categoryID, this.pageNumber);
+    //   } else {
+    //     let categorydata = localStorage.getItem('Category-Object');
+    //     let category = JSON.parse(categorydata);
+    //     console.log('res from local storage Asset',category);
+
+    //     this.getAllDocuments(category.categoryId, this.pageNumber);
+    //     this.categoryID=category.categoryId; 
+    //   }
+    // })
+
+    this.getAllDocuments(this.categoryID, this.pageNumber);
   }
 
-  ngOnDestroy(): void { } 
+  ngOnDestroy(): void { }
 
   /*********************************************************** Get All Assets *******************************************************************/
 
-  getAllDocuments(categoryId,pageNo: any) {
+  getAllDocuments(categoryId, pageNo: any) {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
-    this.assetmateService.getAllDocuments(categoryId,pageNo).subscribe(res => {
+    this.assetmateService.getAllDocuments(categoryId, pageNo).subscribe(res => {
       console.log(res);
-      
+
       this.dataSource = res.categoryDocument;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
     },
       error => {
-        this.toastr.error(error.error.message); 
+        this.toastr.error(error.error.message);
       }
     );
   }
@@ -108,7 +112,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getAllDocuments(this.categoryID,this.page);
+    this.getAllDocuments(this.categoryID, this.page);
   }
 
 
@@ -122,17 +126,17 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
     // this.router.navigate(['/asset/add-asset'])
   }
 
-  
+
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
   deleteDocument(documentId: number) {
     alert('are you sure?');
     this.assetmateService.deleteDocument(documentId).subscribe(res => {
       this.toastr.success(res.message);
-      this.getAllDocuments(this.categoryID,this.page);
+      this.getAllDocuments(this.categoryID, this.page);
     })
     error => {
-      this.toastr.error(error.message);  
+      this.toastr.error(error.message);
     }
   }
 
@@ -145,13 +149,13 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Download Particular Document  *******************************************************************/
 
 
-  downloadDocument(file){
+  downloadDocument(file) {
     console.log(file);
     // var FileSaver = require('file-saver');
     const Ext = file.split('/').pop().split('?')[0]; // splits url into file name
     var ext = Ext.substr(Ext.lastIndexOf('.') + 1); // gives extension of any file name
-   saveAs(file,Ext);
- 
+    saveAs(file, Ext);
+
   }
 
 
@@ -161,14 +165,14 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
   searchDocument(keyword) {
     if (keyword) {
-      this.assetmateService.searchDocument(keyword).subscribe(res => {  
+      this.assetmateService.searchDocument(keyword).subscribe(res => {
         this.dataSource = res.data;
       }, error => {
-        console.log(error); 
+        console.log(error);
       })
 
-    }else {
-      this.getAllDocuments(this.categoryID,this.pageNumber); 
+    } else {
+      this.getAllDocuments(this.categoryID, this.pageNumber);
     }
   }
 

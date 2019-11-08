@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetmateService } from '../../../service/assetmate.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -24,6 +24,7 @@ export class ViewChecklistComponent implements OnInit {
   constructor(
     private assetmateService: AssetmateService,
     private router: Router,
+    private route: ActivatedRoute,
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
@@ -31,17 +32,22 @@ export class ViewChecklistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.categoryID = res.categoryId;
-        this.getAllChecklists(this.categoryID, this.pageNumber);
-      } else {
-        let categorydata = localStorage.getItem('Category-Object');
-        let category = JSON.parse(categorydata);
-        this.getAllChecklists(category.categoryId, this.pageNumber);
-        this.categoryID= category.categoryId;
-      }
-    })
+
+    this.categoryID = this.route.snapshot.params['categoryId'];
+
+    // this.dataService.currentData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.categoryID = res.categoryId;
+    //     this.getAllChecklists(this.categoryID, this.pageNumber);
+    //   } else {
+    //     let categorydata = localStorage.getItem('Category-Object');
+    //     let category = JSON.parse(categorydata);
+    //     this.getAllChecklists(category.categoryId, this.pageNumber);
+    //     this.categoryID = category.categoryId;
+    //   }
+    // })
+
+    this.getAllChecklists(this.categoryID, this.pageNumber);
 
   }
 
@@ -65,12 +71,12 @@ export class ViewChecklistComponent implements OnInit {
   addChecklist() {
     this.showFirst = !this.showFirst;
     let selectedAsset = null;
-     this.dataService.saveData(selectedAsset);
+    this.dataService.saveData(selectedAsset);
   }
 
   editChecklist(checklistId: number) {
     this.showFirst = !this.showFirst;
-    this.dataService.saveData(checklistId); 
+    this.dataService.saveData(checklistId);
   }
 
   /*********************************************************** Delete Particular Checklist *******************************************************************/

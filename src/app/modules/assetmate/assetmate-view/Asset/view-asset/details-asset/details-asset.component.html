@@ -190,7 +190,7 @@
 
 
 <div class="table assets_view padding_container margin_auto flex_container">
-        <app-filter-category></app-filter-category>
+    <app-filter-category></app-filter-category>
     <!-- <mat-card class="filter width_15 mar-29">
         <h4 class="title_header mat-subheading-2 ">Categories</h4>
         <form class="example-form filter_search">
@@ -227,9 +227,10 @@
         <div class="innerpage_title">
             <div class="header_title flex_container">
                 <div>
-                    <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
-                                        <mat-icon>keyboard_backspace</mat-icon>
-                                      </button>
+                    <button mat-button (click)="backToList()"
+                        class="back btn_style round_squer bg_pink_navy text_white">
+                        <mat-icon>keyboard_backspace</mat-icon>
+                    </button>
                 </div>
                 <div class="width_75">
                     <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p>
@@ -237,19 +238,20 @@
                 <div class="dfe add_action" style="width:19.5%">
                     <ul>
                         <li>
-                            <button mat-icon-button aria-label="Example icon-button with a heart icon" >
+                            <button mat-icon-button aria-label="Example icon-button with a heart icon">
                                 <mat-icon>add</mat-icon>
-                              </button>
+                            </button>
                         </li>
                         <li>
                             <button mat-icon-button aria-label="Example icon-button with a heart icon">
-                                        <mat-icon>edit</mat-icon>
-                                      </button>
+                                <mat-icon>edit</mat-icon>
+                            </button>
                         </li>
                         <li>
-                            <button mat-icon-button aria-label="Example icon-button with a heart icon" (click)="listAsset()">
-                                        <mat-icon>format_list_bulleted</mat-icon>
-                                      </button>
+                            <button mat-icon-button aria-label="Example icon-button with a heart icon"
+                                (click)="listAsset()">
+                                <mat-icon>format_list_bulleted</mat-icon>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -316,7 +318,7 @@
                         <div class="flex_container form_column">
                             <div class="padding_container width_30 field">
                                 <div class="block">
-                                    <h4 class=" mat-h4 db ">Installation Date</h4> 
+                                    <h4 class=" mat-h4 db ">Installation Date</h4>
                                     <span>{{assetData.installationDate}}</span>
                                 </div>
                             </div>
@@ -346,11 +348,12 @@
                                     <span>{{assetData.warrenty}}</span>
                                 </div>
                             </div>
-                            <div class="padding_container width_100 field">
-                                <div class="block">
-                                    <h4 class=" mat-h4 db ">Description</h4>
-                                    <p>{{assetData.description}} </p>
-                                </div>
+
+                        </div>
+                        <div class="padding_container field ">
+                            <div class="block">
+                                <h4 class=" mat-h4 db ">Description</h4>
+                                <p>{{assetData.description}} </p>
                             </div>
                         </div>
                     </div>
@@ -380,8 +383,8 @@
                                         <mat-list-item role="listitem">
                                             <mat-grid-list cols="2" rowHeight="47px" gutterSize="15px">
                                                 <mat-grid-tile> <span class="round">
-                                                    .Pdf
-                                                  </span> File Name
+                                                        .Pdf
+                                                    </span> File Name
                                                 </mat-grid-tile>
                                                 <mat-grid-tile class="btns">
                                                     <button mat-button>View</button>
@@ -393,8 +396,8 @@
                                         <mat-list-item role="listitem">
                                             <mat-grid-list cols="2" rowHeight="47px" gutterSize="15px">
                                                 <mat-grid-tile> <span class="round">
-                                                    .Pdf
-                                                  </span> File Name
+                                                        .Pdf
+                                                    </span> File Name
                                                 </mat-grid-tile>
                                                 <mat-grid-tile class="btns">
                                                     <button mat-button>View</button>
@@ -406,8 +409,8 @@
                                         <mat-list-item role="listitem">
                                             <mat-grid-list cols="2" rowHeight="47px" gutterSize="15px">
                                                 <mat-grid-tile> <span class="round">
-                                                    .Pdf
-                                                  </span> File Name
+                                                        .Pdf
+                                                    </span> File Name
                                                 </mat-grid-tile>
                                                 <mat-grid-tile class="btns">
                                                     <button mat-button>View</button>
@@ -424,12 +427,12 @@
                 </mat-tab>
                 <mat-tab label="Document">
                     <div class="tab_content">
-                        <app-view-asset-document></app-view-asset-document> 
+                        <app-view-asset-document></app-view-asset-document>
                     </div>
                 </mat-tab>
                 <mat-tab label="History">
                     <div class="tab_content">
-                       <app-view-history></app-view-history>
+                        <app-view-history></app-view-history>
                     </div>
                 </mat-tab>
                 <mat-tab label="Assigned Users">

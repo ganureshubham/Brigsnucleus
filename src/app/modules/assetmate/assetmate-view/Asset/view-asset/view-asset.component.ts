@@ -72,19 +72,19 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     // this.dataService.currentData.subscribe(res => {
     //   if (res != null && res != "null" && res != "null") {
     //     this.categoryID = res.categoryId;
-        this.getAllAssets(this.categoryID, this.pageNumber);
-      // } else {
-      //   let categorydata = localStorage.getItem('Category-Object');
-      //   let category = JSON.parse(categorydata);
-      //   console.log('res from local storage Asset',category);
-        
-      //   this.getAllAssets(category.categoryId, this.pageNumber);
-      //   this.categoryID=category.categoryId; 
-      // }
+    this.getAllAssets(this.categoryID, this.pageNumber);
+    // } else {
+    //   let categorydata = localStorage.getItem('Category-Object');
+    //   let category = JSON.parse(categorydata);
+    //   console.log('res from local storage Asset',category);
+
+    //   this.getAllAssets(category.categoryId, this.pageNumber);
+    //   this.categoryID=category.categoryId; 
+    // }
     // })
   }
 
-  ngOnDestroy(): void { } 
+  ngOnDestroy(): void { }
 
   /*********************************************************** Get All Assets *******************************************************************/
 
@@ -121,14 +121,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   searchAsset(keyword) {
     if (keyword) {
-      this.assetmateService.searchAsset(this.categoryID, keyword).subscribe(res => { 
+      this.assetmateService.searchAsset(this.categoryID, keyword).subscribe(res => {
         this.dataSource = res.data;
       }, error => {
-        console.log(error); 
+        console.log(error);
       })
 
-    }else {
-      this.getAllAssets(this.categoryID, this.pageNumber); 
+    } else {
+      this.getAllAssets(this.categoryID, this.pageNumber);
     }
   }
 
@@ -144,7 +144,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Print Asset Code *******************************************************************/
   openDialog(assetCode): void {
     this.dataService.saveData(assetCode);
-    const dialogRef = this.dialog.open(AssetCodeComponent, { 
+    const dialogRef = this.dialog.open(AssetCodeComponent, {
     });
 
     // dialogRef.afterClosed().subscribe(result => {
@@ -171,7 +171,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       this.getAllAssets(this.categoryID, this.page);
     })
     error => {
-      this.toastr.error(error.message); 
+      this.toastr.error(error.message);
     }
   }
 
@@ -190,7 +190,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     // let AssetId=assetId;
     // localStorage.setItem('Category-Object',JSON.stringify(AssetId));
     this.dataService.saveData(assetId);
-    this.router.navigate(['/assetmate/assetmate-details/'+this.route.snapshot.params['categoryId']+'/asset-details/'+assetId]);
+    this.router.navigate(['/assetmate/assetmate-details/' + this.route.snapshot.params['categoryId'] + '/asset-details/' + assetId]);
   }
 
 

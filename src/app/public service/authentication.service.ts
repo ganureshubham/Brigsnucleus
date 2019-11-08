@@ -31,33 +31,33 @@ export class AuthenticationService {
   ) { }
 
   login(body) {
-    return this._http.post<any>(this.loginURL + `authorization/login/`, body);
+    return this._http.post<LoginResponse>(this.loginURL + `authorization/login/`, body);
   }
 
   /***********************************************Send OTP By Text*************************************************************************/
   sendOtpText(value: any) {
-    return this._http.post(this.loginURL + `authorization/sendOtpViaText/`, value);
+    return this._http.post<any>(this.loginURL + `authorization/sendOtpViaText/`, value);
   }
 
   /***********************************************Send OTP By Mail*************************************************************************/
 
   sendOtpMail(value: any) {
-    return this._http.post(this.loginURL + `authorization/sendOtpViaMail/`, value);
+    return this._http.post<any>(this.loginURL + `authorization/sendOtpViaMail/`, value);
   }
   /***********************************************Verify OTP By Text*************************************************************************/
 
   verifyOTPText(value: any) {
-    return this._http.post(this.loginURL + `authorization/verifyOtp/`, value);
+    return this._http.post<any>(this.loginURL + `authorization/verifyOtp/`, value);
   }
 
   /***********************************************Verify OTP By Mail*************************************************************************/
   verifyOTPMail(value: any) {
-    return this._http.post(this.loginURL + `authorization/verifyOtpEmail/`, value);
+    return this._http.post<any>(this.loginURL + `authorization/verifyOtpEmail/`, value);
   }
 
 
   changePass(value: any) {
-    return this._http.put(this.loginURL + `authorization/saveNewPassword/`, value);
+    return this._http.put<any>(this.loginURL + `authorization/saveNewPassword/`, value);
   }
 
   logout() {
