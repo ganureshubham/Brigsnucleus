@@ -29,10 +29,10 @@ export class AssetmateViewComponent implements OnInit {
   }
 
   getRootCategoryList() {
-    this.assetmateService.getAllRootCateg().subscribe(res => { 
+    this.assetmateService.getAllRootCateg().subscribe(res => {
       console.log(res);
-      
-      this.category = res.rootCategory;  
+
+      this.category = res.rootCategory;
     })
   }
 
@@ -40,17 +40,17 @@ export class AssetmateViewComponent implements OnInit {
     // let categoryObj=categ;
     // localStorage.setItem('Category-Object',JSON.stringify(categoryObj));
     // this.dataService.changeData(categ);
-    this.router.navigate(['/assetmate/assetmate-details/'+categoryId]);
+    this.router.navigate(['/assetmate/assetmate-details/' + categoryId]);
   }
 
 
   /*********************************************************** Search Category *******************************************************************/
 
-  searchCategory(keyword) { 
+  searchCategory(keyword) {
     if (keyword) {
-      this.assetmateService.searchCategory(keyword).subscribe(res => { 
+      this.assetmateService.searchCategory(keyword).subscribe(res => {
         if (res && res.data) {
-          this.category = res.data; 
+          this.category = res.data;
         }
       },
         error => {
@@ -58,7 +58,7 @@ export class AssetmateViewComponent implements OnInit {
           this.toastr.error(error.error.message);
         })
     } else {
-      this.getRootCategoryList(); 
+      this.getRootCategoryList();
     }
   }
 

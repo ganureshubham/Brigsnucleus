@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../public service/authentication.service';
 import { Router } from '@angular/router';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerService } from '../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   email_address: string = null;
   mobileNumber: string = null;
   email: string = null;
   password: string = null;
-  // newpassword: string = null;
-  // confirmpassword: string = null;
   sendOTPFlag: boolean;
   forgPass: boolean = false;
   newPass: boolean;
@@ -24,31 +24,54 @@ export class LoginComponent implements OnInit {
   confirmPassword: any;
   flag: number = 1;
   otp: any;
+
   public show: boolean = false;
   public hide: boolean = true;
 
-  constructor(public authService: AuthenticationService,
+  constructor(
+    private spinnerService: SpinnerService,
+    public authService: AuthenticationService,
+    private snackBar: MatSnackBar,
     public router: Router,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService
   ) {
-    if (localStorage.getItem('currentUser')) {
-      this.router.navigate(['/dashboard'])
-    }
   }
 
   ngOnInit() {
-    this.authService.loginLoader = true;
     this.forgPass = false;
   }
 
   login() {
-    this.authService.loginLoader = false;
-    let body = new URLSearchParams();
-    body.set("emailId", this.email_address);
-    body.set("password", this.password);
-    body.set("grant_type", "implicit");
-    this.authService.login(body);
+
+    let body = {
+      "emailId": this.email_address,
+      "password": this.password
+    }
+
+    this.spinnerService.setSpinnerVisibility(true);
+
+    this.authService.login(body).subscribe(
+      res => {
+
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(res.message)
+
+        if (res.auth) {
+          localStorage.setItem('currentUser', JSON.stringify(res));
+          this.router.navigate(["/dashboard"]);
+        }
+
+      },
+      error => {
+        this.showSnackBar("Something went wrong..!!")
+      }
+    );
+
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 
@@ -57,9 +80,7 @@ export class LoginComponent implements OnInit {
     this.hide = !this.show;
     console.log(this.show, 'mobile');
     console.log(this.hide, 'email');
-
   }
-
 
   forgotPassword() {
     this.spinner.show();
@@ -85,252 +106,252 @@ export class LoginComponent implements OnInit {
   /******************************************************* Resend OTP *****************************************************/
 
 
-  sendOtp(value: any, resend: number) {
+  // sendOtp(value: any, resend: number) {
 
 
-    this.spinner.show();
-    setTimeout(() => {
-      /** spinner ends after 1 seconds */
-      this.spinner.hide();
-    }, 1000);
-    if (this.show == true && this.hide == false) {
-      console.log(value);
-      let MOBILE = { mobileNumber: this.mobileNumber }
+  //   this.spinner.show();
+  //   setTimeout(() => {
+  //     /** spinner ends after 1 seconds */
+  //     this.spinner.hide();
+  //   }, 1000);
+  //   if (this.show == true && this.hide == false) {
+  //     console.log(value);
+  //     let MOBILE = { mobileNumber: this.mobileNumber }
 
-      this.sendOtpText(MOBILE, resend);
-    } else {
-      console.log("else send otp", this.email);
+  //     this.sendOtpText(MOBILE, resend);
+  //   } else {
+  //     console.log("else send otp", this.email);
 
-      let EMAIL = { email: this.email }
-      this.sendOtpMail(EMAIL);
+  //     let EMAIL = { email: this.email }
+  //     this.sendOtpMail(EMAIL);
 
-    }
-  }
+  //   }
+  // }
   /******************************************************* Send OTP by Text*****************************************************/
 
-  sendOtpText(value: any, resend: number) {
-    console.log(value);
+  // sendOtpText(value: any, resend: number) {
+  //   console.log(value);
 
-    this.mobileNumber = value.mobileNumber;
-    value.resendFlag = resend;
-
-
-    this.authService.sendOtpText(value).subscribe(res => {
-      console.log(res.json().status);
-      if (res.json().status) {
-        this.spinner.show();
-        setTimeout(() => {
-          this.toastr.success(res.json().message);
-          this.forgPass = true;
-          this.sendOTPFlag = true;
-          /** spinner ends after 1 seconds */
-          this.spinner.hide();
-        }, 1000);
+  //   this.mobileNumber = value.mobileNumber;
+  //   value.resendFlag = resend;
 
 
-      } else {
-        this.spinner.show();
-        setTimeout(() => {
-          this.toastr.show(res.json().message);
-          this.spinner.hide();
-        }, 1000);
+  //   this.authService.sendOtpText(value).subscribe(res => {
+  //     console.log(res.json().status);
+  //     if (res.json().status) {
+  //       this.spinner.show();
+  //       setTimeout(() => {
+  //         this.toastr.success(res.json().message);
+  //         this.forgPass = true;
+  //         this.sendOTPFlag = true;
+  //         /** spinner ends after 1 seconds */
+  //         this.spinner.hide();
+  //       }, 1000);
 
 
-
-
-      }
-
-
-      // this.newPass = true;
-    },
-      error => {
-        console.log(error);
-        this.toastr.error(error.json().message);
-      });
-
-  }
-
-  /******************************************************* Send OTP by E-Mail*****************************************************/
-
-  sendOtpMail(value: any) {
-    // value : value must be object {email: "example@gmail.com"}
-    console.log("inside send otp mail func", value);
-    this.email = value.email;  //   assigning input value to global varialble for future use
-    this.authService.sendOtpMail(value).subscribe(res => {
-      console.log(res.json());
-      if (res.json().status) {
-        this.spinner.show();
-        setTimeout(() => {
-          this.toastr.success(res.json().message);
-          this.forgPass = true;
-          this.sendOTPFlag = true;
-          /** spinner ends after 1 seconds */
-          this.spinner.hide();
-        }, 1000);
-
-
-
-      } else {
-        this.spinner.show();
-        setTimeout(() => {
-          this.toastr.show(res.json().message);
-          this.spinner.hide();
-        }, 1000);
-
-
-      }
-
-      // this.newPass = true;
-
-
-    },
-      error => {
-        console.log(error);
-
-      })
-
-  }
-
-  backToForgot() {
-    this.forgPass = false;
-    this.newPass = false;
-    this.sendOTPFlag = false;
-  }
-
-  verifyOTP(value: any) {
-    console.log(value);
-
-    if (this.show == true && this.hide == false) {
-      value.mobileNumber = this.mobileNumber;
-      this.otp = value.otp;
-      this.authService.verifyOTPText(value).subscribe(res => {
-        console.log(res.json());
-        if (res.json().status) {
-          this.spinner.show();
-          setTimeout(() => {
-            this.toastr.success(res.json().message);
-            this.forgPass = true;
-            this.newPass = true;
-            this.sendOTPFlag = false;
-            this.spinner.hide();
-          }, 1000);
-
-
-        } else {
-          this.spinner.show();
-          setTimeout(() => {
-            this.toastr.show(res.json().message);
-            this.spinner.hide();
-          }, 1000);
-        }
-      },
-        error => {
-          console.log(error.json().message);
-          this.toastr.error(error.json().message);
-        })
-
-    }
-    else {
-      value.email = this.email;
-      this.otp = value.otp;
-
-      this.authService.verifyOTPMail(value).subscribe(res => {
-        console.log(res);
-        if (res.json().status) {
-          this.spinner.show();
-          setTimeout(() => {
-            this.toastr.success(res.json().message);
-            this.forgPass = true;
-            this.newPass = true;
-            this.sendOTPFlag = false;
-            this.spinner.hide();
-          }, 1000);
-
-
-        } else {
-          this.spinner.show();
-          setTimeout(() => {
-            this.toastr.show(res.json().message);
-            this.spinner.hide();
-          }, 1000);
-        }
+  //     } else {
+  //       this.spinner.show();
+  //       setTimeout(() => {
+  //         this.toastr.show(res.json().message);
+  //         this.spinner.hide();
+  //       }, 1000);
 
 
 
 
-      },
-        error => {
-          console.log(error.json().message);
-          this.toastr.error(error.json().message);
-
-        })
+  //     }
 
 
-    }
-    // value.mobileNumber = this.mobileNumber;
-    // this.otp = value.otp;
+  //     // this.newPass = true;
+  //   },
+  //     error => {
+  //       console.log(error);
+  //       this.toastr.error(error.json().message);
+  //     });
 
-    // this.authService.verifyOTP(value).subscribe(res => {
-    //   console.log(res);
-    //   // this.toastr.success(res.message);
+  // }
 
+  // /******************************************************* Send OTP by E-Mail*****************************************************/
 
-    //   this.forgPass = true;
-    //   this.newPass = true;
-    //   this.sendOTPFlag = false;
-    // },
-    //   error => {
-    //     console.log(error.json().message);
-    //     this.toastr.error(error.errors.msg);
+  // sendOtpMail(value: any) {
+  //   // value : value must be object {email: "example@gmail.com"}
+  //   console.log("inside send otp mail func", value);
+  //   this.email = value.email;  //   assigning input value to global varialble for future use
+  //   this.authService.sendOtpMail(value).subscribe(res => {
 
-    //   })
-
-  }
-
-  changePass(value: any) {
-    if (this.show == true && this.hide == false) {
-      value.inputType = "mobile";
-      value.inputValue = this.mobileNumber;
-
-    }
-    else {
-      value.inputType = "email";
-      value.inputValue = this.email;
-
-    }
-    value.otp = this.otp;
-    value.newPassword = this.newPassword;
-    value.confirmPassword = this.confirmPassword;
-    this.spinner.show();
-
-    setTimeout(() => {
-      /** spinner ends after 1 seconds */
-      this.spinner.hide();
-    }, 1000);
-    this.authService.changePass(value).subscribe(res => {
-      console.log(res);
-      if (res.json().status) {
-        this.toastr.success(res.json().message);
-        this.forgPass = false;
-        this.sendOTPFlag = false;
-        this.newPass = false;
-
-
-      } else {
-        this.toastr.show(res.json().message);
-
-      }
-      // this.toastr.success(res.message);
+  //     if (res.json().status) {
+  //       this.spinner.show();
+  //       setTimeout(() => {
+  //         this.toastr.success(res.json().message);
+  //         this.forgPass = true;
+  //         this.sendOTPFlag = true;
+  //         /** spinner ends after 1 seconds */
+  //         this.spinner.hide();
+  //       }, 1000);
 
 
 
-    },
-      error => {
-        console.log(error);
-        this.toastr.error(error.json().message);
+  //     } else {
+  //       this.spinner.show();
+  //       setTimeout(() => {
+  //         this.toastr.show(res.json().message);
+  //         this.spinner.hide();
+  //       }, 1000);
 
-      })
 
-  }
+  //     }
+
+  //     // this.newPass = true;
+
+
+  //   },
+  //     error => {
+  //       console.log(error);
+
+  //     })
+
+  // }
+
+  // backToForgot() {
+  //   this.forgPass = false;
+  //   this.newPass = false;
+  //   this.sendOTPFlag = false;
+  // }
+
+  // verifyOTP(value: any) {
+  //   console.log(value);
+
+  //   if (this.show == true && this.hide == false) {
+  //     value.mobileNumber = this.mobileNumber;
+  //     this.otp = value.otp;
+  //     this.authService.verifyOTPText(value).subscribe(res => {
+  //       console.log(res.json());
+  //       if (res.json().status) {
+  //         this.spinner.show();
+  //         setTimeout(() => {
+  //           this.toastr.success(res.json().message);
+  //           this.forgPass = true;
+  //           this.newPass = true;
+  //           this.sendOTPFlag = false;
+  //           this.spinner.hide();
+  //         }, 1000);
+
+
+  //       } else {
+  //         this.spinner.show();
+  //         setTimeout(() => {
+  //           this.toastr.show(res.json().message);
+  //           this.spinner.hide();
+  //         }, 1000);
+  //       }
+  //     },
+  //       error => {
+  //         console.log(error.json().message);
+  //         this.toastr.error(error.json().message);
+  //       })
+
+  //   }
+  //   else {
+  //     value.email = this.email;
+  //     this.otp = value.otp;
+
+  //     this.authService.verifyOTPMail(value).subscribe(res => {
+  //       console.log(res);
+  //       if (res.json().status) {
+  //         this.spinner.show();
+  //         setTimeout(() => {
+  //           this.toastr.success(res.json().message);
+  //           this.forgPass = true;
+  //           this.newPass = true;
+  //           this.sendOTPFlag = false;
+  //           this.spinner.hide();
+  //         }, 1000);
+
+
+  //       } else {
+  //         this.spinner.show();
+  //         setTimeout(() => {
+  //           this.toastr.show(res.json().message);
+  //           this.spinner.hide();
+  //         }, 1000);
+  //       }
+
+
+
+
+  //     },
+  //       error => {
+  //         console.log(error.json().message);
+  //         this.toastr.error(error.json().message);
+
+  //       })
+
+
+  //   }
+  //   // value.mobileNumber = this.mobileNumber;
+  //   // this.otp = value.otp;
+
+  //   // this.authService.verifyOTP(value).subscribe(res => {
+  //   //   console.log(res);
+  //   //   // this.toastr.success(res.message);
+
+
+  //   //   this.forgPass = true;
+  //   //   this.newPass = true;
+  //   //   this.sendOTPFlag = false;
+  //   // },
+  //   //   error => {
+  //   //     console.log(error.json().message);
+  //   //     this.toastr.error(error.errors.msg);
+
+  //   //   })
+
+  // }
+
+  // changePass(value: any) {
+  //   if (this.show == true && this.hide == false) {
+  //     value.inputType = "mobile";
+  //     value.inputValue = this.mobileNumber;
+
+  //   }
+  //   else {
+  //     value.inputType = "email";
+  //     value.inputValue = this.email;
+
+  //   }
+  //   value.otp = this.otp;
+  //   value.newPassword = this.newPassword;
+  //   value.confirmPassword = this.confirmPassword;
+  //   this.spinner.show();
+
+  //   setTimeout(() => {
+  //     /** spinner ends after 1 seconds */
+  //     this.spinner.hide();
+  //   }, 1000);
+  //   this.authService.changePass(value).subscribe(res => {
+  //     console.log(res);
+  //     if (res.json().status) {
+  //       this.toastr.success(res.json().message);
+  //       this.forgPass = false;
+  //       this.sendOTPFlag = false;
+  //       this.newPass = false;
+
+
+  //     } else {
+  //       this.toastr.show(res.json().message);
+
+  //     }
+  //     // this.toastr.success(res.message);
+
+
+
+  //   },
+  //     error => {
+  //       console.log(error);
+  //       this.toastr.error(error.json().message);
+
+  //     })
+
+  // }
 
 }  

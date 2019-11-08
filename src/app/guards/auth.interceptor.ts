@@ -24,7 +24,7 @@ import { AuthenticationService } from '../public service/authentication.service'
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private authenticationService: AuthenticationService ) { }
+    constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -34,17 +34,17 @@ export class AuthInterceptor implements HttpInterceptor {
                 setHeaders: {
                     Authorization: JSON.parse(localStorage.getItem('currentUser')).data.token
                 }
-            });  
+            });
         }
 
-        return next.handle(request).pipe(tap((   
+        return next.handle(request).pipe(tap((
 
         ) => { },
             err => {
                 if (err.status === 401) {
                     this.authenticationService.logout();
-                    this.router.navigateByUrl('/login'); 
-                   
+                    this.router.navigateByUrl('/login');
+
                 }
             }
         ));

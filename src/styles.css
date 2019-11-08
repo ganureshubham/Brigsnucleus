@@ -63,9 +63,8 @@ body {
   text-align: right;
 }
 
-.adddept{
-
-    margin-left: 72% ;
+.adddept {
+  margin-left: 72%;
 }
 
 .bg_white,
@@ -148,13 +147,12 @@ body {
 /********************************************** Login Page ends**************************************************************/
 
 /********************************************** Start my css**************************************************************/
-.mat-card-content{
+.mat-card-content {
   font-size: initial !important;
 }
 .flex_container {
   display: flex;
   flex-direction: row;
- 
 }
 
 .fex_column {
@@ -333,7 +331,6 @@ body {
   font-weight: 400;
   font-size: 14px;
 }
-
 
 .asset_view_detail .form_column:last-child .field:last-child {
   padding-top: 29px;
@@ -521,7 +518,7 @@ body {
   float: left;
   width: 100%;
   margin: 0px 10px;
-   display: block; 
+  display: block;
 }
 
 .logo {
@@ -1004,10 +1001,10 @@ body {
 .asset_view_detail h4,
 .done_question h4,
 .admin_profile_page .form_column .field h4 {
-   color: #B9B9B9;
-   font-weight: 400;
-   font-size: 14px;
-   margin-bottom: 8px;
+  color: #b9b9b9;
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 /********************************************Checklist****************************************************************/
 
@@ -1037,20 +1034,30 @@ body {
 }
 
 .add_question .mat-form-field {
-  width: 30%
+  width: 30%;
 }
 
 .remove_options .mat-form-field-infix {
   display: flex;
 }
 
-.mat-radio-button~.mat-radio-button,
-.mat-checkbox~.mat-checkbox {
+.mat-radio-button ~ .mat-radio-button,
+.mat-checkbox ~ .mat-checkbox {
   margin-left: 16px;
 }
 
 .done_question .mat-list-base .mat-list-item {
   height: 61px;
+}
+
+.mat-snack-bar-container {
+  text-align: center;
+  background-color: #7e2097;
+  color: #fff;
+}
+
+.mat-simple-snackbar {
+  display: inline-block !important;
 }
 
 /********************************************** end style**************************************************************/

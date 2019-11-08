@@ -1,19 +1,21 @@
 import { Routes } from '@angular/router';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { AdminComponent } from './layouts/admin/admin.component';
-import { AuthGuard } from './public service/auth-guard.service';
+// import { AuthGuard } from './public service/auth-guard.service';
+import { AuthGuard } from './guards/auth.guard'
+import { LoginComponent } from './login/login.component';
 
 
 export const AppRoutes: Routes = [
   {
     path: "",
-    redirectTo: "login",
-    pathMatch: "full"
-  },
-  {
-    path: "",
-    component: AdminComponent, 
+    component: AdminComponent,
     children: [
+      {
+        path: "",
+        redirectTo: "dashboard",
+        pathMatch: "full"
+      },
       {
         path: "dashboard",
         loadChildren: "./dashboard/dashboard.module#DashboardModule",
@@ -22,7 +24,7 @@ export const AppRoutes: Routes = [
       {
         path: "asset",
         loadChildren: "./modules/asset/asset.module#AssetModule",
-        canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
       },
       {
         path: "asset-category",
@@ -32,7 +34,7 @@ export const AppRoutes: Routes = [
       {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
-        canActivate: [AuthGuard] 
+        canActivate: [AuthGuard]
       },
       {
         path: "supplier",
@@ -53,31 +55,26 @@ export const AppRoutes: Routes = [
         path: "department",
         loadChildren: "./modules/department/department.module#DepartmentModule",
         canActivate: [AuthGuard]
-
       },
       {
         path: "alert",
         loadChildren: "./modules/alert/alert.module#AlertModule",
         canActivate: [AuthGuard]
-
       },
       {
         path: "assetmate",
         loadChildren: "./modules/assetmate/assetmate.module#AssetmateModule",
         canActivate: [AuthGuard]
-
       },
       {
         path: "checklist",
         loadChildren: "./modules/checklist/checklist.module#ChecklistModule",
         canActivate: [AuthGuard]
-
       },
       {
         path: "profile",
         loadChildren: "./modules/profile/profile.module#ProfileModule",
         canActivate: [AuthGuard]
-
       },
       // {
       //   path: "category-Document",
@@ -92,15 +89,19 @@ export const AppRoutes: Routes = [
       //    },
     ]
   },
+  // {
+  //   path: "",
+  //   component: AuthComponent,
+  //   children: [
+  //     {
+  //       path: "",
+  //       loadChildren: "./login/login.module#LoginModule"
+  //     }
+  //   ]
+  // }
   {
-    path: "",
-    component: AuthComponent,
-    children: [
-      {
-        path: "",
-        loadChildren: "./login/login.module#LoginModule"
-      }
-    ]
+    path: "login",
+    component: LoginComponent,
   }
 ];
 

@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { LoginResponse } from '../model/login';
+
+import { HttpClient } from '@angular/common/http';
+import { LoginComponent } from '../login/login.component';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,41 +22,16 @@ export class AuthenticationService {
   public loginLoader: boolean = false;
   redirectUrl: string;
 
-  constructor(private _http: Http, private router: Router, private toastr: ToastrService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private _http: HttpClient,
+    // private _http: Http,
+    private router: Router,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) { }
 
-  login(body: URLSearchParams) { 
-    let headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let options = new RequestOptions({ headers: headers });
-    this._http.post(this.loginURL + `authorization/login/`, body.toString(), options).subscribe(
-      (response: Response) => {
-        if (response) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(response.json()));
-          this.isLoggedIn = response.status;
-          this.spinner.show();
-          setTimeout(() => {
-            this.router.navigate(["/dashboard"]);
-            this.toastr.success(response.json().message);
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-          }, 5000);
-
-        }
-        else {
-          this.isLoggedIn = response.status;
-        }
-      },
-      error => {
-        this.spinner.show();
-        setTimeout(() => {
-          this.router.navigate(["/dashboard"]);
-          this.toastr.error(error.json().message);
-          this.spinner.hide();
-        }, 5000);
-        // console.log(error.json().message);
-       
-      });
+  login(body) {
+    return this._http.post<any>(this.loginURL + `authorization/login/`, body);
   }
 
   /***********************************************Send OTP By Text*************************************************************************/
@@ -82,7 +62,9 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('currentUser');
+
+    localStorage.clear();
     this.router.navigate(["/login"]);
   }
 }

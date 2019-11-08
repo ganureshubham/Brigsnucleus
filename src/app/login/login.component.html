@@ -20,7 +20,7 @@
             <input matInput #emailid="ngModel" placeholder="Email Address"
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email_address" id="email_address"
               [(ngModel)]="email_address" required email>
-            <mat-error *ngIf="emailid.errors?.pattern"> 
+            <mat-error *ngIf="emailid.errors?.pattern">
               Please type your e-mail address in the format <b> name@example.com </b>!
             </mat-error>
           </mat-form-field>
@@ -93,19 +93,19 @@
                 Back To Login
               </a>
               <button *ngIf="forgPass && !newPass && show" mat-button i18n type="submit" fxFlex="20%"
-                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="sendOtpText(data.value,0)"
-                class="login_btn">
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid"
+                (click)="sendOtpText(data.value,0)" class="login_btn">
                 Send OTP
               </button>
               <button *ngIf="forgPass && !newPass && hide" mat-button i18n type="submit" fxFlex="20%"
-                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="sendOtpMail(data.value)"
-                class="login_btn">
+                fxFlex.lt-md="none" style="width : 8.5em" color="primary" [disabled]="!data.valid"
+                (click)="sendOtpMail(data.value)" class="login_btn">
                 SEND OTP
               </button>
             </div>
           </div>
 
-        </mat-card-content> 
+        </mat-card-content>
       </mat-card>
     </div>
 
@@ -132,7 +132,7 @@
 
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
-                <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
+              <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
                 fxFlex="50%" fxFlex.lt-md="none" (click)="sendOtp(data.value,1)">
                 Didn't get the code? RESEND CODE
               </a>
@@ -140,8 +140,9 @@
                 fxFlex="50%" fxFlex.lt-md="none" (click)="sendOtp(data.value,1)">
                 Didn't get the code? RESEND CODE
               </button> -->
-              <button  *ngIf="forgPass && sendOTPFlag" mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none"
-                style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="verifyOTP(data.value)" class="login_btn">
+              <button *ngIf="forgPass && sendOTPFlag" mat-button i18n type="submit" fxFlex="20%" fxFlex.lt-md="none"
+                style="width : 8.5em" color="primary" [disabled]="!data.valid" (click)="verifyOTP(data.value)"
+                class="login_btn">
                 VERIFY
               </button>
             </div>

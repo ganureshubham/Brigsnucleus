@@ -5,6 +5,7 @@ import { AppRoutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
+import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -50,9 +51,9 @@ import {
   MatTooltipModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatTreeModule,
+  MatTreeModule
 } from '@angular/material';
-import { config } from 'rxjs';
+import { config, from } from 'rxjs';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
@@ -91,8 +92,6 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    
-    
   ],
   declarations: [ConfirmDialogComponent],
   imports: []
@@ -104,7 +103,7 @@ export class MaterialModule { }
     AppComponent,
     AdminComponent,
     AuthComponent,
-  
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -125,13 +124,16 @@ export class MaterialModule { }
     }),
   ],
   exports: [MaterialModule],
-  providers: [AuthGuard,AuthenticationService, ConfigurationService,
+  providers: [
+    AuthenticationService,
+    ConfigurationService,
     { provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: config },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },],
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

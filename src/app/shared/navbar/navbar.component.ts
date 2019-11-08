@@ -8,19 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  displayName: any;
-  displayOrg: any;
+  displayName: String = '';
+  displayOrg: String = '';
 
 
 
 
-  constructor(private authService: AuthenticationService,private router:Router) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     this.users();
   }
 
-  goToProfile(){
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
 
@@ -31,9 +31,10 @@ export class NavbarComponent implements OnInit {
   users(): any {
     let user = localStorage.getItem('currentUser');
     var name = JSON.parse(user);
-    this.displayName = name.data.firstName + ' ' + name.data.lastName;
-    this.displayOrg = name.data.organizationName;
-
+    if (name) {
+      this.displayName = name.data.firstName + ' ' + name.data.lastName;
+      this.displayOrg = name.data.organizationName;
+    }
   }
 
 }
