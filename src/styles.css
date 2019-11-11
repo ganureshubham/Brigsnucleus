@@ -10,6 +10,14 @@ body {
   background-attachment: fixed;
 }
 
+*{
+  font-family: 'Barlow';
+}
+
+.mat-subheading-2{
+  font-family: 'Barlow';
+}
+
 .toggle {
   margin-left: 12px;
   margin-right: 5px;
