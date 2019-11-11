@@ -9,6 +9,8 @@ import { AssetmateService } from '../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { AssetCodeComponent } from '../asset-code/asset-code.component';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
+import { SpinnerService } from '../../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-view-asset',
@@ -41,9 +43,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   animal: any;
 
-
-
-
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private assetmateService: AssetmateService,
@@ -51,7 +50,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) {
 
   }
@@ -66,22 +67,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.categoryID = this.route.snapshot.params['categoryId'];
-
-    // this.dataService.currentData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     this.categoryID = res.categoryId;
     this.getAllAssets(this.categoryID, this.pageNumber);
-    // } else {
-    //   let categorydata = localStorage.getItem('Category-Object');
-    //   let category = JSON.parse(categorydata);
-    //   console.log('res from local storage Asset',category);
-
-    //   this.getAllAssets(category.categoryId, this.pageNumber);
-    //   this.categoryID=category.categoryId; 
-    // }
-    // })
   }
 
   ngOnDestroy(): void { }
@@ -89,20 +76,30 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllAssets(categoryId: number, pageNo: any) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllAssets(categoryId, pageNo).subscribe(res => {
-      this.dataSource = res.asset;
-      this.parentdata = res.asset;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
+
+      this.spinnerService.setSpinnerVisibility(false);
+
+      if (res.asset) {
+        this.dataSource = res.asset;
+        this.parentdata = res.asset;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
+
     },
       error => {
-        this.toastr.error(error.error.message);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 

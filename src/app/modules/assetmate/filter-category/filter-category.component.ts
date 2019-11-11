@@ -3,20 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material';
 
 // import { Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // import { FlatTreeControl } from '@angular/cdk/tree';
 import { AssetmateService } from '../service/assetmate.service';
 
-import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
+import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
 // import {Component, Injectable} from '@angular/core';
-import {BehaviorSubject, merge, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Flat node with expandable and level information */
 export class DynamicFlatNode {
   constructor(public item: string, public level = 1, public expandable = false,
-              public isLoading = false) {}
+    public isLoading = false) { }
 }
 
 /**
@@ -66,7 +66,7 @@ export class DynamicDataSource {
   }
 
   constructor(private treeControl: FlatTreeControl<DynamicFlatNode>,
-              private database: DynamicDatabase) {}
+    private database: DynamicDatabase) { }
 
   connect(collectionViewer: CollectionViewer): Observable<DynamicFlatNode[]> {
     this.treeControl.expansionModel.onChange.subscribe(change => {
@@ -109,7 +109,7 @@ export class DynamicDataSource {
       } else {
         let count = 0;
         for (let i = index + 1; i < this.data.length
-          && this.data[i].level > node.level; i++, count++) {}
+          && this.data[i].level > node.level; i++ , count++) { }
         this.data.splice(index + 1, count);
       }
 
@@ -126,20 +126,25 @@ export class DynamicDataSource {
   selector: 'app-filter-category',
   templateUrl: './filter-category.component.html',
   styleUrls: ['./filter-category.component.css'],
-  providers: [DynamicDatabase] 
+  providers: [DynamicDatabase]
 })
-export class FilterCategoryComponent implements OnInit {      
- 
+export class FilterCategoryComponent implements OnInit {
+
+  categoryID;
+
   constructor(
-    private assetmateService : AssetmateService,
-    database: DynamicDatabase
+    private assetmateService: AssetmateService,
+    database: DynamicDatabase,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
     this.dataSource.data = database.initialData();
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.categoryID = this.route.snapshot.params['categoryId'];
     this.loadAllCategories();
   }
 
@@ -153,17 +158,18 @@ export class FilterCategoryComponent implements OnInit {
 
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
 
-  loadAllCategories(){
-    this.assetmateService.filterCategoryList(0).subscribe(res => { 
-      console.log(res);
-      // if (res && res.data) {
-      //   this.category = res.data; 
-      // }
-    },
-      error => {
-        console.log(error.error.message);
-        // this.toastr.error(error.error.message);
-      })
+  loadAllCategories() {
+
+    // this.assetmateService.filterCategoryList(this.categoryID).subscribe(res => {
+    //   console.log(res);
+    //   // if (res && res.data) {
+    //   //   this.category = res.data; 
+    //   // }
+    // },
+    //   error => {
+    //     console.log(error.error.message);
+    //   })
+
   }
 
 }

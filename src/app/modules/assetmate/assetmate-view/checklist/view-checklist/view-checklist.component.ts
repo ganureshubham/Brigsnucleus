@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerService } from '../../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-view-checklist',
@@ -28,44 +30,40 @@ export class ViewChecklistComponent implements OnInit {
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
-
     this.categoryID = this.route.snapshot.params['categoryId'];
-
-    // this.dataService.currentData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     this.categoryID = res.categoryId;
-    //     this.getAllChecklists(this.categoryID, this.pageNumber);
-    //   } else {
-    //     let categorydata = localStorage.getItem('Category-Object');
-    //     let category = JSON.parse(categorydata);
-    //     this.getAllChecklists(category.categoryId, this.pageNumber);
-    //     this.categoryID = category.categoryId;
-    //   }
-    // })
-
     this.getAllChecklists(this.categoryID, this.pageNumber);
-
   }
 
   /*********************************************************** Get All Checklists *******************************************************************/
 
   getAllChecklists(categoryId: number, pageNo: any) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+
+    this.spinnerService.setSpinnerVisibility(true);
+
     this.assetmateService.getAllChecklists(categoryId, pageNo).subscribe(res => {
-      this.checklistData = res.ChecklistData;
+
+      this.spinnerService.setSpinnerVisibility(false);
+
+      if (res.ChecklistData) {
+        this.checklistData = res.ChecklistData;
+      } else {
+        this.showSnackBar(res.message)
+      }
 
     },
       error => {
-        this.toastr.error(error.error.message);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   addChecklist() {

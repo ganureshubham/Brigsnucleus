@@ -8,6 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { saveAs } from 'file-saver';
+import { SpinnerService } from '../../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-view-category-document',
@@ -29,7 +31,6 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   parentdata: any;
   result: string = '';
 
-
   displayedColumns: string[] = ['documentId', 'title', 'description', 'Actions'];
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
 
@@ -42,9 +43,6 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   filepath: any;
   filedata: any = {};
 
-
-
-
   constructor(private http: HttpClient,
     private assetmateService: AssetmateService,
     private router: Router,
@@ -52,7 +50,9 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) {
 
   }
@@ -64,23 +64,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.categoryID = this.route.snapshot.params['categoryId'];
-
-    // this.dataService.currentData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     this.categoryID = res.categoryId;
-    //     this.getAllDocuments(this.categoryID, this.pageNumber);
-    //   } else {
-    //     let categorydata = localStorage.getItem('Category-Object');
-    //     let category = JSON.parse(categorydata);
-    //     console.log('res from local storage Asset',category);
-
-    //     this.getAllDocuments(category.categoryId, this.pageNumber);
-    //     this.categoryID=category.categoryId; 
-    //   }
-    // })
-
     this.getAllDocuments(this.categoryID, this.pageNumber);
   }
 
@@ -89,21 +73,30 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllDocuments(categoryId, pageNo: any) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-    this.assetmateService.getAllDocuments(categoryId, pageNo).subscribe(res => {
-      console.log(res);
 
-      this.dataSource = res.categoryDocument;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
+    this.spinnerService.setSpinnerVisibility(true);
+
+    this.assetmateService.getAllDocuments(categoryId, pageNo).subscribe(res => {
+
+      this.spinnerService.setSpinnerVisibility(false);
+
+      if (res.categoryDocument) {
+        this.dataSource = res.categoryDocument;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message);
+      }
+
     },
       error => {
-        this.toastr.error(error.error.message);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 

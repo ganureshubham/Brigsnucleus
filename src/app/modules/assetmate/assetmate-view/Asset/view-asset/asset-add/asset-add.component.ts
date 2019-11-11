@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
 import { AssetmateService } from '../../../../service/assetmate.service';
+import { SpinnerService } from '../../../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-asset-add',
@@ -27,21 +29,26 @@ export class AssetAddComponent implements OnInit {
   userGuideBook: any;
   imageerror: any;
   pdferror: any;
-  formTitle: string = "Add Asset"; 
+  formTitle: string = "Add Asset";
   isEdited: boolean = false;
   showFirst: boolean = false;
   category: any;
-
+  selectedCategory: any;
+  categoryID = 1;
 
 
   constructor(private router: Router,
     private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
+    this.categoryID = this.route.snapshot.params['categoryId'];
     this.dataService.mSaveData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
         this.isEdited = true;
@@ -55,7 +62,7 @@ export class AssetAddComponent implements OnInit {
     this.get_w_DurationList();
     this.getManufList();
     this.getsuppList();
-    this.getcategoryList(); 
+    this.getcategoryList();
   }
 
 
@@ -112,27 +119,36 @@ export class AssetAddComponent implements OnInit {
   /*********************************************************** Add New Asset *******************************************************************/
 
   addAsset(formData: NgForm) {
+
+
     let value = formData.value;
-    value.installationDate = moment(value.installationDate).format("YYYY/MM/DD"); 
+    value.categoryIdFK = this.route.snapshot.params['categoryId'];
+
+    console.log('updated value', value);
+
+    value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
+
       this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
-          // console.log(JSON.stringify(value));
-          this.assetmateService.addAsset(value).subscribe(
-            res => {
-              this.spinner.show();
-              setTimeout(() => {
-                this.toastr.success(res.message);
-                let categorydata = localStorage.getItem('Category-Object');
-                this.category = JSON.parse(categorydata);
-                this.dataService.changeData(this.category);
-                this.showFirst = !this.showFirst;
-                // this.router.navigate(['/asset']);
-                this.spinner.hide();
-              }, 1000);
-            },
+
+          console.log(value);
+
+          this.spinnerService.setSpinnerVisibility(true);
+
+          this.assetmateService.addAsset(value).subscribe(res => {
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+
+            // let categorydata = localStorage.getItem('Category-Object');
+            // this.category = JSON.parse(categorydata);
+            // this.dataService.changeData(this.category);
+            this.showFirst = !this.showFirst;
+
+          },
             error => {
               this.toastr.error(error.message);
             }
@@ -142,8 +158,11 @@ export class AssetAddComponent implements OnInit {
     }
   }
 
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
 
-  uploadImageToserver = (callback) => { 
+  uploadImageToserver = (callback) => {
     if (this.fileToUpload == null) {
       callback(this.assetImage)
     } else {
@@ -175,7 +194,7 @@ export class AssetAddComponent implements OnInit {
     let value = formData.value;
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
-      this.uploadImageToserver((result) => { 
+      this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
@@ -211,7 +230,7 @@ export class AssetAddComponent implements OnInit {
     var validImageFormats = ['jpg', 'gif', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
-      this.imageerror ="";
+      this.imageerror = "";
       let formData: FormData = new FormData();
       this.fileToUpload = files.item(0);
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
@@ -231,7 +250,7 @@ export class AssetAddComponent implements OnInit {
     var validImageFormats = ['pdf', 'docx', 'doc'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
-      this.pdferror ="";
+      this.pdferror = "";
       this.fileToUpload1 = files.item(0);
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload1, this.fileToUpload1.name);
@@ -304,6 +323,11 @@ export class AssetAddComponent implements OnInit {
     this.assetmateService.getcategoryList().subscribe(res => {
       if (res.AssetCategory) {
         this.categoryList = res.AssetCategory;
+        for (let i = 0; i < this.categoryList.length; i++) {
+          if (this.categoryID == this.categoryList[i].categoryId) {
+            this.assetData.categoryIdFK = this.categoryList[i].categoryId;
+          }
+        }
       }
     },
       error => {
