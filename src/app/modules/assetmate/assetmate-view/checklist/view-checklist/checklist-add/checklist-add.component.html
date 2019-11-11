@@ -54,7 +54,7 @@
         <form #checklistform="ngForm" class="example-form" class="listing_space add_department">
           <mat-form-field>
             <mat-label>Select Category</mat-label>
-            <mat-select name="categoryId" id="categoryId" [(ngModel)]="checklistData.categoryId" required> 
+            <mat-select disabled name="categoryId" id="categoryId" [(ngModel)]="checklistData.categoryId" required>
               <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
                 {{categ.title}}
               </mat-option>
@@ -68,11 +68,13 @@
             </mat-error>
             <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
           </mat-form-field>
-          <button type="submit"  *ngIf="!isEdited" [disabled]="!checklistform.valid" (click)="addChecklist(checklistform.value)"
-            mat-raised-button class="bg_primary text_white btn">Save Checklist</button>
-            <button *ngIf="isEdited"  [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-            [disabled]="!assetform.valid" (click)="editChecklist(checklistform.value)">Update Checklist</button> 
-        </form>  
+          <button type="submit" *ngIf="!isEdited" [disabled]="!checklistform.valid"
+            (click)="addChecklist(checklistform.value)" mat-raised-button class="bg_primary text_white btn">Save
+            Checklist</button>
+          <button *ngIf="isEdited" [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button i18n
+            color="primary" type="submit" [disabled]="!assetform.valid"
+            (click)="editChecklist(checklistform.value)">Update Checklist</button>
+        </form>
       </div>
     </div>
   </div>

@@ -34,7 +34,7 @@ export class AssetAddComponent implements OnInit {
   showFirst: boolean = false;
   category: any;
   selectedCategory: any;
-  categoryID = 1;
+  categoryID;
 
 
   constructor(private router: Router,
@@ -142,12 +142,7 @@ export class AssetAddComponent implements OnInit {
 
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-
-            // let categorydata = localStorage.getItem('Category-Object');
-            // this.category = JSON.parse(categorydata);
-            // this.dataService.changeData(this.category);
             this.showFirst = !this.showFirst;
-
           },
             error => {
               this.toastr.error(error.message);
@@ -339,11 +334,7 @@ export class AssetAddComponent implements OnInit {
   /*********************************************************** Back to Asset List *******************************************************************/
 
   backToList() {
-    let categorydata = localStorage.getItem('Category-Object');
-    this.category = JSON.parse(categorydata);
-    this.dataService.changeData(this.category);
     this.showFirst = !this.showFirst;
-    // this.router.navigate(['/asset']);   
 
   }
 
