@@ -22,8 +22,8 @@ export class AssetmateService {
 
   /**********************************************  category Filter ********************************************************************/
 
-  filterCategoryList(parentId): Observable<any> {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetcategories/assetCategoryList/${parentId}`);
+  filterCategoryList(): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetcategories/categoryList`);
   }
 
 
@@ -44,7 +44,7 @@ export class AssetmateService {
 
   /*********************************************************** Get All Documents *************************************/
 
-  getAllAssetDocuments(assetId:number,pageNo: number): Observable<any> {
+  getAllAssetDocuments(assetId: number, pageNo: number): Observable<any> {
     return this.httpClient.get(ConfigurationService.baseUrl + `document/listOfDocumentsByAssetId/${assetId}/${pageNo}`);
   }
 
@@ -181,11 +181,11 @@ export class AssetmateService {
 
   /*********************************************************** Get All Documents *************************************/
 
-  getAllDocuments(categoryId:number,pageNo: number): Observable<any> {
+  getAllDocuments(categoryId: number, pageNo: number): Observable<any> {
     return this.httpClient.get(ConfigurationService.baseUrl + `document/listOfDocumentsByCategoryId/${categoryId}/${pageNo}`);
   }
 
-  /***********************************************************Select Document************************************************************/ 
+  /***********************************************************Select Document************************************************************/
 
   getDocumentList(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `document/selectDocumentType`);
@@ -198,7 +198,7 @@ export class AssetmateService {
   }
 
   /***********************************************************Select Asset************************************************************/
-  getAssetLists():Observable<any> {
+  getAssetLists(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/selectAsset`);
   }
 
@@ -242,7 +242,7 @@ export class AssetmateService {
 
   /*********************************************************** Get All Assigned User **********************************/
 
-  getAllAssignUsers(pageNo: number, categoryId:number): Observable<any> {
+  getAllAssignUsers(pageNo: number, categoryId: number): Observable<any> {
     return this.httpClient.get(ConfigurationService.baseUrl + `userCatAssign/listOfAssignedUsersByCategoryId/${categoryId}/${pageNo}`);
   }
 
@@ -279,15 +279,15 @@ export class AssetmateService {
 
 
 
-/*********************************************************** History Starts *******************************************************************/
+  /*********************************************************** History Starts *******************************************************************/
 
-doneChecklistLists(assetIdFK:number,pageNo:number):Observable<any>{
-  return this.httpClient.get<any>(ConfigurationService.baseUrl+`assets/assetHistory/${assetIdFK}/${pageNo}`);  
-}
+  doneChecklistLists(assetIdFK: number, pageNo: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetHistory/${assetIdFK}/${pageNo}`);
+  }
 
-getQuestAnsList(doneChecklistIdFK:number,pageNo:number):Observable<any>{
-  return this.httpClient.get<any>(ConfigurationService.baseUrl+`assets/questionAnswer/${doneChecklistIdFK}/${pageNo}`);
-}
+  getQuestAnsList(doneChecklistIdFK: number, pageNo: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/questionAnswer/${doneChecklistIdFK}/${pageNo}`);
+  }
 
 
 
