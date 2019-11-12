@@ -9,18 +9,18 @@
             <p class="tabel_heading mat-subheading-2">Alerts List</p>
           </div>
           <div *ngIf="loading">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar> 
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
         </div>
         <div class="cl"></div>
         <mat-table [dataSource]="paidDataSource">
           <ng-container matColumnDef="alertId">
             <mat-header-cell *matHeaderCellDef>Alert Id </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>   
+            <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="alertType">                                                                                       
-            <mat-header-cell *matHeaderCellDef>Alert Type</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.alertType }}</mat-cell> 
+          <ng-container matColumnDef="alertName">
+            <mat-header-cell *matHeaderCellDef>Alert Name</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="title">
             <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
@@ -30,6 +30,14 @@
             <mat-header-cell *matHeaderCellDef>Alert Image</mat-header-cell>
             <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive" src="{{visit.alertImage}}"
                 alt="photo"></mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="isRead">
+            <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="isDeliver">
+            <mat-header-cell *matHeaderCellDef>Is Deliver</mat-header-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="message">
             <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
@@ -41,16 +49,16 @@
             <mat-cell *matCellDef="let visit">
               <div>
                 <mat-menu #dailyPerformanceMenu="matMenu">
-                    <a mat-menu-item (click)="viewAlert(visit.alertId)">  
-                        <mat-icon matListIcon>visibility</mat-icon>
-                        <span i18n>View Alert Detail</span>
-                      </a>
+                  <a mat-menu-item (click)="viewAlert(visit.alertId)">
+                    <mat-icon matListIcon>visibility</mat-icon>
+                    <span i18n>View Alert Detail</span>
+                  </a>
                   <a mat-menu-item (click)="deleteAlert(visit.alertId)">
                     <mat-icon matListIcon>delete_outline</mat-icon>
                     <span i18n>Delete Alert</span>
                   </a>
                 </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">     
+                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
                   <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
                 </button>
               </div>
@@ -66,4 +74,4 @@
       </mat-card>
     </div>
   </div>
-</div> 
+</div>

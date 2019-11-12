@@ -21,7 +21,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   manufacturerData: any = {};
 
-  displayedColumns: string[] = ['alertId', 'alertType','title','alertImage','message', 'Actions'];
+  displayedColumns: string[] = ['alertId', 'alertName', 'title', 'alertImage', 'isRead', 'isDeliver', 'message', 'Actions'];
   paidDataSource: MatTableDataSource<Alert> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -33,7 +33,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   constructor(private http: HttpClient,
     private router: Router,
     private alertService: AlertService,
-    public dataService: DataSharingService, 
+    public dataService: DataSharingService,
     private toastr: ToastrService
   ) {
 
@@ -47,74 +47,76 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.getAlertList(this.pageNumber);
-    
+
   }
 
- 
-/*********************************************************** Get all Alerts *******************************************************************/
-getAlertList(pageNo:number){
-  this.loading=true;
-  this.alertService.getAlertList(pageNo).subscribe(res=>{
-    console.log(res);
-    this.paidDataSource=res.alert;
-    this.pageNumber=res.currentPage;
-    this.totalCount=res.totalCount;
-    this.loading=false;
-    
-  },
-  error=>{
-    this.loading=false;
-    console.log(error);
-    
-  })
-}
 
- /*********************************************************** Page Change *******************************************************************/
+  /*********************************************************** Get all Alerts *******************************************************************/
+  getAlertList(pageNo: number) {
+    this.loading = true;
+    this.alertService.getAlertList(pageNo).subscribe(res => {
+      console.log(res);
+      this.paidDataSource = res.alert;
+      this.pageNumber = res.currentPage;
+      this.totalCount = res.totalCount;
+      this.loading = false;
 
- pageChange(pageNo: any) {
-  this.loading = true;
-  this.page = pageNo.pageIndex;
-  this.getAlertList(this.page);  
-}
+    },
+      error => {
+        this.loading = false;
+        console.log(error);
 
-/*********************************************************** View Particular Alert  *******************************************************************/
+      })
+  }
 
+  /*********************************************************** Page Change *******************************************************************/
 
-viewAlert(alertId: number) {
-  this.dataService.changeData(alertId);
-  this.router.navigate(['/alert/alert-details']);
-}
+  pageChange(pageNo: any) {
+    this.loading = true;
+    this.page = pageNo.pageIndex;
+    this.getAlertList(this.page);
+  }
+
+  /*********************************************************** View Particular Alert  *******************************************************************/
 
 
-/*********************************************************** Delete Particular Alert *******************************************************************/
+  viewAlert(alertId: number) {
+    this.dataService.changeData(alertId);
+    this.router.navigate(['/alert/alert-details']);
+  }
 
-  deleteAlert(alertId:number){
+
+  /*********************************************************** Delete Particular Alert *******************************************************************/
+
+  deleteAlert(alertId: number) {
     alert('are you sure?');
-    this.alertService.deleteAlert(alertId).subscribe(res=>{
+    this.alertService.deleteAlert(alertId).subscribe(res => {
       console.log(res);
       this.toastr.success(res.message);
       this.getAlertList(this.page);
-      
+
     },
-    error=>{
-      console.log(error);
-      this.toastr.error(error.message);
-      
-    })
+      error => {
+        console.log(error);
+        this.toastr.error(error.message);
+
+      })
   }
 
 
   ngOnDestroy(): void { }
 
- 
+
 
 
 }
 export interface Alert {
   alertId: number;
-  alertType: string;
+  alertName: string;
   title: string;
   alertImage: string;
+  isRead: string;
+  isDeliver: string;
   message: string;
 }
 
