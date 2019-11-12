@@ -2,7 +2,7 @@
   <h4 class="title_header mat-subheading-2 ">Categories</h4>
   <form class="example-form filter_search">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Search">
+      <input matInput placeholder="Search" (input)="onSearchCategoryTxtChange($event.target.value)">
     </mat-form-field>
   </form>
   <div class="mar-29" *ngIf="isTreeDataReady">

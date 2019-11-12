@@ -91,4 +91,4 @@
 </div>
 <!-- <app-add-asset *ngIf="showFirst" ></app-add-asset>  -->
 
-<app-asset-add *ngIf="showFirst"></app-asset-add>
+<app-asset-add *ngIf="showFirst" (assetAddedEmitter)='onAssetAdded($event)'></app-asset-add>

@@ -40,6 +40,10 @@ export class AssetmateDetailsComponent implements OnInit {
       })
   }
 
+  onAssetAdded(isAssetAdded) {
+    this.getdata();
+  }
+
   backToList() {
     this.router.navigate(['/assetmate']);
   }

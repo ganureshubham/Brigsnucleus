@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -36,6 +36,7 @@ export class AssetAddComponent implements OnInit {
   selectedCategory: any;
   categoryID;
 
+  @Output() assetAddedEmitter = new EventEmitter<boolean>();
 
   constructor(private router: Router,
     private assetmateService: AssetmateService,
@@ -95,9 +96,7 @@ export class AssetAddComponent implements OnInit {
     },
       error => {
         console.log(error);
-
       })
-
   }
 
   /*********************************************************** Get Department List *******************************************************************/
@@ -135,6 +134,7 @@ export class AssetAddComponent implements OnInit {
           this.assetmateService.addAsset(value).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
+            this.assetAddedEmitter.emit(true);
             this.showFirst = !this.showFirst;
           },
             error => {

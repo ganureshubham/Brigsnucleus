@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -44,6 +44,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
   animal: any;
+
+  @Output() assetAddedEmitter = new EventEmitter<boolean>();
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
@@ -103,6 +105,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  onAssetAdded(isAssetAdded) {
+    this.assetAddedEmitter.emit(isAssetAdded);
   }
 
 
@@ -179,8 +185,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
-      title: 'DELETE ASSETE',
-      message: `Are your sure you want to delete assete "${assetTitle}"`,
+      title: 'DELETE ASSET',
+      message: `Are your sure you want to delete asset "${assetTitle}"`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
@@ -191,6 +197,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       if (userAction == 0) {
         //User has not performed any action on opened app dialog or closed the dialog;
       } else if (userAction == 1) {
+
+        this.dialogService.setUserDialogAction(0);
+
         //User has approved delete operation 
         this.spinnerService.setSpinnerVisibility(true);
         this.assetmateService.deleteAsset(assetId).subscribe(res => {
