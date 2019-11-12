@@ -77,7 +77,9 @@ export class FilterCategoryComponent implements OnInit {
   }
 
   handleCategoryTreeNodeClick(node) {
-    this.router.navigate([`/assetmate/assetmate-details/${node.categoryId}`]);
+    this.router.navigate([`/assetmate/assetmate-details/${node.categoryId}`]).then(() => {
+      location.reload();
+    })
   }
 
 }

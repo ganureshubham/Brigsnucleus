@@ -16,6 +16,10 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetHome/allRootCategories`);
   }
 
+  getCategoryPrimaryInfo(categoryId: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetHome/allCategories/${categoryId}`);
+  }
+
   searchCategory(keyword): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assetHome/categorySearch?keyword=${keyword}`);
   }

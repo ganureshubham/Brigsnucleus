@@ -1,89 +1,91 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner> -->
 <div *ngIf="!showFirst" class="table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-        <div class="flex_container padding_box align_center">
-          <div class="width_50">
-            <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-              <mat-icon>add</mat-icon>Add Asset
-            </button>
-          </div>
-          <div class="width_50 dfe">
-            <form class="example-form filter_search">
-              <mat-form-field class="example-full-width">
-                <input matInput (keyup)="searchAsset($event.target.value)" placeholder="Search">       
-              </mat-form-field> 
-            </form>
-          </div> 
+      <div class="flex_container padding_box align_center">
+        <div class="width_50">
+          <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+            <mat-icon>add</mat-icon>Add Asset
+          </button>
         </div>
-        <div class="cl"></div>
-        <mat-table [dataSource]="dataSource">
-          <ng-container matColumnDef="assetId">
-            <mat-header-cell *matHeaderCellDef>Asset Id</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.assetId }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="assetCodeImage">
-            <mat-header-cell *matHeaderCellDef i18n>Asset Code Image </mat-header-cell>
-            <!-- <mat-cell *matCellDef="let visit"><img (click)="openDialog(visit.assetCodeImage)" class="imgwrapper rounded img-responsive"
+        <div class="width_50 dfe">
+          <form class="example-form filter_search">
+            <mat-form-field class="example-full-width">
+              <input matInput (keyup)="searchAsset($event.target.value)" placeholder="Search">
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+      <div class="cl"></div>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="assetId">
+          <mat-header-cell *matHeaderCellDef>Asset Id</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.assetId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assetCodeImage">
+          <mat-header-cell *matHeaderCellDef i18n>Asset Code Image </mat-header-cell>
+          <!-- <mat-cell *matCellDef="let visit"><img (click)="openDialog(visit.assetCodeImage)" class="imgwrapper rounded img-responsive"
                 src="{{visit.assetCodeImage}}" alt="photo"></mat-cell> -->
-                <mat-cell  class="imgwrapper rounded img-responsive" *matCellDef="let visit"><qrcode (click)="openDialog(visit.assetCode)" [qrdata]="visit.assetCode" [size]="60" [level]="'M'"></qrcode></mat-cell>    
-          </ng-container>
-          <ng-container matColumnDef="assetCode">
-            <mat-header-cell *matHeaderCellDef i18n>Asset Code </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="assetImage"> 
-            <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
-            <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive" src="{{visit.assetImage}}"
-                alt="photo"></mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="assetTitle">
-            <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="categoryName">
-            <mat-header-cell *matHeaderCellDef>Asset Category</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.categoryName }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="modelNumber">
-            <mat-header-cell *matHeaderCellDef>Model Number</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-            <mat-cell *matCellDef="let visit">
-              <div>
-                <mat-menu #dailyPerformanceMenu="matMenu">
-                  <a mat-menu-item (click)="viewAsset(visit.assetId)">  
-                    <mat-icon matListIcon>visibility</mat-icon>
-                    <span i18n>View Asset Detail</span>
-                  </a>
-                  <a mat-menu-item (click)="editAsset(visit.assetId)">   
-                    <mat-icon matListIcon>edit</mat-icon>
-                    <span i18n>Edit Asset</span>
-                  </a>
-                  <a mat-menu-item (click)="deleteAsset(visit.assetId)">
-                    <mat-icon matListIcon>delete_outline</mat-icon>
-                    <span i18n>Delete Asset</span>
-                  </a>
-                  <!-- <a mat-menu-item (click)="printAsset(visit)">
+          <mat-cell class="imgwrapper rounded img-responsive" *matCellDef="let visit">
+            <qrcode (click)="openDialog(visit.assetCode)" [qrdata]="visit.assetCode" [size]="60" [level]="'M'"></qrcode>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assetCode">
+          <mat-header-cell *matHeaderCellDef i18n>Asset Code </mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assetImage">
+          <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
+          <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive" src="{{visit.assetImage}}"
+              alt="photo"></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assetTitle">
+          <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="categoryName">
+          <mat-header-cell *matHeaderCellDef>Asset Category</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.categoryName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="modelNumber">
+          <mat-header-cell *matHeaderCellDef>Model Number</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let visit">
+            <div>
+              <mat-menu #dailyPerformanceMenu="matMenu">
+                <a mat-menu-item (click)="viewAsset(visit.assetId)">
+                  <mat-icon matListIcon>visibility</mat-icon>
+                  <span i18n>View Asset Detail</span>
+                </a>
+                <a mat-menu-item (click)="editAsset(visit.assetId)">
+                  <mat-icon matListIcon>edit</mat-icon>
+                  <span i18n>Edit Asset</span>
+                </a>
+                <a mat-menu-item (click)="deleteAsset(visit.assetId)">
+                  <mat-icon matListIcon>delete_outline</mat-icon>
+                  <span i18n>Delete Asset</span>
+                </a>
+                <!-- <a mat-menu-item (click)="printAsset(visit)">
                     <mat-icon matListIcon>delete_outline</mat-icon> 
                     <span i18n>Print Asset</span> 
                   </a> -->
-                </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon> 
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <div>
-          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-          </mat-paginator> 
-        </div>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <div>
+        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+        </mat-paginator>
+      </div>
     </div>
   </div>
 </div>

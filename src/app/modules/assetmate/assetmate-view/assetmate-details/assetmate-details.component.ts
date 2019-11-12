@@ -30,14 +30,9 @@ export class AssetmateDetailsComponent implements OnInit {
   }
 
   getdata() {
-    this.assetmateService.getAllRootCateg().subscribe(res => {
-      if (res) {
-        for (let i = 0; i < (res.rootCategory).length; i++) {
-          if (res.rootCategory[i].categoryId == this.categoryID) {
-            this.category = res.rootCategory[i];
-            break;
-          }
-        }
+    this.assetmateService.getCategoryPrimaryInfo(this.categoryID).subscribe(res => {
+      if (res.allCategory) {
+        this.category = res.allCategory[0];
       }
     },
       error => {

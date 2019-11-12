@@ -30,6 +30,7 @@ export class AssetmateViewComponent implements OnInit {
 
   getRootCategoryList() {
     this.assetmateService.getAllRootCateg().subscribe(res => {
+      console.log('Root category list')
       console.log(res);
 
       this.category = res.rootCategory;
