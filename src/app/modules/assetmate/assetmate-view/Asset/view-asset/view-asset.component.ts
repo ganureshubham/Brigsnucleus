@@ -186,7 +186,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   viewAsset = (assetId: number) => {
     // let AssetId=assetId;
     // localStorage.setItem('Category-Object',JSON.stringify(AssetId));
-    this.dataService.saveData(assetId);
+    // this.dataService.saveData(assetId);
     this.router.navigate(['/assetmate/assetmate-details/' + this.route.snapshot.params['categoryId'] + '/asset-details/' + assetId]);
   }
 

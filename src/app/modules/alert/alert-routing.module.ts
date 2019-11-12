@@ -18,7 +18,7 @@ export const AlertRoutes: Routes = [
     path: "",
     children: [
       {
-        path: "alert-details",
+        path: "alert-details/:alertId",
         component: AlertDetailsComponent
       }
     ]

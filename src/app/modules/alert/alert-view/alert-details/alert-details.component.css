@@ -1,0 +1,16 @@
+.width_80 {
+  width: 100%;
+}
+
+.isRead {
+  color: #6c63ff;
+}
+
+.isDeliver {
+  color: #00b9ff;
+}
+
+.mat-card-img {
+  width: 232px;
+  height: 232px;
+}

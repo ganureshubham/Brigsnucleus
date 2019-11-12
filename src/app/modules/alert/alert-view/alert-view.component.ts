@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../service/alert.service';
@@ -20,8 +20,9 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   manufacturerData: any = {};
+  totalAlerts: any;
 
-  displayedColumns: string[] = ['alertId', 'alertName', 'title', 'alertImage', 'isRead', 'isDeliver', 'message', 'Actions'];
+  displayedColumns: string[] = ['alertName', 'title', 'alertImage', 'isRead', 'isDeliver', 'message', 'Actions'];
   paidDataSource: MatTableDataSource<Alert> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -29,12 +30,15 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
   Router: any;
+  alertid: any;
 
   constructor(private http: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private alertService: AlertService,
     public dataService: DataSharingService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private snackBar: MatSnackBar,
   ) {
 
   }
@@ -53,9 +57,9 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Get all Alerts *******************************************************************/
   getAlertList(pageNo: number) {
-    this.loading = true;
+
     this.alertService.getAlertList(pageNo).subscribe(res => {
-      console.log(res);
+      this.totalAlerts = res.totalAlerts;
       this.paidDataSource = res.alert;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
@@ -81,8 +85,8 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
 
   viewAlert(alertId: number) {
-    this.dataService.changeData(alertId);
-    this.router.navigate(['/alert/alert-details']);
+    //this.dataService.changeData(alertId);
+    this.router.navigate([`/alert/alert-details/${alertId}`]);
   }
 
 
@@ -102,6 +106,23 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
       })
   }
+
+  /*********************************************************** Search Alerts *******************************************************************/
+  searchAlert(keyword) {
+
+    if (keyword) {
+      this.alertService.searchAlert(keyword).subscribe(res => {
+        this.paidDataSource = res.data;
+      }, error => {
+        console.log(error);
+      })
+
+    } else {
+      this.getAlertList(this.pageNumber);
+    }
+  }
+
+
 
 
   ngOnDestroy(): void { }

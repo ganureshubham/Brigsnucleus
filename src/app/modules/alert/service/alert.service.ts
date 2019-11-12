@@ -30,4 +30,21 @@ export class AlertService {
 
   }
 
+  /*********************************************************** Search Alert *******************************************************************/
+  searchAlert(keyword): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `alerts/alertSearch?keyword=${keyword}`);
+  }
+
+  /*********************************************************** Search Tracking Alert *******************************************************************/
+  searchTrackingAlert(alertId: number, keyword): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `alerts/alertTrackSearch?alertId=${alertId}&keyword=${keyword}`);
+  }
+
+
+  /*********************************************************** get all Tracking Alerts *******************************************************************/
+
+  getAllTrackingList(alertId: number, pageNo: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `alerts/viewParticularAlertTrack/${alertId}/${pageNo}`);
+  }
+
 } 

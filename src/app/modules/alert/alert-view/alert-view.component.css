@@ -1,0 +1,10 @@
+.width_80 {
+  width: 100%;
+}
+.isRead {
+  color: #00b9ff;
+}
+
+.isDeliver {
+  color: #6c63ff;
+}
