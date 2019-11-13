@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { AssetCodeComponent } from '../asset-code/asset-code.component';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { DialogService } from '../../../../../public service/dialog.service';
+import { AppDialogData } from '../../../../../model/appDialogData';
 
 @Component({
   selector: 'app-view-asset',
@@ -43,6 +45,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   animal: any;
 
+  @Output() assetAddedEmitter = new EventEmitter<boolean>();
+
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private assetmateService: AssetmateService,
@@ -53,6 +57,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    private dialogService: DialogService
   ) {
 
   }
@@ -100,6 +105,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  onAssetAdded(isAssetAdded) {
+    this.assetAddedEmitter.emit(isAssetAdded);
   }
 
 
@@ -152,24 +161,59 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
-  deleteAsset(assetId: number) {
-    // alert('are you sure?');
-    const message = `Are you sure you want to do this?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: "1000px",
-      data: dialogData
-    });
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      this.result = dialogResult;
-    });
-    this.assetmateService.deleteAsset(assetId).subscribe(res => {
-      this.toastr.success(res.message);
-      this.getAllAssets(this.categoryID, this.page);
-    })
-    error => {
-      this.toastr.error(error.message);
+  // deleteAsset(assetId: number) {
+  //   // alert('are you sure?');
+  //   const message = `Are you sure you want to do this?`;
+  //   const dialogData = new ConfirmDialogModel("Confirm Action", message);
+  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //     maxWidth: "1000px",
+  //     data: dialogData
+  //   });
+  //   dialogRef.afterClosed().subscribe(dialogResult => {
+  //     this.result = dialogResult;
+  //   });
+  //   this.assetmateService.deleteAsset(assetId).subscribe(res => {
+  //     this.toastr.success(res.message);
+  //     this.getAllAssets(this.categoryID, this.page);
+  //   })
+  //   error => {
+  //     this.toastr.error(error.message);
+  //   }
+  // }
+
+  deleteAsset(assetId: number, assetTitle: string) {
+
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ASSET',
+      message: `Are your sure you want to delete asset "${assetTitle}"`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
     }
+
+    this.dialogService.setDialogVisibility(appDialogData);
+
+    this.dialogService.getUserDialogAction().subscribe(userAction => {
+      if (userAction == 0) {
+        //User has not performed any action on opened app dialog or closed the dialog;
+      } else if (userAction == 1) {
+
+        this.dialogService.setUserDialogAction(0);
+
+        //User has approved delete operation 
+        this.spinnerService.setSpinnerVisibility(true);
+        this.assetmateService.deleteAsset(assetId).subscribe(res => {
+
+          this.spinnerService.setSpinnerVisibility(false);
+          this.showSnackBar(res.message);
+
+          this.getAllAssets(this.categoryID, this.page);
+
+        }, error => {
+          this.showSnackBar("Something went wrong..!!");
+        });
+      }
+    })
   }
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/

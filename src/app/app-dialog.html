@@ -1,0 +1,20 @@
+<div class="dialog-container">
+    <div class="dialog-title-row">
+        <span class="mat-dialog-custom-title">{{data.title}}</span>
+        <!-- <mat-icon [mat-dialog-close]="userActionNegativeBtnClicked">close</mat-icon> -->
+        <!-- (click)="onCloseClick()" -->
+        <button mat-button [mat-dialog-close]="userActionNegativeBtnClicked">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="mat-dialog-custom-content">
+        <p>{{data.message}}</p>
+    </div>
+    <div class="mat-dialog-custom-action">
+        <button class="mat-dialog-action-btn" mat-button [mat-dialog-close]="userActionPositiveBtnClicked"
+            cdkFocusInitial>{{data.positiveBtnLable}}</button>
+        <button class="mat-dialog-action-btn" mat-button
+            [mat-dialog-close]="userActionNegativeBtnClicked">{{data.negativeBtnLable}}</button>
+        <!-- (click)="onCloseClick()" -->
+    </div>
+</div>

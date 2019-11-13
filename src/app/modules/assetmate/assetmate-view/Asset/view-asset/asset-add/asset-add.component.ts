@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -36,6 +36,7 @@ export class AssetAddComponent implements OnInit {
   selectedCategory: any;
   categoryID;
 
+  @Output() assetAddedEmitter = new EventEmitter<boolean>();
 
   constructor(private router: Router,
     private assetmateService: AssetmateService,
@@ -95,9 +96,7 @@ export class AssetAddComponent implements OnInit {
     },
       error => {
         console.log(error);
-
       })
-
   }
 
   /*********************************************************** Get Department List *******************************************************************/
@@ -120,12 +119,8 @@ export class AssetAddComponent implements OnInit {
 
   addAsset(formData: NgForm) {
 
-
     let value = formData.value;
     value.categoryIdFK = this.route.snapshot.params['categoryId'];
-
-    console.log('updated value', value);
-
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
 
@@ -134,18 +129,16 @@ export class AssetAddComponent implements OnInit {
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
 
-          console.log(value);
-
           this.spinnerService.setSpinnerVisibility(true);
 
           this.assetmateService.addAsset(value).subscribe(res => {
-
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
+            this.assetAddedEmitter.emit(true);
             this.showFirst = !this.showFirst;
           },
             error => {
-              this.toastr.error(error.message);
+              this.showSnackBar("Something went wrong..!!");
             }
           );
         })
@@ -168,7 +161,6 @@ export class AssetAddComponent implements OnInit {
         callback(res.ImageName)
       })
     }
-
   }
 
   uploadPdfToserver = (callback) => {
@@ -187,24 +179,24 @@ export class AssetAddComponent implements OnInit {
   // on submit of update button send updated data on server 
   editAsset(formData: NgForm) {
     let value = formData.value;
+    value.categoryIdFK = this.route.snapshot.params['categoryId'];
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
+          this.spinnerService.setSpinnerVisibility(true);
           this.assetmateService.editAsset(this.assetData.assetId, value).subscribe(
             res => {
-              this.spinner.show();
-              setTimeout(() => {
-                this.toastr.success(res.message);
-                let categorydata = localStorage.getItem('Category-Object');
-                this.category = JSON.parse(categorydata);
-                this.dataService.changeData(this.category);
-                this.showFirst = !this.showFirst;
-                // this.router.navigate(['/asset']);
-                this.spinner.hide();
-              }, 1000);
+
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+
+              let categorydata = localStorage.getItem('Category-Object');
+              this.category = JSON.parse(categorydata);
+              this.dataService.changeData(this.category);
+              this.showFirst = !this.showFirst;
 
             },
             error => {

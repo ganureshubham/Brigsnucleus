@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutes } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, AppDialog } from './app.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { LoginComponent } from './login/login.component';
@@ -103,7 +103,8 @@ export class MaterialModule { }
     AppComponent,
     AdminComponent,
     AuthComponent,
-    LoginComponent
+    LoginComponent,
+    AppDialog,
   ],
   imports: [
     BrowserModule,
@@ -134,6 +135,7 @@ export class MaterialModule { }
       multi: true
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AppDialog],
 })
 export class AppModule { }

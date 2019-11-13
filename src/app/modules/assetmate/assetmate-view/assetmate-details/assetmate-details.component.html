@@ -1,4 +1,4 @@
-<div class="innerpage assets_view padding_container flex_container margin_auto" >
+<div class="innerpage assets_view padding_container flex_container margin_auto">
     <app-filter-category></app-filter-category>
     <!-- <mat-card class="filter width_15 mar-29">
         <h4 class="title_header mat-subheading-2 ">Categories</h4>
@@ -41,7 +41,7 @@
                         <mat-icon>keyboard_backspace</mat-icon>
                     </button>
                 </div>
-                <div class="width_75">    
+                <div class="width_75">
                     <p class="title_header mat-subheading-2 tal">{{category.title}}</p>
                 </div>
                 <!-- <div class="dfe" style="width:19.9%">
@@ -73,12 +73,12 @@
         <mat-tab-group class="">
             <!--start_Assets-->
             <mat-tab label="Assets">
-              <app-view-asset></app-view-asset> 
+                <app-view-asset (assetAddedEmitter)='onAssetAdded($event)'></app-view-asset>
 
             </mat-tab>
             <!--start_Checklist-->
             <mat-tab label="Checklist">
-                    <app-view-checklist></app-view-checklist>
+                <app-view-checklist></app-view-checklist>
                 <!-- <div class="flex_container padding_box align_center">
                     
                     <div class="width_50 dfe">
@@ -93,7 +93,7 @@
                     
                     <div class="fl width_20 padding_box"> 
                            < -->
-                        <!-- <mat-card>
+                <!-- <mat-card>
                             <mat-list role="list">
                                 <form class="example-form" class="listing_space add_department">
                                     <mat-list role="list">
@@ -121,10 +121,10 @@
                                 </form>
                             </mat-list>
                         </mat-card> -->
-                    <!-- </div> 
+                <!-- </div> 
                     <div class="fl width_77 padding_box overflow_box checklist_list"> -->
-                      
-                        <!-- <mat-card>
+
+                <!-- <mat-card>
                             <div class="flex_container listing">
                                 <div class="checklist_name width_40">
                                     <h4>Checklist1</h4>
@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                         </mat-card> -->
-                        <!-- <mat-card>
+                <!-- <mat-card>
                             <div class="flex_container listing">
                                 <div class="checklist_name width_40">
                                     <h4>Checklist1</h4>
@@ -244,7 +244,7 @@
                                 </div>
                             </div>
                         </mat-card> -->
-                    <!-- </div>
+                <!-- </div>
                 </div> -->
             </mat-tab>
             <!--start_documents-->
