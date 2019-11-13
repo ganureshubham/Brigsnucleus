@@ -21,10 +21,10 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="goToProfile()" >
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>View Profile</span>
-                  </button>
+              <button mat-menu-item (click)="goToProfile()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>View Profile</span>
+              </button>
               <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
@@ -52,15 +52,15 @@
               <span i18n>Asset</span>
             </a>
           </mat-menu> -->
-          <!-- <a mat-button>
+          <a mat-button routerLink="/documate">
             <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
-          </a> -->
+          </a>
           <!-- <a mat-button>
             <mat-icon>work</mat-icon><span i18n>Taskmate</span>
           </a> -->
-          <!-- <a mat-button routerLink="/alert">
+          <a mat-button routerLink="/alert">
             <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
-          </a> -->
+          </a>
           <!-- <a mat-button>
             <mat-icon>menu_book</mat-icon><span i18n>complaint</span>
           </a> -->

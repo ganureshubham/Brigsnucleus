@@ -1,66 +1,124 @@
-<div class="display width_90 auto_margin margin_5">
-  <div class="title_padding">
-    <mat-card class="margin-bottom">
-      <mat-card-title class="title_color uppercase fl">view Alert</mat-card-title>
-      <span>
-        <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
-          <mat-icon>keyboard_backspace</mat-icon>
-        </button>
-      </span>
-      <span class="fr">
-        <div class="manage_form">
-          <mat-list>
-            <mat-list-item>
-              <button mat-mini-fab (click)="backToList()">
-                <mat-icon>format_list_bulleted</mat-icon>
-              </button>
-            </mat-list-item>
-          </mat-list>
+<div class="table assets_view padding_container margin_auto flex_container">
+  <mat-card class="width_80 right_side_box">
+    <div class="innerpage_title">
+      <div class="header_title flex_container">
+        <div>
+          <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
         </div>
-      </span>
-    </mat-card>
-    <mat-grid-list cols="4" rowHeight="1:2.5">
-      <mat-grid-tile [colspan]="3" [rowspan]="1">
-        <mat-card class="view_detail width_100 margin-right">
-          <form #assetform="ngForm" class="example-form">
+        <div class="width_75">
+          <p class="title_header mat-subheading-2 tal">{{alertData.title}}</p>
+        </div>
+      </div>
+      <div>
+        <div class="fl total">
+          <p><b>{{countData.totalAlertTrack}}</b><span>Total Alert Track</span></p>
+        </div>
+        <div class="fl total">
+          <p><b>{{countData.isRead}}</b><span>Is Read</span></p>
+        </div>
+        <div class="fl total">
+          <p><b>{{countData.isDeliver}}</b><span>Is Deliver </span></p>
+        </div>
+      </div>
+      <div class="cl"></div>
+    </div>
+    <div class="asset_view_detail">
+      <mat-tab-group>
+        <mat-tab label="Alerts">
+          <div class="tab_content">
+            <div class="flex_container form_column">
+              <div class="padding_container width_30 field">
+                <div class=" img_block margin-right">
+                  <h4 class=" mat-h4 db ">Asset Image</h4>
+                  <mat-card class="mat-card-img">
+                    <img src="{{alertData.alertImage}}" alt="Alert-pic">
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+            <div class="flex_container form_column">
+              <div class="padding_container width_30 field">
+                <div class="block">
+                  <h4 class=" mat-h4 db ">Alert Name</h4>
+                  <span>{{alertData.alertName}}</span>
+                </div>
+              </div>
+              <div class="padding_container width_30 field">
+                <div class="block">
+                  <h4 class=" mat-h4 db ">Alert Title</h4>
+                  <span>{{alertData.title}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="padding_container field ">
+              <div class="block">
+                <h4 class=" mat-h4 db ">Message</h4>
+                <p>{{alertData.message}} </p>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
 
-            <mat-grid-list cols="2" rowHeight="300px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <span class="db mat-form-field-infix">
-                  <label class="ng-tns-c13-2 ng-star-inserted img_label">Alert Image</label>
-                </span>
-                <img src="{{alertData.alertImage}}" alt="" width="250" height="250">
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="80px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="example-full-width margin-right">
-                  <input matInput placeholder="Alert Id" name="alertId" [(ngModel)]="alertData.alertId" disabled>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="example-full-width margin-left">
-                  <input matInput placeholder="Alert Title" name="title" [(ngModel)]="alertData.title" disabled>
-                </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="80px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="example-full-width margin-right">
-                  <input matInput placeholder="Alert Type" name="alertType" [(ngModel)]="alertData.alertType"
-                    disabled>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="example-full-width">
-                  <textarea matInput name="message" [(ngModel)]="alertData.message" disabled
-                    placeholder="Message"></textarea>
-                </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-          </form>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
+
+        <mat-tab label="Alert Tracking">
+          <div class="table">
+            <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
+              <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
+                <div class="flex_container padding_box align_center">
+                  <div class="width_50">
+                  </div>
+                  <div class="width_50 dfe">
+                    <form class="example-form filter_search">
+                      <mat-form-field class="example-full-width">
+                        <input matInput (keyup)="searchTrackingAlert($event.target.value)" placeholder="Search">
+                      </mat-form-field>
+                    </form>
+                  </div>
+                </div>
+                <div class="cl"></div>
+                <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="userImage">
+                    <mat-header-cell *matHeaderCellDef>User Image</mat-header-cell>
+                    <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
+                        src="{{visit.userImage}}" alt="photo"></mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="userName">
+                    <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.userName }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isRead">
+                    <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      <mat-icon class="isRead" *ngIf="visit.isRead">check_circle</mat-icon>
+
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isDeliver">
+                    <mat-header-cell *matHeaderCellDef>Is Deliver</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      <mat-icon class="isDeliver" *ngIf="visit.isDeliver">check_circle</mat-icon>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="readDate">
+                    <mat-header-cell *matHeaderCellDef>Read Date</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.readDate }}</mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div>
+                  <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
+                    (page)="pageChange($event)">
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </mat-card>
 </div>

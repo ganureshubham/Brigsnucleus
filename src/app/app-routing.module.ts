@@ -76,6 +76,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/profile/profile.module#ProfileModule",
         canActivate: [AuthGuard]
       },
+      {
+        path: "documate",
+        loadChildren: "./modules/documate/documate.module#DocumateModule",
+        canActivate: [AuthGuard]
+      },
       // {
       //   path: "category-Document",
       //   loadChildren: "./modules/category-document/category-document.module#CategoryDocumentModule",
