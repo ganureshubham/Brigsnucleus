@@ -25,19 +25,19 @@ export class AddAssetDocumentComponent implements OnInit {
 
 
   constructor(
-    private assetmateService: AssetmateService, 
+    private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res=>{
-      if (res != null && res != "null" && res != "null"){
-        console.log('doc edit res',res);
-        this.documentData=res;
+    this.dataService.mSaveData.subscribe(res => {
+      if (res != null && res != "null" && res != "null") {
+        console.log('doc edit res', res);
+        this.documentData = res;
         //console.log('aacffd', this.documentData);
-        
+
         this.filepath = res.filepath.split('/').pop().split('?')[0];
         this.isEdited = true;
         this.formTitle = `Edit Document`;
@@ -62,17 +62,17 @@ export class AddAssetDocumentComponent implements OnInit {
 
   /*********************************************************** Get Asset List *******************************************************************/
 
-  getAssetLists(){
-    this.assetmateService.getAssetLists().subscribe(res=>{
+  getAssetLists() {
+    this.assetmateService.getAssetLists().subscribe(res => {
 
-      if(res.assetList){
-        this.AssetLists=res.assetList;
+      if (res.assetList) {
+        this.AssetLists = res.assetList;
       }
     },
-    error =>{
-      console.log(error);
-      
-    }
+      error => {
+        console.log(error);
+
+      }
     );
   }
 
@@ -117,7 +117,7 @@ export class AddAssetDocumentComponent implements OnInit {
             }, 1000);
           },
           error => {
-            this.toastr.error(error.message); 
+            this.toastr.error(error.message);
           }
         );
       })
@@ -138,7 +138,7 @@ export class AddAssetDocumentComponent implements OnInit {
     }
   }
 
-/*********************************************************** Edit Document *******************************************************************/
+  /*********************************************************** Edit Document *******************************************************************/
 
   editDocument(formData: NgForm) {
     let value = formData.value;
@@ -146,7 +146,7 @@ export class AddAssetDocumentComponent implements OnInit {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
         // console.log(JSON.stringify(value));
-        this.assetmateService.editDocument(this.documentData.documentId,value).subscribe(
+        this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
           res => {
             this.spinner.show();
             setTimeout(() => {
@@ -166,12 +166,12 @@ export class AddAssetDocumentComponent implements OnInit {
       })
     }
 
-   }
+  }
 
 
-   /*********************************************************** Back to Asset List *******************************************************************/
+  /*********************************************************** Back to Asset List *******************************************************************/
 
-   backToList() {
+  backToList() {
     let categorydata = localStorage.getItem('Category-Object');
     this.category = JSON.parse(categorydata);
     this.dataService.changeData(this.category);

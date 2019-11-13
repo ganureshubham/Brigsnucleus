@@ -15,29 +15,29 @@ export class AddCategoryDocumentComponent implements OnInit {
   documentData: any = {};
   formTitle: string = "Add Document";
   isEdited: boolean = false;
-  documenterror: any;
   documentList: any;
   categoryLists: any;
+  documenterror: any;
   filepath: any;
   fileToUpload1: File = null;
   category: any;
 
 
   constructor(
-    private assetmateService: AssetmateService, 
+    private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res=>{
-      if (res != null && res != "null" && res != "null"){
-        console.log('doc edit res',res);
-        this.documentData=res;
+    this.dataService.mSaveData.subscribe(res => {
+      if (res != null && res != "null" && res != "null") {
+        console.log('doc edit res', res);
+        this.documentData = res;
         this.filepath = res.filepath.split('/').pop().split('?')[0];
 
-        
+
         this.isEdited = true;
         this.formTitle = `Edit Document`;
       }
@@ -108,7 +108,7 @@ export class AddCategoryDocumentComponent implements OnInit {
               let categorydata = localStorage.getItem('Category-Object');
               this.category = JSON.parse(categorydata);
               this.dataService.changeData(this.category);
-              this.showFirst = !this.showFirst; 
+              this.showFirst = !this.showFirst;
               // this.router.navigate(['/asset']); 
               this.spinner.hide();
             }, 1000);
@@ -135,7 +135,7 @@ export class AddCategoryDocumentComponent implements OnInit {
     }
   }
 
-/*********************************************************** Edit Document *******************************************************************/
+  /*********************************************************** Edit Document *******************************************************************/
 
   editDocument(formData: NgForm) {
     let value = formData.value;
@@ -143,7 +143,7 @@ export class AddCategoryDocumentComponent implements OnInit {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
         // console.log(JSON.stringify(value));
-        this.assetmateService.editDocument(this.documentData.documentId,value).subscribe(
+        this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
           res => {
             this.spinner.show();
             setTimeout(() => {
@@ -163,12 +163,12 @@ export class AddCategoryDocumentComponent implements OnInit {
       })
     }
 
-   }
+  }
 
 
-   /*********************************************************** Back to Asset List *******************************************************************/
+  /*********************************************************** Back to Asset List *******************************************************************/
 
-   backToList() {
+  backToList() {
     let categorydata = localStorage.getItem('Category-Object');
     this.category = JSON.parse(categorydata);
     this.dataService.changeData(this.category);

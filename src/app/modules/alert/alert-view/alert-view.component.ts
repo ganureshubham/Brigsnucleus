@@ -6,6 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../service/alert.service';
+import { DialogService } from '../../../public service/dialog.service';
+import { AppDialogData } from '../../../model/appDialogData';
+import { SpinnerService } from '../../../public service/spinner.service';
 
 @Component({
   selector: 'app-alert-view',
@@ -21,6 +24,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   manufacturerData: any = {};
   totalAlerts: any;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['alertName', 'title', 'alertImage', 'isRead', 'isDeliver', 'message', 'Actions'];
   paidDataSource: MatTableDataSource<Alert> = new MatTableDataSource();
@@ -39,6 +43,9 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private snackBar: MatSnackBar,
+    private dialogService: DialogService,
+    private spinnerService: SpinnerService,
+
   ) {
 
   }
@@ -92,19 +99,39 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Delete Particular Alert *******************************************************************/
 
-  deleteAlert(alertId: number) {
-    alert('are you sure?');
-    this.alertService.deleteAlert(alertId).subscribe(res => {
-      console.log(res);
-      this.toastr.success(res.message);
-      this.getAlertList(this.page);
-
-    },
-      error => {
-        console.log(error);
-        this.toastr.error(error.message);
-
+  deleteAlert(alertId: number, title: string) {
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ASSET',
+      message: ` Are your sure you want to delete alert "${alertId}"`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+    this.dialogService.setDialogVisibility(appDialogData);
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+          this.dialogService.setUserDialogAction(0);
+          //User has approved delete operation
+          this.spinnerService.setSpinnerVisibility(true);
+          this.alertService.deleteAlert(alertId).subscribe(res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getAlertList(this.page);
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
       })
+    }
+  }
+
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   /*********************************************************** Search Alerts *******************************************************************/
