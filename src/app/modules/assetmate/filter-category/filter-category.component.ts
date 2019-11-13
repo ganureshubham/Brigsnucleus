@@ -105,7 +105,11 @@ export class FilterCategoryComponent implements OnInit {
       for (let i = 0; i < this.TREE_DATA.length; i++) {
         // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
         // console.log(this.local_TREE_DATA);
-        if (this.TREE_DATA[i].title.includes(searchedText)) {
+        if (
+          this.TREE_DATA[i].title.includes(searchedText) ||
+          this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
+          this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
+        ) {
           this.TREE_DATA = [];
           this.TREE_DATA.push(this.local_TREE_DATA[i]);
           this.dataSource.data = this.TREE_DATA;
