@@ -10,6 +10,8 @@ import { DataSharingService } from '../../../../../public service/data-sharing.s
 import { saveAs } from 'file-saver';
 import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { DialogService } from '../../../../../public service/dialog.service';
+import { AppDialogData } from 'src/app/model/appDialogData';
 
 @Component({
   selector: 'app-view-category-document',
@@ -30,6 +32,8 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   codeData: any;
   parentdata: any;
   result: string = '';
+  deletedocWithId;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['documentId', 'title', 'description', 'Actions'];
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
@@ -53,6 +57,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    private dialogService: DialogService,
   ) {
 
   }
@@ -122,15 +127,45 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
-  deleteDocument(documentId: number) {
-    alert('are you sure?');
-    this.assetmateService.deleteDocument(documentId).subscribe(res => {
-      this.toastr.success(res.message);
-      this.getAllDocuments(this.categoryID, this.page);
-    })
-    error => {
-      this.toastr.error(error.message);
+  deleteDocument(documentId: number, documentTitle: string) {
+
+    this.deletedocWithId = documentId;
+
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE CATEGORY DOCUMENT',
+      message: `Are your sure you want to delete document "${documentTitle}" ?`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
     }
+
+    this.dialogService.setDialogVisibility(appDialogData);
+
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+
+          this.dialogService.setUserDialogAction(0);
+
+          //User has approved delete operation 
+          this.spinnerService.setSpinnerVisibility(true);
+          this.assetmateService.deleteDocument(this.deletedocWithId).subscribe(res => {
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.assetmateService.setBadgeUpdateAction('assetList', true);
+            this.getAllDocuments(this.categoryID, this.page);
+
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
+
   }
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
@@ -158,12 +193,11 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
   searchDocument(keyword) {
     if (keyword) {
-      this.assetmateService.searchDocument(keyword).subscribe(res => {
+      this.assetmateService.searchDocumentByCategoryId(keyword, this.categoryID).subscribe(res => {
         this.dataSource = res.data;
       }, error => {
         console.log(error);
       })
-
     } else {
       this.getAllDocuments(this.categoryID, this.pageNumber);
     }

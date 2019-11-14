@@ -356,25 +356,24 @@
                                 <p>{{assetData.description}} </p>
                             </div>
                         </div>
-                        <div class="image_file">
+                        <!-- class="image_file" -->
+                        <div class="asset-img-guide-container">
                             <mat-grid-list cols="3" rowHeight="390px" gutterSize="10px">
                                 <mat-grid-tile colspan="1">
                                     <div class=" img_block margin-right">
                                         <h4 class=" mat-h4 db ">Asset Image</h4>
-                                        <mat-card>
+                                        <mat-card class="asset-img-container-card">
                                             <img src="{{assetData.image}}" alt="asset-pic">
                                         </mat-card>
                                     </div>
                                     <div class="img_block ">
                                         <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
                                         <mat-card>
-                                            <img src="{{assetcode}}" alt="asset-code">
-                                            <!-- <qrcode (click)="openDialog(visit.assetCode)" [qrdata]="visit.assetCode"
-                                                [size]="60" [level]="'M'"></qrcode> -->
+                                            <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode"
+                                                [size]="60" [level]="'M'"></qrcode>
                                         </mat-card>
                                     </div>
                                 </mat-grid-tile>
-
                                 <mat-grid-tile colspan="3" rowspan="1" class="user_guid">
                                     <div class="block ">
                                         <h4 class="mat-h4 db">Asset User Guide</h4>
@@ -382,13 +381,14 @@
                                             <mat-list-item role="listitem">
                                                 <mat-grid-list cols="2" rowHeight="47px" gutterSize="15px">
                                                     <mat-grid-tile> <span class="round">
-                                                            .Pdf
-                                                        </span> File Name
+                                                            .{{userGuideFileExtension}}
+                                                        </span> {{userGuideFileName}}
                                                     </mat-grid-tile>
                                                     <mat-grid-tile class="btns">
-                                                        <button mat-button>View</button>
-                                                        <button mat-button>Download</button>
-                                                        <button mat-button>Delete</button>
+                                                        <!-- <button mat-button>View</button> -->
+                                                        <button mat-button
+                                                            (click)="downloadDocument(assetData.userGuideBook)">Download</button>
+                                                        <!-- <button mat-button>Delete</button> -->
                                                     </mat-grid-tile>
                                                 </mat-grid-list>
                                             </mat-list-item>
@@ -494,7 +494,8 @@
                 </mat-tab> -->
                 <mat-tab label="Document">
                     <div class="tab_content">
-                        <app-view-asset-document></app-view-asset-document>
+                        <app-view-asset-document (assetDocAddedEmitterP1)="onAssetDocAddedP1($event)">
+                        </app-view-asset-document>
                     </div>
                 </mat-tab>
                 <mat-tab label="History">
@@ -504,7 +505,7 @@
                 </mat-tab>
                 <mat-tab label="Assigned Users">
                     <div class="tab_content">
-                        call Assigned Users module
+                        <app-asset-assign-user></app-asset-assign-user>
                     </div>
                 </mat-tab>
             </mat-tab-group>

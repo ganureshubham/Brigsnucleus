@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgForm } from '@angular/forms'; 
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
-import { forEach } from '@angular/router/src/utils/collection';
-import { element } from 'protractor';
-
+import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from '../../../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-assign-user',
@@ -16,37 +15,48 @@ import { element } from 'protractor';
 export class AddAssignUserComponent implements OnInit {
   showFirst: boolean = false;
   assignUserData: any = {};
-  formTitle: string = "Add Assigned User"; 
+  formTitle: string = "Add Assigned User";
   isEdited: boolean = false;
   categoryLists: any;
   category: any;
   assignmentLists: any;
   userLists: any;
+  categoryId;
 
 
   constructor(
     private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
+
+    this.categoryId = this.route.snapshot.params['categoryId'];
+
+    //Hardcoded for the category option;
+    this.assignUserData.assignmentTypeIdFK = 1;
+    this.assignUserData.masterIdFK = Number(this.categoryId);
+
     // this.dataService.mSaveData.subscribe(res=>{
     //   if (res != null && res != "null" && res != "null"){
     //     console.log('doc edit res',res);
     //     this.documentData=res;
     //     this.filepath = res.filepath.split('/').pop().split('?')[0];
 
-        
+
     //     this.isEdited = true;
     //     this.formTitle = `Edit Document`;
     //   }
     // })
     // this.getDocumentList();
-     this.getcategoryList();
-     this.getassignmentLists();
-     this.getuserLists();
+    this.getcategoryList();
+    this.getassignmentLists();
+    this.getuserLists();
   }
   /*********************************************************** Get Category List *******************************************************************/
 
@@ -60,6 +70,10 @@ export class AddAssignUserComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   /*********************************************************** Get Assignment List *******************************************************************/
@@ -76,54 +90,51 @@ export class AddAssignUserComponent implements OnInit {
     );
   }
 
-    /*********************************************************** Get User List *******************************************************************/
+  /*********************************************************** Get User List *******************************************************************/
 
-    getuserLists() {
-      this.assetmateService.getuserLists().subscribe(res => {  
-        if (res.user) {
-          this.userLists = res.user;
-        }
-      },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+  getuserLists() {
+    this.assetmateService.getuserLists().subscribe(res => {
+      if (res.user) {
+        this.userLists = res.user;
+      }
+    },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
 
-  
+
 
 
   /*********************************************************** Add New Assigned User *******************************************************************/
   addAssignUser(value) {
+
+    this.spinnerService.setSpinnerVisibility(true);
+
     let users = []
     value.users.forEach(element => {
-      users.push({userIdFK:element})
+      users.push({ userIdFK: element })
     });
-    value.users= users;
-    console.log('assign user value',JSON.stringify(value));
+    value.users = users;
+    value.assignmentTypeIdFK = 1;
+    value.masterIdFK = Number(this.categoryId);
+
     this.assetmateService.addAssignUser(value).subscribe(res => {
-      this.spinner.show();
-      setTimeout(() => {
-        this.toastr.success(res.message);
-        let categorydata = localStorage.getItem('Category-Object');  
-                this.category = JSON.parse(categorydata);
-                this.dataService.changeData(this.category);
-        this.showFirst = !this.showFirst;
-        // this.router.navigate(['/asset']);
-        this.spinner.hide();
-      }, 1000);
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
+      this.showFirst = !this.showFirst;
+      this.assetmateService.setBadgeUpdateAction('assetList', true);
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.error.message);
+        this.showSnackBar("Something went wrong..!!");
       })
+
   }
 
-
- 
-/*********************************************************** Edit Document *******************************************************************/
-editAssignUser(){}
+  /*********************************************************** Edit Document *******************************************************************/
+  editAssignUser() { }
   // editDocument(formData: NgForm) {
   //   let value = formData.value;
   //   if (formData.valid) {
@@ -153,9 +164,9 @@ editAssignUser(){}
   //  }
 
 
-   /*********************************************************** Back to Asset List *******************************************************************/
+  /*********************************************************** Back to Asset List *******************************************************************/
 
-   backToList() {
+  backToList() {
     let categorydata = localStorage.getItem('Category-Object');
     this.category = JSON.parse(categorydata);
     this.dataService.changeData(this.category);
