@@ -36,8 +36,6 @@ export class AssetAddComponent implements OnInit {
   selectedCategory: any;
   categoryID;
 
-  @Output() assetAddedEmitter = new EventEmitter<boolean>();
-
   constructor(private router: Router,
     private assetmateService: AssetmateService,
     private dataService: DataSharingService,
@@ -134,7 +132,7 @@ export class AssetAddComponent implements OnInit {
           this.assetmateService.addAsset(value).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            this.assetAddedEmitter.emit(true);
+            this.assetmateService.setBadgeUpdateAction('assetList', true);
             this.showFirst = !this.showFirst;
           },
             error => {

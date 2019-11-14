@@ -27,6 +27,7 @@ export class AssetmateDetailsComponent implements OnInit {
   ngOnInit() {
     this.categoryID = this.route.snapshot.params['categoryId'];
     this.getdata();
+    this.subscribeToBadgeUpdateService();
   }
 
   getdata() {
@@ -40,9 +41,15 @@ export class AssetmateDetailsComponent implements OnInit {
       })
   }
 
-  onAssetAdded(isAssetAdded) {
-    this.getdata();
+  subscribeToBadgeUpdateService() {
+    this.assetmateService.getBadgeUpdateAction('assetList').subscribe(res => {
+      if (res) {
+        this.assetmateService.setBadgeUpdateAction('assetList', false);
+        this.getdata();
+      }
+    });
   }
+
 
   backToList() {
     this.router.navigate(['/assetmate']);

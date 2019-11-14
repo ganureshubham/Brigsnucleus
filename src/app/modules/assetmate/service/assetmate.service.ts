@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ConfigurationService } from '../../../public service/configuration.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssetmateService {
+
+  private badgeUpdateActionAssetDetails = new BehaviorSubject<boolean>(false);
+  private badgeUpdateActionAssetList = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -293,8 +297,20 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/questionAnswer/${doneChecklistIdFK}/${pageNo}`);
   }
 
+  getBadgeUpdateAction(component: string): Observable<boolean> {
+    if (component == 'assetDetails') {
+      return this.badgeUpdateActionAssetDetails.asObservable();
+    } else if (component == 'assetList') {
+      return this.badgeUpdateActionAssetList.asObservable();
+    }
+  }
 
-
-
+  setBadgeUpdateAction(component: string, action: boolean) {
+    if (component == 'assetDetails') {
+      this.badgeUpdateActionAssetDetails.next(action);
+    } else if (component == 'assetList') {
+      this.badgeUpdateActionAssetList.next(action);
+    }
+  }
 
 }

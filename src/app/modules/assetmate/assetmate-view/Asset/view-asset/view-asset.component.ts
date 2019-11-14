@@ -33,7 +33,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   codeData: any;
   parentdata: any;
   result: string = '';
-
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['assetId', 'assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
@@ -44,8 +44,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
   animal: any;
-
-  @Output() assetAddedEmitter = new EventEmitter<boolean>();
+  deleteAssetWithId: number;
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
@@ -106,11 +105,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
-
-  onAssetAdded(isAssetAdded) {
-    this.assetAddedEmitter.emit(isAssetAdded);
-  }
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -183,6 +177,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   deleteAsset(assetId: number, assetTitle: string) {
 
+    this.deleteAssetWithId = assetId;
+
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET',
@@ -193,27 +189,30 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
     this.dialogService.setDialogVisibility(appDialogData);
 
-    this.dialogService.getUserDialogAction().subscribe(userAction => {
-      if (userAction == 0) {
-        //User has not performed any action on opened app dialog or closed the dialog;
-      } else if (userAction == 1) {
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
 
-        this.dialogService.setUserDialogAction(0);
+          this.dialogService.setUserDialogAction(0);
 
-        //User has approved delete operation 
-        this.spinnerService.setSpinnerVisibility(true);
-        this.assetmateService.deleteAsset(assetId).subscribe(res => {
+          //User has approved delete operation 
+          this.spinnerService.setSpinnerVisibility(true);
+          this.assetmateService.deleteAsset(this.deleteAssetWithId).subscribe(res => {
 
-          this.spinnerService.setSpinnerVisibility(false);
-          this.showSnackBar(res.message);
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.assetmateService.setBadgeUpdateAction('assetList', true);
+            this.getAllAssets(this.categoryID, this.page);
 
-          this.getAllAssets(this.categoryID, this.page);
-
-        }, error => {
-          this.showSnackBar("Something went wrong..!!");
-        });
-      }
-    })
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
   }
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/

@@ -18,9 +18,9 @@
       <div mat-dialog-content>
         <form #documentform="ngForm" fxLayout="column" novalidate>
           <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="1" [rowspan]="1"> 
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field fxFlex>
-                <mat-select name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
+                <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
                   [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
                   <mat-option *ngFor="let doc of documentList" [value]="doc.documentTypeId">
                     {{doc.title}}
@@ -33,8 +33,8 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field fxFlex>
-                <mat-select name="masterId" id="masterId" [(ngModel)]="documentData.masterId" #CategoryName="ngModel"
-                  placeholder="Select Asset" required>
+                <mat-select disabled name="masterId" id="masterId" [(ngModel)]="documentData.masterId"
+                  #CategoryName="ngModel" placeholder="Select Asset" required>
                   <mat-option *ngFor="let asset of AssetLists" [value]="asset.assetId">{{asset.assetTitle}}
                   </mat-option>
                 </mat-select>
@@ -56,7 +56,7 @@
               </mat-form-field>
             </mat-grid-tile>
           </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="1:0.15"> 
+          <mat-grid-list cols="3" rowHeight="1:0.15">
             <mat-grid-tile [colspan]="3" [rowspan]="1">
               <mat-form-field fxFlex>
                 <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput
@@ -72,7 +72,7 @@
               <div class="md-form">
                 <label>Document File</label>
                 <div class="file-field">
-                  <div class="btn btn-primary btn-sm float-left"> 
+                  <div class="btn btn-primary btn-sm float-left">
                     <span>Choose file</span>
                     <input type="file" (change)="documentChange($event.target.files)">
                   </div>
@@ -92,6 +92,8 @@
               [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
             <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
               [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
+            <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+              [disabled]="!documentform.valid" (click)="backToList()" class="btn-cancel">Cancel</button>
           </div>
         </form>
       </div>

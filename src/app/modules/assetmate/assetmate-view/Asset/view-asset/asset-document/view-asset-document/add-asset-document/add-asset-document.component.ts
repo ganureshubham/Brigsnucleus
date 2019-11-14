@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
 import { AssetmateService } from '../../../../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../../../../public service/data-sharing.service';
+import { MatSnackBar } from '@angular/material';
+import { SpinnerService } from '../../../../../../../../public service/spinner.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-asset-document',
@@ -22,29 +25,38 @@ export class AddAssetDocumentComponent implements OnInit {
   fileToUpload1: File = null;
   category: any;
   AssetLists: any;
-
+  assetId: number;
 
   constructor(
-    private assetmateService: AssetmateService, 
+    private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar,
+    private spinnerService: SpinnerService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res=>{
-      if (res != null && res != "null" && res != "null"){
-        console.log('doc edit res',res);
-        this.documentData=res;
-        //console.log('aacffd', this.documentData);
-        
+
+    this.assetId = this.route.snapshot.params['assetId'];
+
+    this.dataService.mSaveData.subscribe(res => {
+      if (res != null && res != "null" && res != "null") {
+        this.documentData = res;
         this.filepath = res.filepath.split('/').pop().split('?')[0];
         this.isEdited = true;
         this.formTitle = `Edit Document`;
+      } else {
+        //Hardcoded documentTypeIdFK for asset it is 2
+        this.documentData.documentTypeIdFK = 2;
+        this.documentData.masterId = Number(this.assetId);
       }
     })
+
     this.getDocumentList();
     this.getAssetLists();
+
   }
   /*********************************************************** Get Document List *******************************************************************/
 
@@ -62,26 +74,22 @@ export class AddAssetDocumentComponent implements OnInit {
 
   /*********************************************************** Get Asset List *******************************************************************/
 
-  getAssetLists(){
-    this.assetmateService.getAssetLists().subscribe(res=>{
+  getAssetLists() {
+    this.assetmateService.getAssetLists().subscribe(res => {
 
-      if(res.assetList){
-        this.AssetLists=res.assetList;
+      if (res.assetList) {
+        this.AssetLists = res.assetList;
       }
     },
-    error =>{
-      console.log(error);
-      
-    }
+      error => {
+        console.log(error);
+
+      }
     );
   }
 
   /*********************************************************** Add  Document file *****************************************************************/
   documentChange(files: FileList) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 200);
     var validDocumentFormats = ['pdf', 'docx', 'doc'];
     var extension = files.item(0).name.split('.').pop();
     if (validDocumentFormats.includes(extension)) {
@@ -99,32 +107,38 @@ export class AddAssetDocumentComponent implements OnInit {
 
   addDocument(formData: NgForm) {
     let value = formData.value;
+
+    //Hardcoded documentTypeIdFK for asset it is 2
+    value.documentTypeIdFK = 2;
+    value.masterId = this.assetId;
+
     if (formData.valid) {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
-        // console.log(JSON.stringify(value));
+
+        this.spinnerService.setSpinnerVisibility(true);
+
         this.assetmateService.addDocument(value).subscribe(
           res => {
-            this.spinner.show();
-            setTimeout(() => {
-              this.toastr.success(res.message);
-              let categorydata = localStorage.getItem('Category-Object');
-              this.category = JSON.parse(categorydata);
-              this.dataService.changeData(this.category);
-              this.showFirst = !this.showFirst;
-              // this.router.navigate(['/asset']); 
-              this.spinner.hide();
-            }, 1000);
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+
+            let categorydata = localStorage.getItem('Category-Object');
+            this.category = JSON.parse(categorydata);
+            this.dataService.changeData(this.category);
+            this.showFirst = !this.showFirst;
+
+            this.assetmateService.setBadgeUpdateAction('assetDetails', true);
+
           },
           error => {
-            this.toastr.error(error.message); 
+            this.showSnackBar("Something went wrong..!!");
           }
         );
       })
     }
   }
-
-
 
   uploadDocToserver = (callback) => {
     if (this.fileToUpload1 == null) {
@@ -138,40 +152,49 @@ export class AddAssetDocumentComponent implements OnInit {
     }
   }
 
-/*********************************************************** Edit Document *******************************************************************/
+  /*********************************************************** Edit Document *******************************************************************/
 
   editDocument(formData: NgForm) {
     let value = formData.value;
     if (formData.valid) {
+
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
-        // console.log(JSON.stringify(value));
-        this.assetmateService.editDocument(this.documentData.documentId,value).subscribe(
+        value.documentTypeIdFK = this.documentData.documentTypeIdFK;
+        value.masterId = this.documentData.masterId;
+
+        this.spinnerService.setSpinnerVisibility(true);
+
+        this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
           res => {
-            this.spinner.show();
-            setTimeout(() => {
-              this.toastr.success(res.message);
-              let categorydata = localStorage.getItem('Category-Object');
-              this.category = JSON.parse(categorydata);
-              this.dataService.changeData(this.category);
-              this.showFirst = !this.showFirst;
-              // this.router.navigate(['/asset']); 
-              this.spinner.hide();
-            }, 1000);
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+
+            let categorydata = localStorage.getItem('Category-Object');
+            this.category = JSON.parse(categorydata);
+            this.dataService.changeData(this.category);
+            this.showFirst = !this.showFirst;
+
           },
           error => {
-            this.toastr.error(error.message);
+            this.showSnackBar("Something went wrong..!!");
           }
         );
       })
+
     }
 
-   }
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
 
 
-   /*********************************************************** Back to Asset List *******************************************************************/
+  /*********************************************************** Back to Asset List *******************************************************************/
 
-   backToList() {
+  backToList() {
     let categorydata = localStorage.getItem('Category-Object');
     this.category = JSON.parse(categorydata);
     this.dataService.changeData(this.category);
