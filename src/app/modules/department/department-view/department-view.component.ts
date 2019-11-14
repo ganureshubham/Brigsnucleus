@@ -1,164 +1,164 @@
-import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {Component, Injectable} from '@angular/core';
-import {BehaviorSubject, merge, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { AddDepartmentComponent } from './add-department/add-department.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DepartmentService } from '../service/department.service';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { DialogData } from '../../../app.component';
+
+
+interface DepartmentNode {
+  departmentId: number;
+  departmentTitle: String;
+  childData?: DepartmentNode[];
+  parentId: number;
+}
+
+interface departmentDialogData {
+  type: string;
+  level: number;
+  parentId: number;
+  departmentTitle: string;
+}
 
 /** Flat node with expandable and level information */
-export class DynamicFlatNode {
-  constructor(public item: string, public level = 1, public expandable = false,
-              public isLoading = false) {}
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  departmentId: number;
+  level: number;
+  parentId: number;
 }
 
-/**
- * Database for dynamic data. When expanding a node in the tree, the data source will need to fetch
- * the descendants data from the database.
- */
-export class DynamicDatabase {
-  dataMap = new Map<string, string[]>([
-    ['Fruits', ['Apple', 'Orange', 'Banana']],
-    ['Vegetables', ['Tomato', 'Potato', 'Onion']],
-    ['Apple', ['Fuji', 'Macintosh']],
-    ['Onion', ['Yellow', 'White', 'Purple']]
-  ]);
 
-  rootLevelNodes: string[] = ['Fruits', 'Vegetables'];
-
-  /** Initial data from database */
-  initialData(): DynamicFlatNode[] {
-    return this.rootLevelNodes.map(name => new DynamicFlatNode(name, 0, true));
-  }
-
-  getChildren(node: string): string[] | undefined {
-    return this.dataMap.get(node);
-  }
-
-  isExpandable(node: string): boolean {
-    return this.dataMap.has(node);
-  }
-}
-/**
- * File database, it can build a tree structured Json object from string.
- * Each node in Json object represents a file or a directory. For a file, it has filename and type.
- * For a directory, it has filename and children (a list of files or directories).
- * The input will be a json object string, and the output is a list of `FileNode` with nested
- * structure.
- */
-@Injectable()
-export class DynamicDataSource {
-
-  dataChange = new BehaviorSubject<DynamicFlatNode[]>([]);
-
-  get data(): DynamicFlatNode[] { return this.dataChange.value; }
-  set data(value: DynamicFlatNode[]) {
-    this._treeControl.dataNodes = value;
-    this.dataChange.next(value);
-  }
-
-  constructor(private _treeControl: FlatTreeControl<DynamicFlatNode>,
-              private _database: DynamicDatabase) {}
-
-  connect(collectionViewer: CollectionViewer): Observable<DynamicFlatNode[]> {
-    this._treeControl.expansionModel.onChange.subscribe(change => {
-      if ((change as SelectionChange<DynamicFlatNode>).added ||
-        (change as SelectionChange<DynamicFlatNode>).removed) {
-        this.handleTreeControl(change as SelectionChange<DynamicFlatNode>); 
-      }
-    });
-
-    return merge(collectionViewer.viewChange, this.dataChange).pipe(map(() => this.data));
-  }
-
-  /** Handle expand/collapse behaviors */
-  handleTreeControl(change: SelectionChange<DynamicFlatNode>) {
-    if (change.added) {
-      change.added.forEach(node => this.toggleNode(node, true));
-    }
-    if (change.removed) {
-      change.removed.slice().reverse().forEach(node => this.toggleNode(node, false));
-    }
-  }
-
-  /**
-   * Toggle the node, remove from display list
-   */
-  toggleNode(node: DynamicFlatNode, expand: boolean) {
-    const children = this._database.getChildren(node.item);
-    const index = this.data.indexOf(node);
-    if (!children || index < 0) { // If no children, or cannot find the node, no op
-      return;
-    }
-
-    node.isLoading = true;
-
-    setTimeout(() => {
-      if (expand) {
-        const nodes = children.map(name =>
-          new DynamicFlatNode(name, node.level + 1, this._database.isExpandable(name)));
-        this.data.splice(index + 1, 0, ...nodes);
-      } else {
-        let count = 0;
-        for (let i = index + 1; i < this.data.length
-          && this.data[i].level > node.level; i++, count++) {}
-        this.data.splice(index + 1, count);
-      }
-
-      // notify the change
-      this.dataChange.next(this.data);
-      node.isLoading = false;
-    }, 1000);
-  }
-}
-
-/**
- * @title Tree with dynamic data
- */
 
 @Component({
   selector: 'app-department-view',
   templateUrl: './department-view.component.html',
   styleUrls: ['./department-view.component.css'],
-  providers: [DynamicDatabase]
 })
-export class DepartmentViewComponent   {
+export class DepartmentViewComponent implements OnInit {
+
+  departmentId;
   animal: any;
+  TREE_DATA: DepartmentNode[];
+  local_TREE_DATA: DepartmentNode[];
+  final_TREE_DATA: DepartmentNode[];
+  isTreeDataReady: boolean = false;
+  dialogData: departmentDialogData;
 
-  constructor(database: DynamicDatabase,public dialog: MatDialog) {
-    this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new DynamicDataSource(this.treeControl, database); 
 
-    this.dataSource.data = database.initialData();
+  private transformer = (node: DepartmentNode, level: number) => {
+    return {
+      expandable: !!node.childData && node.childData.length > 0,
+      name: node.departmentTitle,
+      departmentId: node.departmentId,
+      parentId: node.parentId,
+      level: level,
+    };
   }
 
-  openDialog(): void {
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level, node => node.expandable);
+
+  treeFlattener = new MatTreeFlattener(
+    this.transformer, node => node.level, node => node.expandable, node => node.childData);
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private departmentService: DepartmentService,
+    public dialog: MatDialog
+  ) {
+  }
+
+  ngOnInit() {
+    //this.categoryID = this.route.snapshot.params['categoryId'];
+    this.getAllDept();
+  }
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+
+
+
+
+
+  getAllDept() {
+    this.departmentService.getAllDept().subscribe(res => {
+      if (res.department) {
+        // console.log('TREE DATA:');
+        // console.log(res);
+        this.TREE_DATA = res.department;
+        this.dataSource.data = this.TREE_DATA;
+        this.isTreeDataReady = true;
+      }
+    },
+      error => {
+        console.log(error.error.message);
+      })
+  }
+
+  addDept(node: any): void {
+    console.log('bak', node);
+
+
+    this.dialogData = {
+
+      type: 'Add',
+      level: node.level,
+      parentId: node.parentId,
+      departmentTitle: node.name
+
+    }
+
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
-   });
+
+      data: this.dialogData
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    
+      this.getAllDept();
     });
   }
 
 
-  treeControl: FlatTreeControl<DynamicFlatNode>;
+  editDept(node: any) {
+    console.log('edit', node);
 
-  dataSource: DynamicDataSource;
 
-  getLevel = (node: DynamicFlatNode) => node.level;
+    this.dialogData = {
 
-  isExpandable = (node: DynamicFlatNode) => node.expandable;
+      type: 'Edit',
+      level: node.level,
+      parentId: node.parentId,
+      departmentTitle: node.name
 
-  hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
+    }
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      data: this.dialogData
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllDept();
+    });
+
+  }
+
+
+
 }
 
 
-  
-  
-  
+
 
 
 
