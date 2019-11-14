@@ -6,23 +6,23 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentService { 
+export class DepartmentService {
 
-  constructor(private httpClient: HttpClient) { }  
+  constructor(private httpClient: HttpClient) { }
 
   /***********************************************************Select Department***************************************************/
 
   getDeptList(): Observable<any> {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl +`departments/selectDepartment`);
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `departments/selectDepartment`);
   }
 
-/*********************************************************** Get All Departments ************************************************/
-  getAllDept(parentId :number):Observable<any>{
-    return this.httpClient.get<any>(ConfigurationService.baseUrl +`departments/departmentList/${parentId}`);
+  /*********************************************************** Get All Departments ************************************************/
+  getAllDept(): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `departments/departmentList`);
   }
 
-/*********************************************************** Add New Department *************************************************/
-  addDept(deptData:any):Observable<any>{
-    return this.httpClient.post<any>(ConfigurationService.baseUrl + `departments/addDepartment`,deptData); 
+  /*********************************************************** Add New Department *************************************************/
+  addDept(deptData: any): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `departments/addDepartment`, deptData);
   }
 }

@@ -127,8 +127,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Supplier  *******************************************************************/
 
-  editSupplier(supplierId: number) {
-    this.dataService.changeData(supplierId);
+  editSupplier(visit: number) {
+    this.dataService.changeData(visit);
     this.router.navigate(['/supplier/add-supplier']);
 
 

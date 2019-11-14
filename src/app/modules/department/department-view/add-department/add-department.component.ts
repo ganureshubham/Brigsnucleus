@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DepartmentService } from '../../service/department.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-add-department',
@@ -10,53 +11,77 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./add-department.component.css']
 })
 export class AddDepartmentComponent implements OnInit {
-  deptData:any={};
-  deptList:any;
-  constructor(private departmentService:DepartmentService,
-    private router:Router,
-    private toastr:ToastrService,
-    public dialog: MatDialog
-    ) { }
+  deptData: any = {};
+  deptList: any;
+  parentId: any;
+
+
+  constructor(private departmentService: DepartmentService,
+    private router: Router,
+    private toastr: ToastrService,
+    public dialog: MatDialog,
+    public dialog1: MatDialogRef<AddDepartmentComponent>,
+    public dialogRef: MatDialogRef<AddDepartmentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit() {
+    console.log('blabla', this.data);
+    if (this.data.type == 'Add') {
+      console.log('if');
+
+      this.deptData.parentId = this.data.parentId;
+
+    } else if (this.data.type == 'Edit') {
+      console.log('else if');
+
+      this.deptData = this.data;
+      // this.deptData.parentId = this.data.parentId;
+      // this.deptData = this.data.node.parentId;
+    }
+
+
+
+
     this.getDeptList();
   }
 
-  closeDialog():void {
+  closeDialog(): void {
     this.dialog.closeAll();
 
   }
 
-  onNoClick(){}
+  onNoClick() { }
 
   /*********************************************************** Get Department List *******************************************************************/
 
-  getDeptList(){
-    this.departmentService.getDeptList().subscribe(res=>{
-      if(res.department){
-        this.deptList=res.department;
+  getDeptList() {
+    this.departmentService.getDeptList().subscribe(res => {
+
+      if (res.department) {
+        this.deptList = res.department;
       }
     },
-    error =>{
-      console.log(error);
-      this.toastr.error(error.message);
-      
-    })
-  } 
+      error => {
+        console.log(error);
+        this.toastr.error(error.message);
+
+      })
+  }
 
   /*********************************************************** Add New Department *******************************************************************/
 
-  addDept(value){
-    this.departmentService.addDept(value).subscribe(res=>{
-      console.log(res);
+  addDept(value) {
+    this.departmentService.addDept(value).subscribe(res => {
+      this.dialog.closeAll();
       this.toastr.success(res.message);
-      
+
     },
-    error =>{
-      console.log(error);
-      this.toastr.error(error.message);
-      
-    })
+      error => {
+        console.log(error);
+        this.toastr.error(error.message);
+
+      })
   }
 
 }

@@ -18,9 +18,9 @@ export class AddCategoryDocumentComponent implements OnInit {
   documentData: any = {};
   formTitle: string = "Add Document";
   isEdited: boolean = false;
-  documenterror: any;
   documentList: any;
   categoryLists: any;
+  documenterror: any;
   filepath: any;
   fileToUpload1: File = null;
   category: any;
@@ -37,23 +37,22 @@ export class AddCategoryDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.categoryId = this.route.snapshot.params['categoryId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.documentData = res;
-        this.filepath = res.filepath.split('/').pop().split('?')[0];
-        this.isEdited = true;
-        this.formTitle = `Edit Document`;
-      } else {
-        //Hardcoded for Category
-        this.documentData.documentTypeIdFK = 1;
-        this.documentData.masterId = Number(this.categoryId);
-      }
-    })
-    this.getDocumentList();
-    this.getcategoryLists();
-  }
+   this.categoryId = this.route.snapshot.params['categoryId'];
+   this.dataService.mSaveData.subscribe(res => {
+     if (res != null && res != "null" && res != "null") {
+       this.documentData = res;
+       this.filepath = res.filepath.split('/').pop().split('?')[0];
+       this.isEdited = true;
+       this.formTitle = Edit Document;
+     } else {
+       //Hardcoded for Category
+       this.documentData.documentTypeIdFK = 1;
+       this.documentData.masterId = Number(this.categoryId);
+     }
+   })
+   this.getDocumentList();
+   this.getcategoryLists();
+ }
   /*********************************************************** Get Document List *******************************************************************/
 
   getDocumentList() {
@@ -100,72 +99,65 @@ export class AddCategoryDocumentComponent implements OnInit {
   /*********************************************************** Add New Asset *******************************************************************/
 
   addDocument(formData: NgForm) {
-    let value = formData.value;
-    if (formData.valid) {
-      this.uploadDocToserver((result1) => {
-        value.filepath = result1;
-        value.documentTypeIdFK = 1;
-        value.masterId = Number(this.categoryId);
-
-        this.spinnerService.setSpinnerVisibility(true);
-
-        this.assetmateService.addDocument(value).subscribe(
-          res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message)
-            this.showFirst = !this.showFirst;
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
-          },
-          error => {
-            this.showSnackBar("Something went wrong..!!");
-          }
-        );
-      })
-    }
-  }
-
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
-  }
-
-  uploadDocToserver = (callback) => {
-    if (this.fileToUpload1 == null) {
-      callback(this.filepath)
-    } else {
-      let formData: FormData = new FormData();
-      formData.append("file", this.fileToUpload1, this.fileToUpload1.name);
-      this.assetmateService.docsUpload(formData).subscribe(res => {
-        callback(res.DocumentName)
-      })
-    }
-  }
+   let value = formData.value;
+   if (formData.valid) {
+     this.uploadDocToserver((result1) => {
+       value.filepath = result1;
+       value.documentTypeIdFK = 1;
+       value.masterId = Number(this.categoryId);
+       this.spinnerService.setSpinnerVisibility(true);
+       this.assetmateService.addDocument(value).subscribe(
+         res => {
+           this.spinnerService.setSpinnerVisibility(false);
+           this.showSnackBar(res.message)
+           this.showFirst = !this.showFirst;
+           this.assetmateService.setBadgeUpdateAction('assetList', true);
+         },
+         error => {
+           this.showSnackBar("Something went wrong..!!");
+         }
+       );
+     })
+   }
+ }
+ showSnackBar(message: string) {
+   this.snackBar.open(message, '', { duration: 2000 });
+ }
+ uploadDocToserver = (callback) => {
+   if (this.fileToUpload1 == null) {
+     callback(this.filepath)
+   } else {
+     let formData: FormData = new FormData();
+     formData.append("file", this.fileToUpload1, this.fileToUpload1.name);
+     this.assetmateService.docsUpload(formData).subscribe(res => {
+       callback(res.DocumentName)
+     })
+   }
+ }
 
   /*********************************************************** Edit Document *******************************************************************/
 
-  editDocument(formData: NgForm) {
-    let value = formData.value;
-    if (formData.valid) {
-      this.uploadDocToserver((result1) => {
-        value.filepath = result1;
-        value.documentTypeIdFK = 1;
-        value.masterId = Number(this.categoryId);
-
-        this.spinnerService.setSpinnerVisibility(true);
-
-        this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
-          res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.showFirst = !this.showFirst;
-          },
-          error => {
-            this.toastr.error(error.message);
-          }
-        );
-      })
-    }
-
-  }
+ editDocument(formData: NgForm) {
+   let value = formData.value;
+   if (formData.valid) {
+     this.uploadDocToserver((result1) => {
+       value.filepath = result1;
+       value.documentTypeIdFK = 1;
+       value.masterId = Number(this.categoryId);
+       this.spinnerService.setSpinnerVisibility(true);
+       this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
+         res => {
+           this.spinnerService.setSpinnerVisibility(false);
+           this.showSnackBar(res.message);
+           this.showFirst = !this.showFirst;
+         },
+         error => {
+           this.toastr.error(error.message);
+         }
+       );
+     })
+   }
+ }
 
 
   /*********************************************************** Back to Asset List *******************************************************************/

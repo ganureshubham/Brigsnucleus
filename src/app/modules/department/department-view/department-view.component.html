@@ -5,9 +5,9 @@
                 <p class="title_header mat-subheading-2 tal dfs">ALL Department</p>
             </mat-grid-tile>
             <mat-grid-tile class="tar">
-                <button mat-button (click)="openDialog()" class="bg_white_grey btn_style adddept">
+                <!-- <button mat-button (click)="openDialog()" class="bg_white_grey btn_style adddept">
                     <mat-icon>add</mat-icon>Add Department
-                </button>
+                </button> -->
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card>
@@ -17,41 +17,36 @@
                 <mat-list role="list">
                     <mat-list-item role="listitem">
                         <button mat-icon-button disabled></button>
-                        {{node.item}}
+                        {{node.name}}
                     </mat-list-item>
                     <mat-list-item role="listitem">
-                        <button mat-icon-button (click)="openDialog()">
+                        <button mat-icon-button (click)="addDept(node)">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="openDialog()">
+                        <button mat-icon-button (click)="editDept(node)">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button>
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>
-
-
                 </mat-list>
-
             </mat-tree-node>
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
                 <mat-list role="list">
                     <mat-list-item role="listitem">
-                        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle> 
+                        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
                             <mat-icon class="mat-icon-rtl-mirror">
                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                             </mat-icon>
                         </button>
-                        {{node.item}}
-                        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
-                        </mat-progress-bar>
+                        {{node.name}}
                     </mat-list-item>
                     <mat-list-item role="listitem">
-                        <button mat-icon-button (click)="openDialog()">
+                        <button mat-icon-button (click)="addDept(node)">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="openDialog()">
+                        <button mat-icon-button (click)="editDept(node)">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button>
@@ -59,9 +54,7 @@
                         </button>
                     </mat-list-item>
                 </mat-list>
-
             </mat-tree-node>
-
         </mat-tree>
     </mat-card>
 </div>

@@ -5,6 +5,10 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DocumateService } from '../service/documate.service';
 import { SpinnerService } from '../../../public service/spinner.service';
+import { DataSharingService } from '../../../public service/data-sharing.service';
+import { saveAs } from 'file-saver';
+import { DialogService } from '../../../public service/dialog.service';
+import { AppDialogData } from '../../../model/appDialogData';
 
 
 @Component({
@@ -21,6 +25,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   manufacturerData: any = {};
   totalAlerts: any;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
 
 
@@ -42,6 +47,8 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     private documateService: DocumateService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    public dataService: DataSharingService,
+    private dialogService: DialogService
   ) {
 
   }
@@ -97,28 +104,58 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** View Particular Alert  *******************************************************************/
 
 
-  // viewAlert(alertId: number) {
-  //   this.router.navigate([`/alert/alert-details/${alertId}`]);
-  // }
+  editDocumate(visit: any) {
+    this.dataService.changeData(visit);
+    this.router.navigate(['/documate/add-documate']);
+
+
+  }
+
+  /*********************************************************** Download Particular Document  *******************************************************************/
+
+
+  downloadDocument(file) {
+    console.log(file);
+    // var FileSaver = require('file-saver');
+    const Ext = file.split('/').pop().split('?')[0]; // splits url into file name
+    var ext = Ext.substr(Ext.lastIndexOf('.') + 1); // gives extension of any file name
+    saveAs(file, Ext);
+
+  }
 
 
   /*********************************************************** Delete Particular Alert *******************************************************************/
 
-  // deleteAlert(alertId: number) {
-  //   alert('are you sure?');
-  //   this.alertService.deleteAlert(alertId).subscribe(res => {
-  //     console.log(res);
-  //     this.toastr.success(res.message);
-  //     this.getAlertList(this.page);
 
-  //   },
-  //     error => {
-  //       console.log(error);
-  //       this.toastr.error(error.message);
-
-  //     })
-  // }
-
+  deleteDocumate(documentId: number, title: string) {
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ASSET',
+      message: ` Are your sure you want to delete documate "${documentId}"`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+    this.dialogService.setDialogVisibility(appDialogData);
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+          this.dialogService.setUserDialogAction(0);
+          //User has approved delete operation
+          this.spinnerService.setSpinnerVisibility(true);
+          this.documateService.deleteDocumate(documentId).subscribe(res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getAllDocumates(this.page);
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
+  }
   /*********************************************************** Search Documate *******************************************************************/
 
   searchDocumate(keyword) {
@@ -133,6 +170,14 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     } else {
       this.getAllDocumates(this.pageNumber);
     }
+  }
+
+
+
+  addDocumate() {
+    let selectedManufacturer = null;
+    this.dataService.changeData(selectedManufacturer);
+    this.router.navigate(['/documate/add-documate']);
   }
 
 
