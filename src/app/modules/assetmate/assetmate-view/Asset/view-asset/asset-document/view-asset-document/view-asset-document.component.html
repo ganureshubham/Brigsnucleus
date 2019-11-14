@@ -2,67 +2,67 @@
 <div *ngIf="!showFirst" class="table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-        <div class="flex_container padding_box align_center">
-          <div class="width_50">
-            <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-              <mat-icon>add</mat-icon>Add Document
-            </button>
-          </div>
-          <div class="width_50 dfe">
-            <form class="example-form filter_search">
-              <mat-form-field class="example-full-width">
-                <input matInput (keyup)="searchDocument($event.target.value)" placeholder="Search">              
-              </mat-form-field> 
-            </form>
-          </div> 
+      <div class="flex_container padding_box align_center">
+        <div class="width_50">
+          <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+            <mat-icon>add</mat-icon>Add Document
+          </button>
         </div>
-        <div class="cl"></div>
-        <mat-table [dataSource]="dataSource">
-          <ng-container matColumnDef="documentId"> 
-            <mat-header-cell *matHeaderCellDef>Document Id</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.documentId }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef>Document Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef>Document Description</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.description }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-            <mat-cell *matCellDef="let visit">
-              <div>
-                <mat-menu #dailyPerformanceMenu="matMenu">
-                  <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank" >      
-                    <mat-icon matListIcon>get_app</mat-icon>
-                    <span i18n>Download Document</span>
-                  </a>
-                  <a mat-menu-item (click)="editDocument(visit)">     
-                    <mat-icon matListIcon>edit</mat-icon>
-                    <span i18n>Edit Document</span>
-                  </a>
-                  <a mat-menu-item (click)="deleteDocument(visit.documentId)">
-                    <mat-icon matListIcon>delete_outline</mat-icon>
-                    <span i18n>Delete Document</span>
-                  </a>
-                </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon> 
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <div>
-          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-          </mat-paginator> 
+        <div class="width_50 dfe">
+          <form class="example-form filter_search">
+            <mat-form-field class="example-full-width">
+              <input matInput (keyup)="searchDocument($event.target.value)" placeholder="Search">
+            </mat-form-field>
+          </form>
         </div>
+      </div>
+      <div class="cl"></div>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="documentId">
+          <mat-header-cell *matHeaderCellDef>Document Id</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.documentId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Document Title</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Document Description</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.description }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let visit">
+            <div>
+              <mat-menu #dailyPerformanceMenu="matMenu">
+                <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
+                  <mat-icon matListIcon>get_app</mat-icon>
+                  <span i18n>Download Document</span>
+                </a>
+                <a mat-menu-item (click)="editDocument(visit)">
+                  <mat-icon matListIcon>edit</mat-icon>
+                  <span i18n>Edit Document</span>
+                </a>
+                <a mat-menu-item (click)="deleteDocument(visit.documentId, visit.title)">
+                  <mat-icon matListIcon>delete_outline</mat-icon>
+                  <span i18n>Delete Document</span>
+                </a>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <div>
+        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+        </mat-paginator>
+      </div>
     </div>
   </div>
 </div>
 
-<app-add-asset-document *ngIf="showFirst"></app-add-asset-document> 
+<app-add-asset-document *ngIf="showFirst" (assetDocAddedEmitter)="onAssetDocAdded($event)"></app-add-asset-document>

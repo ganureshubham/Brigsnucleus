@@ -5,19 +5,19 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AssetmateService } from '../../../service/assetmate.service';
-import { DataSharingService } from '../../../../../public service/data-sharing.service';
-import { SpinnerService } from '../../../../../public service/spinner.service';
+import { AssetmateService } from '../../../../service/assetmate.service';
+import { DataSharingService } from '../../../../../../public service/data-sharing.service';
+import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { AppDialogData } from 'src/app/model/appDialogData';
-import { DialogService } from '../../../../../public service/dialog.service';
+import { DialogService } from '../../../../../../public service/dialog.service';
 
 @Component({
-  selector: 'app-view-assign-user',
-  templateUrl: './view-assign-user.component.html',
-  styleUrls: ['./view-assign-user.component.css']
+  selector: 'app-asset-assign-user',
+  templateUrl: './asset-assign-user.component.html',
+  styleUrls: ['./asset-assign-user.component.css']
 })
-export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
+export class AssetAssignUserComponent implements OnInit {
 
   loading: boolean;
   public page: number = 0;
@@ -27,11 +27,11 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   assetData: any = {};
   showFirst: boolean = false;
   Router: any;
-  categoryID: any;
+  assetId: any;
   codeData: any;
   parentdata: any;
   result: string = '';
-  userCatAssignmentId;
+  deleteUserWithAssignedId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['firstName', 'lastName', 'assignmentType', 'Actions'];
@@ -55,7 +55,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {
 
   }
@@ -67,7 +67,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId']
+    this.assetId = this.route.snapshot.params['assetId']
     this.getAllAssignUsers(this.pageNumber);
   }
 
@@ -79,7 +79,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
     this.spinnerService.setSpinnerVisibility(true);
 
-    this.assetmateService.getAllAssignUsers(pageNo, this.categoryID).subscribe(res => {
+    this.assetmateService.getAllAssignUsersToAsset(pageNo, this.assetId).subscribe(res => {
 
       this.spinnerService.setSpinnerVisibility(false);
 
@@ -102,8 +102,15 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-  /*********************************************************** Page Change *******************************************************************/
+  onNewUserAssignedToAsset(isNewUserAssignedTOAsset: boolean) {
+    if (isNewUserAssignedTOAsset) {
+      this.pageNumber = 0;
+      this.getAllAssignUsers(this.pageNumber);
+    }
+    this.showFirst = !this.showFirst;
+  }
 
+  /*********************************************************** Page Change *******************************************************************/
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
@@ -114,7 +121,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Search Category *******************************************************************/
   searchAssignUsers(keyword) {
     if (keyword) {
-      this.assetmateService.searchAssignUsersToCategory(keyword, this.categoryID).subscribe(res => {
+      this.assetmateService.searchAssignUsersToAsset(keyword, this.assetId).subscribe(res => {
         this.dataSource = res.data;
       }, error => {
         console.log(error);
@@ -133,22 +140,14 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
-  deleteAssignUsers(userCatAssignmentId: number, firstName: string, lastName: string) {
+  deleteAssignUsers(userCatAssignmentId: number, userFirstName: string, userLastName: string) {
 
-    // this.assetmateService.deleteAssignUsers(userCatAssignmentId).subscribe(res => {
-    //   this.toastr.success(res.message);
-    //   this.getAllAssignUsers(this.page);
-    // })
-    // error => {
-    //   this.toastr.error(error.message);
-    // }
-
-    this.userCatAssignmentId = userCatAssignmentId;
+    this.deleteUserWithAssignedId = userCatAssignmentId;
 
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
-      title: 'DELETE CATEGORY ASSIGNED USER',
-      message: `Are your sure you want to delete assigned user "${firstName + ' ' + lastName}" ?`,
+      title: 'DELETE ASSET ASSIGNED USER',
+      message: `Are your sure you want to delete user "${userFirstName + ' ' + userLastName}"?`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
@@ -166,11 +165,12 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
           //User has approved delete operation 
           this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteAssignUsers(this.userCatAssignmentId).subscribe(res => {
+          this.assetmateService.deleteAssignUsers(this.deleteUserWithAssignedId).subscribe(res => {
 
             this.spinnerService.setSpinnerVisibility(false);
+            this.assetmateService.setBadgeUpdateAction('assetDetails', true);
             this.showSnackBar(res.message);
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
+
             this.getAllAssignUsers(this.page);
 
           }, error => {
@@ -182,21 +182,6 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
   }
 
-  /*********************************************************** Edit Particular Asset  *******************************************************************/
-  // editDocument(visit: number) {
-  //   this.showFirst = !this.showFirst;
-  //   this.dataService.saveData(visit);
-  // }
-
-
-
-  // viewAsset = (assetId: number) => {
-  //   this.dataService.changeData(assetId);
-  //   this.router.navigate(['/asset/asset-details']);
-  // }
-
-
-
 }
 
 export interface AssignUser {
@@ -204,4 +189,3 @@ export interface AssignUser {
   lastName: string;
   assignmentType: string;
 }
-

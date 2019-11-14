@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -21,10 +21,10 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   roleData: any = {};
-  showFirst:boolean=false;
+  showFirst: boolean = false;
 
 
-  displayedColumns: string[] = ['doneChecklistId', 'checkListTitle','doneBy','doneOn', 'Actions']; 
+  displayedColumns: string[] = ['doneChecklistId', 'checkListTitle', 'doneBy', 'doneOn', 'Actions'];
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -36,10 +36,11 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private assetmateService:AssetmateService,
+    private assetmateService: AssetmateService,
     public dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,
   ) {
 
   }
@@ -51,13 +52,14 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") { 
-        this.AssetId=res;
-        this.getAssetHistory(this.AssetId,this.pageNumber);
-      }
-    })
-    
+    // this.dataService.mSaveData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") { 
+    //     this.AssetId=res;
+    this.AssetId = this.route.snapshot.params['assetId'];
+    this.getAssetHistory(this.AssetId, this.pageNumber);
+    //   }
+    // })
+
   }
 
 
@@ -68,12 +70,12 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
 
 
-  getAssetHistory(assetIdFK:number,pageNo: any) {
+  getAssetHistory(assetIdFK: number, pageNo: any) {
     // this.spinner.show();
     // setTimeout(() => {
     //   this.spinner.hide();
     // }, 1000);
-    this.assetmateService.doneChecklistLists(assetIdFK,pageNo).subscribe(res => { 
+    this.assetmateService.doneChecklistLists(assetIdFK, pageNo).subscribe(res => {
       this.paidDataSource = res.assetHistory;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
@@ -93,12 +95,12 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getAssetHistory(this.AssetId,this.page); 
+    this.getAssetHistory(this.AssetId, this.page);
   }
 
 
-  
- 
+
+
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   viewQuestion(doneChecklistId: number) {
