@@ -71,6 +71,7 @@ export class AssetAddComponent implements OnInit {
   getDetails(assetId) {
     this.assetmateService.getDetails(assetId).subscribe(res => {
       if (res.asset) {
+        console.log('getDetails');
         this.assetData = res.asset;
         let installationDate = new Date(this.assetData.installationDate);
         this.assetData.installationDate = installationDate;
@@ -79,8 +80,6 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
       })
   }
 

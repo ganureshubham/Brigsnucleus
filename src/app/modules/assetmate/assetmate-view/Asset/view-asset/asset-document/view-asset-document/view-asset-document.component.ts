@@ -139,7 +139,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET DOCUMENT',
-      message: `Are your sure you want to delete asset document "${documentTite}"`,
+      message: `Are your sure you want to delete asset document "${documentTite}" ?`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
@@ -203,7 +203,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   searchDocument(keyword) {
     if (keyword) {
-      this.assetmateService.searchDocument(keyword).subscribe(res => {
+      this.assetmateService.searchDocumentByAssetId(keyword, this.assetID).subscribe(res => {
         this.dataSource = res.data;
       }, error => {
         console.log(error);

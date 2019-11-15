@@ -182,7 +182,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET',
-      message: `Are your sure you want to delete asset "${assetTitle}"`,
+      message: `Are your sure you want to delete asset "${assetTitle}" ?`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }

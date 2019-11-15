@@ -26,6 +26,8 @@ import { ViewAssetDocumentComponent } from './assetmate-view/Asset/view-asset/as
 import { AddAssetDocumentComponent } from './assetmate-view/Asset/view-asset/asset-document/view-asset-document/add-asset-document/add-asset-document.component';
 import { ViewHistoryComponent } from './assetmate-view/Asset/view-asset/History/view-history/view-history.component';
 import { ViewQuestionComponent } from './assetmate-view/Asset/view-asset/History/view-history/view-question/view-question.component';
+import { AssetAssignUserComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-user.component';
+import { AssetAssignNewUsersComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-new-users/asset-assign-new-users.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ViewQuestionComponent } from './assetmate-view/Asset/view-asset/History
     ViewAssetDocumentComponent,
     AddAssetDocumentComponent,
     ViewHistoryComponent,
-    ViewQuestionComponent,  
+    ViewQuestionComponent,
+    AssetAssignUserComponent,
+    AssetAssignNewUsersComponent,  
   ],
   imports: [
     CommonModule,
