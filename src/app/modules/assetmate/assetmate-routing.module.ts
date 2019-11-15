@@ -11,7 +11,7 @@ export const AssetmateRoutes: Routes = [
     children: [
       {
         path: "",
-        component:AssetmateViewComponent
+        component: AssetmateViewComponent
       }
     ]
   },
@@ -20,7 +20,7 @@ export const AssetmateRoutes: Routes = [
     children: [
       {
         path: "assetmate-details/:categoryId",
-        component: AssetmateDetailsComponent   
+        component: AssetmateDetailsComponent
       }
     ]
   },
@@ -29,7 +29,7 @@ export const AssetmateRoutes: Routes = [
     children: [
       {
         path: "assetcode",
-        component: AssetCodeComponent   
+        component: AssetCodeComponent
       }
     ]
   },
@@ -38,7 +38,16 @@ export const AssetmateRoutes: Routes = [
     children: [
       {
         path: "assetmate-details/:categoryId/asset-details/:assetId",
-        component: DetailsAssetComponent   
+        component: DetailsAssetComponent
+      }
+    ]
+  },
+  {
+    path: "",
+    children: [
+      {
+        path: "assetmate-details/:categoryId/asset-details/:assetId",
+        component: DetailsAssetComponent
       }
     ]
   },
@@ -60,5 +69,5 @@ export const AssetmateRoutes: Routes = [
   //     }
   //   ]
   // },
-  
+
 ];

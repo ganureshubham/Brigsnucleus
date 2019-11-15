@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { DialogService } from '../../../../../public service/dialog.service';
+import { AppDialogData } from 'src/app/model/appDialogData';
 
 @Component({
   selector: 'app-view-checklist',
@@ -13,8 +15,6 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./view-checklist.component.css']
 })
 export class ViewChecklistComponent implements OnInit {
-
-
   pageNumber = 0;
   totalCount = 0;
   checklistData: any = [];
@@ -22,6 +22,8 @@ export class ViewChecklistComponent implements OnInit {
   categoryId: any;
   public page: number = 0;
   categoryID: any;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
+  deleteChecklistWithId;
 
   constructor(
     private assetmateService: AssetmateService,
@@ -32,6 +34,7 @@ export class ViewChecklistComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -74,18 +77,57 @@ export class ViewChecklistComponent implements OnInit {
 
   editChecklist(checklistId: number) {
     this.showFirst = !this.showFirst;
+    console.log('checklistId :');
+    console.log(checklistId)
     this.dataService.saveData(checklistId);
   }
 
   /*********************************************************** Delete Particular Checklist *******************************************************************/
-  deleteChecklist(checklistId: number) {
-    alert('are you sure?');
-    this.assetmateService.deleteChecklist(checklistId).subscribe(res => {
-      this.toastr.success(res.message);
-      this.getAllChecklists(this.categoryID, this.page);
-    })
-    error => {
-      this.toastr.error(error.message);
+  deleteChecklist(checklistId: number, checklistTitle: string) {
+    // alert('are you sure?');
+    // this.assetmateService.deleteChecklist(checklistId).subscribe(res => {
+    //   this.toastr.success(res.message);
+    //   this.getAllChecklists(this.categoryID, this.page);
+    // })
+    // error => {
+    //   this.toastr.error(error.message);
+    // }
+    this.deleteChecklistWithId = checklistId;
+
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ASSET',
+      message: `Are your sure you want to delete checklist "${checklistTitle}" ?`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+
+    this.dialogService.setDialogVisibility(appDialogData);
+
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+
+          this.dialogService.setUserDialogAction(0);
+
+          //User has approved delete operation 
+          this.spinnerService.setSpinnerVisibility(true);
+          this.assetmateService.deleteChecklist(this.deleteChecklistWithId).subscribe(res => {
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.assetmateService.setBadgeUpdateAction('assetList', true);
+            this.getAllChecklists(this.categoryID, this.page);
+
+          }, error => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
     }
   }
 

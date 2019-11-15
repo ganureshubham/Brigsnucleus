@@ -43,14 +43,14 @@
                     <form class="example-form filter_search">
                         <mat-form-field class="example-full-width">
                             <input matInput (keyup)="searchChecklist($event.target.value)" placeholder="Search">
-                        </mat-form-field> 
+                        </mat-form-field>
                     </form>
                 </div>
             </div>
             <div class="cl"></div>
             <mat-card *ngFor="let checklist of checklistData">
                 <div class="flex_container listing">
-                    <div class="checklist_name width_40"> 
+                    <div class="checklist_name width_40">
                         <h4>{{checklist.title}}</h4>
                     </div>
                     <div class="width_30">
@@ -59,12 +59,13 @@
                     <div class="btns width_30 dfe">
                         <button mat-button>View</button>
                         <button mat-button (click)="editChecklist(checklist)">Edit</button>
-                        <button mat-button (click)="deleteChecklist(checklist.checklistId)">Delete</button>
+                        <button mat-button
+                            (click)="deleteChecklist(checklist.checklistId, checklist.title)">Delete</button>
                     </div>
                 </div>
-            </mat-card> 
+            </mat-card>
 
         </div>
     </div>
 </div>
-<app-checklist-add *ngIf="showFirst"></app-checklist-add>   
+<app-checklist-add *ngIf="showFirst"></app-checklist-add>

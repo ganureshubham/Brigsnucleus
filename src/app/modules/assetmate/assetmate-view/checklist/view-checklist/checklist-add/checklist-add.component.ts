@@ -21,7 +21,7 @@ export class ChecklistAddComponent implements OnInit {
   category: any;
   isEdited: boolean = false;
   categoryID: any;
-
+  durationList: any;
 
   constructor(private assetmateService: AssetmateService,
     private dataService: DataSharingService,
@@ -48,8 +48,20 @@ export class ChecklistAddComponent implements OnInit {
       }
     })
     this.getCategoryList();
+    this.getDurationList();
   }
 
+  getDurationList() {
+    this.assetmateService.getDurationList().subscribe(res => {
+      if (res.durationType) {
+        this.durationList = res.durationType;
+      }
+    },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
   /*********************************************************** Select Asset Category *******************************************************************/
 
@@ -73,8 +85,7 @@ export class ChecklistAddComponent implements OnInit {
 
   /*********************************************************** Add New Checklist *******************************************************************/
   addChecklist(value) {
-    console.log('checklist Form data', value);
-    value.categoryIdFK = this.route.snapshot.params['categoryId'];
+    value.categoryId = Number(this.route.snapshot.params['categoryId']);
 
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.addChecklist(value).subscribe(res => {
@@ -83,10 +94,12 @@ export class ChecklistAddComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
       this.showFirst = !this.showFirst;
+      this.assetmateService.setBadgeUpdateAction('assetList', true);
+
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong');
       })
   }
 
