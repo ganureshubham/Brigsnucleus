@@ -25,4 +25,13 @@ export class DepartmentService {
   addDept(deptData: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `departments/addDepartment`, deptData);
   }
+
+  /*********************************************************** Edit particular Department *************************************************/
+
+  editDept(departmentId: number, editedDeptdata: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `departments/updateDepartment/${departmentId}`, editedDeptdata);
+  }
+
+
+
 }

@@ -51,7 +51,7 @@ export class AddSupplierComponent implements OnInit {
       this.router.navigate(['/supplier']);
     },
       error => {
-        this.toastr.error(error.error.message); 
+        this.toastr.error(error.error.message);
 
       })
 
