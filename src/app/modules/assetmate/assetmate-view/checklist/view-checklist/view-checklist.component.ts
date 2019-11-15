@@ -77,9 +77,11 @@ export class ViewChecklistComponent implements OnInit {
 
   editChecklist(checklistId: number) {
     this.showFirst = !this.showFirst;
-    console.log('checklistId :');
-    console.log(checklistId)
     this.dataService.saveData(checklistId);
+  }
+
+  navigateToChecklistQuestionView(checklistId: number) {
+    this.router.navigate(['/assetmate/assetmate-details/' + this.categoryID + '/checklist/' + checklistId]);
   }
 
   /*********************************************************** Delete Particular Checklist *******************************************************************/

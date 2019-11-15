@@ -57,7 +57,8 @@
                         <p><b>{{checklist.totalQuestions}}</b><span>Total Questions</span></p>
                     </div>
                     <div class="btns width_30 dfe">
-                        <button mat-button>View</button>
+                        <button mat-button
+                            (click)="navigateToChecklistQuestionView(checklist.checklistId)">View</button>
                         <button mat-button (click)="editChecklist(checklist)">Edit</button>
                         <button mat-button
                             (click)="deleteChecklist(checklist.checklistId, checklist.title)">Delete</button>

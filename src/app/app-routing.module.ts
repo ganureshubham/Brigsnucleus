@@ -21,16 +21,16 @@ export const AppRoutes: Routes = [
         loadChildren: "./dashboard/dashboard.module#DashboardModule",
         canActivate: [AuthGuard]
       },
-      {
-        path: "asset",
-        loadChildren: "./modules/asset/asset.module#AssetModule",
-        canActivate: [AuthGuard]
-      },
-      {
-        path: "asset-category",
-        loadChildren: "./modules/asset-category/asset-category.module#AssetCategoryModule",
-        canActivate: [AuthGuard]
-      },
+      // {
+      //   path: "asset",
+      //   loadChildren: "./modules/asset/asset.module#AssetModule",
+      //   canActivate: [AuthGuard]
+      // },
+      // {
+      //   path: "asset-category",
+      //   loadChildren: "./modules/asset-category/asset-category.module#AssetCategoryModule",
+      //   canActivate: [AuthGuard]
+      // },
       {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
@@ -66,11 +66,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/assetmate/assetmate.module#AssetmateModule",
         canActivate: [AuthGuard]
       },
-      {
-        path: "checklist",
-        loadChildren: "./modules/checklist/checklist.module#ChecklistModule",
-        canActivate: [AuthGuard]
-      },
+      // {
+      //   path: "checklist",
+      //   loadChildren: "./modules/checklist/checklist.module#ChecklistModule",
+      //   canActivate: [AuthGuard]
+      // },
       {
         path: "profile",
         loadChildren: "./modules/profile/profile.module#ProfileModule",

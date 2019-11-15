@@ -95,8 +95,8 @@
           <button *ngIf="isEdited" [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button i18n
             color="primary" type="submit" [disabled]="!assetform.valid"
             (click)="editChecklist(checklistform.value)">Update Checklist</button>
-          <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-            (click)="backToList()" class="btn-cancel">Cancel</button>
+          <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" (click)="backToList()"
+            class="btn-cancel">Cancel</button>
         </form>
       </div>
     </div>
