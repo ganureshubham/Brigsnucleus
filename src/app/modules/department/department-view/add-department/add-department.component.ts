@@ -14,6 +14,9 @@ export class AddDepartmentComponent implements OnInit {
   deptData: any = {};
   deptList: any;
   parentId: any;
+  isEdited: boolean = false;
+  formTitle: string = "Add Department";
+  deptId: any;
 
 
   constructor(private departmentService: DepartmentService,
@@ -27,12 +30,17 @@ export class AddDepartmentComponent implements OnInit {
 
   ngOnInit() {
     console.log('blabla', this.data);
+    this.deptId = this.data.parentId;
+
+
     if (this.data.type == 'Add') {
       console.log('if');
 
       this.deptData.parentId = this.data.parentId;
 
     } else if (this.data.type == 'Edit') {
+      this.isEdited = true;
+      this.formTitle = `Edit Department`;
       console.log('else if');
 
       this.deptData = this.data;
@@ -83,5 +91,23 @@ export class AddDepartmentComponent implements OnInit {
 
       })
   }
+
+  editDept(value) {
+    this.departmentService.editDept(this.deptId, value).subscribe(res => {
+      console.log('edited', res);
+
+      this.dialog.closeAll();
+      this.toastr.success(res.message);
+
+    },
+      error => {
+        console.log(error);
+        this.toastr.error(error.message);
+
+      })
+
+
+  }
+
 
 }

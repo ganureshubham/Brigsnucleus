@@ -1,7 +1,7 @@
 <form #deptForm="ngForm" class="example-form" class="listing_space add_department">
   <mat-list role="list">
     <mat-list-item role="listitem">
-      <p class="title_header mat-subheading-2">Add Department</p>
+      <p class="title_header mat-subheading-2">{{formTitle}}</p>
     </mat-list-item>
     <mat-list-item role="listitem">
       <mat-form-field fxFlex>
@@ -23,8 +23,10 @@
       </mat-form-field>
     </mat-list-item>
     <mat-list-item role="listitem">
-      <button [color]="'success'" [disabled]="!deptForm.valid" (click)="addDept(deptForm.value)" mat-raised-button i18n
-        color="primary">Save</button>
+      <button *ngIf="!isEdited" [color]="'success'" [disabled]="!deptForm.valid" (click)="addDept(deptForm.value)"
+        mat-raised-button i18n color="primary">Save Department</button>
+      <button *ngIf="isEdited" [color]="'success'" [disabled]="!deptForm.valid" (click)="editDept(deptForm.value)"
+        mat-raised-button i18n color="primary">Update Department</button>
       <button mat-raised-button (click)="closeDialog()" class="fr">Cancel</button>
     </mat-list-item>
   </mat-list>
