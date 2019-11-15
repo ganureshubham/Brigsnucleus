@@ -1,4 +1,5 @@
-<div class="innerpage department">
+<div>
+    <!-- class="innerpage department" -->
     <mat-card class="width_90 margin_auto innerpage_title">
         <mat-grid-list cols="2" rowHeight="50px">
             <mat-grid-tile>
@@ -11,7 +12,8 @@
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card>
-    <mat-card class="width_90 margin_auto department">
+    <mat-card class="department-tree-container">
+        <!-- class="width_90 margin_auto department" -->
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                 <mat-list role="list">
@@ -26,7 +28,7 @@
                         <button mat-icon-button (click)="editDept(node)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button>
+                        <button mat-icon-button (click)="deleteDept(node.departmentId,node.name)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>
@@ -49,7 +51,7 @@
                         <button mat-icon-button (click)="editDept(node)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button>
+                        <button mat-icon-button (click)="deleteDept(node.departmentId,node.name)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>

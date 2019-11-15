@@ -5,8 +5,8 @@
     </mat-list-item>
     <mat-list-item role="listitem">
       <mat-form-field fxFlex>
-        <mat-select name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
-          placeholder="Select Parent Category" required>
+        <mat-select disabled name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
+          placeholder="Select Parent Department" required>
           <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
           </mat-option>
         </mat-select>

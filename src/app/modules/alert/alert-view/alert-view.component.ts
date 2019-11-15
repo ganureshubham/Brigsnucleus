@@ -35,6 +35,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
   alertid: any;
+  alertId: number;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -100,6 +101,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Delete Particular Alert *******************************************************************/
 
   deleteAlert(alertId: number, title: string) {
+    this.alertId = alertId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET',
@@ -117,7 +119,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
           this.dialogService.setUserDialogAction(0);
           //User has approved delete operation
           this.spinnerService.setSpinnerVisibility(true);
-          this.alertService.deleteAlert(alertId).subscribe(res => {
+          this.alertService.deleteAlert(this.alertId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
             this.getAlertList(this.page);

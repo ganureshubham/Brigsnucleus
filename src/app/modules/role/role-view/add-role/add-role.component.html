@@ -24,12 +24,12 @@
             <mat-grid-list cols="3" rowHeight="1:0.15">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field fxFlex>
-                  <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title" 
-                    #roleTitle="ngModel" type="text" required placeholder="Title">
+                  <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3"
+                    [(ngModel)]="roleData.title" #roleTitle="ngModel" type="text" required placeholder="Title">
                   <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
                     <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
                   </mat-error>
-                  <mat-error *ngIf="roleTitle.errors?.minlength"> 
+                  <mat-error *ngIf="roleTitle.errors?.minlength">
                     Title length Must be atleast 3!
                   </mat-error>
                 </mat-form-field>
@@ -42,7 +42,7 @@
                 [matTooltip]="!roleform.valid ? 'You must complete all the required fields.' : null" type="submit"
                 (click)="addRole(roleform.value)">Save User Role</button>
               <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
-                mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User 
+                mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
                 Role</button>
               <span *ngIf="uploadingLoader == true">
                 <i class="fa fa-spinner fa-spin loadspiner" style="font-size:38px;color:#00aec5"></i>

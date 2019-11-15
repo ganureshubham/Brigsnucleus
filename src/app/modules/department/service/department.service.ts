@@ -29,7 +29,12 @@ export class DepartmentService {
   /*********************************************************** Edit particular Department *************************************************/
 
   editDept(departmentId: number, editedDeptdata: any): Observable<any> {
+    console.log('Inside service : ' + departmentId)
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `departments/updateDepartment/${departmentId}`, editedDeptdata);
+  }
+
+  deleteDept(departmentId: number): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `departments/deleteDepartment/${departmentId}`, {});
   }
 
 

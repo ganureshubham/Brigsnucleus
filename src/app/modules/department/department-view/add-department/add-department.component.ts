@@ -3,7 +3,8 @@ import { DepartmentService } from '../../service/department.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { SpinnerService } from '../../../../public service/spinner.service';
 
 @Component({
   selector: 'app-add-department',
@@ -17,9 +18,12 @@ export class AddDepartmentComponent implements OnInit {
   isEdited: boolean = false;
   formTitle: string = "Add Department";
   deptId: any;
+  dialogInputData: any;
 
-
-  constructor(private departmentService: DepartmentService,
+  constructor(
+    private departmentService: DepartmentService,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
     private router: Router,
     private toastr: ToastrService,
     public dialog: MatDialog,
@@ -29,34 +33,27 @@ export class AddDepartmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('blabla', this.data);
+
     this.deptId = this.data.parentId;
 
-
     if (this.data.type == 'Add') {
-      console.log('if');
-
-      this.deptData.parentId = this.data.parentId;
-
+      if (this.data.level > 0) {
+        this.deptData.parentId = this.data.departmentId;
+      } else {
+        this.deptData.parentId = this.data.parentId;
+      }
     } else if (this.data.type == 'Edit') {
       this.isEdited = true;
       this.formTitle = `Edit Department`;
-      console.log('else if');
-
       this.deptData = this.data;
-      // this.deptData.parentId = this.data.parentId;
-      // this.deptData = this.data.node.parentId;
     }
 
-
-
-
     this.getDeptList();
+
   }
 
   closeDialog(): void {
     this.dialog.closeAll();
-
   }
 
   onNoClick() { }
@@ -65,13 +62,12 @@ export class AddDepartmentComponent implements OnInit {
 
   getDeptList() {
     this.departmentService.getDeptList().subscribe(res => {
-
       if (res.department) {
         this.deptList = res.department;
       }
     },
       error => {
-        console.log(error);
+        // console.log(error);
         this.toastr.error(error.message);
 
       })
@@ -80,34 +76,37 @@ export class AddDepartmentComponent implements OnInit {
   /*********************************************************** Add New Department *******************************************************************/
 
   addDept(value) {
+    value.parentId = this.deptData.parentId;
+    this.spinnerService.setSpinnerVisibility(true);
     this.departmentService.addDept(value).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
       this.dialog.closeAll();
-      this.toastr.success(res.message);
-
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
-
+        this.showSnackBar("Something went wrong..!!");
       })
   }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  /*********************************************************** Update particular Department *******************************************************************/
 
   editDept(value) {
-    this.departmentService.editDept(this.deptId, value).subscribe(res => {
-      console.log('edited', res);
 
+    value.parentId = this.deptData.parentId;
+    this.spinnerService.setSpinnerVisibility(true);
+    this.departmentService.editDept(this.deptData.departmentId, value).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
       this.dialog.closeAll();
-      this.toastr.success(res.message);
-
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
 
+        this.showSnackBar("Something went wrong..!!");
       })
-
-
   }
-
 
 }
