@@ -37,23 +37,23 @@ export class AddAssetDocumentComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
- ngOnInit() {
-   this.assetId = this.route.snapshot.params['assetId'];
-   this.dataService.mSaveData.subscribe(res => {
-     if (res != null && res != "null" && res != "null") {
-       this.documentData = res;
-       this.filepath = res.filepath.split('/').pop().split('?')[0];
-       this.isEdited = true;
-       this.formTitle = Edit Document;
-     } else {
-       //Hardcoded documentTypeIdFK for asset it is 2
-       this.documentData.documentTypeIdFK = 2;
-       this.documentData.masterId = Number(this.assetId);
-     }
-   })
-   this.getDocumentList();
-   this.getAssetLists();
- }
+  ngOnInit() {
+    this.assetId = this.route.snapshot.params['assetId'];
+    this.dataService.mSaveData.subscribe(res => {
+      if (res != null && res != "null" && res != "null") {
+        this.documentData = res;
+        this.filepath = res.filepath.split('/').pop().split('?')[0];
+        this.isEdited = true;
+        this.formTitle = 'Edit Document';
+      } else {
+        //Hardcoded documentTypeIdFK for asset it is 2
+        this.documentData.documentTypeIdFK = 2;
+        this.documentData.masterId = Number(this.assetId);
+      }
+    })
+    this.getDocumentList();
+    this.getAssetLists();
+  }
   /*********************************************************** Get Document List *******************************************************************/
 
   getDocumentList() {
@@ -129,7 +129,7 @@ export class AddAssetDocumentComponent implements OnInit {
 
           },
           error => {
-              this.showSnackBar("Something went wrong..!!");
+            this.showSnackBar("Something went wrong..!!");
           }
         );
       })
@@ -151,32 +151,32 @@ export class AddAssetDocumentComponent implements OnInit {
   /*********************************************************** Edit Document *******************************************************************/
 
   editDocument(formData: NgForm) {
-   let value = formData.value;
-   if (formData.valid) {
-     this.uploadDocToserver((result1) => {
-       value.filepath = result1;
-       value.documentTypeIdFK = this.documentData.documentTypeIdFK;
-       value.masterId = this.documentData.masterId;
-       this.spinnerService.setSpinnerVisibility(true);
-       this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
-         res => {
-           this.spinnerService.setSpinnerVisibility(false);
-           this.showSnackBar(res.message);
-           let categorydata = localStorage.getItem('Category-Object');
-           this.category = JSON.parse(categorydata);
-           this.dataService.changeData(this.category);
-           this.showFirst = !this.showFirst;
-         },
-         error => {
-           this.showSnackBar("Something went wrong..!!");
-         }
-       );
-     })
-   }
- }
- showSnackBar(message: string) {
-   this.snackBar.open(message, '', { duration: 2000 });
- }
+    let value = formData.value;
+    if (formData.valid) {
+      this.uploadDocToserver((result1) => {
+        value.filepath = result1;
+        value.documentTypeIdFK = this.documentData.documentTypeIdFK;
+        value.masterId = this.documentData.masterId;
+        this.spinnerService.setSpinnerVisibility(true);
+        this.assetmateService.editDocument(this.documentData.documentId, value).subscribe(
+          res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            let categorydata = localStorage.getItem('Category-Object');
+            this.category = JSON.parse(categorydata);
+            this.dataService.changeData(this.category);
+            this.showFirst = !this.showFirst;
+          },
+          error => {
+            this.showSnackBar("Something went wrong..!!");
+          }
+        );
+      })
+    }
+  }
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
 
 
   /*********************************************************** Back to Asset List *******************************************************************/
