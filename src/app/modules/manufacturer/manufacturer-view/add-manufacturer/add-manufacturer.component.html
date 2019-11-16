@@ -44,10 +44,12 @@
               <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
                 [disabled]="!manufacturerform.valid" (click)="editManufacturer(manufacturerform.value)">Update
                 Manufacturer</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
+                [disabled]="!manufacturerform.valid" (click)="backToList()">Cancel</button>
             </div>
           </form>
         </div>
-      </mat-card> 
+      </mat-card>
     </div>
   </div>
 </div>

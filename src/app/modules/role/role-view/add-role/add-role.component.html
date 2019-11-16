@@ -44,9 +44,9 @@
               <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
                 mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
                 Role</button>
-              <span *ngIf="uploadingLoader == true">
-                <i class="fa fa-spinner fa-spin loadspiner" style="font-size:38px;color:#00aec5"></i>
-              </span>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
+                [disabled]="!roleform.valid" (click)="backToList()">Cancel</button>
+
             </div>
           </form>
         </div>

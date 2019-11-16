@@ -19,6 +19,9 @@ export class AddDepartmentComponent implements OnInit {
   formTitle: string = "Add Department";
   deptId: any;
   dialogInputData: any;
+  savebtn = 1;
+  cancelbtn = 0;
+
 
   constructor(
     private departmentService: DepartmentService,
@@ -54,6 +57,7 @@ export class AddDepartmentComponent implements OnInit {
 
   closeDialog(): void {
     this.dialog.closeAll();
+
   }
 
   onNoClick() { }
@@ -67,7 +71,6 @@ export class AddDepartmentComponent implements OnInit {
       }
     },
       error => {
-        // console.log(error);
         this.toastr.error(error.message);
 
       })
@@ -108,5 +111,7 @@ export class AddDepartmentComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       })
   }
+
+
 
 }

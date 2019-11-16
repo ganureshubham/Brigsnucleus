@@ -19,7 +19,7 @@
           <mat-grid-list cols="3" rowHeight="1:0.15">
             <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field fxFlex>
-                <mat-select name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
+                <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
                   [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
                   <mat-option *ngFor="let doc of documatetypelist" [value]="doc.documentTypeId">
                     {{doc.title}}
@@ -79,6 +79,8 @@
               [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Documate</button>
             <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
               [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Documate</button>
+            <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
+              [disabled]="!documentform.valid" (click)="backToList()">Cancel</button>
           </div>
         </form>
       </div>

@@ -89,6 +89,8 @@
                 (click)="addSupplier(supplierform.value)">Save Supplier</button>
               <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
                 [disabled]="!supplierform.valid" (click)="editSupplier(supplierform.value)">Update Supplier</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
+                [disabled]="!supplierform.valid" (click)="backToList()">Cancel</button>
             </div>
           </form>
         </div>

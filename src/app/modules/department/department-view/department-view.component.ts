@@ -127,8 +127,6 @@ export class DepartmentViewComponent implements OnInit {
 
 
   addDept(node: any): void {
-    console.log('Add', node);
-
 
     this.dialogData = {
       type: 'Add',
@@ -143,7 +141,9 @@ export class DepartmentViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllDept();
+      if (result !== 0) {
+        this.getAllDept();
+      }
     });
   }
 
@@ -154,7 +154,6 @@ export class DepartmentViewComponent implements OnInit {
 
     } else {
       return node.parentId;
-
     }
 
   }
@@ -164,7 +163,6 @@ export class DepartmentViewComponent implements OnInit {
 
 
   editDept(node: any) {
-    console.log('edit', node);
     this.dialogData = {
 
       type: 'Edit',
@@ -180,7 +178,10 @@ export class DepartmentViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllDept();
+      if (result !== 0) {
+        this.getAllDept();
+      }
+
     });
 
   }
@@ -195,6 +196,8 @@ export class DepartmentViewComponent implements OnInit {
 
   }
 
+
+  /************************************* Delete Particular Department****************************************************************/
 
 
   deleteDept(departmentId: number, name: string) {

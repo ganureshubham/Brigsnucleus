@@ -10,6 +10,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
+import { AppDialogData } from '../../../model/appDialogData';
 
 @Component({
   selector: 'app-supplier-view',
@@ -25,6 +26,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   supplierData: any = {};
   supplierName: any;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
+
+
 
   displayedColumns: string[] = ['supplierId', 'supplierName', 'businessName', 'mobileNumber', 'emailId', 'Actions'];
   paidDataSource: MatTableDataSource<Supplier> = new MatTableDataSource();
@@ -34,6 +38,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
   Router: any;
+  supplierId: number;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -89,24 +94,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  // getAllSuppliers(pageNo: any) {
-  //   this.loading = true;
-  //   this.supplierService.getAllSuppliers(pageNo).subscribe(res => {
-  //     console.log(res);
-  //     this.paidDataSource = res.userroles;
-  //     this.pageNumber = res.currentPage;
-  //     this.totalCount = res.totalCount;
-  //     this.loading = false;
-
-  //   },
-  //     error => {
-  //       this.loading = false;
-  //       console.log(error);
-
-  //     }
-  //   )
-  // }
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -125,46 +112,37 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Delete Particular Supplier *******************************************************************/
 
-  // deleteSupplier(supplierId: number) {
-  //   alert('are you sure?');
-  //   this.supplierService.deleteSupplier(supplierId).subscribe(res => {
-  //     this.toastr.success(res.message);
-  //     this.getAllSuppliers(this.page);
-  //   })
-  //   error => {
-  //     this.toastr.error(error.message);
-  //   }
-  // }
 
-  deleteDocumate(documentId: number, title: string) {
-    // this.documentId = documentId;
-    // let appDialogData: AppDialogData = {
-    //   visibilityStatus: true,
-    //   title: 'DELETE ASSET',
-    //   message: ` Are your sure you want to delete documate "${documentId}"`,
-    //   positiveBtnLable: "Yes",
-    //   negativeBtnLable: "Cancel"
-    // }
-    // this.dialogService.setDialogVisibility(appDialogData);
-    // if (!this.isAlreadySubscribedToDialogUserActionService) {
-    //   this.isAlreadySubscribedToDialogUserActionService = true;
-    //   this.dialogService.getUserDialogAction().subscribe(userAction => {
-    //     if (userAction == 0) {
-    //       //User has not performed any action on opened app dialog or closed the dialog;
-    //     } else if (userAction == 1) {
-    //       this.dialogService.setUserDialogAction(0);
-    //       //User has approved delete operation
-    //       this.spinnerService.setSpinnerVisibility(true);
-    //       this.documateService.deleteDocumate(this.documentId).subscribe(res => {
-    //         this.spinnerService.setSpinnerVisibility(false);
-    //         this.showSnackBar(res.message);
-    //         this.getAllDocumates(this.page);
-    //       }, error => {
-    //         this.showSnackBar("Something went wrong..!!");
-    //       });
-    //     }
-    //   })
-    // }
+  deleteSupplier(supplierId: number, firstName: string) {
+    this.supplierId = supplierId;
+
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE Supplier',
+      message: ` Are your sure you want to delete supplier "${firstName}"`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+    this.dialogService.setDialogVisibility(appDialogData);
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+          this.dialogService.setUserDialogAction(0);
+          //User has approved delete operation
+          this.spinnerService.setSpinnerVisibility(true);
+          this.supplierService.deleteSupplier(this.supplierId).subscribe(res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getAllSuppliers(this.page);
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
   }
 
   /*********************************************************** Edit Particular Supplier  *******************************************************************/

@@ -1,4 +1,3 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
 <div class="innerbody table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
@@ -53,7 +52,7 @@
                     <mat-icon matListIcon>edit</mat-icon>
                     <span i18n>Edit Supplier</span>
                   </a>
-                  <a mat-menu-item (click)="deleteSupplier(visit.supplierId)">
+                  <a mat-menu-item (click)="deleteSupplier(visit.supplierId,visit.firstName)">
                     <mat-icon matListIcon>delete_outline</mat-icon>
                     <span i18n>Delete Supplier</span>
                   </a>
