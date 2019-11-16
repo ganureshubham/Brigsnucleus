@@ -29,6 +29,9 @@ import { ViewQuestionComponent } from './assetmate-view/Asset/view-asset/History
 import { AssetAssignUserComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-user.component';
 import { AssetAssignNewUsersComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-new-users/asset-assign-new-users.component';
 import { ViewChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/view-checklist-questions.component';
+import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-checklist-questions/checklist-question-list/checklist-question-list.component';
+import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
+import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 
 
 @NgModule({
@@ -53,7 +56,10 @@ import { ViewChecklistQuestionsComponent } from './assetmate-view/checklist/view
     ViewQuestionComponent,
     AssetAssignUserComponent,
     AssetAssignNewUsersComponent,
-    ViewChecklistQuestionsComponent,  
+    ViewChecklistQuestionsComponent,
+    ChecklistQuestionListComponent,
+    AddChecklistQuestionComponent,
+    EditChecklistQuestionComponent,  
   ],
   imports: [
     CommonModule,

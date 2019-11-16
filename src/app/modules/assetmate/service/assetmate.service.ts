@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ConfigurationService } from '../../../public service/configuration.service';
@@ -144,6 +144,13 @@ export class AssetmateService {
 
   /**********************************************  Checklist Starts ********************************************************************************************/
 
+  getChecklistPrimaryInfoByChecklistId(checklistId) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `checklists/viewParticularChecklist/${checklistId}`);
+  }
+
+  getChecklistQuestions(checklistId, pageNo) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/questionsList/${checklistId}/${pageNo}`);
+  }
 
   /*********************************************************** Get All Checklists ********************************/
 
@@ -181,7 +188,15 @@ export class AssetmateService {
 
   searchChecklist(categoryIdFK, keyword) {
     return this.httpClient.get(ConfigurationService.baseUrl + `questions/allChecklistSearch?categoryIdFK=${categoryIdFK}&keyword=${keyword}`);
+  }
 
+  deleteCheckListQuestion(checkListQuestionId: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.httpClient.delete(ConfigurationService.baseUrl + `questions/deleteQuestion/${checkListQuestionId}`, httpOptions);
   }
 
   /********************************************** Category Document Starts *****************************************************************/

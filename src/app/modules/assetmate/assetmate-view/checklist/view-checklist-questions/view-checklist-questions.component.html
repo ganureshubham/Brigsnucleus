@@ -1,7 +1,6 @@
 <div class="table assets_view padding_container margin_auto flex_container">
   <app-filter-category></app-filter-category>
   <mat-card class="width_80 right_side_box">
-    <!-- start_title -->
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div>
@@ -10,169 +9,25 @@
           </button>
         </div>
         <div class="width_75">
-          <!-- <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p> -->
-          <p class="title_header mat-subheading-2 tal">Checklist title</p>
+          <p class="title_header mat-subheading-2 tal">{{checklistPrimaryInfo.title}}</p>
         </div>
         <div class="dfe add_action" style="width:19.5%">
 
         </div>
       </div>
       <div>
-        <!-- <div class="fl total">
-          <p><b>{{assetData.totalDoneChecklist}}</b><span>Total Done Checklist</span></p>
-        </div>
         <div class="fl total">
-          <p><b>{{assetData.totalDocuments}}</b><span>Documents</span></p>
+          <p><b>{{checklistPrimaryInfo.totalQuestions}}</b><span>Total Questions</span></p>
         </div>
-        <div class="fl total">
-          <p><b>{{assetData.totalAssignedUsers}}</b><span>Assigned Users</span></p>
-        </div> -->
       </div>
       <div class="cl"></div>
     </div>
-    <!-- <div class="asset_view_detail">
+    <div class="asset_view_detail">
       <mat-tab-group>
-        <mat-tab label="Basic Information">
-          <div class="tab_content">
-            <div class="flex_container form_column">
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Asset Title</h4>
-                  <span>{{assetData.assetTitle}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Asset Code</h4>
-                  <span>{{assetData.assetCode}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Model Number</h4>
-                  <span>{{assetData.modelNumber}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex_container form_column">
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Supplier Name</h4>
-                  <span>{{assetData.supplierName}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Manufacturer </h4>
-                  <span>{{assetData.manufacturerName}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Department</h4>
-                  <span>{{assetData.departmentTitle}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex_container form_column">
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Installation Date</h4>
-                  <span>{{assetData.installationDate}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Installation Location Type</h4>
-                  <span>{{assetData.installedAt}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Installation Location</h4>
-                  <span>{{assetData.installedLocation}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex_container form_column">
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Checking Duration</h4>
-                  <span>{{assetData.checkingDuration}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Asset Warrenty</h4>
-                  <span>{{assetData.warrenty}}</span>
-                </div>
-              </div>
-
-            </div>
-            <div class="padding_container field ">
-              <div class="block">
-                <h4 class=" mat-h4 db ">Description</h4>
-                <p>{{assetData.description}} </p>
-              </div>
-            </div>
-            <div class="asset-img-guide-container">
-              <mat-grid-list cols="3" rowHeight="390px" gutterSize="10px">
-                <mat-grid-tile colspan="1">
-                  <div class=" img_block margin-right">
-                    <h4 class=" mat-h4 db ">Asset Image</h4>
-                    <mat-card class="asset-img-container-card">
-                      <img src="{{assetData.image}}" alt="asset-pic">
-                    </mat-card>
-                  </div>
-                  <div class="img_block ">
-                    <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
-                    <mat-card>
-                      <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode" [size]="60" [level]="'M'">
-                      </qrcode>
-                    </mat-card>
-                  </div>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="3" rowspan="1" class="user_guid">
-                  <div class="block ">
-                    <h4 class="mat-h4 db">Asset User Guide</h4>
-                    <mat-list role="list">
-                      <mat-list-item role="listitem">
-                        <mat-grid-list cols="2" rowHeight="47px" gutterSize="15px">
-                          <mat-grid-tile> <span class="round">
-                              .{{userGuideFileExtension}}
-                            </span> {{userGuideFileName}}
-                          </mat-grid-tile>
-                          <mat-grid-tile class="btns">
-                            <button mat-button (click)="downloadDocument(assetData.userGuideBook)">Download</button>
-                          </mat-grid-tile>
-                        </mat-grid-list>
-                      </mat-list-item>
-                    </mat-list>
-                  </div>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </div>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Document">
-          <div class="tab_content">
-            <app-view-asset-document>
-            </app-view-asset-document>
-          </div>
-        </mat-tab>
-        <mat-tab label="History">
-          <div class="tab_content">
-            <app-view-history></app-view-history>
-          </div>
-        </mat-tab>
-        <mat-tab label="Assigned Users">
-          <div class="tab_content">
-            <app-asset-assign-user></app-asset-assign-user>
-          </div>
+        <mat-tab label="Questions">
+          <router-outlet></router-outlet>
         </mat-tab>
       </mat-tab-group>
-    </div> -->
-
+    </div>
   </mat-card>
 </div>

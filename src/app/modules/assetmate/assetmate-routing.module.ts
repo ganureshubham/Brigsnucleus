@@ -5,6 +5,9 @@ import { AssetmateLayoutComponent } from './assetmate-layout/assetmate-layout.co
 import { AssetCodeComponent } from './assetmate-view/Asset/asset-code/asset-code.component';
 import { DetailsAssetComponent } from './assetmate-view/Asset/view-asset/details-asset/details-asset.component';
 import { ViewChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/view-checklist-questions.component';
+import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-checklist-questions/checklist-question-list/checklist-question-list.component';
+import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
+import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 
 export const AssetmateRoutes: Routes = [
   {
@@ -48,7 +51,21 @@ export const AssetmateRoutes: Routes = [
     // children: [
     //   {
     path: "assetmate-details/:categoryId/checklist/:checkListId",
-    component: ViewChecklistQuestionsComponent
+    component: ViewChecklistQuestionsComponent,
+    children: [
+      {
+        path: "",
+        component: ChecklistQuestionListComponent,
+      },
+      {
+        path: "add-question",
+        component: AddChecklistQuestionComponent,
+      },
+      {
+        path: "edit-question",
+        component: EditChecklistQuestionComponent,
+      }
+    ]
     //   }
     // ]
   },
