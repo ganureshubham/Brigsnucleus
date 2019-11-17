@@ -1,9 +1,216 @@
 <div class="add-checklist-question-container">
   <div class="fr">
-    <div class="example-button-row btn_style bg_white_grey">
+    <div class="example-button-row btn_style bg_white_grey ">
       <button mat-button (click)="backToListChecklistQuestionList()">
         <mat-icon>list</mat-icon> Asset Lists
       </button>
     </div>
   </div>
+</div>
+<div class="add_question tab_content">
+  <h4>Add Question</h4>
+  <!-- <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form class="tab_content">
+        <ng-template matStepLabel>Question Type</ng-template>
+        <mat-form-field>
+          <mat-label>Select Question Type *</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form class="tab_content">
+        <ng-template matStepLabel>Question Description
+        </ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Define Question Description " required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form class="tab_content">
+        <ng-template matStepLabel>Question Option Single </ng-template>
+        <mat-list role="list" class="add_question_fild">
+          <mat-list-item role="listitem">
+            <button mat-button class="bg_white_grey btn_style">
+              <mat-icon>add</mat-icon>Add New Option
+            </button>
+
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-form-field>
+              <input matInput placeholder="Option1  " required>
+            </mat-form-field>
+            <mat-checkbox>Is Danger</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-form-field>
+              <input matInput placeholder="Option2" required>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-form-field class="remove_options">
+              <input matInput placeholder="Option3" required>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn">
+                <mat-icon matSuffix>cancel</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-form-field class="remove_options">
+              <input matInput placeholder="Option4" required>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn">
+                <mat-icon matSuffix>cancel</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-list-item>
+        </mat-list>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <div class="tab_content done_question">
+        <ng-template matStepLabel>Review & Submit</ng-template>
+        <mat-list role="list" class="add_question_fild">
+          <mat-list-item role="listitem">
+            <div class="block">
+              <h4 class=" mat-h4 db ">Question Type</h4>
+              <span>SingleOption</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <div class="block">
+              <h4 class=" mat-h4 db ">Question Description</h4>
+              <span>Telephone is working well ?</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <div class="block">
+              <h4 class=" mat-h4 db ">Single Options</h4>
+              <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1">Yes</mat-radio-button>
+                <mat-radio-button value="2">No</mat-radio-button>
+                <mat-radio-button value="3">Other</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <div class="block">
+              <h4 class=" mat-h4 db ">Multiple Options</h4>
+              <mat-radio-group aria-label="Select an option">
+                <mat-checkbox>Check me!</mat-checkbox>
+                <mat-checkbox>Check me!</mat-checkbox>
+                <mat-checkbox>Check me!</mat-checkbox>
+                <mat-checkbox>Check me!</mat-checkbox>
+              </mat-radio-group>
+            </div>
+          </mat-list-item>
+        </mat-list>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Done</button>
+        </div>
+      </div>
+
+    </mat-step>
+  </mat-vertical-stepper> -->
+
+  <form [formGroup]="formGroup">
+    <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
+      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>Question Type</ng-template>
+        <mat-form-field>
+          <mat-label>Select Question Type</mat-label>
+          <mat-select formControlName="selectQuestionTypeFormCtrl" required
+            (selectionChange)="onQuestionTypeSelectionChange($event.value)">
+            <mat-option *ngFor="let checklistQuestionType of arrChecklistQuestionType"
+              [value]="checklistQuestionType.questionTypeId">
+              {{checklistQuestionType.title}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please choose checklist question type</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>
+          <div>Question Description</div>
+        </ng-template>
+        <mat-form-field>
+          <mat-label>Define Question Description</mat-label>
+          <input matInput formControlName="questionDescriptionFormCtrl" required>
+          <mat-error>Please describe question (minimum 10 character)</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step *ngIf="isQuestionOptionSectionAllowed()" formGroupName="2" [stepControl]="formArray?.get([2])">
+        <ng-template matStepLabel>
+          <div>Question Option</div>
+        </ng-template>
+        <button mat-button class="bg_white_grey btn_style" (click)="onNewOptionAddClicked()">
+          <mat-icon>add</mat-icon>Add New Option
+        </button>
+        <div>
+
+          <div>
+            <mat-form-field>
+              <input formControlName="option0" matInput placeholder="Option" required>
+              <mat-error>Please describe option (minimum 2 character)</mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="checkbox0">Is Danger</mat-checkbox>
+          </div>
+
+          <div *ngFor="let option of arrOption; let i=index">
+            <mat-form-field class="remove_options">
+              <input formControlName="{{option.optionControl}}" matInput placeholder="Option" required>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn"
+                (click)="onQuestionOptionDelete(i)">
+                <mat-icon matSuffix>cancel</mat-icon>
+              </button>
+              <mat-error>Please describe option (minimum 2 character)</mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="{{option.checkboxControl}}">Is Danger</mat-checkbox>
+          </div>
+
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Submit</ng-template>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
+          <button mat-button (click)="addNewQuestion()">Submit & Save</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
+
 </div>

@@ -199,6 +199,10 @@ export class AssetmateService {
     return this.httpClient.delete(ConfigurationService.baseUrl + `questions/deleteQuestion/${checkListQuestionId}`, httpOptions);
   }
 
+  getCheckListQuestionTypes() {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/selectQuestionType`);
+  }
+
   /********************************************** Category Document Starts *****************************************************************/
 
 

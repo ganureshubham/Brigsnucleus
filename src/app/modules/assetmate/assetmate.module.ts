@@ -5,7 +5,7 @@ import { AssetmateDetailsComponent } from './assetmate-view/assetmate-details/as
 import { RouterModule } from '@angular/router';
 import { AssetmateRoutes } from './assetmate-routing.module';
 import { MaterialModule } from '../../app.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssetModule } from '../asset/asset.module';
 import { AssetmateLayoutComponent } from './assetmate-layout/assetmate-layout.component';
 import { ViewAssetComponent } from './assetmate-view/Asset/view-asset/view-asset.component';
@@ -59,16 +59,17 @@ import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-
     ViewChecklistQuestionsComponent,
     ChecklistQuestionListComponent,
     AddChecklistQuestionComponent,
-    EditChecklistQuestionComponent,  
+    EditChecklistQuestionComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(AssetmateRoutes),
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxSpinnerModule,
     QRCodeModule
   ],
-  entryComponents: [AssetCodeComponent,ConfirmDialogComponent]
+  entryComponents: [AssetCodeComponent, ConfirmDialogComponent]
 })
 export class AssetmateModule { } 

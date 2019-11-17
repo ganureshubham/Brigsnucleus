@@ -1,4 +1,7 @@
 .add-checklist-question-container{
     padding: 20px;
     display: flex;
+    position: absolute;
+    top:0;
+    right: 0;
 }
