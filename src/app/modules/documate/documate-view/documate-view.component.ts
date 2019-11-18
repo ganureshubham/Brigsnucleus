@@ -40,15 +40,16 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   alertid: any;
   totalDocumate: any;
+  documentId: number;
 
   constructor(private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
     private documateService: DocumateService,
+    public dataService: DataSharingService,
+    private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
-    public dataService: DataSharingService,
-    private dialogService: DialogService
   ) {
 
   }
@@ -61,7 +62,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.getAllDocumates(this.pageNumber);
-
 
   }
 
@@ -81,7 +81,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
-        this.showSnackBar(res.message)
+        this.showSnackBar(res.message);
       }
     },
       error => {
@@ -128,6 +128,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
 
   deleteDocumate(documentId: number, title: string) {
+    this.documentId = documentId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET',
@@ -145,7 +146,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
           this.dialogService.setUserDialogAction(0);
           //User has approved delete operation
           this.spinnerService.setSpinnerVisibility(true);
-          this.documateService.deleteDocumate(documentId).subscribe(res => {
+          this.documateService.deleteDocumate(this.documentId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
             this.getAllDocumates(this.page);
@@ -156,6 +157,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
       })
     }
   }
+
   /*********************************************************** Search Documate *******************************************************************/
 
   searchDocumate(keyword) {
@@ -172,7 +174,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
+  /*********************************************************** Add  Documate *******************************************************************/
 
   addDocumate() {
     let selectedManufacturer = null;

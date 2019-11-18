@@ -97,24 +97,24 @@
                 <mat-form-field fxFlex>
                   <mat-select name="userRoleIdFK" id="userRoleIdFK" [(ngModel)]="userData.userRoleIdFK"
                     #UserRoleName="ngModel" placeholder="Select User Role Name" required>
-                    <mat-option *ngFor="let role of userRoleList" [value]="role.userRoleId">{{role.title}}  
+                    <mat-option *ngFor="let role of userRoleList" [value]="role.userRoleId">{{role.title}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="userform.submitted && UserRoleName.invalid">
-                    <mat-error *ngIf="UserRoleName.errors.required">User Role Name is required</mat-error> 
-                  </mat-error> 
-                </mat-form-field> 
+                    <mat-error *ngIf="UserRoleName.errors.required">User Role Name is required</mat-error>
+                  </mat-error>
+                </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <div class="md-form">
                   <label>Profile Image</label>
                   <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left"> 
+                    <div class="btn btn-primary btn-sm float-left">
                       <span>Choose file</span>
                       <input type="file" (change)="imageChange($event.target.files)" accept="image/*">
                     </div>
                     <div class="file-path-wrapper">
-                      <input class="file-path validate" name="profileImage" [(ngModel)]="profileImage" type="text" 
+                      <input class="file-path validate" name="profileImage" [(ngModel)]="profileImage" type="text"
                         placeholder="Upload your User image" required>
                     </div>
                     <div class="error hide text-error">{{imageerror}}</div>
@@ -129,6 +129,8 @@
                 [disabled]="!userform.valid" (click)="addUser(userform)">Save User</button>
               <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
                 [disabled]="!userform.valid" (click)="editUser(userform)">Update User</button>
+              <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
+                [disabled]="!userform.valid" (click)="backToList()">Cancel</button>
             </div>
           </form>
         </div>

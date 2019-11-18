@@ -1,9 +1,3 @@
-<ngx-spinner
-bdColor="rgba(51,51,51,0.8)"
-size="medium"
-color="#7e71b1"
-type="line-spin-fade-rotating"      
-></ngx-spinner>
 <div class="innerbody table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
@@ -31,10 +25,10 @@ type="line-spin-fade-rotating"
           </ng-container>
           <ng-container matColumnDef="title">
             <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell> 
+            <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell> 
+            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
             <mat-cell *matCellDef="let visit">
               <div>
                 <mat-menu #dailyPerformanceMenu="matMenu">
@@ -42,7 +36,7 @@ type="line-spin-fade-rotating"
                     <mat-icon matListIcon>edit</mat-icon>
                     <span i18n>Edit User Role</span>
                   </a>
-                  <a mat-menu-item (click)="deleteRole(visit.userRoleId)">
+                  <a mat-menu-item (click)="deleteRole(visit.userRoleId, visit.title)">
                     <mat-icon matListIcon>delete_outline</mat-icon>
                     <span i18n>Delete User Role</span>
                   </a>
@@ -54,7 +48,7 @@ type="line-spin-fade-rotating"
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> 
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
         <div>
           <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">

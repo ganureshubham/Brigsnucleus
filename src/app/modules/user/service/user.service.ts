@@ -16,6 +16,11 @@ export class UserService {
     return this.httpClient.get(ConfigurationService.baseUrl + `users/listOfUsers/${pageNo}`);
   }
 
+  /*********************************************************** Get All Departments ************************************************/
+  getAllDepts(): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `departments/departmentList`);
+  }
+
   /*********************************************************** Add New User *******************************************************************/
 
   addUser(userData: any): Observable<any> {

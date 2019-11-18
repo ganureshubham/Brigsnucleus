@@ -39,6 +39,8 @@ export class AddDocumateComponent implements OnInit {
         this.isEdited = true;
         this.formTitle = `Edit Documate`;
 
+      } else {
+        this.documentData.documentTypeIdFK = 3;
       }
     })
     this.selectDocumentType();
@@ -62,7 +64,7 @@ export class AddDocumateComponent implements OnInit {
 
 
 
-  /*********************************************************** Add New Asset *******************************************************************/
+  /*********************************************************** Add New Documate *******************************************************************/
 
   addDocument(formData: NgForm) {
     let value = formData.value;
@@ -142,6 +144,8 @@ export class AddDocumateComponent implements OnInit {
       this.documenterror = "please select Documents only";
     }
   }
+
+
 
   backToList() {
     this.router.navigate(['/documate']);

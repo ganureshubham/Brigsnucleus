@@ -4,6 +4,8 @@ import { SupplierService } from '../../service/supplier.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerService } from '../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-supplier',
@@ -18,8 +20,8 @@ export class AddSupplierComponent implements OnInit {
   constructor(private router: Router,
     private supplierService: SupplierService,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -35,42 +37,38 @@ export class AddSupplierComponent implements OnInit {
         this.supplierData.supplierName = res.supplierName;
         this.isEdited = true;
         this.formTitle = `Edit Supplier`;
-
       }
     })
   }
 
   /*********************************************************** Add New Asset *******************************************************************/
   addSupplier(value) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+    this.spinnerService.setSpinnerVisibility(true);
+
     this.supplierService.addSupplier(value).subscribe(res => {
-      this.toastr.success(res.message);
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
       this.router.navigate(['/supplier']);
     },
       error => {
-        this.toastr.error(error.error.message);
-
+        this.showSnackBar("Something went wrong..!!");
       })
 
+  }
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   /*********************************************************** Edit Selected Role *******************************************************************/
   editSupplier(value) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+    this.spinnerService.setSpinnerVisibility(true);
     this.supplierService.editSupplier(this.supplierData.supplierId, value).subscribe(res => {
-      this.toastr.success(res.message);
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
       this.router.navigate(['/supplier']);
-
     },
       error => {
-        this.toastr.error(error.error.message);
-
+        this.showSnackBar("Something went wrong..!!");
       })
   }
 

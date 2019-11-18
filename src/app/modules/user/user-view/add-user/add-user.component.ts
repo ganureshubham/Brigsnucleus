@@ -27,7 +27,7 @@ export class AddUserComponent implements OnInit {
     private userService: UserService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner:NgxSpinnerService 
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {

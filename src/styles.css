@@ -10,12 +10,12 @@ body {
   background-attachment: fixed;
 }
 
-*{
-  font-family: 'Barlow';
+* {
+  font-family: "Barlow";
 }
 
-.mat-subheading-2{
-  font-family: 'Barlow';
+.mat-subheading-2 {
+  font-family: "Barlow";
 }
 
 .toggle {
@@ -1067,6 +1067,16 @@ body {
 
 .mat-simple-snackbar {
   display: inline-block !important;
+}
+
+.btn-cancel {
+  margin-left: 10px;
+}
+.flex_end .mat-list-item-content {
+  justify-content: flex-end;
+}
+.border_bottom {
+  border-bottom: 1px solid #ddd;
 }
 
 /********************************************** end style**************************************************************/

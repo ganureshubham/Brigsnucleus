@@ -5,22 +5,12 @@ import { AddUserComponent } from './user-view/add-user/add-user.component';
 
 export const UserRoutes: Routes = [
   {
-    path: "",
-    children: [
-      {
-        path: "",
-        component:UserViewComponent
-      }
-    ]
+    path: "user-list",
+    component: UserViewComponent
   },
   {
-    path: "",
-    children: [
-      {
-        path: "add-user",
-        component: AddUserComponent  
-      }
-    ]
-  },
+    path: "add-user",
+    component: AddUserComponent
+  }
 
-];
+]; 

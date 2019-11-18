@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-
+import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { RoleService } from '../service/role.service';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerService } from '../../../public service/spinner.service';
+import { AppDialogData } from '../../../model/appDialogData';
+import { DialogService } from '../../../public service/dialog.service';
 
 @Component({
   selector: 'app-role-view',
@@ -22,6 +22,9 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   roleData: any = {};
+  userRoleId: number;
+
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['userRoleId', 'title', 'Actions'];
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
@@ -36,8 +39,9 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private roleService: RoleService,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
+    private dialogService: DialogService
   ) {
 
   }
@@ -61,25 +65,27 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
 
   getAllRoles(pageNo: any) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-    this.roleService.getAllRoles(pageNo).subscribe(res => { 
-      console.log(res);
-      this.paidDataSource = res.userroles;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
+    this.spinnerService.setSpinnerVisibility(true);
+    this.roleService.getAllRoles(pageNo).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.userroles) {
+        this.paidDataSource = res.userroles;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
 
-
+      } else {
+        this.showSnackBar(res.message);
+      }
     },
       error => {
-
-        this.toastr.error(error.message);
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
 
       }
     )
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 
@@ -88,9 +94,10 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getAllRoles(this.page); 
+    this.getAllRoles(this.page);
   }
 
+  /*********************************************************** Add Role *******************************************************************/
 
   addRole() {
     let selectedAsset = null;
@@ -100,24 +107,45 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Delete Particular Role *******************************************************************/
 
-  deleteRole(userRoleId: number) {
-    alert('are you sure?');
-    this.roleService.deleteRole(userRoleId).subscribe(res => {
-      this.toastr.success(res.message);
-      this.getAllRoles(this.page);
-    })
-    error => {
-      console.log(error);
-      this.toastr.error(error.message);
-
+  deleteRole(userRoleId: number, title: string) {
+    this.userRoleId = userRoleId;
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE USER ROLE',
+      message: ` Are your sure you want to delete User Role "${title}"`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
     }
+    this.dialogService.setDialogVisibility(appDialogData);
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+          this.dialogService.setUserDialogAction(0);
+          //User has approved delete operation
+          this.spinnerService.setSpinnerVisibility(true);
+          this.roleService.deleteRole(this.userRoleId).subscribe(res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getAllRoles(this.page);
+          }, error => {
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
+
   }
+
+
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   editRole(userRoleId: number) {
     this.dataService.changeData(userRoleId);
-    this.router.navigate(['/user-role/add-user-role']); 
+    this.router.navigate(['/user-role/add-user-role']);
 
 
   }

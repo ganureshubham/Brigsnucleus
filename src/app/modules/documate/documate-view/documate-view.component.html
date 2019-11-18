@@ -3,7 +3,7 @@
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div class="width_75">
-          <p class="title_header mat-subheading-2 tal">Documate</p>
+          <p class="title_header mat-subheading-2 tal">Document</p>
         </div>
       </div>
       <div>
@@ -14,14 +14,14 @@
       <div class="cl"></div>
     </div>
     <mat-tab-group class="">
-      <mat-tab label="Documate">
+      <mat-tab label="Document">
         <div class="table">
           <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
             <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
               <div class="flex_container padding_box align_center">
                 <div class="width_50">
                   <button mat-button (click)="addDocumate()" class="bg_white_grey btn_style">
-                    <mat-icon>add</mat-icon>Add Documate
+                    <mat-icon>add</mat-icon>Add Document
                   </button>
                 </div>
                 <div class="width_50 dfe">
@@ -53,15 +53,15 @@
                       <mat-menu #dailyPerformanceMenu="matMenu">
                         <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
                           <mat-icon matListIcon>get_app</mat-icon>
-                          <span i18n>Download Documate</span>
+                          <span i18n>Download Document</span>
                         </a>
                         <a mat-menu-item (click)="editDocumate(visit)">
                           <mat-icon matListIcon>edit</mat-icon>
-                          <span i18n>Edit Documate</span>
+                          <span i18n>Edit Document</span>
                         </a>
                         <a mat-menu-item (click)="deleteDocumate(visit.documentId,visit.title)">
                           <mat-icon matListIcon>delete_outline</mat-icon>
-                          <span i18n>Delete Documate</span>
+                          <span i18n>Delete Document</span>
                         </a>
                       </mat-menu>
                       <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

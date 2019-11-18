@@ -1,0 +1,16 @@
+.department-tree-container {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+}
+
+.mat-list-base {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.mat-icon {
+  color: #757575;
+}

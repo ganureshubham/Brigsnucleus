@@ -7,9 +7,10 @@ import { UserRoutes } from './user-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { DepartmentFilterComponent } from './department-filter/department-filter.component';
 
 @NgModule({
-  declarations: [UserViewComponent, AddUserComponent],
+  declarations: [UserViewComponent, AddUserComponent, DepartmentFilterComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(UserRoutes),

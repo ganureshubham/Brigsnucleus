@@ -5,8 +5,8 @@
     </mat-list-item>
     <mat-list-item role="listitem">
       <mat-form-field fxFlex>
-        <mat-select name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
-          placeholder="Select Parent Category" required>
+        <mat-select disabled name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
+          placeholder="Select Parent Department" required>
           <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
           </mat-option>
         </mat-select>
@@ -23,11 +23,11 @@
       </mat-form-field>
     </mat-list-item>
     <mat-list-item role="listitem">
-      <button *ngIf="!isEdited" [color]="'success'" [disabled]="!deptForm.valid" (click)="addDept(deptForm.value)"
-        mat-raised-button i18n color="primary">Save Department</button>
-      <button *ngIf="isEdited" [color]="'success'" [disabled]="!deptForm.valid" (click)="editDept(deptForm.value)"
-        mat-raised-button i18n color="primary">Update Department</button>
-      <button mat-raised-button (click)="closeDialog()" class="fr">Cancel</button>
+      <button *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save Department</button>
+      <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="editDept(deptForm.value)" mat-raised-button i18n color="primary">Update Department</button>
+      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
     </mat-list-item>
   </mat-list>
 </form>
