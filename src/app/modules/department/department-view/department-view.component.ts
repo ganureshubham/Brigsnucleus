@@ -102,6 +102,8 @@ export class DepartmentViewComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
 
     this.departmentService.getAllDept().subscribe(res => {
+      console.log(res);
+
 
       this.spinnerService.setSpinnerVisibility(false);
 

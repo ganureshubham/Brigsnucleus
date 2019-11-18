@@ -37,7 +37,6 @@ export class AddSupplierComponent implements OnInit {
         this.supplierData.supplierName = res.supplierName;
         this.isEdited = true;
         this.formTitle = `Edit Supplier`;
-
       }
     })
   }
@@ -53,7 +52,6 @@ export class AddSupplierComponent implements OnInit {
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
-
       })
 
   }
@@ -68,11 +66,9 @@ export class AddSupplierComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
       this.router.navigate(['/supplier']);
-
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
-
       })
   }
 
