@@ -11,6 +11,7 @@ export class AssetmateService {
 
   private badgeUpdateActionAssetDetails = new BehaviorSubject<boolean>(false);
   private badgeUpdateActionAssetList = new BehaviorSubject<boolean>(false);
+  private badgeUpdateActionQuestionList = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -150,6 +151,10 @@ export class AssetmateService {
 
   getChecklistQuestions(checklistId, pageNo) {
     return this.httpClient.get(ConfigurationService.baseUrl + `questions/questionsList/${checklistId}/${pageNo}`);
+  }
+
+  addChecklistQuestion(checklistQuestion): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addQuestion`, checklistQuestion);
   }
 
   /*********************************************************** Get All Checklists ********************************/
@@ -349,6 +354,8 @@ export class AssetmateService {
       return this.badgeUpdateActionAssetDetails.asObservable();
     } else if (component == 'assetList') {
       return this.badgeUpdateActionAssetList.asObservable();
+    } else if (component == 'questionList') {
+      return this.badgeUpdateActionQuestionList.asObservable();
     }
   }
 
@@ -357,7 +364,10 @@ export class AssetmateService {
       this.badgeUpdateActionAssetDetails.next(action);
     } else if (component == 'assetList') {
       this.badgeUpdateActionAssetList.next(action);
+    } else if (component == 'questionList') {
+      this.badgeUpdateActionQuestionList.next(action);
     }
+
   }
 
 }

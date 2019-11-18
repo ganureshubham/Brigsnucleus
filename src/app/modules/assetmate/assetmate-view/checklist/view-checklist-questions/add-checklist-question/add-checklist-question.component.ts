@@ -4,6 +4,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from
 import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { MatSnackBar } from '@angular/material';
+import { checklistQuestion, questionOption } from '../../../../../../model/checklistQuestion';
+import { ActivatedRoute } from '@angular/router';
 
 interface QuestionTypeOption {
   questionTypeId: number,
@@ -31,6 +33,7 @@ export class AddChecklistQuestionComponent implements OnInit {
   questionOptions: FormGroup;
 
   arrOption: QuestionOptions[] = [];
+  checkListId: number;
 
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
@@ -41,9 +44,12 @@ export class AddChecklistQuestionComponent implements OnInit {
     private assetmateService: AssetmateService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+
+    this.checkListId = Number(this.activatedRoute.snapshot.parent.params['checkListId']);
 
     this.getChecklistQuestionTypes();
 
@@ -56,8 +62,8 @@ export class AddChecklistQuestionComponent implements OnInit {
     });
 
     this.questionOptions = this._formBuilder.group({
-      option0: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      checkbox0: [''],
+      'option0': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+      'checkbox0': [''],
     });
 
     this.arrFormGroupsForFormArray.push(
@@ -148,33 +154,115 @@ export class AddChecklistQuestionComponent implements OnInit {
 
   onNewOptionAddClicked() {
 
-    this.questionOptions.addControl('option' + (this.arrOption.length + 1), new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
-    this.questionOptions.addControl('checkbox' + (this.arrOption.length + 1), new FormControl(''));
+    let randomNo = this.getRandomInt();
+
+    this.questionOptions.addControl('option' + randomNo, new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
+    this.questionOptions.addControl('checkbox' + randomNo, new FormControl(''));
 
     this.arrOption.push({
-      optionControl: 'option' + (this.arrOption.length + 1),
-      checkboxControl: 'checkbox' + (this.arrOption.length + 1)
+      optionControl: 'option' + randomNo,
+      checkboxControl: 'checkbox' + randomNo
     });
 
-    console.log('this.arrOption add --- >');
-    console.log(this.arrOption);
+    // console.log('this.arrOption add --- >');
+    // console.log(this.arrOption);
+
+    // this.questionOptions.addControl('option' + (this.arrOption.length + 1), new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
+    // this.questionOptions.addControl('checkbox' + (this.arrOption.length + 1), new FormControl(''));
+
+    // this.arrOption.push({
+    //   optionControl: 'option' + (this.arrOption.length + 1),
+    //   checkboxControl: 'checkbox' + (this.arrOption.length + 1)
+    // });
+
+    // console.log('this.arrOption add --- >');
+    // console.log(this.arrOption);
 
   }
 
   onQuestionOptionDelete(optionIndex) {
 
-    this.arrOption.splice(optionIndex, 1);
-    this.questionOptions.removeControl('option' + this.arrOption.length);
-    this.questionOptions.removeControl('checkbox' + this.arrOption.length);
+    let formControlLable = this.arrOption[optionIndex];
 
-    console.log('this.arrOption --- >');
-    console.log(this.arrOption);
+    this.arrOption.splice(optionIndex, 1);
+    this.questionOptions.removeControl('option' + formControlLable);
+    this.questionOptions.removeControl('checkbox' + formControlLable);
+
+    // console.log('this.arrOption --- >');
+    // console.log(this.arrOption);
+
+    // this.arrOption.splice(optionIndex, 1);
+    // this.questionOptions.removeControl('option' + this.arrOption.length);
+    // this.questionOptions.removeControl('checkbox' + this.arrOption.length);
+
+    // console.log('this.arrOption --- >');
+    // console.log(this.arrOption);
 
   }
 
   isQuestionOptionSectionAllowed() {
     let formArray: any = this.formGroup.controls.formArray;
     return formArray.controls.length > 2;
+  }
+
+  getRandomInt() {
+    // min = 1 and max = 100 included 
+    return Math.floor(Math.random() * (100 - 1 + 1) + 1);
+  }
+
+  addNewQuestion() {
+
+    // console.log('submitForm : --' + this.formGroup.valid);
+    // console.log(this.formGroup);
+
+    let formGroupFormArray: any = (this.formGroup.get('formArray'));
+    // console.log('formGroupFormArray');
+    // console.log(formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value);
+
+
+    let checklistQuestion: checklistQuestion = {
+      title: formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value,
+      questionTypeIdFK: formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value,
+      checkListIdFK: this.checkListId,
+      options: []
+    }
+
+    if (this.isQuestionOptionSectionAllowed()) {
+
+      // console.log('isQuestionOptionSectionAllowed');
+      // console.log(formGroupFormArray.controls[2]);
+
+      //Insert default option0 and checkbox0
+      checklistQuestion.options.push(
+        {
+          optionTitle: formGroupFormArray.controls[2].get('option0').value,
+          isDanger: formGroupFormArray.controls[2].get('checkbox0').value ? 1 : 0
+        }
+      );
+
+      //Insert remaining options with checkbox status
+      for (let option of this.arrOption) {
+        checklistQuestion.options.push(
+          {
+            optionTitle: formGroupFormArray.controls[2].get(option.optionControl).value,
+            isDanger: formGroupFormArray.controls[2].get(option.checkboxControl).value ? 1 : 0
+          }
+        );
+      }
+
+    }
+
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.addChecklistQuestion(checklistQuestion).subscribe(resp => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(resp.message);
+      this.assetmateService.setBadgeUpdateAction('questionList', true);
+      this.location.back();
+    }, error => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar("Something went wrong..!!");
+    });
+
   }
 
 }

@@ -119,7 +119,7 @@ export class ChecklistQuestionListComponent implements OnInit {
             this.showSnackBar(res.message);
 
             //------------------Update Badge-----------------------
-            // this.assetmateService.setBadgeUpdateAction('assetList', true);
+            this.assetmateService.setBadgeUpdateAction('questionList', true);
 
             this.getChecklistQuestions(this.checklistId, this.pageNumber);
 

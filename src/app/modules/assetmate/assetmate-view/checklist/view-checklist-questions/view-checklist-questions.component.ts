@@ -34,6 +34,16 @@ export class ViewChecklistQuestionsComponent implements OnInit {
     this.checklistId = this.activatedRoute.snapshot.params['checkListId'];
     this.categoryId = this.activatedRoute.snapshot.params['categoryId'];
     this.getChecklistTitle(this.checklistId);
+    this.subscribeToBadgeUpdateService();
+  }
+
+  subscribeToBadgeUpdateService() {
+    this.assetmateService.getBadgeUpdateAction('questionList').subscribe(res => {
+      if (res) {
+        this.assetmateService.setBadgeUpdateAction('questionList', false);
+        this.getChecklistTitle(this.checklistId);
+      }
+    });
   }
 
   getChecklistTitle(checklistId: number) {
