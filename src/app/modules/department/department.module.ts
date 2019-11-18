@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forChild(DepartmentRoutes),
     MaterialModule,
     FormsModule
-    
-  ]
+
+  ],
+
 })
 export class DepartmentModule { } 

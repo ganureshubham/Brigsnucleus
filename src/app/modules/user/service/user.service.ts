@@ -12,8 +12,8 @@ export class UserService {
 
   /*********************************************************** Get All Users *******************************************************************/
 
-  getAllUsers(pageNo: number): Observable<any> {
-    return this.httpClient.get(ConfigurationService.baseUrl + `users/listOfUsers/${pageNo}`);
+  getAllUsers(departmentId: number, pageNo: number): Observable<any> {
+    return this.httpClient.get(ConfigurationService.baseUrl + `users/listOfUsers/${departmentId}/${pageNo}`);
   }
 
   /*********************************************************** Get All Departments ************************************************/

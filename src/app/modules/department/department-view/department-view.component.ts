@@ -28,6 +28,8 @@ interface departmentDialogData {
   departmentTitle: string;
 }
 
+
+
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
@@ -93,7 +95,9 @@ export class DepartmentViewComponent implements OnInit {
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-
+  isNoRecord() {
+    return this.dataSource.data.length == 0;
+  }
 
 
   /************************************* All Department Lists****************************************************************/
@@ -123,6 +127,29 @@ export class DepartmentViewComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+
+  openDialog(): void {
+
+
+    this.dialogData = {
+      type: 'New Add',
+      level: 0,
+      parentId: 0,
+      departmentId: 0,
+      departmentTitle: ''
+    }
+
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      data: this.dialogData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('fsfsd', result);
+      this.getAllDept();
+
+    });
+
   }
 
   /************************************* Add New Department****************************************************************/

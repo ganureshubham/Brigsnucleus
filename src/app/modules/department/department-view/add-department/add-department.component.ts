@@ -32,12 +32,18 @@ export class AddDepartmentComponent implements OnInit {
     public dialog: MatDialog,
     public dialog1: MatDialogRef<AddDepartmentComponent>,
     public dialogRef: MatDialogRef<AddDepartmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+
   ) { }
 
   ngOnInit() {
 
     this.deptId = this.data.parentId;
+    console.log('data', this.data);
+
+
+
+
 
     if (this.data.type == 'Add') {
       if (this.data.level > 0) {
@@ -49,6 +55,10 @@ export class AddDepartmentComponent implements OnInit {
       this.isEdited = true;
       this.formTitle = `Edit Department`;
       this.deptData = this.data;
+    } else if (this.data.type == 'New Add') {
+      this.deptData.parentId = this.data.parentId;
+
+
     }
 
     this.getDeptList();
@@ -71,7 +81,7 @@ export class AddDepartmentComponent implements OnInit {
       }
     },
       error => {
-        this.toastr.error(error.message);
+        this.showSnackBar("Something went wrong..!!");
 
       })
   }
