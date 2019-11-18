@@ -5,7 +5,7 @@ import { AssetmateDetailsComponent } from './assetmate-view/assetmate-details/as
 import { RouterModule } from '@angular/router';
 import { AssetmateRoutes } from './assetmate-routing.module';
 import { MaterialModule } from '../../app.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssetModule } from '../asset/asset.module';
 import { AssetmateLayoutComponent } from './assetmate-layout/assetmate-layout.component';
 import { ViewAssetComponent } from './assetmate-view/Asset/view-asset/view-asset.component';
@@ -28,6 +28,10 @@ import { ViewHistoryComponent } from './assetmate-view/Asset/view-asset/History/
 import { ViewQuestionComponent } from './assetmate-view/Asset/view-asset/History/view-history/view-question/view-question.component';
 import { AssetAssignUserComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-user.component';
 import { AssetAssignNewUsersComponent } from './assetmate-view/Asset/view-asset/asset-assign-user/asset-assign-new-users/asset-assign-new-users.component';
+import { ViewChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/view-checklist-questions.component';
+import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-checklist-questions/checklist-question-list/checklist-question-list.component';
+import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
+import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 
 
 @NgModule({
@@ -51,16 +55,21 @@ import { AssetAssignNewUsersComponent } from './assetmate-view/Asset/view-asset/
     ViewHistoryComponent,
     ViewQuestionComponent,
     AssetAssignUserComponent,
-    AssetAssignNewUsersComponent,  
+    AssetAssignNewUsersComponent,
+    ViewChecklistQuestionsComponent,
+    ChecklistQuestionListComponent,
+    AddChecklistQuestionComponent,
+    EditChecklistQuestionComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(AssetmateRoutes),
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxSpinnerModule,
     QRCodeModule
   ],
-  entryComponents: [AssetCodeComponent,ConfirmDialogComponent]
+  entryComponents: [AssetCodeComponent, ConfirmDialogComponent]
 })
 export class AssetmateModule { } 

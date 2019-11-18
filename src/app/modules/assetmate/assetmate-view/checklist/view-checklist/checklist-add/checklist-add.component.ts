@@ -37,10 +37,7 @@ export class ChecklistAddComponent implements OnInit {
     this.categoryID = this.route.snapshot.params['categoryId'];
     this.dataService.mSaveData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        this.checklistData.title = res.title;
-        // let categorydata = localStorage.getItem('Category-Object');
-        // this.category = JSON.parse(categorydata);
-        // this.checklistData.categoryId = this.category.categoryId; 
+        this.checklistData = res;
         this.checklistData.categoryId = this.categoryID;
         this.isEdited = true;
         this.formTitle = `Edit Checklist`;
@@ -110,23 +107,17 @@ export class ChecklistAddComponent implements OnInit {
   /*********************************************************** Add New Checklist *******************************************************************/
   editChecklist(value) {
 
-    this.assetmateService.editChecklist(this.checklistData.checklistId, value).subscribe(res => {
-      console.log('edit checklist res', res);
+    value.categoryId = Number(this.route.snapshot.params['categoryId']);
 
-      this.spinner.show();
-      setTimeout(() => {
-        this.toastr.success(res.message);
-        let categorydata = localStorage.getItem('Category-Object');
-        this.category = JSON.parse(categorydata);
-        this.dataService.changeData(this.category);
-        this.showFirst = !this.showFirst;
-        // this.router.navigate(['/asset']);
-        this.spinner.hide();
-      }, 1000);
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.editChecklist(this.checklistData.checklistId, value).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
+      this.showFirst = !this.showFirst;
     },
       error => {
-        console.log("edit checklist error", error);
-        this.toastr.error(error.message);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
       })
   }
 

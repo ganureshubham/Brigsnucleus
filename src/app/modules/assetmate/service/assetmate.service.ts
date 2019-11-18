@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ConfigurationService } from '../../../public service/configuration.service';
@@ -11,6 +11,7 @@ export class AssetmateService {
 
   private badgeUpdateActionAssetDetails = new BehaviorSubject<boolean>(false);
   private badgeUpdateActionAssetList = new BehaviorSubject<boolean>(false);
+  private badgeUpdateActionQuestionList = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -144,6 +145,17 @@ export class AssetmateService {
 
   /**********************************************  Checklist Starts ********************************************************************************************/
 
+  getChecklistPrimaryInfoByChecklistId(checklistId) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `checklists/viewParticularChecklist/${checklistId}`);
+  }
+
+  getChecklistQuestions(checklistId, pageNo) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/questionsList/${checklistId}/${pageNo}`);
+  }
+
+  addChecklistQuestion(checklistQuestion): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addQuestion`, checklistQuestion);
+  }
 
   /*********************************************************** Get All Checklists ********************************/
 
@@ -181,7 +193,19 @@ export class AssetmateService {
 
   searchChecklist(categoryIdFK, keyword) {
     return this.httpClient.get(ConfigurationService.baseUrl + `questions/allChecklistSearch?categoryIdFK=${categoryIdFK}&keyword=${keyword}`);
+  }
 
+  deleteCheckListQuestion(checkListQuestionId: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.httpClient.delete(ConfigurationService.baseUrl + `questions/deleteQuestion/${checkListQuestionId}`, httpOptions);
+  }
+
+  getCheckListQuestionTypes() {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/selectQuestionType`);
   }
 
   /********************************************** Category Document Starts *****************************************************************/
@@ -330,6 +354,8 @@ export class AssetmateService {
       return this.badgeUpdateActionAssetDetails.asObservable();
     } else if (component == 'assetList') {
       return this.badgeUpdateActionAssetList.asObservable();
+    } else if (component == 'questionList') {
+      return this.badgeUpdateActionQuestionList.asObservable();
     }
   }
 
@@ -338,7 +364,10 @@ export class AssetmateService {
       this.badgeUpdateActionAssetDetails.next(action);
     } else if (component == 'assetList') {
       this.badgeUpdateActionAssetList.next(action);
+    } else if (component == 'questionList') {
+      this.badgeUpdateActionQuestionList.next(action);
     }
+
   }
 
 }

@@ -4,52 +4,70 @@ import { AssetmateDetailsComponent } from './assetmate-view/assetmate-details/as
 import { AssetmateLayoutComponent } from './assetmate-layout/assetmate-layout.component';
 import { AssetCodeComponent } from './assetmate-view/Asset/asset-code/asset-code.component';
 import { DetailsAssetComponent } from './assetmate-view/Asset/view-asset/details-asset/details-asset.component';
+import { ViewChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/view-checklist-questions.component';
+import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-checklist-questions/checklist-question-list/checklist-question-list.component';
+import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
+import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 
 export const AssetmateRoutes: Routes = [
   {
+    // path: "",
+    // children: [
+    //   {
     path: "",
+    component: AssetmateViewComponent
+    //   }
+    // ]
+  },
+  {
+    // path: "",
+    // children: [
+    //   {
+    path: "assetmate-details/:categoryId",
+    component: AssetmateDetailsComponent
+    //   }
+    // ]
+  },
+  {
+    // path: "",
+    // children: [
+    //   {
+    path: "assetcode",
+    component: AssetCodeComponent
+    //   }
+    // ]
+  },
+  {
+    // path: "",
+    // children: [
+    //   {
+    path: "assetmate-details/:categoryId/asset-details/:assetId",
+    component: DetailsAssetComponent
+    //   }
+    // ]
+  },
+  {
+    // path: "",
+    // children: [
+    //   {
+    path: "assetmate-details/:categoryId/checklist/:checkListId",
+    component: ViewChecklistQuestionsComponent,
     children: [
       {
         path: "",
-        component: AssetmateViewComponent
-      }
-    ]
-  },
-  {
-    path: "",
-    children: [
+        component: ChecklistQuestionListComponent,
+      },
       {
-        path: "assetmate-details/:categoryId",
-        component: AssetmateDetailsComponent
-      }
-    ]
-  },
-  {
-    path: "",
-    children: [
+        path: "add-question",
+        component: AddChecklistQuestionComponent,
+      },
       {
-        path: "assetcode",
-        component: AssetCodeComponent
+        path: "edit-question",
+        component: EditChecklistQuestionComponent,
       }
     ]
-  },
-  {
-    path: "",
-    children: [
-      {
-        path: "assetmate-details/:categoryId/asset-details/:assetId",
-        component: DetailsAssetComponent
-      }
-    ]
-  },
-  {
-    path: "",
-    children: [
-      {
-        path: "assetmate-details/:categoryId/asset-details/:assetId",
-        component: DetailsAssetComponent
-      }
-    ]
+    //   }
+    // ]
   },
   // {
   //   path: "assetmate-layout",

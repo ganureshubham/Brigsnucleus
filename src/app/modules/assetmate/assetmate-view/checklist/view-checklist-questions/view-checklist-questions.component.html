@@ -1,0 +1,33 @@
+<div class="table assets_view padding_container margin_auto flex_container">
+  <app-filter-category></app-filter-category>
+  <mat-card class="width_80 right_side_box">
+    <div class="innerpage_title">
+      <div class="header_title flex_container">
+        <div>
+          <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+        </div>
+        <div class="width_75">
+          <p class="title_header mat-subheading-2 tal">{{checklistPrimaryInfo.title}}</p>
+        </div>
+        <div class="dfe add_action" style="width:19.5%">
+
+        </div>
+      </div>
+      <div>
+        <div class="fl total">
+          <p><b>{{checklistPrimaryInfo.totalQuestions}}</b><span>Total Questions</span></p>
+        </div>
+      </div>
+      <div class="cl"></div>
+    </div>
+    <div class="asset_view_detail">
+      <mat-tab-group>
+        <mat-tab label="Questions">
+          <router-outlet></router-outlet>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </mat-card>
+</div>

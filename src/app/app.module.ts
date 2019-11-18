@@ -6,7 +6,7 @@ import { AppComponent, AppDialog } from './app.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
@@ -109,6 +109,7 @@ export class MaterialModule { }
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
     HttpModule,
