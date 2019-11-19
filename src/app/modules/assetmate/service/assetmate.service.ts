@@ -157,6 +157,15 @@ export class AssetmateService {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addQuestion`, checklistQuestion);
   }
 
+  linkChecklistQuestion(questionOptionId, checklistQuestion) {
+    console.log('linkChecklistQuestion: ' + questionOptionId)
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addLinkQuestion/${questionOptionId}`, checklistQuestion);
+  }
+
+  getQuestionDetails(checklistQuestionId) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/viewParticularQuestionWithOptions/${checklistQuestionId}`);
+  }
+
   /*********************************************************** Get All Checklists ********************************/
 
   getAllChecklists(categoryId: number, pageNo: number): Observable<any> {

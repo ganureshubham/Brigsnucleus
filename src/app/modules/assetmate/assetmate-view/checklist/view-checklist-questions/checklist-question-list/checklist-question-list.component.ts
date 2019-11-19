@@ -82,11 +82,12 @@ export class ChecklistQuestionListComponent implements OnInit {
   }
 
   addNewChecklistQuestion() {
-    this.router.navigate(['assetmate/assetmate-details/' + this.categoryId + '/checklist/' + this.checklistId + '/add-question']);
+    //Navigate to add component with question Id 0 so that componet can differentiate add vs link opeation
+    this.router.navigate(['assetmate/assetmate-details/' + this.categoryId + '/checklist/' + this.checklistId + '/add-question/0']);
   }
 
-  editChecklistQuestion() {
-    this.router.navigate(['assetmate/assetmate-details/' + this.categoryId + '/checklist/' + this.checklistId + '/edit-question']);
+  editChecklistQuestion(questionId) {
+    this.router.navigate([`assetmate/assetmate-details/${this.categoryId}/checklist/${this.checklistId}/edit-question/${questionId}`]);
   }
 
   deleteChecklistQuestion(questionId, questionDescription) {
@@ -144,6 +145,10 @@ export class ChecklistQuestionListComponent implements OnInit {
 
   navigaetToAddQuestion() {
     this.router.navigate(['/assetmate/assetmate-details/1/checklist/1/add-question'], { relativeTo: this.activatedRoute });
+  }
+
+  navigateToQuestionDetails(questionId) {
+    this.router.navigate([`/assetmate/assetmate-details/1/checklist/1/details-question/${questionId}`], { relativeTo: this.activatedRoute });
   }
 
 }

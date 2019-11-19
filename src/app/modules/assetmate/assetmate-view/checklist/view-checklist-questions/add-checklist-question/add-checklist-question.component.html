@@ -2,135 +2,15 @@
   <div class="fr">
     <div class="example-button-row btn_style bg_white_grey ">
       <button mat-button (click)="backToListChecklistQuestionList()">
-        <mat-icon>list</mat-icon> Asset Lists
+        <mat-icon>list</mat-icon>{{getBackBtnLable()}}
       </button>
     </div>
   </div>
 </div>
 <div class="add_question tab_content">
-  <h4>Add Question</h4>
-  <!-- <mat-vertical-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form class="tab_content">
-        <ng-template matStepLabel>Question Type</ng-template>
-        <mat-form-field>
-          <mat-label>Select Question Type *</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{food.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form class="tab_content">
-        <ng-template matStepLabel>Question Description
-        </ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Define Question Description " required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form class="tab_content">
-        <ng-template matStepLabel>Question Option Single </ng-template>
-        <mat-list role="list" class="add_question_fild">
-          <mat-list-item role="listitem">
-            <button mat-button class="bg_white_grey btn_style">
-              <mat-icon>add</mat-icon>Add New Option
-            </button>
-
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-form-field>
-              <input matInput placeholder="Option1  " required>
-            </mat-form-field>
-            <mat-checkbox>Is Danger</mat-checkbox>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-form-field>
-              <input matInput placeholder="Option2" required>
-            </mat-form-field>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-form-field class="remove_options">
-              <input matInput placeholder="Option3" required>
-              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn">
-                <mat-icon matSuffix>cancel</mat-icon>
-              </button>
-            </mat-form-field>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-form-field class="remove_options">
-              <input matInput placeholder="Option4" required>
-              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn">
-                <mat-icon matSuffix>cancel</mat-icon>
-              </button>
-            </mat-form-field>
-          </mat-list-item>
-        </mat-list>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step>
-      <div class="tab_content done_question">
-        <ng-template matStepLabel>Review & Submit</ng-template>
-        <mat-list role="list" class="add_question_fild">
-          <mat-list-item role="listitem">
-            <div class="block">
-              <h4 class=" mat-h4 db ">Question Type</h4>
-              <span>SingleOption</span>
-            </div>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <div class="block">
-              <h4 class=" mat-h4 db ">Question Description</h4>
-              <span>Telephone is working well ?</span>
-            </div>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <div class="block">
-              <h4 class=" mat-h4 db ">Single Options</h4>
-              <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="1">Yes</mat-radio-button>
-                <mat-radio-button value="2">No</mat-radio-button>
-                <mat-radio-button value="3">Other</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <div class="block">
-              <h4 class=" mat-h4 db ">Multiple Options</h4>
-              <mat-radio-group aria-label="Select an option">
-                <mat-checkbox>Check me!</mat-checkbox>
-                <mat-checkbox>Check me!</mat-checkbox>
-                <mat-checkbox>Check me!</mat-checkbox>
-                <mat-checkbox>Check me!</mat-checkbox>
-              </mat-radio-group>
-            </div>
-          </mat-list-item>
-        </mat-list>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Done</button>
-        </div>
-      </div>
-
-    </mat-step>
-  </mat-vertical-stepper> -->
-
+  <div class="width_75">
+    <p class="title_header mat-subheading-2 tal">{{getPageTitle()}}</p>
+  </div>
   <form [formGroup]="formGroup">
     <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
@@ -155,11 +35,14 @@
         <ng-template matStepLabel>
           <div>Question Description</div>
         </ng-template>
-        <mat-form-field>
-          <mat-label>Define Question Description</mat-label>
-          <input matInput formControlName="questionDescriptionFormCtrl" required>
-          <mat-error>Please describe question (minimum 10 character)</mat-error>
-        </mat-form-field>
+        <div class="stepper-step-container">
+          <mat-form-field>
+            <mat-label>Define Question Description</mat-label>
+            <input matInput formControlName="questionDescriptionFormCtrl" required>
+            <mat-error>Please describe question (minimum 10 character)</mat-error>
+          </mat-form-field>
+          <mat-checkbox formControlName="questionCompulsoryFormCtrl">Is Compulsory</mat-checkbox>
+        </div>
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
@@ -173,7 +56,7 @@
         <button mat-button class="bg_white_grey btn_style" (click)="onNewOptionAddClicked()">
           <mat-icon>add</mat-icon>Add New Option
         </button>
-        <div>
+        <div class="stepper-step-container">
 
           <div>
             <mat-form-field>
@@ -203,7 +86,43 @@
       </mat-step>
 
       <mat-step>
-        <ng-template matStepLabel>Submit</ng-template>
+        <ng-template matStepLabel>Review & Submit</ng-template>
+        <div class="stepper-step-container">
+
+          <div class="review-question-item">
+            <h4 class="mat-h4 db">Question Type</h4>
+            <span>{{getUserFilledStep1DataForReview()}}</span>
+          </div>
+
+          <div class="review-question-item">
+            <h4 class=" mat-h4 db ">Question Description</h4>
+            <span>{{getUserFilledStep2DataForReview()}}</span>
+          </div>
+
+          <div class="review-question-item" role="listitem" *ngIf="isQuestionOptionSectionAllowed()">
+            <div *ngIf="getQuestionType() == 3">
+              <h4 class=" mat-h4 db ">SingleOption</h4>
+              <div>
+                <mat-radio-button disabled="true">{{getOptionLable('option0')}}
+                </mat-radio-button>
+                <mat-radio-button disabled="true" *ngFor="let option of arrOption">
+                  {{getOptionLable(option.optionControl)}}
+                </mat-radio-button>
+              </div>
+            </div>
+            <div *ngIf="getQuestionType() == 4">
+              <h4 class=" mat-h4 db ">MultiOption</h4>
+              <div>
+                <mat-checkbox disabled="true">{{getOptionLable('option0')}}
+                </mat-checkbox>
+                <mat-checkbox disabled="true" *ngFor="let option of arrOption">
+                  {{getOptionLable(option.optionControl)}}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+        </div>
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>

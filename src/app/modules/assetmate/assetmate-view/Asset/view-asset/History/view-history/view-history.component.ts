@@ -76,6 +76,8 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     //   this.spinner.hide();
     // }, 1000);
     this.assetmateService.doneChecklistLists(assetIdFK, pageNo).subscribe(res => {
+      console.log('doneChecklistLists : ');
+      console.log(res);
       this.paidDataSource = res.assetHistory;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
