@@ -2,13 +2,15 @@
   <div class="fr">
     <div class="example-button-row btn_style bg_white_grey ">
       <button mat-button (click)="backToListChecklistQuestionList()">
-        <mat-icon>list</mat-icon> Asset Lists
+        <mat-icon>list</mat-icon>{{getBackBtnLable()}}
       </button>
     </div>
   </div>
 </div>
 <div class="add_question tab_content">
-  <h4>Add Question</h4>
+  <div class="width_75">
+    <p class="title_header mat-subheading-2 tal">Add Question</p>
+  </div>
   <form [formGroup]="formGroup">
     <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">

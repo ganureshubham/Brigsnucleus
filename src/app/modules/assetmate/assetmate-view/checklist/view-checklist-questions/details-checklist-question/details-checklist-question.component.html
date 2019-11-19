@@ -1,0 +1,40 @@
+<div class="detail-checklist-question-container">
+  <div class="fr">
+    <div class="example-button-row btn_style bg_white_grey ">
+      <button mat-button (click)="backToListChecklistQuestionList()">
+        <mat-icon>list</mat-icon> Question Lists
+      </button>
+    </div>
+  </div>
+</div>
+<div class="add_question tab_content">
+  <div class="width_75">
+    <p class="title_header mat-subheading-2 tal">Question Details</p>
+  </div>
+  <div class="question-details-container">
+    <div class="question-detail-row">
+      <div class="question-detail-item">
+        <h4 class=" mat-h4 db ">Question Description</h4>
+        <span>Description</span>
+      </div>
+    </div>
+    <div class="question-detail-row">
+      <div class="question-detail-item width_30">
+        <h4 class=" mat-h4 db ">Question Type</h4>
+        <span>Title</span>
+      </div>
+      <div class="question-detail-item width_30">
+        <h4 class=" mat-h4 db ">Is Compulsory</h4>
+        <span>Code</span>
+      </div>
+    </div>
+    <div class="question-detail-row">
+      <div class="question-detail-item">
+        <h4 class=" mat-h4 db ">Question Options</h4>
+        <span>Options</span>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="navigateToLinkQuestion()">Link Question</button>
+</div>

@@ -1,0 +1,18 @@
+.detail-checklist-question-container{
+    padding: 20px;
+    display: flex;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
+.question-details-container{
+    padding-top: 40px;
+}
+
+.question-detail-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 25px;
+}

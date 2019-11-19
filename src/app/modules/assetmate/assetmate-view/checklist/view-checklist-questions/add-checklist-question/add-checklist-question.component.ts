@@ -34,6 +34,7 @@ export class AddChecklistQuestionComponent implements OnInit {
 
   arrOption: QuestionOptions[] = [];
   checkListId: number;
+  questionId: number;
 
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
@@ -50,6 +51,7 @@ export class AddChecklistQuestionComponent implements OnInit {
   ngOnInit() {
 
     this.checkListId = Number(this.activatedRoute.snapshot.parent.params['checkListId']);
+    this.questionId = this.activatedRoute.snapshot.params['questionId'];
 
     this.getChecklistQuestionTypes();
 
@@ -299,6 +301,10 @@ export class AddChecklistQuestionComponent implements OnInit {
 
     return selectionOptionType;
 
+  }
+
+  getBackBtnLable() {
+    return this.questionId == 0 ? 'Question List' : 'Question Details';
   }
 
 }

@@ -82,7 +82,7 @@ export class ChecklistQuestionListComponent implements OnInit {
   }
 
   addNewChecklistQuestion() {
-    this.router.navigate(['assetmate/assetmate-details/' + this.categoryId + '/checklist/' + this.checklistId + '/add-question']);
+    this.router.navigate(['assetmate/assetmate-details/' + this.categoryId + '/checklist/' + this.checklistId + '/add-question/0']);
   }
 
   editChecklistQuestion() {
@@ -144,6 +144,10 @@ export class ChecklistQuestionListComponent implements OnInit {
 
   navigaetToAddQuestion() {
     this.router.navigate(['/assetmate/assetmate-details/1/checklist/1/add-question'], { relativeTo: this.activatedRoute });
+  }
+
+  navigateToQuestionDetails(questionId) {
+    this.router.navigate([`/assetmate/assetmate-details/1/checklist/1/details-question/${questionId}`], { relativeTo: this.activatedRoute });
   }
 
 }

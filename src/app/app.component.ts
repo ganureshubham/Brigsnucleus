@@ -3,6 +3,9 @@ import { SpinnerService } from './public service/spinner.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogService } from './public service/dialog.service';
 import { AppDialogData } from './model/appDialogData';
+import {
+  Router, NavigationStart, NavigationCancel, NavigationEnd
+} from '@angular/router';
 
 export interface DialogData {
   title: string;
@@ -28,12 +31,28 @@ export class AppComponent implements OnInit {
     private spinnerService: SpinnerService,
     public dialog: MatDialog,
     private dialogService: DialogService,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
     this.subscribeToSpinnerService();
     this.subscribeToDialogService();
+  }
+
+  ngAfterViewInit() {
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.spinnerService.setSpinnerVisibility(true);
+        }
+        else if (
+          event instanceof NavigationEnd ||
+          event instanceof NavigationCancel
+        ) {
+          this.spinnerService.setSpinnerVisibility(false);
+        }
+      });
   }
 
   subscribeToSpinnerService() {
