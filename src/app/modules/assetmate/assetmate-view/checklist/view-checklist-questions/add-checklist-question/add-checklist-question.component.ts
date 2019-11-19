@@ -58,7 +58,8 @@ export class AddChecklistQuestionComponent implements OnInit {
     });
 
     this.questionDescription = this._formBuilder.group({
-      questionDescriptionFormCtrl: ['', Validators.compose([Validators.required, Validators.minLength(10)])]
+      questionDescriptionFormCtrl: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
+      questionCompulsoryFormCtrl: [true]
     });
 
     this.questionOptions = this._formBuilder.group({
@@ -219,11 +220,11 @@ export class AddChecklistQuestionComponent implements OnInit {
     // console.log('formGroupFormArray');
     // console.log(formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value);
 
-
     let checklistQuestion: checklistQuestion = {
       title: formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value,
       questionTypeIdFK: formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value,
       checkListIdFK: this.checkListId,
+      isCompulsory: formGroupFormArray.controls[1].get('questionCompulsoryFormCtrl').value ? 1 : 0,
       options: []
     }
 
@@ -262,6 +263,41 @@ export class AddChecklistQuestionComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar("Something went wrong..!!");
     });
+
+  }
+
+  getUserFilledStep1DataForReview() {
+    let formGroupFormArray: any = (this.formGroup.get('formArray'));
+    for (let questionType of this.arrChecklistQuestionType) {
+      if (questionType.questionTypeId == formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value) {
+        return questionType.title;
+      }
+    }
+  }
+
+  getUserFilledStep2DataForReview() {
+    let formGroupFormArray: any = (this.formGroup.get('formArray'));
+    return formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value;
+  }
+
+  getOptionLable(optionControl) {
+    let formGroupFormArray: any = (this.formGroup.get('formArray'));
+    return formGroupFormArray.controls[2].get(optionControl).value;
+  }
+
+  getQuestionType() {
+
+    //Question type value 
+    // 1 --- Input
+    // 2 --- Date
+    // 3 --- Single Option
+    // 4 --- Multiple Option
+    // 5 --- Take Photo
+
+    let formGroupFormArray: any = (this.formGroup.get('formArray'));
+    let selectionOptionType = formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value;
+
+    return selectionOptionType;
 
   }
 

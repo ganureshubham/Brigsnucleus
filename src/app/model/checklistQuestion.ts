@@ -2,6 +2,7 @@ export interface checklistQuestion {
     title: string,
     questionTypeIdFK: number,
     checkListIdFK: number,
+    isCompulsory: number,
     options: questionOption[]
 }
 
