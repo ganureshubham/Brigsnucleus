@@ -32,6 +32,8 @@ export class DepartmentService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `departments/updateDepartment/${departmentId}`, editedDeptdata);
   }
 
+  /*********************************************************** Delete particular Department *************************************************/
+
   deleteDept(departmentId: number): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `departments/deleteDepartment/${departmentId}`, {});
   }

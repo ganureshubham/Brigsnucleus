@@ -54,7 +54,6 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   viewAlert(alertId: number) {
     this.alertService.viewAlert(alertId).subscribe(res => {
-      console.log('view Function', res);
       this.alertData = res.alert;
       this.countData = res;
     },

@@ -1,15 +1,14 @@
 <div class="header">
   <mat-toolbar class="bg_white">
-
-    <div class="logo fl">
-      <img src="assets/img/logo.png" alt="">
+    <div matTooltip="Brigs Nucleus Dashboard" class="logo fl">
+      <a routerLink="/dashboard"><img src="assets/img/logo.png" alt="brigs logo"></a>
     </div>
     <div class="fr right_side">
       <div class="admin_img fl">
         <ul>
           <li>
             <div class="admin_profile fl">
-              <img src="assets/img/user.png" alt="user">
+              <img src="assets/img/user.png" alt="user image">
             </div>
             <div class="admin_name fr">
               <b>{{displayName}}</b><br>
@@ -87,6 +86,10 @@
             <a mat-menu-item routerLink="/department">
               <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
               <span i18n>Department</span>
+            </a>
+            <a mat-menu-item routerLink="/asset-category">
+              <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+              <span i18n>Asset-Category</span>
             </a>
             <!-- <a mat-menu-item routerLink="/category-Document">
               <mat-icon matListIcon>subdirectory_arrow_right</mat-icon> 

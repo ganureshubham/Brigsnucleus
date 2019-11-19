@@ -1,58 +1,35 @@
-<!-- <div class="innerbody form ">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-
-      <mat-card>
-        <div class="form_header">
-          <div class="fl">
-            <p class="form_heading mat-subheading-2 fl">Add Asset</p>
-            <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
-              <mat-icon>keyboard_backspace</mat-icon>
-            </button>
-
-          </div>
-          <div class="fr">
-            <div class="example-button-row btn_style bg_white_grey">
-              <button mat-button (click)="addAsset()">
-                <mat-icon>list</mat-icon> Add Asset Category
-              </button>
-
-            </div>
-
-          </div>
-        </div>
-
-        <div class="cl"></div>
-        <div mat-dialog-content>
-          <form #assetform="ngForm" >
-            <div fxLayout="row" fxLayoutGap="16px">              
-              <mat-form-field fxFlex>
-                <input matInput name="asset_title" id="asset_title" [(ngModel)]="assetData.asset_title" type="text"
-                  required placeholder="Asset Title">
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <mat-select name="install_loc_type" id="install_loc_type" [(ngModel)]="assetData.install_loc_type"
-                  placeholder="Installation Location Type" required>
-                  <mat-option value="primary">Primary</mat-option>
-                  <mat-option value="accent">Accent</mat-option>
-                  <mat-option value="warn">Warn</mat-option>
-                </mat-select>
-              </mat-form-field>              
-            </div>
-            <div class="cl"></div>
-            <div fxLayout="row" fxLayoutGap="16px">
-              <div mat-dialog-actions fxLayoutAlign="right">
-                <button mat-raised-button i18n color="primary" type="submit"
-                  (click)="addAsset(assetform.value)">Save</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-      </mat-card>
-    </div>
-
-  </div>
-
-
-</div> -->
+<form #assetCategoryForm="ngForm" class="example-form" class="listing_space add_department">
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      <p class="title_header mat-subheading-2">{{formTitle}}</p>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <mat-form-field fxFlex>
+        <mat-select disabled name="parentId" id="parentId" [(ngModel)]="AssetCategoryData.parentId" #Category="ngModel"
+          placeholder="Select Parent Asset Category" required>
+          <mat-option *ngFor="let AssetCateg of assetcategList" [value]="AssetCateg.categoryId">{{AssetCateg.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="assetCategoryForm.submitted && Category.invalid">
+          <mat-error *ngIf="Category.errors.required">Asset Category name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput name="title" id="title" [(ngModel)]="AssetCategoryData.title" #AssetCatTitle="ngModel"
+          type="text" required placeholder="Asset Category Title">
+        <mat-error *ngIf="assetCategoryForm.submitted && AssetCatTitle.invalid">
+          <mat-error *ngIf="AssetCatTitle.errors.required">Asset Category Title is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      <button *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
+        (click)="addAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Save Asset Category
+        Category</button>
+      <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
+        (click)="editAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Update Asset
+        Category</button>
+      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
+    </mat-list-item>
+  </mat-list>
+</form>

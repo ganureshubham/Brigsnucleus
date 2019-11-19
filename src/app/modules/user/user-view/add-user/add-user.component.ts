@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerService } from '../../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-user',
@@ -26,22 +28,19 @@ export class AddUserComponent implements OnInit {
   constructor(private router: Router,
     private userService: UserService,
     private dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
     this.dataService.currentData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log("ngonit function", res);
-
+        this.userData = res;
+        this.profileImage = res.profileImage.split('/').pop().split('?')[0];
         this.isEdited = true;
         this.formTitle = `Edit User`;
-
-
       }
     })
-
     this.getDeptList();
     this.getUserRoleList();
   }
@@ -52,20 +51,21 @@ export class AddUserComponent implements OnInit {
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.image = result;
+        this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
-          console.log(res);
-          this.spinner.show();
-          setTimeout(() => {
-            this.toastr.success(res.message);
-            this.router.navigate(['/user']);
-            this.spinner.hide();
-          }, 1000);
+          this.spinnerService.setSpinnerVisibility(false);
+          this.showSnackBar(res.message);
+          this.router.navigate(['/user/user-list']);
         },
           error => {
-            this.toastr.error(error.error.message);
+            this.showSnackBar("Something went wrong..!!");
           })
       })
     }
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   uploadImageToserver = (callback) => {
@@ -75,11 +75,9 @@ export class AddUserComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
       this.userService.photoUpload(formData).subscribe(res => {
-        console.log(res);
         callback(res.ImageName)
       })
     }
-
   }
 
   /*********************************************************** Edit Selected Asset *******************************************************************/
@@ -90,15 +88,14 @@ export class AddUserComponent implements OnInit {
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.image = result;
+        this.spinnerService.setSpinnerVisibility(true);
         this.userService.editUser(this.userData.userId, value).subscribe(res => {
-          console.log(res);
-          this.toastr.success(res.message);
-          this.router.navigate(['/user']);
-
+          this.spinnerService.setSpinnerVisibility(false);
+          this.showSnackBar(res.message);
+          this.router.navigate(['/user/user-list']);
         },
           error => {
-            this.toastr.error(error.error.message);
-
+            this.showSnackBar("Something went wrong..!!");
           })
       })
     }
@@ -127,9 +124,7 @@ export class AddUserComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
-        this.toastr.error(error.message);
-
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
@@ -141,20 +136,18 @@ export class AddUserComponent implements OnInit {
     this.userService.getUserRoleList().subscribe(res => {
       if (res.userRole) {
         this.userRoleList = res.userRole;
-
       }
 
     },
       error => {
-        console.log(error);
-
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
 
 
   backToList() {
-    this.router.navigate(['/user']);
+    this.router.navigate(['/user/user-list']);
   }
 
 

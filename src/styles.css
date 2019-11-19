@@ -315,10 +315,16 @@ body {
 
 .admin_profile img {
   width: 100%;
+  cursor: pointer;
 }
 
 .logo img {
   width: 30%;
+  padding-left: 18px;
+}
+
+.logo a {
+  text-decoration: none;
 }
 
 .font-12,
@@ -1077,6 +1083,25 @@ body {
 }
 .border_bottom {
   border-bottom: 1px solid #ddd;
+}
+
+.noDataFound {
+  margin-left: 42%;
+  color: #757575;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /********************************************** end style**************************************************************/

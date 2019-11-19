@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -58,6 +58,9 @@ export class DepartmentFilterComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+
+  @Output() messageEvent = new EventEmitter<string>();
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -112,6 +115,7 @@ export class DepartmentFilterComponent implements OnInit {
         this.final_TREE_DATA = [...this.TREE_DATA];
         this.dataSource.data = this.TREE_DATA;
         this.isTreeDataReady = true;
+        this.messageEvent.emit(res.department[0]);
       }
     },
       error => {
@@ -121,9 +125,10 @@ export class DepartmentFilterComponent implements OnInit {
   }
 
   handleCategoryTreeNodeClick(node) {
-    this.router.navigate([`/user/user-list/${node.departmentId}`]).then(() => {
-      location.reload();
-    })
+    this.messageEvent.emit(node);
+    // this.router.navigate([`/user/user-list/${node.departmentId}`]).then(() => {
+    //   location.reload();
+    // })
   }
 
 
@@ -132,39 +137,39 @@ export class DepartmentFilterComponent implements OnInit {
 
 
 
-  // onSearchCategoryTxtChange(searchedText: string) {
-  //   // console.log(searchedText);
+  onSearchCategoryTxtChange(searchedText: string) {
+    console.log(searchedText);
 
-  //   this.local_TREE_DATA = [...this.TREE_DATA];
-  //   // console.log(this.TREE_DATA);
-  //   // console.log(this.local_TREE_DATA);
+    this.local_TREE_DATA = [...this.TREE_DATA];
+    // console.log(this.TREE_DATA);
+    // console.log(this.local_TREE_DATA);
 
-  //   if (searchedText.length == 0) {
-  //     this.TREE_DATA = [];
-  //     this.TREE_DATA = [...this.final_TREE_DATA];
-  //     // console.log('Length 0');
-  //     // console.log(this.local_TREE_DATA);
-  //     // console.log(this.TREE_DATA);
-  //     this.dataSource.data = this.TREE_DATA;
-  //   } else {
-  //     for (let i = 0; i < this.TREE_DATA.length; i++) {
-  //       // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
-  //       // console.log(this.local_TREE_DATA);
-  //       if (
-  //         this.TREE_DATA[i].title.includes(searchedText) ||
-  //         this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
-  //         this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
-  //       ) {
-  //         this.TREE_DATA = [];
-  //         this.TREE_DATA.push(this.local_TREE_DATA[i]);
-  //         this.dataSource.data = this.TREE_DATA;
-  //         // console.log('Length > 0');
-  //         // console.log(this.dataSource.data)
-  //         break;
-  //       }
-  //     }
-  //   }
+    if (searchedText.length == 0) {
+      this.TREE_DATA = [];
+      this.TREE_DATA = [...this.final_TREE_DATA];
+      // console.log('Length 0');
+      // console.log(this.local_TREE_DATA);
+      // console.log(this.TREE_DATA);
+      this.dataSource.data = this.TREE_DATA;
+    } else {
+      for (let i = 0; i < this.TREE_DATA.length; i++) {
+        console.log(this.TREE_DATA[i].departmentTitle + ' - ' + searchedText + ' ' + this.TREE_DATA[i].departmentTitle.includes(searchedText));
+        console.log(this.local_TREE_DATA);
+        if (
+          this.TREE_DATA[i].departmentTitle.includes(searchedText) ||
+          this.TREE_DATA[i].departmentTitle.includes(searchedText.toLowerCase()) ||
+          this.TREE_DATA[i].departmentTitle.includes(searchedText.toUpperCase())
+        ) {
+          this.TREE_DATA = [];
+          this.TREE_DATA.push(this.local_TREE_DATA[i]);
+          this.dataSource.data = this.TREE_DATA;
+          console.log('Length > 0');
+          console.log(this.dataSource.data)
+          break;
+        }
+      }
+    }
 
-  // }
+  }
 
 }

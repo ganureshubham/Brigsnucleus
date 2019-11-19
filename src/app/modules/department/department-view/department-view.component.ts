@@ -28,6 +28,8 @@ interface departmentDialogData {
   departmentTitle: string;
 }
 
+
+
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
@@ -87,13 +89,14 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.categoryID = this.route.snapshot.params['categoryId'];
     this.getAllDept();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-
+  isNoRecord() {
+    return this.dataSource.data.length == 0;
+  }
 
 
   /************************************* All Department Lists****************************************************************/
@@ -102,11 +105,7 @@ export class DepartmentViewComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
 
     this.departmentService.getAllDept().subscribe(res => {
-      console.log(res);
-
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.department) {
         this.TREE_DATA = res.department;
         this.dataSource.data = this.TREE_DATA;
@@ -123,6 +122,26 @@ export class DepartmentViewComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+
+  openDialog(): void {
+
+
+    this.dialogData = {
+      type: 'New Add',
+      level: 0,
+      parentId: 0,
+      departmentId: 0,
+      departmentTitle: ''
+    }
+
+    const dialogRef = this.dialog.open(AddDepartmentComponent, {
+      data: this.dialogData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllDept();
+    });
   }
 
   /************************************* Add New Department****************************************************************/
@@ -149,18 +168,6 @@ export class DepartmentViewComponent implements OnInit {
     });
   }
 
-  getParentId(node) {
-
-    if (node.level > 0) {
-      return node.departmentId;
-
-    } else {
-      return node.parentId;
-    }
-
-  }
-
-
   /************************************* Edit Particular Department****************************************************************/
 
 
@@ -176,25 +183,13 @@ export class DepartmentViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       data: this.dialogData
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllDept();
       }
-
     });
-
-  }
-
-  getParentId1(node) {
-
-    if (node.level > 0) {
-      return node.parentId;
-    } else {
-      return node.departmentId;
-    }
 
   }
 

@@ -11,7 +11,7 @@ export const AssetCategoryRoutes: Routes = [
     children: [
       {
         path: "",
-        component:AssetCategoryViewComponent
+        component: AssetCategoryViewComponent
       }
     ]
   },
@@ -20,8 +20,8 @@ export const AssetCategoryRoutes: Routes = [
     children: [
       {
         path: "add-asset-category",
-        component: AddAssetCategoryComponent  
+        component: AddAssetCategoryComponent
       }
     ]
   }
-];
+]; 

@@ -1,5 +1,5 @@
 <div class="innerpage assets_view padding_container flex_container margin_auto">
-  <app-department-filter></app-department-filter>
+  <app-department-filter (messageEvent)="receiveMessage($event)"></app-department-filter>
 
   <mat-card class="width_80 right_side_box">
     <div class="innerbody table">
@@ -8,7 +8,7 @@
 
           <div class="table_header">
             <div class="fl">
-              <p class="tabel_heading mat-subheading-2">User</p>
+              <p class="tabel_heading mat-subheading-2">User {{ DepartmentObj}}</p>
             </div>
             <div class="fr">
               <div class="example-button-row btn_style">
@@ -26,7 +26,7 @@
             </ng-container>
             <ng-container matColumnDef="userName">
               <mat-header-cell *matHeaderCellDef i18n>User Name </mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{visit.userName}}</mat-cell>
+              <mat-cell *matCellDef="let visit">{{visit.firstName+' '+visit.lastName}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="profileImage">
               <mat-header-cell *matHeaderCellDef>Profile Image</mat-header-cell>
@@ -43,7 +43,8 @@
             </ng-container>
             <ng-container matColumnDef="emailId">
               <mat-header-cell *matHeaderCellDef>Email Id</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.emailId }}</mat-cell>
+              <mat-cell *matCellDef="let visit">
+                {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="userRoleIdFK">
               <mat-header-cell *matHeaderCellDef>User RoleId</mat-header-cell>
@@ -58,11 +59,11 @@
                     <mat-icon matListIcon>visibility</mat-icon>
                     <span i18n>View Asset Detail</span>
                   </a> -->
-                    <a mat-menu-item (click)="editUser(visit.userId)">
+                    <a mat-menu-item (click)="editUser(visit)">
                       <mat-icon matListIcon>edit</mat-icon>
                       <span i18n>Edit User</span>
                     </a>
-                    <a mat-menu-item (click)="deleteUser(visit.userId)">
+                    <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
                       <mat-icon matListIcon>delete_outline</mat-icon>
                       <span i18n>Delete User</span>
                     </a>
@@ -76,6 +77,7 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
+          <div class="noDataFound" *ngIf="isNoRecord()">No records found</div>
           <div>
             <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
             </mat-paginator>

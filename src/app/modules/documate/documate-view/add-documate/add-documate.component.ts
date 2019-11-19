@@ -33,7 +33,6 @@ export class AddDocumateComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log(" Documate ngonit function", res);
         this.documentData = res;
         this.filepath = res.filepath.split('/').pop().split('?')[0];
         this.isEdited = true;
@@ -50,7 +49,6 @@ export class AddDocumateComponent implements OnInit {
 
   selectDocumentType() {
     this.documateService.selectDocumentType().subscribe(res => {
-      console.log('documate select', res);
       if (res.documentType) {
         this.documatetypelist = res.documentType;
       }
@@ -71,9 +69,7 @@ export class AddDocumateComponent implements OnInit {
     if (formData.valid) {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
-        // console.log(JSON.stringify(value));
         this.spinnerService.setSpinnerVisibility(true);
-
         this.documateService.addDocumate(value).subscribe(
           res => {
             this.spinnerService.setSpinnerVisibility(false);
@@ -113,9 +109,7 @@ export class AddDocumateComponent implements OnInit {
     if (formData.valid) {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
-        // console.log(JSON.stringify(value));
         this.spinnerService.setSpinnerVisibility(true);
-
         this.documateService.editDocumate(this.documentData.documentId, value).subscribe(
           res => {
             this.spinnerService.setSpinnerVisibility(false);
