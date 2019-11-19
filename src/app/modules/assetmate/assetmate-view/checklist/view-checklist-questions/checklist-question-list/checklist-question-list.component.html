@@ -24,8 +24,7 @@
               <mat-icon matListIcon>visibility</mat-icon>
               <span i18n>Question Details</span>
             </a>
-            <a mat-menu-item>
-              <!-- (click)="editChecklistQuestion()" -->
+            <a mat-menu-item (click)="editChecklistQuestion(element.questionId)">
               <mat-icon matListIcon>edit</mat-icon>
               <span i18n>Edit Question</span>
             </a>

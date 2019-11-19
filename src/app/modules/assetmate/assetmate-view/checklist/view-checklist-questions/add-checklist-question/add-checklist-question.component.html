@@ -9,7 +9,7 @@
 </div>
 <div class="add_question tab_content">
   <div class="width_75">
-    <p class="title_header mat-subheading-2 tal">Add Question</p>
+    <p class="title_header mat-subheading-2 tal">{{getPageTitle()}}</p>
   </div>
   <form [formGroup]="formGroup">
     <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">

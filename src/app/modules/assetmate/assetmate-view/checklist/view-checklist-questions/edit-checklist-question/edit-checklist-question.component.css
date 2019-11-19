@@ -1,0 +1,27 @@
+.add-checklist-question-container{
+    padding: 20px;
+    display: flex;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
+.review-option{
+    margin-right: 15px;
+}
+
+.mat-list-item{
+    margin: 10px 0;
+}
+
+h4{
+    padding-bottom: 0;
+}
+
+.stepper-step-container{
+    padding: 20px;
+}
+
+.review-question-item{
+    margin-bottom: 15px;
+}

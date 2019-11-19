@@ -256,15 +256,33 @@ export class AddChecklistQuestionComponent implements OnInit {
     }
 
     this.spinnerService.setSpinnerVisibility(true);
-    this.assetmateService.addChecklistQuestion(checklistQuestion).subscribe(resp => {
-      this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(resp.message);
-      this.assetmateService.setBadgeUpdateAction('questionList', true);
-      this.location.back();
-    }, error => {
-      this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar("Something went wrong..!!");
-    });
+
+    //Add question
+    if (this.questionId == 0) {
+      this.assetmateService.addChecklistQuestion(checklistQuestion).subscribe(resp => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(resp.message);
+        this.assetmateService.setBadgeUpdateAction('questionList', true);
+        this.location.back();
+      }, error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      });
+    }
+    //Link question
+    //QuestionId is QuestionOptionId here
+    else if (this.questionId > 0) {
+      this.assetmateService.linkChecklistQuestion(this.questionId, checklistQuestion).subscribe(resp => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(resp.message);
+        this.assetmateService.setBadgeUpdateAction('questionList', true);
+        this.location.back();
+      }, error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      });
+    }
+
 
   }
 
@@ -305,6 +323,10 @@ export class AddChecklistQuestionComponent implements OnInit {
 
   getBackBtnLable() {
     return this.questionId == 0 ? 'Question List' : 'Question Details';
+  }
+
+  getPageTitle() {
+    return this.questionId == 0 ? 'Add Question' : 'Link New Question';
   }
 
 }
