@@ -142,7 +142,7 @@
             <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field fxFlex>
                 <mat-select name="manufacturerIdFK" id="manufacturerIdFK" [(ngModel)]="assetData.manufacturerIdFK"
-                  #Manuf="ngModel" placeholder="Select Manufacture Name" required>
+                  #Manuf="ngModel" placeholder="Select Manufacturer Name" required>
                   <mat-option *ngFor="let manuf of manufList" [value]="manuf.manufacturerId">{{manuf.title}}
                   </mat-option>
                 </mat-select>
@@ -184,11 +184,16 @@
                 <div class="file-field">
                   <div class="btn btn-primary btn-sm float-left">
                     <span>Choose file</span>
-                    <input type="file" (change)="pdfChange($event.target.files)" accept="pdf/*">
+                    <input type="file" onclick="this.value=null;" (change)="pdfChange($event.target.files)"
+                      accept="pdf/*">
                   </div>
                   <div class="file-path-wrapper">
                     <input class="file-path validate" name="userGuideBook" [(ngModel)]="userGuideBook" type="text"
                       required placeholder="Upload your userguide file">
+                    <button mat-button *ngIf="userGuideBook" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="userGuideBook=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
                   </div>
                 </div>
                 <div class="error hide text-error">{{pdferror}}</div>
@@ -200,11 +205,16 @@
                 <div class="file-field">
                   <div class="btn btn-primary btn-sm float-left">
                     <span>Choose file</span>
-                    <input type="file" (change)="imageChange($event.target.files)" accept="image/*">
+                    <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)"
+                      accept="image/*">
                   </div>
                   <div class="file-path-wrapper">
                     <input class="file-path validate" name="assetImage" [(ngModel)]="assetImage" type="text" required
                       placeholder="Upload your asset image file">
+                    <button mat-button *ngIf="assetImage" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="assetImage=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
                   </div>
                   <div class="error hide text-error">{{imageerror}}</div>
                 </div>

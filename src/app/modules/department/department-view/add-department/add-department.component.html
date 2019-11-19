@@ -18,7 +18,7 @@
         <input matInput name="departmentTitle" id="departmentTitle" [(ngModel)]="deptData.departmentTitle"
           #deptTitle="ngModel" type="text" required placeholder="Department Title">
         <mat-error *ngIf="deptForm.submitted && deptTitle.invalid">
-          <mat-error *ngIf="deptTitle.errors.required">Asset Title is required</mat-error>
+          <mat-error *ngIf="deptTitle.errors.required">Department Title is required</mat-error>
         </mat-error>
       </mat-form-field>
     </mat-list-item>

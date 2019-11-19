@@ -1,12 +1,13 @@
-.app-progress-spinner-container{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: #ffffffb6;
-    z-index: 5000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.app-progress-spinner-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  background-color: #ffffffb6;
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

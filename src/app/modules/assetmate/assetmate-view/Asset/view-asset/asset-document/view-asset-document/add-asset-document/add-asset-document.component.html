@@ -74,11 +74,15 @@
                 <div class="file-field">
                   <div class="btn btn-primary btn-sm float-left">
                     <span>Choose file</span>
-                    <input type="file" (change)="documentChange($event.target.files)">
+                    <input type="file" onclick="this.value=null" (change)="documentChange($event.target.files)">
                   </div>
                   <div class="file-path-wrapper">
                     <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
                       placeholder="Browse Document File From System">
+                    <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="filepath=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
                   </div>
                 </div>
                 <div class="error hide text-error">{{documenterror}}</div>
