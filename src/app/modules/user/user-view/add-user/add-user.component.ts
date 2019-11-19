@@ -35,17 +35,12 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log("ngonit function", res);
         this.userData = res;
         this.profileImage = res.profileImage.split('/').pop().split('?')[0];
-
         this.isEdited = true;
         this.formTitle = `Edit User`;
-
-
       }
     })
-
     this.getDeptList();
     this.getUserRoleList();
   }
@@ -58,7 +53,6 @@ export class AddUserComponent implements OnInit {
         value.image = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
-          console.log(res);
           this.spinnerService.setSpinnerVisibility(false);
           this.showSnackBar(res.message);
           this.router.navigate(['/user/user-list']);
@@ -81,11 +75,9 @@ export class AddUserComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
       this.userService.photoUpload(formData).subscribe(res => {
-        console.log(res);
         callback(res.ImageName)
       })
     }
-
   }
 
   /*********************************************************** Edit Selected Asset *******************************************************************/
@@ -98,7 +90,6 @@ export class AddUserComponent implements OnInit {
         value.image = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.editUser(this.userData.userId, value).subscribe(res => {
-          console.log(res);
           this.spinnerService.setSpinnerVisibility(false);
           this.showSnackBar(res.message);
           this.router.navigate(['/user/user-list']);
@@ -133,9 +124,7 @@ export class AddUserComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
         this.showSnackBar("Something went wrong..!!");
-
       }
     );
   }
@@ -147,13 +136,11 @@ export class AddUserComponent implements OnInit {
     this.userService.getUserRoleList().subscribe(res => {
       if (res.userRole) {
         this.userRoleList = res.userRole;
-
       }
 
     },
       error => {
-        console.log(error);
-
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }

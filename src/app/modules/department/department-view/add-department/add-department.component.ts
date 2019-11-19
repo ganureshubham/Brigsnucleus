@@ -39,12 +39,6 @@ export class AddDepartmentComponent implements OnInit {
   ngOnInit() {
 
     this.deptId = this.data.parentId;
-    console.log('data', this.data);
-
-
-
-
-
     if (this.data.type == 'Add') {
       if (this.data.level > 0) {
         this.deptData.parentId = this.data.departmentId;
@@ -57,8 +51,6 @@ export class AddDepartmentComponent implements OnInit {
       this.deptData = this.data;
     } else if (this.data.type == 'New Add') {
       this.deptData.parentId = this.data.parentId;
-
-
     }
 
     this.getDeptList();
@@ -67,7 +59,6 @@ export class AddDepartmentComponent implements OnInit {
 
   closeDialog(): void {
     this.dialog.closeAll();
-
   }
 
   onNoClick() { }

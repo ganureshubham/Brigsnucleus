@@ -18,3 +18,7 @@
 .bg_white_grey {
   margin-left: 80%;
 }
+
+.mat-tree-node {
+  cursor: pointer;
+}

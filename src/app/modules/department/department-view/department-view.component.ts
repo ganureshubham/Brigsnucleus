@@ -89,7 +89,6 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.categoryID = this.route.snapshot.params['categoryId'];
     this.getAllDept();
   }
 
@@ -106,11 +105,7 @@ export class DepartmentViewComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
 
     this.departmentService.getAllDept().subscribe(res => {
-      console.log(res);
-
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.department) {
         this.TREE_DATA = res.department;
         this.dataSource.data = this.TREE_DATA;
@@ -145,11 +140,8 @@ export class DepartmentViewComponent implements OnInit {
       data: this.dialogData
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('fsfsd', result);
       this.getAllDept();
-
     });
-
   }
 
   /************************************* Add New Department****************************************************************/
@@ -176,18 +168,6 @@ export class DepartmentViewComponent implements OnInit {
     });
   }
 
-  getParentId(node) {
-
-    if (node.level > 0) {
-      return node.departmentId;
-
-    } else {
-      return node.parentId;
-    }
-
-  }
-
-
   /************************************* Edit Particular Department****************************************************************/
 
 
@@ -203,25 +183,13 @@ export class DepartmentViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       data: this.dialogData
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllDept();
       }
-
     });
-
-  }
-
-  getParentId1(node) {
-
-    if (node.level > 0) {
-      return node.parentId;
-    } else {
-      return node.departmentId;
-    }
 
   }
 

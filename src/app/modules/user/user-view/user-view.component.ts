@@ -67,7 +67,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   ngOnInit() {
     //this.deptId = this.route.snapshot.params['departmentId'];
     if (this.message && this.message.departmentId) {
-      console.log('event init', this.message);
       this.DepartmentObj = '(' + this.message.name + ')';
       this.getAllUsers(this.message.departmentId, this.pageNumber);
     }
@@ -75,7 +74,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   receiveMessage($event) {
     this.message = $event;
-    console.log('event emited', this.message);
     if (this.message.departmentTitle) {
       this.DepartmentObj = '(' + this.message.departmentTitle + ')';
     }
@@ -100,7 +98,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.userService.getAllUsers(departmentId, pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.users) {
-        console.log(res);
         this.paidDataSource = res.users;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;

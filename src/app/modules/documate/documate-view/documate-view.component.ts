@@ -62,7 +62,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.getAllDocumates(this.pageNumber);
-
   }
 
 
@@ -72,8 +71,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.spinnerService.setSpinnerVisibility(true);
 
     this.documateService.getAllDocumates(pageNo).subscribe(res => {
-      console.log(res);
-
       this.spinnerService.setSpinnerVisibility(false);
       if (res.document) {
         this.paidDataSource = res.document;
@@ -107,20 +104,16 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   editDocumate(visit: any) {
     this.dataService.changeData(visit);
     this.router.navigate(['/documate/add-documate']);
-
-
   }
 
   /*********************************************************** Download Particular Document  *******************************************************************/
 
 
   downloadDocument(file) {
-    console.log(file);
     // var FileSaver = require('file-saver');
     const Ext = file.split('/').pop().split('?')[0]; // splits url into file name
     var ext = Ext.substr(Ext.lastIndexOf('.') + 1); // gives extension of any file name
     saveAs(file, Ext);
-
   }
 
 
@@ -166,8 +159,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
         this.paidDataSource = res.data;
       },
         error => {
-          console.log(error);
-
+          this.showSnackBar("Something went wrong..!!");
         })
     } else {
       this.getAllDocumates(this.pageNumber);
