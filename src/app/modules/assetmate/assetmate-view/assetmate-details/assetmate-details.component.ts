@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { AssetmateService } from '../../service/assetmate.service';
 import { Location } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-assetmate-details',
@@ -13,6 +14,7 @@ export class AssetmateDetailsComponent implements OnInit {
 
   categoryID: any;
   category: any = [{}];
+  selectedTab = new FormControl(0);
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class AssetmateDetailsComponent implements OnInit {
     this.categoryID = this.route.snapshot.params['categoryId'];
     this.getdata();
     this.subscribeToBadgeUpdateService();
+    this.subscribeToTABService();
   }
 
   getdata() {
@@ -50,13 +53,25 @@ export class AssetmateDetailsComponent implements OnInit {
     });
   }
 
+  subscribeToTABService() {
+    this.assetmateService.getTabSelection('checklistTab').subscribe(res => {
+      if (res == 1 && (this.selectedTab.value == 0)) {
+        this.selectedTab = new FormControl(1);
+      }
+    });
+  }
 
   backToList() {
+    this.assetmateService.setTabSelection('checklistTab', 0);
     this.router.navigate(['/assetmate']);
   }
 
   goto() {
     this.router.navigate(['/assetmate/asset-add']);
+  }
+
+  getSelectedTabIndex() {
+    return this.selectedTab.value;
   }
 
 }

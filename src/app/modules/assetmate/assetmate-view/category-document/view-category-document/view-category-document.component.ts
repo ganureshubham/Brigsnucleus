@@ -35,7 +35,8 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   deletedocWithId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
-  displayedColumns: string[] = ['documentId', 'title', 'description', 'Actions'];
+  displayedColumns: string[] = ['title', 'description', 'Actions'];
+  // 'documentId',
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;

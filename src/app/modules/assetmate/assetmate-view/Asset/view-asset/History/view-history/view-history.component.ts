@@ -24,7 +24,8 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   showFirst: boolean = false;
 
 
-  displayedColumns: string[] = ['doneChecklistId', 'checkListTitle', 'doneBy', 'doneOn', 'Actions'];
+  displayedColumns: string[] = ['checkListTitle', 'doneBy', 'doneOn', 'Actions'];
+  // 'doneChecklistId', 
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
