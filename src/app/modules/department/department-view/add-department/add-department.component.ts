@@ -37,7 +37,6 @@ export class AddDepartmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.deptId = this.data.parentId;
     if (this.data.type == 'Add') {
       if (this.data.level > 0) {
@@ -50,15 +49,12 @@ export class AddDepartmentComponent implements OnInit {
       this.formTitle = `Edit Department`;
       this.deptData = this.data;
     } else if (this.data.type == 'New Add') {
-      console.log('new add', this.data);
-
-
       this.deptData.parentId = this.data.parentId;
     }
-
     this.getDeptList();
-
   }
+
+
 
   closeDialog(): void {
     this.dialog.closeAll();
@@ -76,7 +72,6 @@ export class AddDepartmentComponent implements OnInit {
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
-
       })
   }
 
@@ -102,7 +97,6 @@ export class AddDepartmentComponent implements OnInit {
   /*********************************************************** Update particular Department *******************************************************************/
 
   editDept(value) {
-
     value.parentId = this.deptData.parentId;
     this.spinnerService.setSpinnerVisibility(true);
     this.departmentService.editDept(this.deptData.departmentId, value).subscribe(res => {
@@ -111,7 +105,6 @@ export class AddDepartmentComponent implements OnInit {
       this.dialog.closeAll();
     },
       error => {
-
         this.showSnackBar("Something went wrong..!!");
       })
   }

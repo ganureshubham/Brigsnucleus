@@ -140,7 +140,6 @@ export class AddUserComponent implements OnInit {
       if (res.userRole) {
         this.userRoleList = res.userRole;
       }
-
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
@@ -148,7 +147,7 @@ export class AddUserComponent implements OnInit {
     );
   }
 
-
+  /*********************************************************** Back to User Role List *******************************************************************/
   backToList() {
     this.router.navigate(['/user/user-list']);
   }

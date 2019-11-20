@@ -62,7 +62,6 @@ export class AddAssetCategoryComponent implements OnInit {
       error => {
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
 
   showSnackBar(message: string) {
@@ -83,7 +82,6 @@ export class AddAssetCategoryComponent implements OnInit {
       error => {
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
 
   /*********************************************************** Update particular Department *******************************************************************/
@@ -99,7 +97,6 @@ export class AddAssetCategoryComponent implements OnInit {
       error => {
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
 
 

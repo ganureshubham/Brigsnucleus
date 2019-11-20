@@ -30,7 +30,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['supplierId', 'supplierName', 'businessName', 'mobileNumber', 'emailId', 'Actions'];
+  displayedColumns: string[] = ['supplierName', 'businessName', 'mobileNumber', 'emailId', 'Actions'];
   paidDataSource: MatTableDataSource<Supplier> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -55,9 +55,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     // Add paginators to datastore here, because we need the view to
     // have created the paginator elements
     this.paidDataSource.paginator = this.paginator;
-
-
   }
+
+
 
   ngOnInit() {
     this.getAllSuppliers(this.pageNumber);
@@ -78,11 +78,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
         this.paidDataSource = res.supplier;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
-
       } else {
         this.showSnackBar(res.message);
       }
-
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
@@ -115,7 +113,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   deleteSupplier(supplierId: number, firstName: string) {
     this.supplierId = supplierId;
-
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE Supplier',
@@ -150,8 +147,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   editSupplier(visit: number) {
     this.dataService.changeData(visit);
     this.router.navigate(['/supplier/add-supplier']);
-
-
   }
 
 

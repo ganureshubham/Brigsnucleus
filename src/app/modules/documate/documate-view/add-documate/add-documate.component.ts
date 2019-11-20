@@ -54,7 +54,7 @@ export class AddDocumateComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
 
       })
   }

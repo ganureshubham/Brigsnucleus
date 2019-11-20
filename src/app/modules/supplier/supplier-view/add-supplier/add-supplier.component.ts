@@ -27,7 +27,6 @@ export class AddSupplierComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log("ngonit function", res);
         this.supplierData.businessName = res.businessName;
         this.supplierData.firstName = res.firstName;
         this.supplierData.lastName = res.lastName;
@@ -44,7 +43,6 @@ export class AddSupplierComponent implements OnInit {
   /*********************************************************** Add New Asset *******************************************************************/
   addSupplier(value) {
     this.spinnerService.setSpinnerVisibility(true);
-
     this.supplierService.addSupplier(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
@@ -81,4 +79,6 @@ export class AddSupplierComponent implements OnInit {
   add() {
     this.router.navigate(['/supplier']);
   }
+
+
 }

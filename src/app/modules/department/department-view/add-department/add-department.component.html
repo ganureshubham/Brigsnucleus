@@ -1,4 +1,4 @@
-<form #deptForm="ngForm" class="example-form" class="listing_space add_department">
+<!-- <form #deptForm="ngForm" class="example-form" class="listing_space add_department">
   <mat-list role="list">
     <mat-list-item role="listitem">
       <p class="title_header mat-subheading-2">{{formTitle}}</p>
@@ -30,4 +30,41 @@
       <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
     </mat-list-item>
   </mat-list>
+</form> -->
+
+
+
+
+<form #deptForm="ngForm" class="listing_space add_department">
+  <div>
+    <div>
+      <p class="title_header mat-subheading-2">{{formTitle}}</p>
+    </div>
+    <div class="deptformfield">
+      <mat-form-field *ngIf="this.deptData.parentId!=0" fxFlex>
+        <mat-select disabled name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
+          placeholder="Select Parent Department" required>
+          <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="deptForm.submitted && department.invalid">
+          <mat-error *ngIf="department.errors.required">Department name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput name="departmentTitle" id="departmentTitle" [(ngModel)]="deptData.departmentTitle"
+          #deptTitle="ngModel" type="text" required placeholder="Department Title">
+        <mat-error *ngIf="deptForm.submitted && deptTitle.invalid">
+          <mat-error *ngIf="deptTitle.errors.required">Department Title is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <button *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save Department</button>
+      <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="editDept(deptForm.value)" mat-raised-button i18n color="primary">Update Department</button>
+      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
+    </div>
+  </div>
 </form>
