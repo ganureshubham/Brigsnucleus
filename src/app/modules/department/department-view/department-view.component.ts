@@ -103,7 +103,6 @@ export class DepartmentViewComponent implements OnInit {
 
   getAllDept() {
     this.spinnerService.setSpinnerVisibility(true);
-
     this.departmentService.getAllDept().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.department) {
@@ -125,9 +124,10 @@ export class DepartmentViewComponent implements OnInit {
   }
 
 
-  openDialog(): void {
 
+  /************************************* Add New Root Department ****************************************************************/
 
+  addNewDept(): void {
     this.dialogData = {
       type: 'New Add',
       level: 0,
@@ -135,12 +135,14 @@ export class DepartmentViewComponent implements OnInit {
       departmentId: 0,
       departmentTitle: ''
     }
-
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
-      data: this.dialogData
+      data: this.dialogData,
+      width: '450px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllDept();
+      if (result !== 0) {
+        this.getAllDept();
+      }
     });
   }
 
@@ -148,7 +150,6 @@ export class DepartmentViewComponent implements OnInit {
 
 
   addDept(node: any): void {
-
     this.dialogData = {
       type: 'Add',
       level: node.level,
@@ -156,11 +157,10 @@ export class DepartmentViewComponent implements OnInit {
       departmentId: node.departmentId,
       departmentTitle: node.name
     }
-
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
-      data: this.dialogData
+      data: this.dialogData,
+      width: '450px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllDept();
@@ -173,24 +173,21 @@ export class DepartmentViewComponent implements OnInit {
 
   editDept(node: any) {
     this.dialogData = {
-
       type: 'Edit',
       level: node.level,
       parentId: node.parentId,
       departmentId: node.departmentId,
       departmentTitle: node.name
-
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
-      data: this.dialogData
+      data: this.dialogData,
+      width: '450px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllDept();
       }
     });
-
   }
 
 
@@ -199,7 +196,6 @@ export class DepartmentViewComponent implements OnInit {
 
   deleteDept(departmentId: number, name: string) {
     this.departmentId = departmentId;
-
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE DEPARTMENT',

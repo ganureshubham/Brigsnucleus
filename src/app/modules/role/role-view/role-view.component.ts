@@ -26,7 +26,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
-  displayedColumns: string[] = ['userRoleId', 'title', 'Actions'];
+  displayedColumns: string[] = ['title', 'Actions'];
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -72,14 +72,12 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
         this.paidDataSource = res.userroles;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
-
       } else {
         this.showSnackBar(res.message);
       }
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
-
       }
     )
   }
@@ -136,7 +134,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
         }
       })
     }
-
   }
 
 
@@ -146,9 +143,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   editRole(userRoleId: number) {
     this.dataService.changeData(userRoleId);
     this.router.navigate(['/user-role/add-user-role']);
-
-
   }
+
 
 
 }

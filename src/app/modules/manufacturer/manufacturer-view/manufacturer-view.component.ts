@@ -30,7 +30,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['manufacturerId', 'title', 'Actions'];
+  displayedColumns: string[] = ['title', 'Actions'];
   paidDataSource: MatTableDataSource<Manufacturer> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -69,7 +69,6 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
 
   getAllmanufacturers(pageNo: number) {
     this.spinnerService.setSpinnerVisibility(true);
-
     this.manufacturerService.getAllmanufacturers(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.manufacturer) {
@@ -148,8 +147,6 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   editManufacturer(manufacturerId: number) {
     this.dataService.changeData(manufacturerId);
     this.router.navigate(['/manufacturer/add-manufacturer']);
-
-
   }
 
 

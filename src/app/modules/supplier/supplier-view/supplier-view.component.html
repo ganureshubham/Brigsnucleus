@@ -21,10 +21,10 @@
         </div>
         <div class="cl"></div>
         <mat-table [dataSource]="paidDataSource">
-          <ng-container matColumnDef="supplierId">
+          <!-- <ng-container matColumnDef="supplierId">
             <mat-header-cell *matHeaderCellDef>Supplier Id</mat-header-cell>
             <mat-cell *matCellDef="let visit">{{ visit.supplierId }}</mat-cell>
-          </ng-container>
+          </ng-container> -->
           <ng-container matColumnDef="supplierName">
             <mat-header-cell *matHeaderCellDef>Supplier Name</mat-header-cell>
             <mat-cell *matCellDef="let visit">{{ visit.firstName+' '+visit.lastName }}</mat-cell>

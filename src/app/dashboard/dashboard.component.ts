@@ -9,25 +9,23 @@ import { NotificationService } from '../public service/notification.service';
 })
 export class DashboardComponent implements OnInit {
   loading: boolean;
-  rows:any={};
+  rows: any = {};
 
-  constructor(private toastr:ToastrService,private notificationService:NotificationService) { }
+  constructor(private toastr: ToastrService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.getStatus();
   }
 
+  /*****************************************Get All  Dashboard Counts*******************************************************************************/
 
-
-  getStatus(){
+  getStatus() {
     this.loading = true;
-    this.notificationService.getDashboardDetails().subscribe(res=>{
-      console.log(res);
-      this.rows=res.dashboard[0];
-      
+    this.notificationService.getDashboardDetails().subscribe(res => {
+      this.rows = res.dashboard[0];
     })
 
-    
-  } 
+
+  }
 
 }

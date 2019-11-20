@@ -30,15 +30,12 @@ export class AddRoleComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log("ngonit function", res);
         this.roleData.title = res.title;
         this.roleData.userRoleId = res.userRoleId;
         this.isEdited = true;
         this.formTitle = `Edit User Role`;
-
       }
     })
-
   }
 
   /*********************************************************** Add New Asset *******************************************************************/
@@ -48,7 +45,6 @@ export class AddRoleComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
       this.router.navigate(['/user-role']);
-
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
@@ -67,7 +63,6 @@ export class AddRoleComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
       this.router.navigate(['/user-role']);
-
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
@@ -80,7 +75,6 @@ export class AddRoleComponent implements OnInit {
 
   backToList() {
     this.router.navigate(['/user-role']);
-
   }
 
 

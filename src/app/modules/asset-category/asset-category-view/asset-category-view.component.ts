@@ -100,7 +100,6 @@ export class AssetCategoryViewComponent implements OnInit {
 
   getAllAssetCategoryLists() {
     this.spinnerService.setSpinnerVisibility(true);
-
     this.assetCategoryService.getAllAssetCategoryLists().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.assetCategory) {
@@ -121,10 +120,10 @@ export class AssetCategoryViewComponent implements OnInit {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
+  /************************************* Add New Root Asset Category ****************************************************************/
 
-  openDialog(): void {
 
-
+  addNewAssetCategory(): void {
     this.dialogData = {
       type: 'New Add',
       level: 0,
@@ -132,21 +131,21 @@ export class AssetCategoryViewComponent implements OnInit {
       categoryId: 0,
       title: ''
     }
-
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
-      data: this.dialogData
+      data: this.dialogData,
+      width: '450px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllAssetCategoryLists();
+      if (result !== 0) {
+        this.getAllAssetCategoryLists();
+      }
     });
-
   }
 
   /************************************* Add New Asset Category****************************************************************/
 
 
   addAssetCategory(node: any): void {
-
     this.dialogData = {
       type: 'Add',
       level: node.level,
@@ -154,11 +153,10 @@ export class AssetCategoryViewComponent implements OnInit {
       categoryId: node.categoryId,
       title: node.name
     }
-
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
-      data: this.dialogData
+      data: this.dialogData,
+      width: '450px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllAssetCategoryLists();
@@ -171,26 +169,21 @@ export class AssetCategoryViewComponent implements OnInit {
 
   editAssetCategory(node: any) {
     this.dialogData = {
-
       type: 'Edit',
       level: node.level,
       parentId: node.parentId,
       categoryId: node.categoryId,
       title: node.name
-
     }
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
-      data: this.dialogData
-
+      data: this.dialogData,
+      width: '450px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllAssetCategoryLists();
       }
-
     });
-
   }
 
   /************************************* Delete Particular Asset Category****************************************************************/
