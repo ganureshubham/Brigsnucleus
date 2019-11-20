@@ -23,22 +23,24 @@
             <mat-grid-list cols="3" rowHeight="1:0.15">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field fxFlex>
-                  <input matInput name="firstName" id="firstName" pattern="[a-zA-Z ]*" [(ngModel)]="userData.firstName"
-                    #firstname="ngModel" type="text" required placeholder="First Name">
+                  <input matInput minlength="3" name="firstName" id="firstName" pattern="[a-zA-Z ]*"
+                    [(ngModel)]="userData.firstName" #firstname="ngModel" type="text" required placeholder="First Name">
                   <mat-error *ngIf="userform.submitted && firstname.invalid">
                     <mat-error *ngIf="firstname.errors.required">First Name is required</mat-error>
                   </mat-error>
                   <mat-error *ngIf="firstname.errors?.pattern"> Please Enter Only Characters</mat-error>
+                  <mat-error *ngIf="firstname.errors?.minlength"> Please Enter atleast 3 Characters</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field fxFlex>
-                  <input matInput name="lastName" id="lastName" pattern="[a-zA-Z ]*" [(ngModel)]="userData.lastName"
-                    #lastname="ngModel" type="text" required placeholder="Last Name">
+                  <input matInput minlength="3" name="lastName" id="lastName" pattern="[a-zA-Z ]*"
+                    [(ngModel)]="userData.lastName" #lastname="ngModel" type="text" required placeholder="Last Name">
                   <mat-error *ngIf="userform.submitted && lastname.invalid">
                     <mat-error *ngIf="lastname.errors.required">Last Name is required</mat-error>
                   </mat-error>
                   <mat-error *ngIf="lastname.errors?.pattern"> Please Enter Only Characters</mat-error>
+                  <mat-error *ngIf="lastname.errors?.minlength"> Please Enter atleast 3 Characters</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -66,6 +68,9 @@
                   <mat-error *ngIf="mobilenumber.errors?.pattern">
                     Please add only digits!
                   </mat-error>
+                  <mat-error *ngIf="mobilenumber.errors?.minlength">
+                    Please enter 10 digits!
+                  </mat-error>
                 </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -83,8 +88,13 @@
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field fxFlex>
-                  <input name="password" id="password" minlength="6" [(ngModel)]="userData.password" #pass="ngModel"
-                    pattern="[a-zA-Z0-9 ]*" matInput type="password" required placeholder="Password">
+                  <input name="password" [type]="hide ? 'password' : 'text'" id="password" minlength="6"
+                    [(ngModel)]="userData.password" #pass="ngModel" matInput type="password" required
+                    placeholder="Password">
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
                   <mat-error *ngIf="userform.submitted && pass.invalid">
                     <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
                   </mat-error>
@@ -111,11 +121,16 @@
                   <div class="file-field">
                     <div class="btn btn-primary btn-sm float-left">
                       <span>Choose file</span>
-                      <input type="file" (change)="imageChange($event.target.files)" accept="image/*">
+                      <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)"
+                        accept="image/*">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" name="profileImage" [(ngModel)]="profileImage" type="text"
                         placeholder="Upload your User image" required>
+                      <button mat-button *ngIf="profileImage" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="profileImage=''">
+                        <mat-icon>close</mat-icon>
+                      </button>
                     </div>
                     <div class="error hide text-error">{{imageerror}}</div>
                   </div>

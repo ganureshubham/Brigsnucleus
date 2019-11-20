@@ -50,6 +50,9 @@ export class AddDepartmentComponent implements OnInit {
       this.formTitle = `Edit Department`;
       this.deptData = this.data;
     } else if (this.data.type == 'New Add') {
+      console.log('new add', this.data);
+
+
       this.deptData.parentId = this.data.parentId;
     }
 

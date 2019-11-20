@@ -28,7 +28,7 @@ export class UserService {
   }
 
   /*********************************************************** Add User Photo *****************************************************************/
-  photoUpload(photoData: any): Observable<any> {
+  photoUpload1(photoData: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `users/uploadProfileImage`, photoData);
   }
 

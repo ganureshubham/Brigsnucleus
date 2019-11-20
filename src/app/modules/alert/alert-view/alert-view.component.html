@@ -64,7 +64,9 @@
                 </ng-container>
                 <ng-container matColumnDef="message">
                   <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.message }}</mat-cell>
+                  <mat-cell *matCellDef="let visit">
+                    {{ visit.message.length>62?visit.message.substring(0,62)+'...':visit.message }}
+                  </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="Actions">
                   <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>

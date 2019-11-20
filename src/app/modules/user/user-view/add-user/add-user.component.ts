@@ -24,6 +24,8 @@ export class AddUserComponent implements OnInit {
   deptList: any;
   userRoleList: any;
   formTitle: string = "Add User";
+  hide = true;
+
 
   constructor(private router: Router,
     private userService: UserService,
@@ -50,7 +52,7 @@ export class AddUserComponent implements OnInit {
     let value = formData.value;
     if (formData.valid) {
       this.uploadImageToserver((result) => {
-        value.image = result;
+        value.profileImage = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
@@ -74,8 +76,8 @@ export class AddUserComponent implements OnInit {
     } else {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
-      this.userService.photoUpload(formData).subscribe(res => {
-        callback(res.ImageName)
+      this.userService.photoUpload1(formData).subscribe(res => {
+        callback(res.ImageName);
       })
     }
   }
@@ -87,7 +89,7 @@ export class AddUserComponent implements OnInit {
     let value = formData.value;
     if (formData.valid) {
       this.uploadImageToserver((result) => {
-        value.image = result;
+        value.profileImage = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.editUser(this.userData.userId, value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
@@ -106,6 +108,7 @@ export class AddUserComponent implements OnInit {
     var validImageFormats = ['jpg', 'gif', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
+      this.imageerror = "";
       let formData: FormData = new FormData();
       this.fileToUpload = files.item(0);
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
