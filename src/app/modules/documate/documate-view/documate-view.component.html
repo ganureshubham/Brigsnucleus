@@ -33,48 +33,53 @@
                 </div>
               </div>
               <div class="cl"></div>
-              <mat-table [dataSource]="paidDataSource">
-                <ng-container matColumnDef="title">
-                  <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="documentType">
-                  <mat-header-cell *matHeaderCellDef>Document Type</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.documentType }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="description">
-                  <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">
-                    {{ visit.description.length>52?visit.description.substring(0,52)+'...':visit.description }}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="Actions">
-                  <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">
-                    <div>
-                      <mat-menu #dailyPerformanceMenu="matMenu">
-                        <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
-                          <mat-icon matListIcon>get_app</mat-icon>
-                          <span i18n>Download Document</span>
-                        </a>
-                        <a mat-menu-item (click)="editDocumate(visit)">
-                          <mat-icon matListIcon>edit</mat-icon>
-                          <span i18n>Edit Document</span>
-                        </a>
-                        <a mat-menu-item (click)="deleteDocumate(visit.documentId,visit.title)">
-                          <mat-icon matListIcon>delete_outline</mat-icon>
-                          <span i18n>Delete Document</span>
-                        </a>
-                      </mat-menu>
-                      <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                        <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                      </button>
-                    </div>
-                  </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-              </mat-table>
+              <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+                <p>No Record Found</p>
+              </div>
+              <ng-template #recordFound>
+                <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="documentType">
+                    <mat-header-cell *matHeaderCellDef>Document Type</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.documentType }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      {{ visit.description.length>52?visit.description.substring(0,52)+'...':visit.description }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      <div>
+                        <mat-menu #dailyPerformanceMenu="matMenu">
+                          <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
+                            <mat-icon matListIcon>get_app</mat-icon>
+                            <span i18n>Download Document</span>
+                          </a>
+                          <a mat-menu-item (click)="editDocumate(visit)">
+                            <mat-icon matListIcon>edit</mat-icon>
+                            <span i18n>Edit Document</span>
+                          </a>
+                          <a mat-menu-item (click)="deleteDocumate(visit.documentId,visit.title)">
+                            <mat-icon matListIcon>delete_outline</mat-icon>
+                            <span i18n>Delete Document</span>
+                          </a>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                          <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                        </button>
+                      </div>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+              </ng-template>
               <div>
                 <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
                   (page)="pageChange($event)">

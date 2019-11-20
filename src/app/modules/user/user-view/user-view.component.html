@@ -19,65 +19,70 @@
             </div>
           </div>
           <div class="cl"></div>
-          <mat-table [dataSource]="paidDataSource">
-            <!-- <ng-container matColumnDef="userId">
+          <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+            <p>No Record Found</p>
+          </div>
+          <ng-template #recordFound>
+            <mat-table [dataSource]="paidDataSource">
+              <!-- <ng-container matColumnDef="userId">
               <mat-header-cell *matHeaderCellDef>User Id</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.userId }}</mat-cell>
             </ng-container> -->
-            <ng-container matColumnDef="userName">
-              <mat-header-cell *matHeaderCellDef i18n>User Name </mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{visit.firstName+' '+visit.lastName}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="profileImage">
-              <mat-header-cell *matHeaderCellDef>Profile Image</mat-header-cell>
-              <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                  src="{{visit.profileImage}}" alt="photo"></mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="departmentTitle">
-              <mat-header-cell *matHeaderCellDef>Department Title</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.departmentTitle }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="mobileNumber">
-              <mat-header-cell *matHeaderCellDef>Mobile Number</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="emailId">
-              <mat-header-cell *matHeaderCellDef>Email Id</mat-header-cell>
-              <mat-cell *matCellDef="let visit">
-                {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
-            </ng-container>
-            <!-- <ng-container matColumnDef="userRoleIdFK">
+              <ng-container matColumnDef="userName">
+                <mat-header-cell *matHeaderCellDef i18n>User Name </mat-header-cell>
+                <mat-cell *matCellDef="let visit">{{visit.firstName+' '+visit.lastName}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="profileImage">
+                <mat-header-cell *matHeaderCellDef>Profile Image</mat-header-cell>
+                <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
+                    src="{{visit.profileImage}}" alt="photo"></mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="departmentTitle">
+                <mat-header-cell *matHeaderCellDef>Department Title</mat-header-cell>
+                <mat-cell *matCellDef="let visit">{{ visit.departmentTitle }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="mobileNumber">
+                <mat-header-cell *matHeaderCellDef>Mobile Number</mat-header-cell>
+                <mat-cell *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="emailId">
+                <mat-header-cell *matHeaderCellDef>Email Id</mat-header-cell>
+                <mat-cell *matCellDef="let visit">
+                  {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
+              </ng-container>
+              <!-- <ng-container matColumnDef="userRoleIdFK">
               <mat-header-cell *matHeaderCellDef>User RoleId</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.userRoleIdFK }}</mat-cell>
             </ng-container> -->
-            <ng-container matColumnDef="Actions">
-              <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-              <mat-cell *matCellDef="let visit">
-                <div>
-                  <mat-menu #dailyPerformanceMenu="matMenu">
-                    <!-- <a mat-menu-item (click)="viewUser(visit.assetId)">
+              <ng-container matColumnDef="Actions">
+                <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+                <mat-cell *matCellDef="let visit">
+                  <div>
+                    <mat-menu #dailyPerformanceMenu="matMenu">
+                      <!-- <a mat-menu-item (click)="viewUser(visit.assetId)">
                     <mat-icon matListIcon>visibility</mat-icon>
                     <span i18n>View Asset Detail</span>
                   </a> -->
-                    <a mat-menu-item (click)="editUser(visit)">
-                      <mat-icon matListIcon>edit</mat-icon>
-                      <span i18n>Edit User</span>
-                    </a>
-                    <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
-                      <mat-icon matListIcon>delete_outline</mat-icon>
-                      <span i18n>Delete User</span>
-                    </a>
-                  </mat-menu>
-                  <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                    <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                  </button>
-                </div>
-              </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-          <div class="noDataFound" *ngIf="isNoRecord()">No records found</div>
+                      <a mat-menu-item (click)="editUser(visit)">
+                        <mat-icon matListIcon>edit</mat-icon>
+                        <span i18n>Edit User</span>
+                      </a>
+                      <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
+                        <mat-icon matListIcon>delete_outline</mat-icon>
+                        <span i18n>Delete User</span>
+                      </a>
+                    </mat-menu>
+                    <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                      <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                    </button>
+                  </div>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </ng-template>
+
           <div>
             <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
             </mat-paginator>

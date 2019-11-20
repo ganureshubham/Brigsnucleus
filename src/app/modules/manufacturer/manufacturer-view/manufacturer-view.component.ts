@@ -27,6 +27,8 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   manufacturerData: any = {};
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
 
 
 
@@ -72,6 +74,11 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     this.manufacturerService.getAllmanufacturers(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.manufacturer) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.paidDataSource = res.manufacturer;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;

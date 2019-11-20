@@ -25,6 +25,9 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   manufacturerData: any = {};
   totalAlerts: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
+
 
   displayedColumns: string[] = ['alertName', 'title', 'alertImage', 'isRead', 'isDeliver', 'message', 'Actions'];
   paidDataSource: MatTableDataSource<Alert> = new MatTableDataSource();
@@ -65,19 +68,25 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Get all Alerts *******************************************************************/
   getAlertList(pageNo: number) {
-
+    this.spinnerService.setSpinnerVisibility(true);
     this.alertService.getAlertList(pageNo).subscribe(res => {
-      this.totalAlerts = res.totalAlerts;
-      this.paidDataSource = res.alert;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
-      this.loading = false;
-
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.totalAlerts) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.totalAlerts = res.totalAlerts;
+        this.paidDataSource = res.alert;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message);
+      }
     },
       error => {
-        this.loading = false;
-        console.log(error);
-
+        this.showSnackBar("Something went wrong..!!");
       })
   }
 

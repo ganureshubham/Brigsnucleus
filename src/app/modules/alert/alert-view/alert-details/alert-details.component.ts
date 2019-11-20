@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../service/alert.service';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 
@@ -18,6 +18,8 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
   count: number;
   pageNumber = 0;
   totalCount = 0;
+  isNoRecordFound: boolean = true;
+
 
 
   displayedColumns: string[] = ['userImage', 'userName', 'isRead', 'isDeliver', 'readDate',];
@@ -34,7 +36,8 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private dataService: DataSharingService
+    private dataService: DataSharingService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -76,11 +79,26 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   getAllTrackingList(alertId: number, pageNo: number) {
     this.alertService.getAllTrackingList(alertId, pageNo).subscribe(res => {
-      this.paidDataSource = res.alertTrack;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
+      if (res.alertTrack) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.paidDataSource = res.alertTrack;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
 
-    })
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   /*********************************************************** Search Alerts *******************************************************************/
