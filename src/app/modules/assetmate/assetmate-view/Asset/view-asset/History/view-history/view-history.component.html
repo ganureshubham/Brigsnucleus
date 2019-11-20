@@ -1,54 +1,53 @@
-
 <div *ngIf="!showFirst" class="innerbody table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-        <div class="table_header">
-          <div class="fl">
-            <p class="tabel_heading mat-subheading-2">Done Checklist</p>
-          </div>
-          
+      <div class="table_header">
+        <div class="fl">
+          <p class="tabel_heading mat-subheading-2">Done Checklist</p>
         </div>
-        <div class="cl"></div>
-        <mat-table [dataSource]="paidDataSource">
-          <ng-container matColumnDef="doneChecklistId">
+
+      </div>
+      <div class="cl"></div>
+      <mat-table [dataSource]="paidDataSource">
+        <!-- <ng-container matColumnDef="doneChecklistId">
             <mat-header-cell *matHeaderCellDef>Done Checklist Id</mat-header-cell>
             <mat-cell *matCellDef="let visit">{{ visit.doneChecklistId }}</mat-cell> 
-          </ng-container>
-          <ng-container matColumnDef="checkListTitle">
-            <mat-header-cell *matHeaderCellDef>CheckList Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.checkListTitle }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="doneBy">
-              <mat-header-cell *matHeaderCellDef>Done By</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.doneBy }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="doneOn">
-                <mat-header-cell *matHeaderCellDef>Done On</mat-header-cell>
-                <mat-cell *matCellDef="let visit">{{ visit.doneOn }}</mat-cell>
-              </ng-container>
-          <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>  
-            <mat-cell *matCellDef="let visit">
-              <div>
-                <mat-menu #dailyPerformanceMenu="matMenu">
-                  <a mat-menu-item (click)="viewQuestion(visit.doneChecklistId)">
-                    <mat-icon matListIcon>edit</mat-icon>
-                    <span i18n>View Questions List</span>
-                  </a>
-                </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <div>
-          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-          </mat-paginator>
-        </div>
+          </ng-container> -->
+        <ng-container matColumnDef="checkListTitle">
+          <mat-header-cell *matHeaderCellDef>CheckList Title</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.checkListTitle }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="doneBy">
+          <mat-header-cell *matHeaderCellDef>Done By</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.doneBy }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="doneOn">
+          <mat-header-cell *matHeaderCellDef>Done On</mat-header-cell>
+          <mat-cell *matCellDef="let visit">{{ visit.doneOn }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let visit">
+            <div>
+              <mat-menu #dailyPerformanceMenu="matMenu">
+                <a mat-menu-item (click)="viewQuestion(visit.doneChecklistId)">
+                  <mat-icon matListIcon>edit</mat-icon>
+                  <span i18n>View Questions List</span>
+                </a>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <div>
+        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+        </mat-paginator>
+      </div>
     </div>
   </div>
 </div>

@@ -1,10 +1,17 @@
 <div>
-  <div class="flex_container padding_box align_center">
-    <div class="width_50">
+  <div class="title-row">
+    <div class="width_75">
+      <p class="title_header mat-subheading-2 tal">Question List</p>
+    </div>
+    <!-- <div class="add-checklist-question-container">
+      <div class="fr"> -->
+    <div class="example-button-row btn_style bg_white_grey ">
       <button mat-button (click)="addNewChecklistQuestion()" class="bg_white_grey btn_style">
         <mat-icon>add</mat-icon>Add New Question
       </button>
     </div>
+    <!-- </div>
+    </div> -->
   </div>
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="questionType">

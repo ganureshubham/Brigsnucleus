@@ -1104,4 +1104,9 @@ body {
   background: #555;
 }
 
+.column-center{
+  display: flex;
+  justify-content: center;
+}
+
 /********************************************** end style**************************************************************/

@@ -30,7 +30,8 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   codeData: any;
   parentdata: any;
   result: string = '';
-  displayedColumns: string[] = ['documentId', 'title', 'description', 'Actions'];
+  displayedColumns: string[] = ['title', 'description', 'Actions'];
+  // 'documentId', 
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteDocWithId: number;

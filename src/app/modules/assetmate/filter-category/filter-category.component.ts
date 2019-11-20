@@ -121,34 +121,13 @@ export class FilterCategoryComponent implements OnInit {
     //   }
     // }
 
-
     if (searchedText.length == 0) {
       this.TREE_DATA = [];
       this.local_TREE_DATA = [];
       this.TREE_DATA = [...this.final_TREE_DATA];
       this.dataSource.data = this.TREE_DATA;
     } else {
-      for (let i = 0; i < this.TREE_DATA.length; i++) {
-        console.log(
-          this.TREE_DATA[i].title.includes(searchedText) + ' - ' +
-          this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) + ' - ' +
-          this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
-        );
-
-        if (
-          this.TREE_DATA[i].title.includes(searchedText) ||
-          this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
-          this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
-        ) {
-          this.local_TREE_DATA.push(this.TREE_DATA[i]);
-          this.dataSource.data = this.local_TREE_DATA;
-          console.log('---------------------------------');
-          console.log(this.local_TREE_DATA)
-        }
-      }
-      this.TREE_DATA = [];
-      this.TREE_DATA = [...this.local_TREE_DATA];
-      this.local_TREE_DATA = [];
+      this.dataSource.data = this.TREE_DATA.filter(d => d.title.toLocaleLowerCase().indexOf(searchedText.toLocaleLowerCase()) > -1);
     }
 
   }

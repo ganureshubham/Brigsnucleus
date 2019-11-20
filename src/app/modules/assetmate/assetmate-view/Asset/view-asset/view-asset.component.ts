@@ -35,7 +35,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   result: string = '';
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
-  displayedColumns: string[] = ['assetId', 'assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
+  displayedColumns: string[] = ['assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
+  // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;

@@ -12,6 +12,7 @@ export class AssetmateService {
   private badgeUpdateActionAssetDetails = new BehaviorSubject<boolean>(false);
   private badgeUpdateActionAssetList = new BehaviorSubject<boolean>(false);
   private badgeUpdateActionQuestionList = new BehaviorSubject<boolean>(false);
+  private tabSelectionDetails = new BehaviorSubject<number>(0);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -384,6 +385,18 @@ export class AssetmateService {
       this.badgeUpdateActionQuestionList.next(action);
     }
 
+  }
+
+  getTabSelection(component: string): Observable<number> {
+    if (component == 'checklistTab') {
+      return this.tabSelectionDetails.asObservable();
+    }
+  }
+
+  setTabSelection(component: string, action: number) {
+    if (component == 'checklistTab') {
+      this.tabSelectionDetails.next(action);
+    }
   }
 
 }

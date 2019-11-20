@@ -4,6 +4,7 @@ import { AssetmateService } from '../../../service/assetmate.service';
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-checklist-questions',
@@ -28,6 +29,7 @@ export class ViewChecklistQuestionsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private assetmateService: AssetmateService,
     private router: Router,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -68,7 +70,13 @@ export class ViewChecklistQuestionsComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate(['/assetmate/assetmate-details/' + this.categoryId]);
+    //TAB 1 will be checklist TAB
+    // this.router.navigate(['/assetmate/assetmate-details/' + this.categoryId]).then(
+    //   () => {
+    this.assetmateService.setTabSelection('checklistTab', 1);
+    //   }
+    // );
+    this.location.back();
   }
 
 }
