@@ -6,6 +6,7 @@ import { AssetmateService } from '../../../../service/assetmate.service';
 import { MatSnackBar } from '@angular/material';
 import { checklistQuestion, questionOption } from '../../../../../../model/checklistQuestion';
 import { ActivatedRoute } from '@angular/router';
+import { questionDetails } from '../../../../../../model/questionDetails';
 
 interface QuestionTypeOption {
   questionTypeId: number,
@@ -13,6 +14,7 @@ interface QuestionTypeOption {
 }
 
 interface QuestionOptions {
+  isNewAddedOption: boolean,
   optionControl: string,
   checkboxControl: string
 }
@@ -36,6 +38,8 @@ export class EditChecklistQuestionComponent implements OnInit {
   checkListId: number;
   questionId: number;
 
+  questionDetails: questionDetails;
+
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -51,22 +55,21 @@ export class EditChecklistQuestionComponent implements OnInit {
   ngOnInit() {
 
     this.checkListId = Number(this.activatedRoute.snapshot.parent.params['checkListId']);
-    this.questionId = this.activatedRoute.snapshot.params['questionId'];
-
+    this.questionId = Number(this.activatedRoute.snapshot.params['questionId']);
     this.getChecklistQuestionTypes();
+    this.setAllFormControls();
+
+  }
+
+  setAllFormControls() {
 
     this.quetionTypeFormGroup = this._formBuilder.group({
-      selectQuestionTypeFormCtrl: ['', Validators.required],
+      selectQuestionTypeFormCtrl: [{ value: '', disabled: true }, Validators.required],
     });
 
     this.questionDescription = this._formBuilder.group({
       questionDescriptionFormCtrl: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
       questionCompulsoryFormCtrl: [true]
-    });
-
-    this.questionOptions = this._formBuilder.group({
-      'option0': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      'checkbox0': [''],
     });
 
     this.arrFormGroupsForFormArray.push(
@@ -84,6 +87,61 @@ export class EditChecklistQuestionComponent implements OnInit {
       ])
     });
 
+    this.getQuestionDetails();
+
+  }
+
+  getQuestionDetails() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.getQuestionDetails(this.questionId).subscribe((resp: questionDetails) => {
+      this.spinnerService.setSpinnerVisibility(false);
+
+      if (resp.Question) {
+
+        this.questionDetails = resp;
+
+        let formArray: any = this.formGroup.controls.formArray;
+
+        formArray.controls[0].controls['selectQuestionTypeFormCtrl'].setValue(resp.Question.questionTypeIdFK);
+        formArray.controls[1].controls['questionDescriptionFormCtrl'].setValue(resp.Question.questionDescription);
+        formArray.controls[1].controls['questionCompulsoryFormCtrl'].setValue(resp.Question.isCompulsory == 1 ? true : false);
+
+        let countOfOptionsInQuestion = resp.Question.questionOptions.length;
+
+        if (countOfOptionsInQuestion > 0) {
+          for (let i = 0; i < countOfOptionsInQuestion; i++) {
+            if (i == 0) {
+              this.questionOptions = this._formBuilder.group({
+                'option0': [resp.Question.questionOptions[i].optionTitle, Validators.compose([Validators.required, Validators.minLength(2)])],
+                'checkbox0': [resp.Question.questionOptions[i].isDanger == 1 ? true : false],
+              });
+              let formGroupFormArray: any = (this.formGroup.get('formArray'));
+              formGroupFormArray.push(this.questionOptions);
+            } else {
+
+              let randomNo = this.getRandomInt();
+              this.questionOptions.addControl('option' + randomNo, new FormControl(resp.Question.questionOptions[i].optionTitle, Validators.compose([Validators.required, Validators.minLength(2)])));
+              this.questionOptions.addControl('checkbox' + randomNo, new FormControl(resp.Question.questionOptions[i].isDanger));
+              this.arrOption.push({
+                isNewAddedOption: false,
+                optionControl: 'option' + randomNo,
+                checkboxControl: 'checkbox' + randomNo
+              });
+
+            }
+          }
+        }
+
+      } else {
+        this.showSnackBar(resp.message);
+      }
+
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong..!!');
+      }
+    );
   }
 
   showSnackBar(message: string) {
@@ -163,23 +221,10 @@ export class EditChecklistQuestionComponent implements OnInit {
     this.questionOptions.addControl('checkbox' + randomNo, new FormControl(''));
 
     this.arrOption.push({
+      isNewAddedOption: true,
       optionControl: 'option' + randomNo,
       checkboxControl: 'checkbox' + randomNo
     });
-
-    // console.log('this.arrOption add --- >');
-    // console.log(this.arrOption);
-
-    // this.questionOptions.addControl('option' + (this.arrOption.length + 1), new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
-    // this.questionOptions.addControl('checkbox' + (this.arrOption.length + 1), new FormControl(''));
-
-    // this.arrOption.push({
-    //   optionControl: 'option' + (this.arrOption.length + 1),
-    //   checkboxControl: 'checkbox' + (this.arrOption.length + 1)
-    // });
-
-    // console.log('this.arrOption add --- >');
-    // console.log(this.arrOption);
 
   }
 
@@ -187,19 +232,30 @@ export class EditChecklistQuestionComponent implements OnInit {
 
     let formControlLable = this.arrOption[optionIndex];
 
+    let isNewlyAddedLocalOption = this.arrOption[optionIndex].isNewAddedOption;
+
     this.arrOption.splice(optionIndex, 1);
     this.questionOptions.removeControl('option' + formControlLable);
     this.questionOptions.removeControl('checkbox' + formControlLable);
 
-    // console.log('this.arrOption --- >');
-    // console.log(this.arrOption);
+    if (!isNewlyAddedLocalOption) {
+      this.spinnerService.setSpinnerVisibility(true);
+      this.assetmateService.deleteChecklistQuestionOption(
+        this.questionDetails.Question.questionOptions[optionIndex + 1].questionOptionId
+      ).subscribe((resp: any) => {
 
-    // this.arrOption.splice(optionIndex, 1);
-    // this.questionOptions.removeControl('option' + this.arrOption.length);
-    // this.questionOptions.removeControl('checkbox' + this.arrOption.length);
+        if (resp.affectedRows && resp.affectedRows > 0) {
+          this.questionDetails.Question.questionOptions.splice(optionIndex + 1, 1);
+        }
 
-    // console.log('this.arrOption --- >');
-    // console.log(this.arrOption);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(resp.message);
+
+      }, error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong..!!');
+      })
+    }
 
   }
 
@@ -222,7 +278,8 @@ export class EditChecklistQuestionComponent implements OnInit {
     // console.log('formGroupFormArray');
     // console.log(formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value);
 
-    let checklistQuestion: checklistQuestion = {
+    let checklistQuestion: any = {
+      questionId: this.questionId,
       title: formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value,
       questionTypeIdFK: formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value,
       checkListIdFK: this.checkListId,
@@ -238,17 +295,20 @@ export class EditChecklistQuestionComponent implements OnInit {
       //Insert default option0 and checkbox0
       checklistQuestion.options.push(
         {
+          questionOptionId: this.questionDetails.Question.questionOptions[0].questionOptionId,
           optionTitle: formGroupFormArray.controls[2].get('option0').value,
           isDanger: formGroupFormArray.controls[2].get('checkbox0').value ? 1 : 0
         }
       );
 
       //Insert remaining options with checkbox status
-      for (let option of this.arrOption) {
+      // for (let option of this.arrOption) {
+      for (let i = 0; i < this.arrOption.length; i++) {
         checklistQuestion.options.push(
           {
-            optionTitle: formGroupFormArray.controls[2].get(option.optionControl).value,
-            isDanger: formGroupFormArray.controls[2].get(option.checkboxControl).value ? 1 : 0
+            questionOptionId: this.arrOption[i].isNewAddedOption ? 0 : this.questionDetails.Question.questionOptions[i + 1].questionOptionId,
+            optionTitle: formGroupFormArray.controls[2].get(this.arrOption[i].optionControl).value,
+            isDanger: formGroupFormArray.controls[2].get(this.arrOption[i].checkboxControl).value ? 1 : 0
           }
         );
       }
@@ -257,31 +317,17 @@ export class EditChecklistQuestionComponent implements OnInit {
 
     this.spinnerService.setSpinnerVisibility(true);
 
-    //Add question
-    if (this.questionId == 0) {
-      this.assetmateService.addChecklistQuestion(checklistQuestion).subscribe(resp => {
-        this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar(resp.message);
-        this.assetmateService.setBadgeUpdateAction('questionList', true);
-        this.location.back();
-      }, error => {
-        this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
-      });
-    }
-    //Link question
-    //QuestionId is QuestionOptionId here
-    else if (this.questionId > 0) {
-      this.assetmateService.linkChecklistQuestion(this.questionId, checklistQuestion).subscribe(resp => {
-        this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar(resp.message);
-        this.assetmateService.setBadgeUpdateAction('questionList', true);
-        this.location.back();
-      }, error => {
-        this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
-      });
-    }
+    // console.log('checklistQuestion');
+    // console.log(checklistQuestion);
+
+    this.assetmateService.updateChecklistQuestion(checklistQuestion).subscribe(resp => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(resp.message);
+      this.location.back();
+    }, error => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar("Something went wrong..!!");
+    });
 
 
   }
@@ -319,14 +365,6 @@ export class EditChecklistQuestionComponent implements OnInit {
 
     return selectionOptionType;
 
-  }
-
-  getBackBtnLable() {
-    return this.questionId == 0 ? 'Question List' : 'Question Details';
-  }
-
-  getPageTitle() {
-    return this.questionId == 0 ? 'Add Question' : 'Link New Question';
   }
 
 }

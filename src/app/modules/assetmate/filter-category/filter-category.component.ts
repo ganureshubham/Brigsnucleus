@@ -27,9 +27,9 @@ interface ExampleFlatNode {
 export class FilterCategoryComponent implements OnInit {
 
   categoryID;
-  TREE_DATA: CategoryNode[];
-  local_TREE_DATA: CategoryNode[];
-  final_TREE_DATA: CategoryNode[];
+  TREE_DATA: CategoryNode[] = [];
+  local_TREE_DATA: CategoryNode[] = [];
+  final_TREE_DATA: CategoryNode[] = [];
   isTreeDataReady: boolean = false;
 
   private transformer = (node: CategoryNode, level: number) => {
@@ -88,36 +88,67 @@ export class FilterCategoryComponent implements OnInit {
   }
 
   onSearchCategoryTxtChange(searchedText: string) {
-    // console.log(searchedText);
 
-    this.local_TREE_DATA = [...this.TREE_DATA];
-    // console.log(this.TREE_DATA);
-    // console.log(this.local_TREE_DATA);
+    // // console.log(searchedText);
+
+    // this.local_TREE_DATA = [...this.TREE_DATA];
+    // // console.log(this.TREE_DATA);
+    // // console.log(this.local_TREE_DATA);
+
+    // if (searchedText.length == 0) {
+    //   this.TREE_DATA = [];
+    //   this.TREE_DATA = [...this.final_TREE_DATA];
+    //   // console.log('Length 0');
+    //   // console.log(this.local_TREE_DATA);
+    //   // console.log(this.TREE_DATA);
+    //   this.dataSource.data = this.TREE_DATA;
+    // } else {
+    //   for (let i = 0; i < this.TREE_DATA.length; i++) {
+    //     // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
+    //     // console.log(this.local_TREE_DATA);
+    //     if (
+    //       this.TREE_DATA[i].title.includes(searchedText) ||
+    //       this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
+    //       this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
+    //     ) {
+    //       this.TREE_DATA = [];
+    //       this.TREE_DATA.push(this.local_TREE_DATA[i]);
+    //       this.dataSource.data = this.TREE_DATA;
+    //       // console.log('Length > 0');
+    //       // console.log(this.dataSource.data)
+    //       break;
+    //     }
+    //   }
+    // }
+
 
     if (searchedText.length == 0) {
       this.TREE_DATA = [];
+      this.local_TREE_DATA = [];
       this.TREE_DATA = [...this.final_TREE_DATA];
-      // console.log('Length 0');
-      // console.log(this.local_TREE_DATA);
-      // console.log(this.TREE_DATA);
       this.dataSource.data = this.TREE_DATA;
     } else {
       for (let i = 0; i < this.TREE_DATA.length; i++) {
-        // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
-        // console.log(this.local_TREE_DATA);
+        console.log(
+          this.TREE_DATA[i].title.includes(searchedText) + ' - ' +
+          this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) + ' - ' +
+          this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
+        );
+
         if (
           this.TREE_DATA[i].title.includes(searchedText) ||
           this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
           this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
         ) {
-          this.TREE_DATA = [];
-          this.TREE_DATA.push(this.local_TREE_DATA[i]);
-          this.dataSource.data = this.TREE_DATA;
-          // console.log('Length > 0');
-          // console.log(this.dataSource.data)
-          break;
+          this.local_TREE_DATA.push(this.TREE_DATA[i]);
+          this.dataSource.data = this.local_TREE_DATA;
+          console.log('---------------------------------');
+          console.log(this.local_TREE_DATA)
         }
       }
+      this.TREE_DATA = [];
+      this.TREE_DATA = [...this.local_TREE_DATA];
+      this.local_TREE_DATA = [];
     }
 
   }

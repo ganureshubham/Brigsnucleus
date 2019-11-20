@@ -63,7 +63,7 @@ export class ChecklistQuestionListComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getChecklistQuestions(checklistId, pageNo).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
-      console.log(resp)
+      // console.log(resp)
       if (resp.question) {
         this.checklistQuestions = resp.question;
         this.dataSource = this.checklistQuestions;
@@ -127,7 +127,7 @@ export class ChecklistQuestionListComponent implements OnInit {
           }, error => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
-            console.log(error);
+            // console.log(error);
           });
         }
       })
