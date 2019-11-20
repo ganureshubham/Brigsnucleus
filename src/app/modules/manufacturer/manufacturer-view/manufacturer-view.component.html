@@ -21,40 +21,45 @@
           </div>
         </div>
         <div class="cl"></div>
-        <mat-table [dataSource]="paidDataSource">
-          <!-- <ng-container matColumnDef="manufacturerId">
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+          <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+          <mat-table [dataSource]="paidDataSource">
+            <!-- <ng-container matColumnDef="manufacturerId">
             <mat-header-cell *matHeaderCellDef>Manufacturer Id </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.manufacturerId }}</mat-cell>
+            <mat-cell *matCellDef="let visit">{{ visit.manufacturerId }}</mat-cell> 
           </ng-container> -->
-          <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
-          </ng-container>
+            <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+              <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+            </ng-container>
 
-          <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-            <mat-cell *matCellDef="let visit">
-              <div>
-                <mat-menu #dailyPerformanceMenu="matMenu">
+            <ng-container matColumnDef="Actions">
+              <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+              <mat-cell *matCellDef="let visit">
+                <div>
+                  <mat-menu #dailyPerformanceMenu="matMenu">
 
-                  <a mat-menu-item (click)="editManufacturer(visit)">
-                    <mat-icon matListIcon>edit</mat-icon>
-                    <span i18n>Edit Manufacturer</span>
-                  </a>
-                  <a mat-menu-item (click)="deleteManufacturer(visit.manufacturerId,visit.title)">
-                    <mat-icon matListIcon>delete_outline</mat-icon>
-                    <span i18n>Delete Manufacturer</span>
-                  </a>
-                </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
+                    <a mat-menu-item (click)="editManufacturer(visit)">
+                      <mat-icon matListIcon>edit</mat-icon>
+                      <span i18n>Edit Manufacturer</span>
+                    </a>
+                    <a mat-menu-item (click)="deleteManufacturer(visit.manufacturerId,visit.title)">
+                      <mat-icon matListIcon>delete_outline</mat-icon>
+                      <span i18n>Delete Manufacturer</span>
+                    </a>
+                  </mat-menu>
+                  <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                    <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                  </button>
+                </div>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </ng-template>
         <div>
           <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
           </mat-paginator>

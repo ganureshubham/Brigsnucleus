@@ -27,6 +27,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   supplierData: any = {};
   supplierName: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
 
 
 
@@ -75,6 +76,11 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.supplierService.getAllSuppliers(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.supplier) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.paidDataSource = res.supplier;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;

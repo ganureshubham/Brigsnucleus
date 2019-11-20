@@ -23,8 +23,11 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   roleData: any = {};
   userRoleId: number;
-
+  isNoRecordFound: boolean = true;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+
+
+
 
   displayedColumns: string[] = ['title', 'Actions'];
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
@@ -69,6 +72,11 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     this.roleService.getAllRoles(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.userroles) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.paidDataSource = res.userroles;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
