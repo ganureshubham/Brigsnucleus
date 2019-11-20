@@ -15,7 +15,6 @@
           </div>
         </mat-card-content>
         <mat-card-content class="bg_pink flex">
-
           <mat-form-field>
             <input matInput #emailid="ngModel" placeholder="Email Address"
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email_address" id="email_address"
@@ -40,7 +39,6 @@
               </button>
             </div>
           </div>
-
         </mat-card-content>
       </mat-card>
     </div>
@@ -51,7 +49,7 @@
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
-            <img class="logo-card" src="../../assets/img/logo.png" />
+            <img class="logo-card" src="assets/img/logo.png" />
             <h1 i18n class="title title_color">Forgot Password</h1>
           </mat-card-title>
           <div class="parg">
@@ -63,7 +61,6 @@
             <span>Email Id</span>
             <mat-slide-toggle class="toggle" (click)="toggle()">Mobile Number</mat-slide-toggle>
           </div>
-
           <mat-form-field *ngIf="hide">
             <input matInput placeholder="Email Address" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email"
               id="email" [(ngModel)]="email" #EmailId="ngModel" required email>
@@ -74,7 +71,6 @@
               </mat-error>
             </mat-error>
           </mat-form-field>
-
           <mat-form-field *ngIf="show">
             <input matInput placeholder="Mobile Number" pattern="[0-9]+" minlength="10" maxlength="10"
               name="mobileNumber" id="mobileNumber" [(ngModel)]="mobileNumber" #MobileNumber="ngModel" required>
@@ -85,7 +81,6 @@
               </mat-error>
             </mat-error>
           </mat-form-field>
-
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
               <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && !newPass" style="color :#E4CCEB"
@@ -104,7 +99,6 @@
               </button>
             </div>
           </div>
-
         </mat-card-content>
       </mat-card>
     </div>
@@ -116,7 +110,7 @@
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
-            <img class="logo-card" src="../../assets/img/logo.png" />
+            <img class="logo-card" src="assets/img/logo.png" />
             <h1 i18n class="title title_color">VERIFY OTP</h1>
           </mat-card-title>
           <div class="parg">
@@ -125,11 +119,9 @@
           </div>
         </mat-card-content>
         <mat-card-content class="bg_pink flex">
-
           <mat-form-field>
             <input matInput placeholder="OTP" maxlength="4" name="otp" id="otp" [(ngModel)]="otp" required>
           </mat-form-field>
-
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
               <a mat-button i18n href="javascript:void(0)" *ngIf="forgPass && sendOTPFlag" style="color :#E4CCEB"
@@ -147,7 +139,6 @@
               </button>
             </div>
           </div>
-
         </mat-card-content>
       </mat-card>
     </div>
@@ -158,7 +149,7 @@
       <mat-card class="box_background form_card">
         <mat-card-content class="bg_white flex tac">
           <mat-card-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="left_side">
-            <img class="logo-card" src="../../assets/img/logo.png" />
+            <img class="logo-card" src="assets/img/logo.png" />
             <h1 i18n class="title title_color">Password Recovery</h1>
           </mat-card-title>
           <div class="parg">
@@ -166,7 +157,6 @@
           </div>
         </mat-card-content>
         <mat-card-content class="bg_pink flex">
-
           <mat-form-field>
             <input matInput type="password" minlength="6" #NewPass="ngModel" autocomplete="off" id="newPassword"
               name="newPassword" autocomplete="new-password" [(ngModel)]="newPassword" placeholder="Enter New Password"
@@ -188,7 +178,6 @@
               </mat-error>
             </div>
           </mat-form-field>
-
           <div fxLayout="column" fxLayoutGap="16px">
             <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
               <button mat-button i18n type="submit" [disabled]="!data.valid" fxFlex="20%" fxFlex.lt-md="none"
@@ -197,7 +186,6 @@
               </button>
             </div>
           </div>
-
         </mat-card-content>
       </mat-card>
     </div>

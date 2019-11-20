@@ -29,6 +29,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   deptId: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
 
 
 
@@ -98,6 +99,11 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.userService.getAllUsers(departmentId, pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.users) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.paidDataSource = res.users;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
@@ -113,6 +119,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
+
 
 
 

@@ -30,67 +30,72 @@
                 </div>
               </div>
               <div class="cl"></div>
-              <mat-table [dataSource]="paidDataSource">
-                <!-- <ng-container matColumnDef="serialnumber">
+              <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+                <p>No Record Found</p>
+              </div>
+              <ng-template #recordFound>
+                <mat-table [dataSource]="paidDataSource">
+                  <!-- <ng-container matColumnDef="serialnumber">
                   <mat-header-cell *matHeaderCellDef> Sr.No </mat-header-cell>
                   <mat-cell *matCellDef="let visit; let j = index">
                     {{ (j+1) + (myPaginator.pageIndex * myPaginator.pageSize) }} 
                   </mat-cell>
                 </ng-container> -->
-                <!-- <ng-container matColumnDef="alertId">
+                  <!-- <ng-container matColumnDef="alertId">
                   <mat-header-cell *matHeaderCellDef>Alert Id </mat-header-cell>
                   <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>
                 </ng-container> -->
-                <ng-container matColumnDef="alertName">
-                  <mat-header-cell *matHeaderCellDef>Alert Name</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="title">
-                  <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="alertImage">
-                  <mat-header-cell *matHeaderCellDef>Alert Image</mat-header-cell>
-                  <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                      src="{{visit.alertImage}}" alt="photo"></mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="isRead">
-                  <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
-                  <mat-cell class="isRead" *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="isDeliver">
-                  <mat-header-cell *matHeaderCellDef>Is Deliver</mat-header-cell>
-                  <mat-cell class="isDeliver" *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="message">
-                  <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">
-                    {{ visit.message.length>62?visit.message.substring(0,62)+'...':visit.message }}
-                  </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="Actions">
-                  <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-                  <mat-cell *matCellDef="let visit">
-                    <div>
-                      <mat-menu #dailyPerformanceMenu="matMenu">
-                        <a mat-menu-item (click)="viewAlert(visit.alertId)">
-                          <mat-icon matListIcon>visibility</mat-icon>
-                          <span i18n>View Alert Detail</span>
-                        </a>
-                        <a mat-menu-item (click)="deleteAlert(visit.alertId,visit.title)">
-                          <mat-icon matListIcon>delete_outline</mat-icon>
-                          <span i18n>Delete Alert</span>
-                        </a>
-                      </mat-menu>
-                      <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                        <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                      </button>
-                    </div>
-                  </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-              </mat-table>
+                  <ng-container matColumnDef="alertName">
+                    <mat-header-cell *matHeaderCellDef>Alert Name</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="alertImage">
+                    <mat-header-cell *matHeaderCellDef>Alert Image</mat-header-cell>
+                    <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
+                        src="{{visit.alertImage}}" alt="photo"></mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isRead">
+                    <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
+                    <mat-cell class="isRead" *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isDeliver">
+                    <mat-header-cell *matHeaderCellDef>Is Delivered</mat-header-cell>
+                    <mat-cell class="isDeliver" *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="message">
+                    <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      {{ visit.message.length>62?visit.message.substring(0,62)+'...':visit.message }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let visit">
+                      <div>
+                        <mat-menu #dailyPerformanceMenu="matMenu">
+                          <a mat-menu-item (click)="viewAlert(visit.alertId)">
+                            <mat-icon matListIcon>visibility</mat-icon>
+                            <span i18n>View Alert Detail</span>
+                          </a>
+                          <a mat-menu-item (click)="deleteAlert(visit.alertId,visit.title)">
+                            <mat-icon matListIcon>delete_outline</mat-icon>
+                            <span i18n>Delete Alert</span>
+                          </a>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                          <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                        </button>
+                      </div>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+              </ng-template>
               <div>
                 <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
                   (page)="pageChange($event)">

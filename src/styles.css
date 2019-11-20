@@ -1104,9 +1104,21 @@ body {
   background: #555;
 }
 
-.column-center{
+.column-center {
   display: flex;
   justify-content: center;
+}
+
+.no-record-found-container {
+  width: 100%;
+  padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.no-record-found-container p {
+  font-size: 22px;
+  color: grey;
 }
 
 /********************************************** end style**************************************************************/

@@ -26,6 +26,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   manufacturerData: any = {};
   totalAlerts: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
 
 
 
@@ -69,10 +70,14 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   getAllDocumates(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-
     this.documateService.getAllDocumates(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.document) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.paidDataSource = res.document;
         this.totalDocumate = res.totalCount;
         this.pageNumber = res.currentPage;
