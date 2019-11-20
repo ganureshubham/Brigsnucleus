@@ -34,6 +34,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   parentdata: any;
   result: string = '';
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
 
   displayedColumns: string[] = ['assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
   // 'assetId',
@@ -88,6 +89,12 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       this.spinnerService.setSpinnerVisibility(false);
 
       if (res.asset) {
+
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.dataSource = res.asset;
         this.parentdata = res.asset;
         this.pageNumber = res.currentPage;

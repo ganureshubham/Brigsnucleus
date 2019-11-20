@@ -17,7 +17,14 @@
       </div>
       <div>
         <div class="fl total">
-          <p><b>{{checklistPrimaryInfo.totalQuestions}}</b><span>Total Questions</span></p>
+          <p><span>Total Questions</span> &nbsp; <b>{{checklistPrimaryInfo.totalQuestions}}</b></p>
+        </div>
+        <div class="fl total">
+          <p><span>Checking Duration</span> &nbsp;
+            <b>{{checklistPrimaryInfo.checkingDuration +' '+ checklistPrimaryInfo.durationType}}</b></p>
+        </div>
+        <div class="fl total">
+          <p><span>Category</span> &nbsp;<b>{{checklistPrimaryInfo.categoryTitle}}</b></p>
         </div>
       </div>
       <div class="cl"></div>

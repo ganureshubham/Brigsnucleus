@@ -902,7 +902,7 @@ body {
 }
 
 .user_guid {
-  height: 280px !important;
+  /* height: 280px !important; */
   overflow-x: auto;
 }
 
@@ -1116,6 +1116,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .no-record-found-container p {
   font-size: 22px;
   color: grey;
