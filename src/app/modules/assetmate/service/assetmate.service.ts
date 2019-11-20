@@ -157,9 +157,16 @@ export class AssetmateService {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addQuestion`, checklistQuestion);
   }
 
+  updateChecklistQuestion(checklistQuestion) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `questions/updateQuestion`, checklistQuestion);
+  }
+
   linkChecklistQuestion(questionOptionId, checklistQuestion) {
-    console.log('linkChecklistQuestion: ' + questionOptionId)
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addLinkQuestion/${questionOptionId}`, checklistQuestion);
+  }
+
+  deleteChecklistQuestionOption(questionOptionId) {
+    return this.httpClient.delete<any>(ConfigurationService.baseUrl + `questions/deleteQuestionOption/${questionOptionId}`);
   }
 
   getQuestionDetails(checklistQuestionId) {

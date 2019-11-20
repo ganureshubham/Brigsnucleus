@@ -86,7 +86,7 @@
       </mat-step>
 
       <mat-step>
-        <ng-template matStepLabel>Review & Submit</ng-template>
+        <ng-template matStepLabel>Review & Update</ng-template>
         <div class="stepper-step-container">
 
           <div class="review-question-item">
@@ -125,7 +125,6 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
           <button mat-button (click)="updateQuestion()">Save & Update</button>
         </div>
       </mat-step>

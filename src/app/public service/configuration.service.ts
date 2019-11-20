@@ -7,9 +7,9 @@ export class ConfigurationService {
 
   constructor() { }
 
-  // public static baseUrl = `http://13.127.6.128:8085/`;  //server side
+  // public static baseUrl = `http://15.206.181.222:8085/`;  //server side
 
-  public static baseUrl = `http://192.168.0.115:4001/`;  //local-Ajay
+  public static baseUrl = `http://192.168.0.115:7001/`;  //local-Ajay
 
   // public static baseUrl = `http://192.168.0.166:8082/`;  //local-Harshad
 
