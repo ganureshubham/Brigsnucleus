@@ -71,7 +71,7 @@
               <input formControlName="{{option.optionControl}}" matInput placeholder="Option" required>
               <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn"
                 (click)="onQuestionOptionDelete(i)">
-                <mat-icon matSuffix>cancel</mat-icon>
+                <mat-icon matTooltip="Delete option" matSuffix>delete</mat-icon>
               </button>
               <mat-error>Please describe option (minimum 2 character)</mat-error>
             </mat-form-field>

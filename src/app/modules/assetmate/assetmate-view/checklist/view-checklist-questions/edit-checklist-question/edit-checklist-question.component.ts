@@ -241,10 +241,16 @@ export class EditChecklistQuestionComponent implements OnInit {
     if (!isNewlyAddedLocalOption) {
       this.spinnerService.setSpinnerVisibility(true);
       this.assetmateService.deleteChecklistQuestionOption(
-        this.questionDetails.Question.questionOptions[optionIndex].questionOptionId
+        this.questionDetails.Question.questionOptions[optionIndex + 1].questionOptionId
       ).subscribe((resp: any) => {
+
+        if (resp.affectedRows && resp.affectedRows > 0) {
+          this.questionDetails.Question.questionOptions.splice(optionIndex + 1, 1);
+        }
+
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(resp.message);
+
       }, error => {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar('Something went wrong..!!');
@@ -317,7 +323,6 @@ export class EditChecklistQuestionComponent implements OnInit {
     this.assetmateService.updateChecklistQuestion(checklistQuestion).subscribe(resp => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(resp.message);
-      this.assetmateService.setBadgeUpdateAction('questionList', true);
       this.location.back();
     }, error => {
       this.spinnerService.setSpinnerVisibility(false);
