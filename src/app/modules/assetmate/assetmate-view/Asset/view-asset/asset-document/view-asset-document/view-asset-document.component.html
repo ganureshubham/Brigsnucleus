@@ -28,7 +28,9 @@
         </ng-container>
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef>Document Description</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.description }}</mat-cell>
+          <mat-cell *matCellDef="let visit">
+            {{ visit.description.length>42?visit.description.substring(0,42)+'...':visit.description }}
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Actions">
           <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
