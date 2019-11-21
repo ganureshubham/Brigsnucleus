@@ -64,7 +64,7 @@
                 <input formControlName="option0" matInput placeholder="Option" required>
                 <mat-error>Please describe option (minimum 2 character)</mat-error>
               </mat-form-field>
-              <mat-checkbox formControlName="checkbox0">Is Danger</mat-checkbox>
+              <mat-checkbox formControlName="checkbox0">Is Critical</mat-checkbox>
             </div>
 
             <div *ngFor="let option of arrOption; let i=index">
@@ -76,7 +76,7 @@
                 </button>
                 <mat-error>Please describe option (minimum 2 character)</mat-error>
               </mat-form-field>
-              <mat-checkbox formControlName="{{option.checkboxControl}}">Is Danger</mat-checkbox>
+              <mat-checkbox formControlName="{{option.checkboxControl}}">Is Critical</mat-checkbox>
             </div>
 
           </div>

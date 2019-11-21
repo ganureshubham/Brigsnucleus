@@ -1,12 +1,6 @@
-<div *ngIf="!showFirst" class="innerbody table">
+<div *ngIf="!showFirst" class="table">
   <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <div class="table_header">
-        <div class="fl">
-          <p class="tabel_heading mat-subheading-2">Done Checklist</p>
-        </div>
-
-      </div>
       <div class="cl"></div>
       <mat-table [dataSource]="paidDataSource">
         <!-- <ng-container matColumnDef="doneChecklistId">

@@ -1,8 +1,7 @@
-
-<div *ngIf="!showFirst" class="innerbody table">
+<div *ngIf="!showFirst" class="table">
   <!-- <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
     <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70"> -->
-        <!-- <div class="table_header">
+  <!-- <div class="table_header">
           <div class="fl">
             <p class="tabel_heading mat-subheading-2">Done Checklist</p>
           </div>
@@ -10,25 +9,36 @@
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
         </div> -->
-        <div class="cl"></div>
-        <mat-table [dataSource]="paidDataSource">
-          <ng-container matColumnDef="questionIdFK">
-            <mat-header-cell *matHeaderCellDef>Question Id</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.questionIdFK }}</mat-cell> 
-          </ng-container>
-          <ng-container matColumnDef="questionType">
-            <mat-header-cell *matHeaderCellDef>Question Type</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.questionType }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="answer">
-              <mat-header-cell *matHeaderCellDef>Answers</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.answer }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="isDanger">
-                <mat-header-cell *matHeaderCellDef>Is Danger</mat-header-cell>
-                <mat-cell *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
-              </ng-container>
-          <!-- <ng-container matColumnDef="Actions">
+  <div class="title-row">
+    <div class="width_75">
+      <p class="title_header mat-subheading-2 tal">Checklist Questions</p>
+    </div>
+    <div *ngIf="!showFirst" class="example-button-row btn_style bg_white_grey">
+      <button mat-button (click)="backToList()">
+        <mat-icon>list</mat-icon> Checklists
+      </button>
+    </div>
+  </div>
+
+  <div class="cl"></div>
+  <mat-table [dataSource]="paidDataSource">
+    <!-- <ng-container matColumnDef="questionIdFK">
+      <mat-header-cell *matHeaderCellDef>Question Id</mat-header-cell>
+      <mat-cell *matCellDef="let visit">{{ visit.questionIdFK }}</mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="question">
+      <mat-header-cell *matHeaderCellDef>Question</mat-header-cell>
+      <mat-cell *matCellDef="let visit">{{ visit.question }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="answer">
+      <mat-header-cell *matHeaderCellDef>Answers</mat-header-cell>
+      <mat-cell *matCellDef="let visit">{{ visit.answer }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="isDanger">
+      <mat-header-cell *matHeaderCellDef>Is Critical</mat-header-cell>
+      <mat-cell *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="Actions">
             <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell> 
             <mat-cell *matCellDef="let visit">
               <div>
@@ -44,13 +54,16 @@
               </div>
             </mat-cell>
           </ng-container> -->
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <div>
-          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-          </mat-paginator>
-        </div>
-    <!-- </div>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div>
+    <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+    </mat-paginator>
+  </div>
+  <!-- </div>
   </div> -->
+
 </div>
+
+<app-view-history *ngIf="showFirst"></app-view-history>

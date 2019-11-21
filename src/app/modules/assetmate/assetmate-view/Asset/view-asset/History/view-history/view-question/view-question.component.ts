@@ -21,11 +21,12 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   roleData: any = {};
-  showFirst:boolean=false;
+  showFirst: boolean = false;
 
 
 
-  displayedColumns: string[] = ['questionIdFK', 'questionType','answer','isDanger']; 
+  displayedColumns: string[] = ['question', 'answer', 'isDanger'];
+  // 'questionIdFK', 'questionType'
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -37,7 +38,7 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private assetmateService:AssetmateService,
+    private assetmateService: AssetmateService,
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService
@@ -53,16 +54,16 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") { 
-        console.log('donechecklistid',res);
-        this.checklistId=res;
-        this.getQuestAnsList(this.checklistId,this.pageNumber);
-        
-       // this.AssetId=res;
-       // this.getAssetHistory(this.AssetId,this.pageNumber);
+      if (res != null && res != "null" && res != "null") {
+        console.log('donechecklistid', res);
+        this.checklistId = res;
+        this.getQuestAnsList(this.checklistId, this.pageNumber);
+
+        // this.AssetId=res;
+        // this.getAssetHistory(this.AssetId,this.pageNumber);
       }
     })
-    
+
   }
 
 
@@ -73,12 +74,12 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
 
 
 
-  getQuestAnsList(doneChecklistIdFK:number,pageNo: any) {
+  getQuestAnsList(doneChecklistIdFK: number, pageNo: any) {
     // this.spinner.show();
     // setTimeout(() => {
     //   this.spinner.hide();
     // }, 1000);
-    this.assetmateService.getQuestAnsList(doneChecklistIdFK,pageNo).subscribe(res => { 
+    this.assetmateService.getQuestAnsList(doneChecklistIdFK, pageNo).subscribe(res => {
       this.paidDataSource = res.questionAnswer;
       this.pageNumber = res.currentPage;
       this.totalCount = res.totalCount;
@@ -98,20 +99,23 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getQuestAnsList(this.checklistId,this.page); 
+    this.getQuestAnsList(this.checklistId, this.page);
   }
 
 
-  
- 
+
+
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   viewQuestion(doneChecklistId: number) {
     this.dataService.changeData(doneChecklistId);
-    this.router.navigate(['/assetmate/view-question']); 
+    this.router.navigate(['/assetmate/view-question']);
 
   }
 
+  backToList() {
+    this.showFirst = !this.showFirst;
+  }
 
 }
 
