@@ -80,9 +80,9 @@
           <div class="savebtn">
             <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
               [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
-              [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Documate</button>
+              [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
             <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-              [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Documate</button>
+              [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Document</button>
             <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" class="btn-cancel"
               [disabled]="!documentform.valid" (click)="backToList()">Cancel</button>
           </div>

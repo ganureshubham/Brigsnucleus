@@ -42,6 +42,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   alertid: any;
   totalDocumate: any;
   documentId: number;
+  nonzero: boolean = false;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -159,17 +160,24 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Search Documate *******************************************************************/
 
   searchDocumate(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.documateService.searchDocumate(keyword).subscribe(res => {
-        this.paidDataSource = res.data;
+        if (res && res.data) {
+          this.paidDataSource = res.data;
+        }
       },
         error => {
-          this.showSnackBar("Something went wrong..!!");
+          console.log(error.errors.msg);
         })
     } else {
-      this.getAllDocumates(this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllDocumates(this.pageNumber);
+      }
     }
   }
+
 
   /*********************************************************** Add  Documate *******************************************************************/
 

@@ -36,7 +36,7 @@ export class AddDocumateComponent implements OnInit {
         this.documentData = res;
         this.filepath = res.filepath.split('/').pop().split('?')[0];
         this.isEdited = true;
-        this.formTitle = `Edit Documate`;
+        this.formTitle = `Edit Document`;
 
       } else {
         this.documentData.documentTypeIdFK = 3;
@@ -55,7 +55,6 @@ export class AddDocumateComponent implements OnInit {
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
-
       })
   }
 

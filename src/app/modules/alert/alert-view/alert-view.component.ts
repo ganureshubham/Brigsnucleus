@@ -39,6 +39,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   alertid: any;
   alertId: number;
+  nonzero: boolean = false;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -146,19 +147,26 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Search Alerts *******************************************************************/
+
   searchAlert(keyword) {
-
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.alertService.searchAlert(keyword).subscribe(res => {
-        this.paidDataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
-
+        if (res && res.data) {
+          this.paidDataSource = res.data;
+        }
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAlertList(this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAlertList(this.pageNumber);
+      }
     }
   }
+
 
 
 
