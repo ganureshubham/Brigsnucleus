@@ -1,8 +1,20 @@
-.category_list {
-    margin: 30px 0px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.category-card-tile{
+    padding:15px 0px;
+}
+
+.category-card{
+    width:230px;
+}
+
+.category_counter p span,
+.innerpage_title .total span,
+.listing p span {
+  color: #646464;
+}
+
+.title_header {
+    font-size: 16px;
+    text-transform: capitalize;
 }
 
 .category_counter {
@@ -10,27 +22,12 @@
     margin-top: 15px;
 }
 
-.category_list .title_header {
-    font-size: 16px;
-    text-transform: capitalize;
-}
-
-.category_list .mat-card {
-    width: 262px;
-    margin: 14px 8px;
-}
-
-.category_list .mat-card:last-child {
-    margin-right: 0px;
-}
-
-.category_list .mat-card .category_counter p b {
+.category_counter p b {
     min-width: 10px;
-    /* padding-right: 5px; */
     width: 25px;
     display: inline-block;
 }
 
-.category_list .mat-card .category_counter p {
+.category_counter p {
     margin: 7px 0px;
 }

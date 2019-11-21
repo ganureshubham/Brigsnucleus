@@ -1,20 +1,15 @@
-<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner> -->
 <div *ngIf="!showFirst" class="table">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <div class="flex_container padding_box align_center">
-        <div class="width_50">
-          <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-            <mat-icon>add</mat-icon>Add Asset
-          </button>
-        </div>
-        <div class="width_50 dfe">
-          <form class="example-form filter_search">
-            <mat-form-field class="example-full-width">
-              <input matInput (keyup)="searchAsset($event.target.value)" placeholder="Search">
-            </mat-form-field>
-          </form>
-        </div>
+  <div>
+    <div class="portal-widget">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+        <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+          <mat-icon>add</mat-icon>Add Asset
+        </button>
+        <form class="example-form filter_search" fxFlex.xs="100">
+          <mat-form-field class="example-full-width" fxFlex.xs="100">
+            <input matInput (keyup)="searchAsset($event.target.value)" placeholder="Search">
+          </mat-form-field>
+        </form>
       </div>
       <div class="cl"></div>
       <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
@@ -22,43 +17,37 @@
       </div>
       <ng-template #recordFound>
         <mat-table [dataSource]="dataSource">
-          <!-- <ng-container matColumnDef="assetId">
-          <mat-header-cell *matHeaderCellDef>Asset Id</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.assetId }}</mat-cell>
-        </ng-container> -->
           <ng-container matColumnDef="assetCodeImage">
-            <mat-header-cell *matHeaderCellDef i18n>Asset Code Image </mat-header-cell>
-            <!-- <mat-cell *matCellDef="let visit"><img (click)="openDialog(visit.assetCodeImage)" class="imgwrapper rounded img-responsive"
-                src="{{visit.assetCodeImage}}" alt="photo"></mat-cell> -->
-            <mat-cell class="imgwrapper rounded img-responsive" *matCellDef="let visit">
+            <mat-header-cell fxHide.xs *matHeaderCellDef i18n>Asset Code Image </mat-header-cell>
+            <mat-cell fxHide.xs class="imgwrapper rounded img-responsive" *matCellDef="let visit">
               <qrcode (click)="openDialog(visit.assetCode)" [qrdata]="visit.assetCode" [size]="60" [level]="'M'">
               </qrcode>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="assetCode">
-            <mat-header-cell *matHeaderCellDef i18n>Asset Code </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
+            <mat-header-cell fxHide.xs *matHeaderCellDef i18n>Asset Code </mat-header-cell>
+            <mat-cell fxHide.xs *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="assetImage">
-            <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
-            <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive" src="{{visit.assetImage}}"
-                alt="photo"></mat-cell>
+            <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Image</mat-header-cell>
+            <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit"><img
+                class="imgwrapper rounded img-responsive" src="{{visit.assetImage}}" alt="photo"></mat-cell>
           </ng-container>
           <ng-container matColumnDef="assetTitle">
-            <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
+            <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
+            <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="categoryName">
-            <mat-header-cell *matHeaderCellDef>Asset Category</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.categoryName }}</mat-cell>
+            <mat-header-cell fxHide.xs *matHeaderCellDef>Asset Category</mat-header-cell>
+            <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.categoryName }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="modelNumber">
-            <mat-header-cell *matHeaderCellDef>Model Number</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
+            <mat-header-cell fxHide.xs *matHeaderCellDef>Model Number</mat-header-cell>
+            <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-            <mat-cell *matCellDef="let visit">
+            <mat-header-cell fxLayoutAlign.xs="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+            <mat-cell fxLayoutAlign.xs="end center" *matCellDef="let visit">
               <div>
                 <mat-menu #dailyPerformanceMenu="matMenu">
                   <a mat-menu-item (click)="viewAsset(visit.assetId)">

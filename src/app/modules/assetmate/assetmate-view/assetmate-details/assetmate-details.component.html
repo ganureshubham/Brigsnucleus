@@ -1,38 +1,6 @@
-<div class="innerpage assets_view padding_container flex_container margin_auto">
-    <app-filter-category></app-filter-category>
-    <!-- <mat-card class="filter width_15 mar-29">
-        <h4 class="title_header mat-subheading-2 ">Categories</h4>
-        <form class="example-form filter_search">
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Search" value="Fire Extinguisher">
-            </mat-form-field>
-        </form>
-        <div class="mar-29">
-            <mat-tree [dataSource]="filterdataSource" [treeControl]="treeControl">
-            
-                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-                    <button mat-icon-button disabled></button> {{node.item}}
-                </mat-tree-node>
-
-                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-                    <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" (click)="loadChildren(node)"
-                        matTreeNodeToggle>
-                        <mat-icon class="mat-icon-rtl-mirror">
-                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                        </mat-icon>
-                    </button> {{node.item}}
-                </mat-tree-node>
-
-                <mat-tree-node *matTreeNodeDef="let node; when: isLoadMore">
-                    <button mat-button (click)="loadMore(node.loadMoreParentItem)">
-                        Load more...
-                    </button>
-                </mat-tree-node>
-            </mat-tree>
-        </div>
-    </mat-card> -->
-    <mat-card class="width_80 right_side_box">
-        <!-- start_title -->
+<div fxLayout="row" class="margin_auto" fxLayoutAlign="space-evenly start">
+    <app-filter-category fxFlex="15" fxHide.lt-md="true"></app-filter-category>
+    <mat-card fxFlex="80" fxFlex.lt-md="95">
         <div class="innerpage_title">
             <div class="header_title flex_container">
                 <div>
@@ -44,11 +12,6 @@
                 <div class="width_75">
                     <p class="title_header mat-subheading-2 tal">{{category.title}}</p>
                 </div>
-                <!-- <div class="dfe" style="width:19.9%">
-                    <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-                            <mat-icon>add</mat-icon>Add Asset
-                        </button>
-                </div> -->
             </div>
             <div>
                 <div class="fl total">
@@ -63,280 +26,70 @@
                 <div class="fl total">
                     <p><b>{{category.totalAssignedUsers}}</b><span>Assigned Users</span></p>
                 </div>
-                <!-- <div class="fl total">
-                        <p><b>2</b><span>Total Asset</span></p> 
-                    </div> -->
             </div>
             <div class="cl"></div>
         </div>
-        <!-- end_title -->
         <mat-tab-group class="" [selectedIndex]="getSelectedTabIndex()">
-            <!--start_Assets-->
             <mat-tab label="Assets">
                 <app-view-asset></app-view-asset>
-
             </mat-tab>
-            <!--start_Checklist-->
             <mat-tab label="Checklist">
                 <app-view-checklist></app-view-checklist>
-                <!-- <div class="flex_container padding_box align_center">
-                    
-                    <div class="width_50 dfe">
-                        <form class="example-form filter_search">
-                            <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Search" value="Bsnl">
-                            </mat-form-field>
-                        </form>
-                    </div>
-                </div>   -->
-                <!-- <div class="flex_container">
-                    
-                    <div class="fl width_20 padding_box"> 
-                           < -->
-                <!-- <mat-card>
-                            <mat-list role="list">
-                                <form class="example-form" class="listing_space add_department">
-                                    <mat-list role="list">
-                                        <mat-list-item role="listitem">
-                                            <p class="title_header mat-subheading-2">Add Checklist</p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem">
-                                            <mat-form-field>
-                                                <mat-label>Select Category</mat-label>
-                                                <mat-select>
-                                                    <mat-option *ngFor="let food of foods" [value]="food.value">
-                                                        {{food.viewValue}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field>
-                                                <input matInput placeholder="Checklist Title *">
-                                            </mat-form-field>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem">
-                                            <button mat-raised-button class="bg_primary text_white btn">Save</button>
-                                            <button mat-button class="fr btn">Cancel</button>
-                                        </mat-list-item>
-                                    </mat-list>
-                                </form>
-                            </mat-list>
-                        </mat-card> -->
-                <!-- </div> 
-                    <div class="fl width_77 padding_box overflow_box checklist_list"> -->
-
-                <!-- <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card> -->
-                <!-- <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button> 
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card>
-                        <mat-card>
-                            <div class="flex_container listing">
-                                <div class="checklist_name width_40">
-                                    <h4>Checklist1</h4>
-                                </div>
-                                <div class="width_30">
-                                    <p><b>2</b><span>Total Assets</span></p>
-                                </div>
-                                <div class="btns width_30 dfe">
-                                    <button mat-button>View</button>
-                                    <button mat-button>Edit</button>
-                                    <button mat-button>Delete</button>
-                                </div>
-                            </div>
-                        </mat-card> -->
-                <!-- </div>
-                </div> -->
             </mat-tab>
-            <!--start_documents-->
             <mat-tab label="Documents">
                 <app-view-category-document></app-view-category-document>
-                <!-- <div class="flex_container padding_box align_center">
-                    <div class="width_50">
-                        <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-                            <mat-icon>add</mat-icon>Add Document
-                        </button>
-                    </div>
-                    <div class="width_50 dfe">
-                        <form class="example-form filter_search">
-                            <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Search" value="Asset">
-                            </mat-form-field>
-                        </form>
-                    </div>
-                </div> -->
-                <!-- <div class="table">
-                    <mat-table [dataSource]="paidDataSource">
-                        <ng-container matColumnDef="assetId">
-                            <mat-header-cell *matHeaderCellDef>Document Id</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">{{ visit.assetId }}</mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="assetCodeImage">
-                            <mat-header-cell *matHeaderCellDef i18n>Document Title </mat-header-cell>
-                            <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                                    src="{{visit.assetCodeImage}}" alt="photo"></mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="assetCode">
-                            <mat-header-cell *matHeaderCellDef i18n>Document Description</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="assetImage">
-                            <mat-header-cell *matHeaderCellDef>Images</mat-header-cell>
-                            <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                                    src="{{visit.assetImage}}" alt="photo"></mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="assetTitle">
-                            <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="categoryName">
-                            <mat-header-cell *matHeaderCellDef>Asset Category</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">{{ visit.categoryName }}</mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="modelNumber">
-                            <mat-header-cell *matHeaderCellDef>Model Number</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
-                        </ng-container>
-                        <ng-container matColumnDef="Actions">
-                            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-                            <mat-cell *matCellDef="let visit">
-                                <div>
-                                    <mat-menu #dailyPerformanceMenu="matMenu">
-                                        <a mat-menu-item (click)="viewAsset(visit.assetId)">
-                                            <mat-icon matListIcon>visibility</mat-icon>
-                                            <span i18n>View Asset Detail</span>
-                                        </a>
-                                        <a mat-menu-item (click)="editAsset(visit.assetId)">
-                                            <mat-icon matListIcon>edit</mat-icon>
-                                            <span i18n>Edit Asset</span>
-                                        </a>
-                                        <a mat-menu-item (click)="deleteAsset(visit.assetId)">
-                                            <mat-icon matListIcon>delete_outline</mat-icon>
-                                            <span i18n>Delete Asset</span>
-                                        </a>
-                                    </mat-menu>
-                                    <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                                        <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                                    </button>
-                                </div>
-                            </mat-cell>
-                        </ng-container>
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                    </mat-table>
-                    <div>
-                        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
-                            (page)="pageEvent = pageChange($event)">
-                        </mat-paginator>
-                    </div>
-
-
-                </div> -->
             </mat-tab>
-            <!--start_assigned_user-->
             <mat-tab label="Assigned Users">
                 <app-view-assign-user></app-view-assign-user>
             </mat-tab>
-
         </mat-tab-group>
     </mat-card>
 </div>
+
+<!-- <div class="innerpage assets_view padding_container flex_container margin_auto">
+    <app-filter-category fxHide.lt-md="true"></app-filter-category>
+    <mat-card class="width_80 right_side_box">
+        <div class="innerpage_title">
+            <div class="header_title flex_container">
+                <div>
+                    <button mat-button (click)="backToList()"
+                        class="back btn_style round_squer bg_pink_navy text_white">
+                        <mat-icon>keyboard_backspace</mat-icon>
+                    </button>
+                </div>
+                <div class="width_75">
+                    <p class="title_header mat-subheading-2 tal">{{category.title}}</p>
+                </div>
+            </div>
+            <div>
+                <div class="fl total">
+                    <p><b>{{category.totalAssets}}</b><span>Total Asset</span></p>
+                </div>
+                <div class="fl total">
+                    <p><b>{{category.totalChecklists}}</b><span>Checklist</span></p>
+                </div>
+                <div class="fl total">
+                    <p><b>{{category.totalDocuments}}</b><span>Documents</span></p>
+                </div>
+                <div class="fl total">
+                    <p><b>{{category.totalAssignedUsers}}</b><span>Assigned Users</span></p>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+        <mat-tab-group class="" [selectedIndex]="getSelectedTabIndex()">
+            <mat-tab label="Assets">
+                <app-view-asset></app-view-asset>
+            </mat-tab>
+            <mat-tab label="Checklist">
+                <app-view-checklist></app-view-checklist>
+            </mat-tab>
+            <mat-tab label="Documents">
+                <app-view-category-document></app-view-category-document>
+            </mat-tab>
+            <mat-tab label="Assigned Users">
+                <app-view-assign-user></app-view-assign-user>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+</div> -->
