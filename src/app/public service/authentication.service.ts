@@ -30,6 +30,8 @@ export class AuthenticationService {
     private spinner: NgxSpinnerService
   ) { }
 
+  /****************************************************** Login Request **************************************************************************/
+
   login(body) {
     return this._http.post<LoginResponse>(this.loginURL + `authorization/login/`, body);
   }

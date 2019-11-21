@@ -8,3 +8,16 @@
 .isDeliver {
   color: #6c63ff;
 }
+
+.example-element-row:hover,
+.example-element-row:focus {
+  /* background: #777; */
+  background-color: rgba(0, 0, 0, 0.041);
+  cursor: pointer;
+}
+
+.imgwrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

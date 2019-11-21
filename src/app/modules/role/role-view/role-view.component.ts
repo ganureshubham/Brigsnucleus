@@ -108,7 +108,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   addRole() {
     let selectedAsset = null;
     this.dataService.changeData(selectedAsset);
-    this.router.navigate(['/user-role/add-user-role'])
+    this.router.navigate(['/user-role/add-user-role']);
   }
 
   /*********************************************************** Delete Particular Role *******************************************************************/
