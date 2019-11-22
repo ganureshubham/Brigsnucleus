@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DocumateRoutes } from './documate-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [DocumateViewComponent, AddDocumateComponent],
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild(DocumateRoutes),
     MaterialModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ]
 })
 export class DocumateModule { } 
