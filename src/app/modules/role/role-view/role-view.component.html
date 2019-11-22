@@ -1,22 +1,23 @@
-<div class="innerbody table">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <mat-card>
-        <div class="table_header">
-          <div class="fl">
+<div fxLayout="column" class="innerbody table">
+
+  <div class=" margin_auto padding_container">
+    <div class="portal-widget">
+      <mat-card fxFlex="100" fxFlex.lt-md="95">
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="center center" class="table_header">
+          <div fxLayoutAlign="center center" fxFlex.xs="100" class="fl">
             <p class="tabel_heading mat-subheading-2">User Roles List</p>
           </div>
-          <div *ngIf="loading">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-          </div>
-          <div class="fr">
-            <div class="example-button-row btn_style">
-              <button mat-button (click)="addRole()" class="bg_white_grey">
+          <div fxFlex.xs="100" class="fr">
+            <div fxFlex.xs="100" class="example-button-row btn_style">
+              <button fxFlex.xs="100" mat-button (click)="addRole()" class="bg_white_grey">
                 <mat-icon>add</mat-icon>Add User Role
               </button>
             </div>
           </div>
         </div>
+
+
         <div class="cl"></div>
         <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
           <p>No Record Found</p>
