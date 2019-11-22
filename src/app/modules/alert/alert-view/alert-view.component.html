@@ -1,5 +1,6 @@
-<div class="innerpage assets_view padding_container flex_container margin_auto">
-  <mat-card class="width_80 right_side_box">
+<div fxLayout="row" fxFlex="100" fxLayoutAlign="space-evenly start"
+  class="innerpage assets_view padding_container flex_container margin_auto">
+  <mat-card fxFlex="100" fxFlex.lt-md="95" class="width_80 right_side_box">
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div class="width_75">
@@ -15,15 +16,15 @@
     </div>
     <mat-tab-group class="">
       <mat-tab label="Alerts">
-        <div class="table">
-          <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-            <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-              <div class="flex_container padding_box align_center">
+        <div>
+          <div fxLayout="column">
+            <div>
+              <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
                 <div class="width_50">
                 </div>
-                <div class="width_50 dfe">
-                  <form class="example-form filter_search">
-                    <mat-form-field class="example-full-width">
+                <div fxFlex.xs="100">
+                  <form fxFlex.xs="100" class="filter_search">
+                    <mat-form-field fxFlex.xs="100">
                       <input matInput (keyup)="searchAlert($event.target.value)" placeholder="Search">
                     </mat-form-field>
                   </form>
@@ -46,35 +47,35 @@
                   <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>
                 </ng-container> -->
                   <ng-container matColumnDef="alertName">
-                    <mat-header-cell *matHeaderCellDef>Alert Name</mat-header-cell>
-                    <mat-cell *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Alert Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="title">
-                    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-                    <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="alertImage">
-                    <mat-header-cell *matHeaderCellDef>Alert Image</mat-header-cell>
-                    <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Alert Image</mat-header-cell>
+                    <mat-cell fxHide.xs *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
                         src="{{visit.alertImage}}" alt="photo"></mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="isRead">
-                    <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
-                    <mat-cell class="isRead" *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Is Read</mat-header-cell>
+                    <mat-cell fxHide.xs class="isRead" *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="isDeliver">
-                    <mat-header-cell *matHeaderCellDef>Is Delivered</mat-header-cell>
-                    <mat-cell class="isDeliver" *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Is Delivered</mat-header-cell>
+                    <mat-cell fxHide.xs class="isDeliver" *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="message">
-                    <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
-                    <mat-cell *matCellDef="let visit">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Message</mat-header-cell>
+                    <mat-cell fxHide.xs *matCellDef="let visit">
                       {{ visit.message.length>62?visit.message.substring(0,62)+'...':visit.message }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">
-                    <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-                    <mat-cell (click)="$event.stopPropagation()" *matCellDef="let visit">
+                    <mat-header-cell fxLayoutAlign.xs="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">
                       <div>
                         <mat-menu #dailyPerformanceMenu="matMenu">
                           <a mat-menu-item (click)="viewAlert(visit.alertId)">
