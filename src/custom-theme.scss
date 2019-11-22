@@ -2,9 +2,8 @@
 
 @include mat-core();
 
-$custom-theme-primary: mat-palette($mat-deep-purple);
-$custom-theme-accent: mat-palette($mat-deep-purple, A200, A100, A400);
-
+$custom-theme-primary: mat-palette($mat-purple, 600, 400, 700);
+$custom-theme-accent: mat-palette($mat-purple, A200, A100, A400);
 $custom-theme-warn: mat-palette($mat-red);
 
 $custom-theme: mat-light-theme(

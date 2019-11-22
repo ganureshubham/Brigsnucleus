@@ -18,6 +18,7 @@ import { MaterialFileInputModule, NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './public service/auth-guard.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 import {
   MatAutocompleteModule,
@@ -124,6 +125,7 @@ export class MaterialModule { }
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+    FlexLayoutModule
   ],
   exports: [MaterialModule],
   providers: [

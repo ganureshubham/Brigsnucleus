@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../public service/authentication.service';
 import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +12,20 @@ export class NavbarComponent implements OnInit {
   displayName: String = '';
   displayOrg: String = '';
 
+  mobileQuery: MediaQueryList;
 
+  private _mobileQueryListener: () => void;
 
-
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit() {
     this.users();
@@ -35,6 +46,10 @@ export class NavbarComponent implements OnInit {
       this.displayName = name.data.firstName + ' ' + name.data.lastName;
       this.displayOrg = name.data.organizationName;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
 }

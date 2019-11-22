@@ -1,0 +1,119 @@
+.toolbar-row-1{
+    background-color: #fff;
+    padding: 14px 0;
+}
+
+.toolbar-row-1-mobile{
+  background-color: #fff;
+  padding: 14px 0;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,.12), inset 0 -1px 0 0 #dadce0;
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.toolbar-menu{
+    color: #8b8b8b;
+}
+
+.mat-button {
+    font-size: 14px;
+}
+
+.admin_profile {
+    margin: 0px 15px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px #00000042;
+  }
+
+  .admin_profile img {
+    width: 100%;
+  }
+
+.admin_name {
+    font-size: 13px;
+    padding: 0px;
+    line-height: 22px;
+    cursor: default;
+  }
+  
+  .admin_name b {
+    color: #0f0412;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .toolbar-row-2 .mat-button {
+    padding: 13px 24px;
+    border-radius: 0px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .toolbar-row-2 .mat-button:hover {
+    background: #3f104b;
+  }
+  
+  .toolbar-row-2 .mat-icon {
+    padding-right: 7px;
+  } 
+
+  .toolbar-row-2 .mat-button {
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 400;
+  }
+
+  .is-active{
+    background: #6a1c7e;
+  }
+
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .example-is-mobile .example-toolbar {
+    position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+  }
+  
+  h1.example-app-name {
+    margin-left: 8px;
+  }
+  
+  .example-sidenav-container {
+    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+    flex: 1;
+    background: url("../../../assets/img/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  .example-is-mobile .example-sidenav-container {
+    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+       `<body>` to be our scrolling element for mobile layouts. */
+    flex: 1 0 auto;
+  }
+
+  .example-sidenav{
+    width: 70%;
+  }
+
+  .mat-expansion-panel-header{
+    padding:0px 15px 0px 0px;
+  }
+  
+  

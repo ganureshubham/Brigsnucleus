@@ -1,12 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../service/assetmate.service';
 import { DataSharingService } from '../../../public service/data-sharing.service';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-assetmate-view',
@@ -17,15 +15,34 @@ export class AssetmateViewComponent implements OnInit {
   category: any = [];
   mSearchCategory: any = [];
 
-  constructor(private assetmateService: AssetmateService,
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
+  tabQuery: MediaQueryList;
+  screen_1366x768Query: MediaQueryList;
+  screen_1920x1080Query: MediaQueryList;
+
+  constructor(changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private assetmateService: AssetmateService,
     private router: Router,
     public dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService,
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.tabQuery = media.matchMedia('(max-width: 768px)');
+    this.screen_1366x768Query = media.matchMedia('(max-width: 1366px)');
+    this.screen_1920x1080Query = media.matchMedia('(max-width: 1920px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit() {
     this.getRootCategoryList();
+  }
+
+  mediaQueryListener = () => {
+    console.log('mediaQueryListener');
   }
 
   getRootCategoryList() {
@@ -64,7 +81,24 @@ export class AssetmateViewComponent implements OnInit {
   }
 
 
-
+  getColumnCount() {
+    //Mobile Screen
+    if (this.mobileQuery.matches) {
+      return 1;
+    }
+    //Tablet screen
+    else if (this.tabQuery.matches) {
+      return 2;
+    }
+    //1366 resolution screen
+    else if (this.screen_1366x768Query.matches) {
+      return 4;
+    }
+    //1920 resolution screen
+    else if (this.screen_1920x1080Query.matches) {
+      return 5;
+    }
+  }
 
 
 }

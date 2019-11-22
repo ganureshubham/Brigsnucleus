@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { DashboardRoutes } from './dashboard.routing';
@@ -17,7 +16,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FlexLayoutModule
   ]
 })
 export class DashboardModule { }

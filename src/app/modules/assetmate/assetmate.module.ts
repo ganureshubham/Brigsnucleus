@@ -33,7 +33,7 @@ import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-
 import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
 import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/details-checklist-question/details-checklist-question.component';
-
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -70,7 +70,8 @@ import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/vi
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    QRCodeModule
+    QRCodeModule,
+    FlexLayoutModule
   ],
   entryComponents: [AssetCodeComponent, ConfirmDialogComponent]
 })
