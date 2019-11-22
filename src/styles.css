@@ -476,7 +476,7 @@ body {
 }
 
 .tab_content {
-  padding: 28px 0px;
+  padding: 28px 20px;
 }
 
 .table_header .tabel_heading,
@@ -1125,3 +1125,9 @@ body {
     font-weight: 600;
 }
 
+.example-element-row:hover,
+.example-element-row:focus {
+  /* background: #777; */
+  background-color: rgba(0, 0, 0, 0.041);
+  cursor: pointer;
+}
