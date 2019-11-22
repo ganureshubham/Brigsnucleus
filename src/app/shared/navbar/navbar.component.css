@@ -73,6 +73,10 @@
     background: #6a1c7e;
   }
 
+  .is-active-mobile{
+    background: #eeacff4b;
+  }
+
   .example-container {
     display: flex;
     flex-direction: column;

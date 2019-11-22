@@ -11,7 +11,6 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Inside Admin component..!!');
   }
 
 }
