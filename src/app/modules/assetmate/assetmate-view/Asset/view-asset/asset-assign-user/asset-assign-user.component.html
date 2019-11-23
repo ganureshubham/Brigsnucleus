@@ -19,8 +19,8 @@
       <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.lastName }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="assignmentType">
-      <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>AssignmentType</mat-header-cell>
-      <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
+      <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>AssignmentType</mat-header-cell>
+      <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="Actions">
       <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>

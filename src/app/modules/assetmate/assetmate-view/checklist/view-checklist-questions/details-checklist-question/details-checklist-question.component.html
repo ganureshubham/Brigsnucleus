@@ -1,29 +1,27 @@
-<div class="detail-checklist-question-container">
-  <div class="fr">
-    <div class="example-button-row btn_style bg_white_grey ">
-      <button mat-button (click)="backToListChecklistQuestionList()">
+<div fxLayout="column">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">Question Details</p>
+    </div>
+    <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToListChecklistQuestionList()">
         <mat-icon>list</mat-icon> Question Lists
       </button>
     </div>
   </div>
-</div>
-<div class="add_question tab_content">
-  <div class="width_75">
-    <p class="title_header mat-subheading-2 tal">Question Details</p>
-  </div>
-  <div class="question-details-container">
-    <div class="question-detail-row">
-      <div class="question-detail-item">
+  <div fxLayout="column" fxLayoutGap="30px">
+    <div fxLayout="row">
+      <div fxLayout="column">
         <h4 class=" mat-h4 db ">Question Description</h4>
         <span>{{questionDetails.questionDescription}}</span>
       </div>
     </div>
-    <div class="question-detail-row">
-      <div class="question-detail-item width_30">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap.xs="30px">
+      <div fxLayout="column" fxFlex="50">
         <h4 class=" mat-h4 db ">Question Type</h4>
         <span>{{questionDetails.questionType}}</span>
       </div>
-      <div class="question-detail-item width_30">
+      <div fxLayout="column" fxFlex="50">
         <h4 class=" mat-h4 db ">Is Compulsory</h4>
         <span>{{questionDetails.isCompulsory == 1 ? 'Yes' : 'No'}}</span>
       </div>
@@ -32,8 +30,8 @@
       <div class="question-detail-item">
         <h4 class=" mat-h4 db ">Question Options</h4>
         <div *ngFor="let option of questionDetails.questionOptions; let i = index;">
-          <div class="option-container">
-            <div class="option-row">
+          <div class="option-container" fxLayout.xs="column" fxLayoutGap.xs="20px">
+            <div class="option-row" fxFlex.xs="100">
               <span>{{i+1 +'. '+ option.optionTitle}}</span>
               <div>
                 <span *ngIf="option.hasLinkedQuestion == 1 ? false : true">
@@ -43,7 +41,7 @@
                 </span>
               </div>
             </div>
-            <div *ngIf="option.hasLinkedQuestion == 1 ? true : false" class="linked-question-container">
+            <div fxFlex.xs="100" *ngIf="option.hasLinkedQuestion == 1 ? true : false" class="linked-question-container">
               <div class="linked-question-title-container">
                 <h4 class=" mat-h4 db ">Linked Question</h4>
                 <mat-icon class="icon-material" matTooltip="Edit linked question"

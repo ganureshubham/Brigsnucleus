@@ -1,106 +1,76 @@
-<!-- <mat-card>
-  <mat-list role="list">
-    <form #checklistform="ngForm" class="example-form" class="listing_space add_department">
-      <mat-list role="list">
-        <mat-list-item role="listitem">
-          <p class="title_header mat-subheading-2">Add Checklist</p>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <mat-form-field>
-            <mat-label>Select Category</mat-label>
-            <mat-select name="categoryIdFK" id="categoryIdFK" [(ngModel)]="checklistData.categoryIdFK" required>
-              <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
-                {{categ.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
-              placeholder="Checklist Title" required>
-            <mat-error *ngIf="checklistform.submitted && title.invalid">
-              <mat-error *ngIf="title.errors.required">Installation Location is required</mat-error>
-            </mat-error>
-            <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
-          </mat-form-field>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <button type="submit" [disabled]="!checklistform.valid" (click)="addChecklist(checklistform.value)"
-            mat-raised-button class="bg_primary text_white btn">Save</button>
-          <button mat-button class="fr btn">Cancel</button>
-        </mat-list-item>
-      </mat-list>
-    </form>
-  </mat-list>
-</mat-card> -->
+<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
 
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
-<div *ngIf="!showFirst" class="innerbody form ">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <div class="form_header">
-        <div class="fl">
-          <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
-        </div>
-        <div class="fr">
-          <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-            <button mat-button (click)="backToList()">
-              <mat-icon>list</mat-icon> Checklist Lists
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="cl"></div>
-      <div mat-dialog-content>
-        <form #checklistform="ngForm" class="example-form" class="listing_space add_department">
-          <mat-form-field>
-            <mat-label>Select Category</mat-label>
-            <mat-select disabled name="categoryId" id="categoryId" [(ngModel)]="checklistData.categoryId" required>
-              <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
-                {{categ.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
-              placeholder="Checklist Title" required>
-            <mat-error *ngIf="checklistform.submitted && title.invalid">
-              <mat-error *ngIf="title.errors.required">Installation Location is required</mat-error>
-            </mat-error>
-            <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
-          </mat-form-field>
-          <mat-form-field fxFlex>
-            <input name="checkingDuration" pattern="[0-9 ]*" id="checkingDuration"
-              [(ngModel)]="checklistData.checkingDuration" matInput #CheckDur="ngModel" type="number" required
-              placeholder="Checking Duration">
-            <mat-error *ngIf="checklistData.submitted && CheckDur.invalid">
-              <mat-error *ngIf="CheckDur.errors.required">Checking Duration is required</mat-error>
-            </mat-error>
-            <mat-error *ngIf="CheckDur.errors?.pattern">Please enter only Numbers</mat-error>
-          </mat-form-field>
-          <mat-form-field fxFlex>
-            <mat-select name="durationTypeIdFK" id="durationTypeIdFK" [(ngModel)]="checklistData.durationTypeIdFK"
-              #DurType="ngModel" placeholder="Select Checking Duration Type" required>
-
-              <mat-option *ngFor="let duration of durationList" [value]="duration.durationTypeId">
-                {{duration.title}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="checklistform.submitted && DurType.invalid">
-              <mat-error *ngIf="DurType.errors.required">Duration Type is required</mat-error>
-            </mat-error>
-          </mat-form-field>
-          <button type="submit" *ngIf="!isEdited" [disabled]="!checklistform.valid"
-            (click)="addChecklist(checklistform.value)" mat-raised-button class="bg_primary text_white btn">Save
-            Checklist</button>
-          <button *ngIf="isEdited" [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button i18n
-            color="primary" type="submit" [disabled]="!assetform.valid"
-            (click)="editChecklist(checklistform.value)">Update Checklist</button>
-          <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" (click)="backToList()"
-            class="btn-cancel">Cancel</button>
-        </form>
-      </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">{{formTitle}}</p>
+    </div>
+    <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToList()">
+        <mat-icon>list</mat-icon> Checklist Lists
+      </button>
     </div>
   </div>
+
+  <form #checklistform="ngForm" fxLayout="column" class="example-form" class="listing_space add_department">
+
+    <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <mat-label>Select Category</mat-label>
+        <mat-select disabled name="categoryId" id="categoryId" [(ngModel)]="checklistData.categoryId" required>
+          <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">
+            {{categ.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
+          placeholder="Checklist Title" required>
+        <mat-error *ngIf="checklistform.submitted && title.invalid">
+          <mat-error *ngIf="title.errors.required">Checklist title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <input name="checkingDuration" pattern="[0-9 ]*" id="checkingDuration"
+          [(ngModel)]="checklistData.checkingDuration" matInput #CheckDur="ngModel" type="number" required
+          placeholder="Checking Duration">
+        <mat-error *ngIf="checklistData.submitted && CheckDur.invalid">
+          <mat-error *ngIf="CheckDur.errors.required">Checking Duration is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="CheckDur.errors?.pattern">Please enter only Numbers</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <mat-select name="durationTypeIdFK" id="durationTypeIdFK" [(ngModel)]="checklistData.durationTypeIdFK"
+          #DurType="ngModel" placeholder="Select Checking Duration Type" required>
+          <mat-option *ngFor="let duration of durationList" [value]="duration.durationTypeId">
+            {{duration.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="checklistform.submitted && DurType.invalid">
+          <mat-error *ngIf="DurType.errors.required">Duration Type is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" class="savebtn">
+      <button fxFlex.xs="100" type="submit" *ngIf="!isEdited" [disabled]="!checklistform.valid"
+        (click)="addChecklist(checklistform.value)" mat-raised-button class="bg_primary text_white btn">Save
+        Checklist</button>
+      <button fxFlex.xs="100" *ngIf="isEdited" [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button
+        i18n color="primary" type="submit" [disabled]="!assetform.valid"
+        (click)="editChecklist(checklistform.value)">Update
+        Checklist</button>
+      <button fxFlex.xs="100" *ngIf="isEdited" mat-stroked-button i18n color="primary" (click)="backToList()"
+        class="btn-cancel">Cancel</button>
+    </div>
+
+  </form>
+
 </div>
 
-<app-view-checklist *ngIf="showFirst"></app-view-checklist>
+<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
+  <app-view-checklist></app-view-checklist>
+</div>

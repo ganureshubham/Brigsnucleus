@@ -1,136 +1,130 @@
-<div class="add-checklist-question-container">
-  <div class="fr">
-    <div class="example-button-row btn_style bg_white_grey ">
-      <button mat-button (click)="backToListChecklistQuestionList()">
+<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">{{getPageTitle()}}</p>
+    </div>
+    <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToListChecklistQuestionList()">
         <mat-icon>list</mat-icon>{{getBackBtnLable()}}
       </button>
     </div>
   </div>
-</div>
-<div class="add_question tab_content">
-  <div class="width_75">
-    <p class="title_header mat-subheading-2 tal">{{getPageTitle()}}</p>
-  </div>
-  <div class="stepper-container">
-    <form [formGroup]="formGroup">
-      <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
-        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-          <ng-template matStepLabel>Question Type</ng-template>
-          <mat-form-field>
-            <mat-label>Select Question Type</mat-label>
-            <mat-select formControlName="selectQuestionTypeFormCtrl" required
-              (selectionChange)="onQuestionTypeSelectionChange($event.value)">
-              <mat-option *ngFor="let checklistQuestionType of arrChecklistQuestionType"
-                [value]="checklistQuestionType.questionTypeId">
-                {{checklistQuestionType.title}}
-              </mat-option>
-            </mat-select>
-            <mat-error>Please choose checklist question type</mat-error>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperNext>Next</button>
+  <form [formGroup]="formGroup">
+    <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
+      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>Question Type</ng-template>
+        <div fxLayout="column" fxLayoutGap="15px">
+          <div fxLayout="row">
+            <mat-form-field fxFlex="28" fxFlex.sm="40" fxFlex.xs="100">
+              <mat-label>Select Question Type</mat-label>
+              <mat-select fxFlex.xs="100" formControlName="selectQuestionTypeFormCtrl" required
+                (selectionChange)="onQuestionTypeSelectionChange($event.value)">
+                <mat-option *ngFor="let checklistQuestionType of arrChecklistQuestionType"
+                  [value]="checklistQuestionType.questionTypeId">
+                  {{checklistQuestionType.title}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Please choose checklist question type</mat-error>
+            </mat-form-field>
           </div>
-        </mat-step>
-
-        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel>
-            <div>Question Description</div>
-          </ng-template>
-          <div class="stepper-step-container">
-            <mat-form-field>
+          <div>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>
+          <div>Question Description</div>
+        </ng-template>
+        <div fxLayout="column" fxLayoutGap="15px">
+          <div class="stepper-step-container" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px"
+            fxLayoutAlign.gt-xs="start center">
+            <mat-form-field fxFlex="28" fxFlex.sm="40" fxFlex.xs="100">
               <mat-label>Define Question Description</mat-label>
               <input matInput formControlName="questionDescriptionFormCtrl" required>
               <mat-error>Please describe question (minimum 10 character)</mat-error>
             </mat-form-field>
             <mat-checkbox formControlName="questionCompulsoryFormCtrl">Is Compulsory</mat-checkbox>
           </div>
+          <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutGap.xs="10px">
+            <button fxFlex.xs="100" mat-stroked-button color="primary" matStepperPrevious>Back</button>
+            <button fxFlex.xs="100" mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step *ngIf="isQuestionOptionSectionAllowed()" formGroupName="2" [stepControl]="formArray?.get([2])">
+        <ng-template matStepLabel>
+          <div>Question Option</div>
+        </ng-template>
+        <button mat-button class="bg_white_grey btn_style btn-add-option" (click)="onNewOptionAddClicked()">
+          <mat-icon>add</mat-icon>Add New Option
+        </button>
+        <div class="stepper-step-container">
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <mat-form-field>
+              <input formControlName="option0" matInput placeholder="Option" required>
+              <mat-error>Please describe option (minimum 2 character)</mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="checkbox0">Is Critical</mat-checkbox>
           </div>
-        </mat-step>
-
-        <mat-step *ngIf="isQuestionOptionSectionAllowed()" formGroupName="2" [stepControl]="formArray?.get([2])">
-          <ng-template matStepLabel>
-            <div>Question Option</div>
-          </ng-template>
-          <button mat-button class="bg_white_grey btn_style btn-add-option" (click)="onNewOptionAddClicked()">
-            <mat-icon>add</mat-icon>Add New Option
-          </button>
-          <div class="stepper-step-container">
-
-            <div>
-              <mat-form-field>
-                <input formControlName="option0" matInput placeholder="Option" required>
-                <mat-error>Please describe option (minimum 2 character)</mat-error>
-              </mat-form-field>
-              <mat-checkbox formControlName="checkbox0">Is Critical</mat-checkbox>
-            </div>
-
-            <div *ngFor="let option of arrOption; let i=index">
-              <mat-form-field class="remove_options">
-                <input formControlName="{{option.optionControl}}" matInput placeholder="Option" required>
-                <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn"
-                  (click)="onQuestionOptionDelete(i)">
-                  <mat-icon matSuffix>cancel</mat-icon>
-                </button>
-                <mat-error>Please describe option (minimum 2 character)</mat-error>
-              </mat-form-field>
-              <mat-checkbox formControlName="{{option.checkboxControl}}">Is Critical</mat-checkbox>
-            </div>
-
+          <div *ngFor="let option of arrOption; let i=index">
+            <mat-form-field class="remove_options">
+              <input formControlName="{{option.optionControl}}" matInput placeholder="Option" required>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn"
+                (click)="onQuestionOptionDelete(i)">
+                <mat-icon matSuffix>cancel</mat-icon>
+              </button>
+              <mat-error>Please describe option (minimum 2 character)</mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="{{option.checkboxControl}}">Is Critical</mat-checkbox>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutGap.xs="10px">
+          <button fxFlex.xs="100" mat-stroked-button color="primary" matStepperPrevious>Back</button>
+          <button fxFlex.xs="100" mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Review & Submit</ng-template>
+        <div class="stepper-step-container">
+          <div class="review-question-item">
+            <h4 class="mat-h4 db">Question Type</h4>
+            <span>{{getUserFilledStep1DataForReview()}}</span>
           </div>
-        </mat-step>
-
-        <mat-step>
-          <ng-template matStepLabel>Review & Submit</ng-template>
-          <div class="stepper-step-container">
-
-            <div class="review-question-item">
-              <h4 class="mat-h4 db">Question Type</h4>
-              <span>{{getUserFilledStep1DataForReview()}}</span>
-            </div>
-
-            <div class="review-question-item">
-              <h4 class=" mat-h4 db ">Question Description</h4>
-              <span>{{getUserFilledStep2DataForReview()}}</span>
-            </div>
-
-            <div class="review-question-item" role="listitem" *ngIf="isQuestionOptionSectionAllowed()">
-              <div *ngIf="getQuestionType() == 3">
-                <h4 class=" mat-h4 db ">SingleOption</h4>
-                <div>
-                  <mat-radio-button disabled="true">{{getOptionLable('option0')}}
-                  </mat-radio-button>
-                  <mat-radio-button disabled="true" *ngFor="let option of arrOption">
-                    {{getOptionLable(option.optionControl)}}
-                  </mat-radio-button>
-                </div>
-              </div>
-              <div *ngIf="getQuestionType() == 4">
-                <h4 class=" mat-h4 db ">MultiOption</h4>
-                <div>
-                  <mat-checkbox disabled="true">{{getOptionLable('option0')}}
-                  </mat-checkbox>
-                  <mat-checkbox disabled="true" *ngFor="let option of arrOption">
-                    {{getOptionLable(option.optionControl)}}
-                  </mat-checkbox>
-                </div>
+          <div class="review-question-item">
+            <h4 class=" mat-h4 db ">Question Description</h4>
+            <span>{{getUserFilledStep2DataForReview()}}</span>
+          </div>
+          <div class="review-question-item" role="listitem" *ngIf="isQuestionOptionSectionAllowed()">
+            <div *ngIf="getQuestionType() == 3">
+              <h4 class=" mat-h4 db ">SingleOption</h4>
+              <div>
+                <mat-radio-button disabled="true">{{getOptionLable('option0')}}
+                </mat-radio-button>
+                <mat-radio-button disabled="true" *ngFor="let option of arrOption">
+                  {{getOptionLable(option.optionControl)}}
+                </mat-radio-button>
               </div>
             </div>
-
+            <div *ngIf="getQuestionType() == 4">
+              <h4 class=" mat-h4 db ">MultiOption</h4>
+              <div>
+                <mat-checkbox disabled="true">{{getOptionLable('option0')}}
+                </mat-checkbox>
+                <mat-checkbox disabled="true" *ngFor="let option of arrOption">
+                  {{getOptionLable(option.optionControl)}}
+                </mat-checkbox>
+              </div>
+            </div>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button type="button" mat-button (click)="linearVerticalStepper.reset()">Reset</button>
-            <button mat-button (click)="addNewQuestion()">Submit & Save</button>
-          </div>
-        </mat-step>
-      </mat-vertical-stepper>
-    </form>
-  </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutGap.xs="10px">
+          <button fxFlex.xs="100" mat-stroked-button color="primary" matStepperPrevious>Back</button>
+          <button fxFlex.xs="100" mat-stroked-button color="primary" type="button" mat-button
+            (click)="linearVerticalStepper.reset()">Reset</button>
+          <button fxFlex.xs="100" mat-raised-button color="primary" (click)="addNewQuestion()">Submit & Save</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
 </div>

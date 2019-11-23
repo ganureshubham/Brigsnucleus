@@ -1,61 +1,25 @@
-<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
-<div class="flex_container padding_box align_center">
-    <div class="width_50">
-        <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-                            <mat-icon>add</mat-icon>Add Asset
-                        </button>
-    </div>
-    <div class="width_50 dfe">
-        <form class="example-form filter_search">
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Search" value="Bsnl">
-            </mat-form-field>
-        </form>
-    </div>
-</div> 
-<mat-card *ngFor="let checklist of checklistData">
-    <div class="flex_container listing">
-        <div class="checklist_name width_40">
-            <h4>{{checklist.checklistTitle}}</h4>
-        </div>
-        <div class="width_30">
-            <p><b>{{checklist.totalQuestions}}</b><span>Total Assets</span></p>
-        </div>
-        <div class="btns width_30 dfe">
-            <button mat-button>View</button>
-            <button mat-button>Edit</button>
-            <button mat-button>Delete</button>
-        </div>
-    </div>
-</mat-card> -->
-
-<div *ngIf="!showFirst" class="table">
-    <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-        <div class="portal-widget checklist_list" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-            <div class="flex_container padding_box align_center">
-                <div class="width_50">
-                    <button mat-button (click)="addChecklist()" class="bg_white_grey btn_style">
-                        <mat-icon>add</mat-icon>Add Checklist
-                    </button>
-                </div>
-                <div class="width_50 dfe">
-                    <form class="example-form filter_search">
-                        <mat-form-field class="example-full-width">
-                            <input matInput (keyup)="searchChecklist($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </form>
-                </div>
+<div *ngIf="!showFirst" class="table" fxLayout="column" fxFlex="100">
+    <div fxLayout="column">
+        <div class="portal-widget checklist_list">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+                <button fxFlex.xs="100" mat-button (click)="addChecklist()" class="bg_white_grey btn_style">
+                    <mat-icon>add</mat-icon>Add Checklist
+                </button>
+                <form class="example-form filter_search" fxFlex.xs="100">
+                    <mat-form-field class="example-full-width" fxFlex.xs="100">
+                        <input matInput (keyup)="searchChecklist($event.target.value)" placeholder="Search">
+                    </mat-form-field>
+                </form>
             </div>
-            <div class="cl"></div>
             <mat-card *ngFor="let checklist of checklistData">
-                <div class="flex_container listing">
-                    <div class="checklist_name width_40">
+                <div class="listing" fxLayout="row" fxLayout.xs="column" fxLayoutGap.xs="20px">
+                    <div class="checklist_name" fxFlex="60" fxFlex.sm="50" fxFlex.xs="100">
                         <h4>{{checklist.title}}</h4>
                     </div>
-                    <div class="width_30">
+                    <div fxFlex="20" fxFlex.sm="30" fxFlex.xs="100">
                         <p><b>{{checklist.totalQuestions}}</b><span>Total Questions</span></p>
                     </div>
-                    <div class="btns width_30 dfe">
+                    <div class="btns" fxFlex="20" fxFlex.xs="100" fxLayoutAlign.gt-xs="end center">
                         <button mat-button
                             (click)="navigateToChecklistQuestionView(checklist.checklistId)">View</button>
                         <button mat-button (click)="editChecklist(checklist)">Edit</button>
@@ -64,8 +28,10 @@
                     </div>
                 </div>
             </mat-card>
-
         </div>
     </div>
 </div>
-<app-checklist-add *ngIf="showFirst"></app-checklist-add>
+
+<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
+    <app-checklist-add></app-checklist-add>
+</div>
