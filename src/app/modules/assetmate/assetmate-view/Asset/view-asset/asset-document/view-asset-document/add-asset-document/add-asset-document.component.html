@@ -1,108 +1,93 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
-<div *ngIf="!showFirst" class="innerbody form ">
-  <div fxLayout="column">
-    <div class="portal-widget">
-      <div class="form_header">
-        <div class="fl">
-          <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
-        </div>
-        <div class="fr">
-          <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-            <button mat-button (click)="backToList()">
-              <mat-icon>list</mat-icon> Document Lists
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="cl"></div>
-      <div mat-dialog-content>
-        <form #documentform="ngForm" fxLayout="column" novalidate>
-          <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
-                  [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
-                  <mat-option *ngFor="let doc of documentList" [value]="doc.documentTypeId">
-                    {{doc.title}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="documentform.submitted && DocumentType.invalid">
-                  <mat-error *ngIf="DocumentType.errors.required">Document Type is required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <mat-select disabled name="masterId" id="masterId" [(ngModel)]="documentData.masterId"
-                  #CategoryName="ngModel" placeholder="Select Asset" required>
-                  <mat-option *ngFor="let asset of AssetLists" [value]="asset.assetId">{{asset.assetTitle}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="documentform.submitted && CategoryName.invalid">
-                  <mat-error *ngIf="CategoryName.errors.required">Asset title is required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <input matInput name="title" id="title" minlength="3" [(ngModel)]="documentData.title"
-                  #DocTitle="ngModel" type="text" required placeholder="Document Title">
-                <mat-error *ngIf="documentform.submitted && DocTitle.invalid">
-                  <mat-error *ngIf="DocTitle.errors.required">Document Title is required</mat-error>
-                </mat-error>
-                <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="3" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput
-                  #desc="ngModel" placeholder="Description" required></textarea>
-                <mat-error *ngIf="documentform.submitted && desc.invalid">
-                  <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="1:0.20">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <div class="md-form">
-                <label>Document File</label>
-                <div class="file-field">
-                  <div class="btn btn-primary btn-sm float-left">
-                    <span>Choose file</span>
-                    <input type="file" onclick="this.value=null" (change)="documentChange($event.target.files)">
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
-                      placeholder="Browse Document File From System">
-                    <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear"
-                      (click)="filepath=''">
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  </div>
-                </div>
-                <div class="error hide text-error">{{documenterror}}</div>
-              </div>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <div class="cl"></div>
-          <div class="savebtn">
-            <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-              [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
-              [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
-            <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-              [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
-            <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-              [disabled]="!documentform.valid" (click)="backToList()" class="btn-cancel">Cancel</button>
-          </div>
-        </form>
-      </div>
+<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">{{formTitle}}</p>
+    </div>
+    <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToList()">
+        <mat-icon>list</mat-icon> Document Lists
+      </button>
     </div>
   </div>
+  <div mat-dialog-content>
+    <form #documentform="ngForm" fxLayout="column" fxLayoutGap.gt-xs="30px" novalidate>
+      <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+        <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+          <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
+            [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
+            <mat-option *ngFor="let doc of documentList" [value]="doc.documentTypeId">
+              {{doc.title}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="documentform.submitted && DocumentType.invalid">
+            <mat-error *ngIf="DocumentType.errors.required">Document Type is required</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+          <mat-select disabled name="masterId" id="masterId" [(ngModel)]="documentData.masterId" #CategoryName="ngModel"
+            placeholder="Select Asset" required>
+            <mat-option *ngFor="let asset of AssetLists" [value]="asset.assetId">{{asset.assetTitle}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="documentform.submitted && CategoryName.invalid">
+            <mat-error *ngIf="CategoryName.errors.required">Asset title is required</mat-error>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+          <input matInput name="title" id="title" minlength="3" [(ngModel)]="documentData.title" #DocTitle="ngModel"
+            type="text" required placeholder="Document Title">
+          <mat-error *ngIf="documentform.submitted && DocTitle.invalid">
+            <mat-error *ngIf="DocTitle.errors.required">Document Title is required</mat-error>
+          </mat-error>
+          <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex="100">
+          <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
+            placeholder="Description" required></textarea>
+          <mat-error *ngIf="documentform.submitted && desc.invalid">
+            <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <div class="md-form" fxFlex="50" fxFlex.xs="100">
+          <label>Document File</label>
+          <div class="file-field" fxLayout.xs="column">
+            <div class="btn btn-primary btn-sm float-left">
+              <span>Choose file</span>
+              <input type="file" onclick="this.value=null" (change)="documentChange($event.target.files)">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
+                placeholder="Browse Document File From System">
+              <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear" (click)="filepath=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="error hide text-error">{{documenterror}}</div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayout.xs="column" class="savebtn">
+        <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+          [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
+          [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
+        <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+          type="submit" [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
+        <button fxFlex.xs="100" *ngIf="isEdited" mat-stroked-button i18n color="primary" (click)="backToList()"
+          class="btn-cancel">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+
 </div>
 
-<app-view-asset-document *ngIf="showFirst"></app-view-asset-document>
+<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
+  <app-view-asset-document></app-view-asset-document>
+</div>

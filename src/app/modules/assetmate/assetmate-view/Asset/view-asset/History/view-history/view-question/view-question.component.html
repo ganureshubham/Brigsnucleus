@@ -1,59 +1,29 @@
-<div *ngIf="!showFirst" class="table">
-  <!-- <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70"> -->
-  <!-- <div class="table_header">
-          <div class="fl">
-            <p class="tabel_heading mat-subheading-2">Done Checklist</p>
-          </div>
-          <div *ngIf="loading">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-          </div>
-        </div> -->
-  <div class="title-row">
-    <div class="width_75">
+<div *ngIf="!showFirst" fxLayout="column" class="table">
+  <div class="padding_box" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px"
+    fxLayoutAlign.gt-xs="space-between center">
+    <div fxFlex.xs="100" fxLayoutAlign.xs="center center">
       <p class="title_header mat-subheading-2 tal">Checklist Questions</p>
     </div>
-    <div *ngIf="!showFirst" class="example-button-row btn_style bg_white_grey">
-      <button mat-button (click)="backToList()">
+    <div fxFlex.xs="100" fxLayoutAlign.xs="center center" *ngIf="!showFirst"
+      class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToList()">
         <mat-icon>list</mat-icon> Checklists
       </button>
     </div>
   </div>
-
-  <div class="cl"></div>
   <mat-table [dataSource]="paidDataSource">
-    <!-- <ng-container matColumnDef="questionIdFK">
-      <mat-header-cell *matHeaderCellDef>Question Id</mat-header-cell>
-      <mat-cell *matCellDef="let visit">{{ visit.questionIdFK }}</mat-cell>
-    </ng-container> -->
     <ng-container matColumnDef="question">
-      <mat-header-cell *matHeaderCellDef>Question</mat-header-cell>
-      <mat-cell *matCellDef="let visit">{{ visit.question }}</mat-cell>
+      <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Question</mat-header-cell>
+      <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.question }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="answer">
-      <mat-header-cell *matHeaderCellDef>Answers</mat-header-cell>
-      <mat-cell *matCellDef="let visit">{{ visit.answer }}</mat-cell>
+      <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Answers</mat-header-cell>
+      <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.answer }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="isDanger">
-      <mat-header-cell *matHeaderCellDef>Is Critical</mat-header-cell>
-      <mat-cell *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
+      <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Is Critical</mat-header-cell>
+      <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
     </ng-container>
-    <!-- <ng-container matColumnDef="Actions">
-            <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell> 
-            <mat-cell *matCellDef="let visit">
-              <div>
-                <mat-menu #dailyPerformanceMenu="matMenu">
-                  <a mat-menu-item (click)="viewQuestion(visit.doneChecklistId)">
-                    <mat-icon matListIcon>edit</mat-icon>
-                    <span i18n>View Questions List</span>
-                  </a>
-                </mat-menu>
-                <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                  <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container> -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
@@ -61,9 +31,6 @@
     <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
     </mat-paginator>
   </div>
-  <!-- </div>
-  </div> -->
-
 </div>
 
 <app-view-history *ngIf="showFirst"></app-view-history>

@@ -3,25 +3,21 @@
     <div class="portal-widget">
       <div class="cl"></div>
       <mat-table [dataSource]="paidDataSource">
-        <!-- <ng-container matColumnDef="doneChecklistId">
-            <mat-header-cell *matHeaderCellDef>Done Checklist Id</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.doneChecklistId }}</mat-cell> 
-          </ng-container> -->
         <ng-container matColumnDef="checkListTitle">
-          <mat-header-cell *matHeaderCellDef>CheckList Title</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.checkListTitle }}</mat-cell>
+          <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>CheckList Title</mat-header-cell>
+          <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.checkListTitle }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="doneBy">
-          <mat-header-cell *matHeaderCellDef>Done By</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.doneBy }}</mat-cell>
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Done By</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.doneBy }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="doneOn">
-          <mat-header-cell *matHeaderCellDef>Done On</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.doneOn }}</mat-cell>
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Done On</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.doneOn }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="Actions">
-          <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-          <mat-cell *matCellDef="let visit">
+          <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
             <div>
               <mat-menu #dailyPerformanceMenu="matMenu">
                 <a mat-menu-item (click)="viewQuestion(visit.doneChecklistId)">

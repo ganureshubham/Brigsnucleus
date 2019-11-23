@@ -1,76 +1,62 @@
-<div *ngIf="!showFirst" class="innerbody form ">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <div class="form_header">
-        <div class="fl">
-          <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
-        </div>
-        <div class="fr">
-          <div *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-            <button mat-button (click)="backToList()">
-              <mat-icon>list</mat-icon> Assigned User Lists
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="cl"></div>
-      <div mat-dialog-content>
-        <form #assignuserform="ngForm" fxLayout="column" novalidate>
-          <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <mat-select disabled name="assignmentTypeIdFK" id="assignmentTypeIdFK" #assignuserType="ngModel"
-                  [(ngModel)]="assignUserData.assignmentTypeIdFK" placeholder="Select Assignment Type" required>
-                  <mat-option *ngFor="let assign of assignmentLists" [value]="assign.assignmentTypeId">
-                    {{assign.title}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="assignuserform.submitted && assignuserType.invalid">
-                  <mat-error *ngIf="assignuserType.errors.required">Assigned User Type is required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <mat-select disabled name="masterIdFK" id="masterIdFK" [(ngModel)]="assignUserData.masterIdFK"
-                  #CategoryName="ngModel" placeholder="Select Asset" required>
-                  <mat-option *ngFor="let category of categoryLists" [value]="category.assetId">{{category.assetTitle}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="assignuserform.submitted && CategoryName.invalid">
-                  <mat-error *ngIf="CategoryName.errors.required">Category Name is required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="1:0.15">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-form-field fxFlex>
-                <mat-select multiple name="users" id="users" [(ngModel)]="assignUserData.users" #UsersName="ngModel"
-                  placeholder="Select Users" required>
-                  <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
-                    {{user.firstName+' '+user.lastName}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="assignuserform.submitted && UsersName.invalid">
-                  <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <div class="cl"></div>
-          <div class="savebtn">
-            <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-              [matTooltip]="!assignuserform.valid ? 'You must complete all the required fields.' : null" type="submit"
-              [disabled]="!assignuserform.valid" (click)="addAssignUser(assignuserform.value)">Save Assign User</button>
-            <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-              [disabled]="!assignuserform.valid" (click)="editAssignUser(assignuserform.value)">Update Assign
-              User</button>
-          </div>
-        </form>
-      </div>
+<div *ngIf="!showFirst">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">{{formTitle}}</p>
+    </div>
+    <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToList()">
+        <mat-icon>list</mat-icon> Assigned User Lists
+      </button>
     </div>
   </div>
-</div>
+  <form #assignuserform="ngForm" fxLayout="column" novalidate>
 
-<!-- <app-view-assign-user *ngIf="showFirst"></app-view-assign-user> -->
+    <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <mat-select disabled name="assignmentTypeIdFK" id="assignmentTypeIdFK" #assignuserType="ngModel"
+          [(ngModel)]="assignUserData.assignmentTypeIdFK" placeholder="Select Assignment Type" required>
+          <mat-option *ngFor="let assign of assignmentLists" [value]="assign.assignmentTypeId">
+            {{assign.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="assignuserform.submitted && assignuserType.invalid">
+          <mat-error *ngIf="assignuserType.errors.required">Assigned User Type is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <mat-select disabled name="masterIdFK" id="masterIdFK" [(ngModel)]="assignUserData.masterIdFK"
+          #CategoryName="ngModel" placeholder="Select Asset" required>
+          <mat-option *ngFor="let category of categoryLists" [value]="category.assetId">{{category.assetTitle}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="assignuserform.submitted && CategoryName.invalid">
+          <mat-error *ngIf="CategoryName.errors.required">Category Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+        <mat-select multiple name="users" id="users" [(ngModel)]="assignUserData.users" #UsersName="ngModel"
+          placeholder="Select Users" required>
+          <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
+            {{user.firstName+' '+user.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="assignuserform.submitted && UsersName.invalid">
+          <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="savebtn" fxLayout="row" fxLayout.xs="column">
+      <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+        [matTooltip]="!assignuserform.valid ? 'You must complete all the required fields.' : null" type="submit"
+        [disabled]="!assignuserform.valid" (click)="addAssignUser(assignuserform.value)">Save Assign User</button>
+      <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+        [disabled]="!assignuserform.valid" (click)="editAssignUser(assignuserform.value)">Update Assign
+        User</button>
+    </div>
+
+  </form>
+</div>
