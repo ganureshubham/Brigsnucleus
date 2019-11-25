@@ -26,12 +26,12 @@
         <span>{{questionDetails.isCompulsory == 1 ? 'Yes' : 'No'}}</span>
       </div>
     </div>
-    <div class="question-detail-row" *ngIf="areOptionsAvailaableForQuestion()">
-      <div class="question-detail-item">
+    <div fxLayout="row" *ngIf="areOptionsAvailaableForQuestion()">
+      <div fxLayout="column" fxFlex="50" fxFlex.xs="100">
         <h4 class=" mat-h4 db ">Question Options</h4>
         <div *ngFor="let option of questionDetails.questionOptions; let i = index;">
           <div class="option-container" fxLayout.xs="column" fxLayoutGap.xs="20px">
-            <div class="option-row" fxFlex.xs="100">
+            <div class="option-row" fxFlex.xs="100" fxLayout.xs="column" fxLayoutGap.xs="20px">
               <span>{{i+1 +'. '+ option.optionTitle}}</span>
               <div>
                 <span *ngIf="option.hasLinkedQuestion == 1 ? false : true">
