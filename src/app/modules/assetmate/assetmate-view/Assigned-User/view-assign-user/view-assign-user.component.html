@@ -1,60 +1,54 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#7e71b1" type="line-spin-fade-rotating"></ngx-spinner>
-<div *ngIf="!showFirst" class="table">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <div class="flex_container padding_box align_center">
-        <div class="width_50">
-          <button mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-            <mat-icon>add</mat-icon>Assigned New User
+<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+    <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+      <mat-icon>add</mat-icon>Assign New User
+    </button>
+    <form class="example-form filter_search" fxFlex.xs="100">
+      <mat-form-field class="example-full-width" fxFlex.xs="100">
+        <input matInput (keyup)="searchAssignUsers($event.target.value)" placeholder="Search">
+      </mat-form-field>
+    </form>
+  </div>
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>First Name</mat-header-cell>
+      <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.firstName }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Last Name</mat-header-cell>
+      <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.lastName }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="assignmentType">
+      <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>AssignmentType</mat-header-cell>
+      <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Actions">
+      <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+      <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
+        <div>
+          <mat-menu #dailyPerformanceMenu="matMenu">
+            <a mat-menu-item (click)="deleteAssignUsers(visit.userCatAssignmentId, visit.firstName, visit.lastName)">
+              <mat-icon matListIcon>delete_outline</mat-icon>
+              <span i18n>Delete Assigned User</span>
+            </a>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+            <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
           </button>
         </div>
-        <div class="width_50 dfe">
-          <form class="example-form filter_search">
-            <mat-form-field class="example-full-width">
-              <input matInput (keyup)="searchAssignUsers($event.target.value)" placeholder="Search">
-            </mat-form-field>
-          </form>
-        </div>
-      </div>
-      <div class="cl"></div>
-      <mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="firstName">
-          <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.firstName }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="lastName">
-          <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.lastName }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="assignmentType">
-          <mat-header-cell *matHeaderCellDef>AssignmentType</mat-header-cell>
-          <mat-cell *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="Actions">
-          <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-          <mat-cell *matCellDef="let visit">
-            <div>
-              <mat-menu #dailyPerformanceMenu="matMenu">
-                <a mat-menu-item
-                  (click)="deleteAssignUsers(visit.userCatAssignmentId, visit.firstName, visit.lastName)">
-                  <mat-icon matListIcon>delete_outline</mat-icon>
-                  <span i18n>Delete Assigned User</span>
-                </a>
-              </mat-menu>
-              <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-              </button>
-            </div>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <div>
-        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-        </mat-paginator>
-      </div>
-    </div>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div>
+    <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+    </mat-paginator>
   </div>
+
 </div>
-<app-add-assign-user *ngIf="showFirst"></app-add-assign-user>
+
+<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
+  <app-add-assign-user></app-add-assign-user>
+</div>

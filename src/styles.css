@@ -1124,3 +1124,10 @@ body {
   text-transform: uppercase;
   font-weight: 600;
 }
+
+.example-element-row:hover,
+.example-element-row:focus {
+  /* background: #777; */
+  background-color: rgba(0, 0, 0, 0.041);
+  cursor: pointer;
+}

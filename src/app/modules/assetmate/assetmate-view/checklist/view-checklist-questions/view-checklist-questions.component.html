@@ -1,6 +1,6 @@
-<div class="table assets_view padding_container margin_auto flex_container">
-  <app-filter-category></app-filter-category>
-  <mat-card class="width_80 right_side_box">
+<div fxLayout="row" class="margin_auto" fxLayoutAlign="space-evenly start">
+  <app-filter-category fxFlex="15" fxHide.lt-md="true"></app-filter-category>
+  <mat-card fxFlex="80" fxFlex.lt-md="95">
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div>
@@ -12,7 +12,6 @@
           <p class="title_header mat-subheading-2 tal">{{checklistPrimaryInfo.title}}</p>
         </div>
         <div class="dfe add_action" style="width:19.5%">
-
         </div>
       </div>
       <div>

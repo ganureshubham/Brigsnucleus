@@ -4,7 +4,7 @@
       <p class="page-title">{{formTitle}}</p>
     </div>
     <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-      <button mat-button (click)="backToList()">
+      <button fxFlex.xs="100" mat-button (click)="backToList()">
         <mat-icon>list</mat-icon> Asset Lists
       </button>
     </div>
@@ -185,7 +185,7 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div fxLayout="row" class="savebtn">
+    <div fxLayout="row" fxLayout.xs="column" class="savebtn">
       <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
         [matTooltip]="!assetform.valid ? 'You must complete all the required fields.' : null" type="submit"
         [disabled]="!assetform.valid" (click)="addAsset(assetform)">Save Asset</button>
