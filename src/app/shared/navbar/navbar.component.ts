@@ -11,7 +11,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class NavbarComponent implements OnInit {
   displayName: String = '';
   displayOrg: String = '';
-
+  panelOpenState: boolean = false;
   mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
