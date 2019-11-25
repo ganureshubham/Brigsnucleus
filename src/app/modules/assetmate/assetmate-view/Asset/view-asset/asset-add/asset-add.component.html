@@ -11,7 +11,7 @@
   </div>
   <form #assetform="ngForm" fxLayout="column" novalidate>
     <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
-      <mat-form-field fxFlex.xs="100">
+      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
         <input matInput name="assetTitle" id="assetTitle" [(ngModel)]="assetData.assetTitle" #AssetTitle="ngModel"
           type="text" required placeholder="Asset Title">
         <mat-error *ngIf="assetform.submitted && AssetTitle.invalid">
@@ -50,7 +50,7 @@
       </mat-form-field>
       <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
         <input name="installedLocation" id="installedLocation" [(ngModel)]="assetData.installedLocation"
-          #InstallLoc="ngModel" pattern="[a-zA-Z ]*" matInput type="text" required placeholder="Installation Location">
+          #InstallLoc="ngModel" matInput type="text" required placeholder="Installation Location">
         <mat-error *ngIf="assetform.submitted && InstallLoc.invalid">
           <mat-error *ngIf="InstallLoc.errors.required">Installation Location is required</mat-error>
         </mat-error>
@@ -179,10 +179,10 @@
     <div fxLayout="row">
       <mat-form-field fxFlex="100">
         <textarea name="description" id="description" [(ngModel)]="assetData.description" matInput #desc="ngModel"
-          placeholder="Description" required></textarea>
-        <mat-error *ngIf="assetform.submitted && desc.invalid">
+          placeholder="Description"></textarea>
+        <!-- <mat-error *ngIf="assetform.submitted && desc.invalid">
           <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
-        </mat-error>
+        </mat-error> -->
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayout.xs="column" class="savebtn">

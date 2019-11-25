@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DocumateService } from '../service/documate.service';
@@ -9,6 +9,7 @@ import { DataSharingService } from '../../../public service/data-sharing.service
 import { saveAs } from 'file-saver';
 import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
+import { AddDocumateComponent } from './add-documate/add-documate.component';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     public dataService: DataSharingService,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private spinnerService: SpinnerService,
   ) {
 
@@ -186,6 +188,20 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.dataService.changeData(selectedManufacturer);
     this.router.navigate(['/documate/add-documate']);
   }
+
+  // addDocumate(): void {
+  //   let selectedManufacturer = null;
+  //   this.dataService.changeData(selectedManufacturer);
+  //   const dialogRef = this.dialog.open(AddDocumateComponent, {
+  //     // data: this.dialogData,
+  //     width: '500px'
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // if (result !== 0) {
+  //     //   this.getAllDept();
+  //     // }
+  //   });
+  // }
 
 
 

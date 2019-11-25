@@ -125,7 +125,7 @@ export class AddDocumateComponent implements OnInit {
 
   /*********************************************************** Add  Document file *****************************************************************/
   documentChange(files: FileList) {
-    var validDocumentFormats = ['pdf', 'docx', 'doc'];
+    var validDocumentFormats = ['pdf', 'PDF', 'DOCX', 'DOC', 'XLS', 'XLSX', 'docx', 'doc', 'gif', 'png', 'jpeg', 'jpg', 'xls', 'xlsx'];
     var extension = files.item(0).name.split('.').pop();
     if (validDocumentFormats.includes(extension)) {
       this.documenterror = "";
@@ -134,7 +134,7 @@ export class AddDocumateComponent implements OnInit {
       formData.append("file", this.fileToUpload1, this.fileToUpload1.name);
       this.filepath = files.item(0).name;
     } else {
-      this.documenterror = "please select Documents only";
+      this.documenterror = "";
     }
   }
 
