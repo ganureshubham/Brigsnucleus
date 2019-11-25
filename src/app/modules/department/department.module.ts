@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DepartmentRoutes } from './department-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [DepartmentViewComponent, AddDepartmentComponent],
@@ -13,8 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild(DepartmentRoutes),
     MaterialModule,
-    FormsModule
-
+    FormsModule,
+    FlexLayoutModule
   ],
 
 })
