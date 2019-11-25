@@ -79,6 +79,8 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   getAllTrackingList(alertId: number, pageNo: number) {
     this.alertService.getAllTrackingList(alertId, pageNo).subscribe(res => {
+      console.log('res', res);
+
       if (res.alertTrack) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;

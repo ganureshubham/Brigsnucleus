@@ -114,8 +114,8 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
     this.alertId = alertId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
-      title: 'DELETE ASSET',
-      message: ` Are your sure you want to delete alert "${alertId}"`,
+      title: 'DELETE ALERT',
+      message: ` Are your sure you want to delete alert "${title}"`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }

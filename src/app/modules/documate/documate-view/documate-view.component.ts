@@ -132,8 +132,8 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.documentId = documentId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
-      title: 'DELETE ASSET',
-      message: ` Are your sure you want to delete documate "${documentId}"`,
+      title: 'DELETE DOCUMENT',
+      message: ` Are your sure you want to delete document "${title}"`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
