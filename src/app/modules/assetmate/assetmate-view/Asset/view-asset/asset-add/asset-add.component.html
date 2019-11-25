@@ -11,7 +11,7 @@
   </div>
   <form #assetform="ngForm" fxLayout="column" novalidate>
     <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
-      <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+      <mat-form-field fxFlex.xs="100">
         <input matInput name="assetTitle" id="assetTitle" [(ngModel)]="assetData.assetTitle" #AssetTitle="ngModel"
           type="text" required placeholder="Asset Title">
         <mat-error *ngIf="assetform.submitted && AssetTitle.invalid">
