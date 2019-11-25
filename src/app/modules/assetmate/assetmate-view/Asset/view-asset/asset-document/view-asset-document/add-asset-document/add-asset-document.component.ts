@@ -86,7 +86,7 @@ export class AddAssetDocumentComponent implements OnInit {
 
   /*********************************************************** Add  Document file *****************************************************************/
   documentChange(files: FileList) {
-    var validDocumentFormats = ['pdf', 'docx', 'doc'];
+    var validDocumentFormats = ['pdf', 'PDF', 'DOCX', 'DOC', 'XLS', 'XLSX', 'docx', 'doc', 'gif', 'png', 'jpeg', 'jpg', 'xls', 'xlsx'];
     var extension = files.item(0).name.split('.').pop();
     if (validDocumentFormats.includes(extension)) {
       this.documenterror = "";

@@ -63,12 +63,11 @@
   </div>
   <div>
     <button *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
-      (click)="addAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Save Asset Category
+      (click)="addAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Save Asset
       Category</button>
     <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
       (click)="editAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Update Asset
       Category</button>
     <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
   </div>
-
 </form>

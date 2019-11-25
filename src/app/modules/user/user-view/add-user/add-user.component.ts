@@ -105,7 +105,7 @@ export class AddUserComponent implements OnInit {
 
   /*********************************************************** Add Asset Photo *****************************************************************/
   imageChange(files: FileList) {
-    var validImageFormats = ['jpg', 'gif', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
+    var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
       this.imageerror = "";
