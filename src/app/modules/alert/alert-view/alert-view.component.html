@@ -74,8 +74,8 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">
-                    <mat-header-cell fxLayoutAlign.xs="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">
+                    <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">
                       <div>
                         <mat-menu #dailyPerformanceMenu="matMenu">
                           <a mat-menu-item (click)="viewAlert(visit.alertId)">

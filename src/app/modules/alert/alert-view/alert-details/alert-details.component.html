@@ -1,5 +1,5 @@
-<div class="table assets_view padding_container margin_auto flex_container">
-  <mat-card class="width_80 right_side_box">
+<div fxLayout="row" fxFlex="100" fxLayout.xs="column" class="padding_container margin_auto">
+  <mat-card fxFlex="100">
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div>
@@ -27,18 +27,18 @@
     <div class="asset_view_detail">
       <mat-tab-group>
         <mat-tab label="Alerts">
-          <div class="tab_content">
-            <div class="flex_container form_column">
-              <div class="padding_container width_30 field">
+          <div fxFlex="100" fxLayout="column" class="tab_content">
+            <div fxLayout.xs="column" fxFlex.xs="100" class=" form_column">
+              <div class="padding_container field">
                 <div class=" img_block margin-right">
                   <h4 class=" mat-h4 db ">Asset Image</h4>
-                  <mat-card class="mat-card-img">
+                  <mat-card fxLayout.xs="column" fxLayoutAlign.xs="center center" class="mat-card-img">
                     <img src="{{alertData.alertImage}}" alt="Alert-pic">
                   </mat-card>
                 </div>
               </div>
             </div>
-            <div class="flex_container form_column">
+            <div fxLayout.xs="column" fxFlex.xs="100" class=" form_column">
               <div class="padding_container width_30 field">
                 <div class="block">
                   <h4 class=" mat-h4 db ">Alert Name</h4>
@@ -52,26 +52,25 @@
                 </div>
               </div>
             </div>
-            <div class="padding_container field ">
-              <div class="block">
+            <div fxLayout.xs="column" fxFlex.xs="100" class="padding_container field ">
+              <div fxFlex.xs="80" class="block">
                 <h4 class=" mat-h4 db ">Message</h4>
                 <p>{{alertData.message}} </p>
               </div>
             </div>
           </div>
         </mat-tab>
-
-
         <mat-tab label="Alert Tracking">
-          <div class="table">
-            <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-              <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-                <div class="flex_container padding_box align_center">
-                  <div class="width_50">
+          <div>
+            <div fxLayout="column">
+              <div class="portal-widget">
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center"
+                  class="flex_container padding_box">
+                  <div fxFlex.xs="100" class="width_50">
                   </div>
-                  <div class="width_50 dfe">
-                    <form class="example-form filter_search">
-                      <mat-form-field class="example-full-width">
+                  <div fxFlex.xs="100" class="">
+                    <form fxFlex.xs="100" class="filter_search">
+                      <mat-form-field fxFlex.xs="100" class="example-full-width">
                         <input matInput (keyup)="searchTrackingAlert($event.target.value)" placeholder="Search">
                       </mat-form-field>
                     </form>
@@ -84,29 +83,29 @@
                 <ng-template #recordFound>
                   <mat-table [dataSource]="paidDataSource">
                     <ng-container matColumnDef="userImage">
-                      <mat-header-cell *matHeaderCellDef>User Image</mat-header-cell>
-                      <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                          src="{{visit.userImage}}" alt="photo"></mat-cell>
+                      <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>User Image</mat-header-cell>
+                      <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit"><img
+                          class="imgwrapper rounded img-responsive" src="{{visit.userImage}}" alt="photo"></mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="userName">
-                      <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
-                      <mat-cell *matCellDef="let visit">{{ visit.userName }}</mat-cell>
+                      <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>User Name</mat-header-cell>
+                      <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.userName }}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isRead">
-                      <mat-header-cell *matHeaderCellDef>Is Read</mat-header-cell>
-                      <mat-cell *matCellDef="let visit">
+                      <mat-header-cell fxHide.xs *matHeaderCellDef>Is Read</mat-header-cell>
+                      <mat-cell fxHide.xs *matCellDef="let visit">
                         <mat-icon class="isRead" *ngIf="visit.isRead">check_circle</mat-icon>
                       </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isDeliver">
-                      <mat-header-cell *matHeaderCellDef>Is Delivered</mat-header-cell>
-                      <mat-cell *matCellDef="let visit">
+                      <mat-header-cell fxHide.xs *matHeaderCellDef>Is Delivered</mat-header-cell>
+                      <mat-cell fxHide.xs *matCellDef="let visit">
                         <mat-icon class="isDeliver" *ngIf="visit.isDeliver">check_circle</mat-icon>
                       </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="readDate">
-                      <mat-header-cell *matHeaderCellDef>Read Date</mat-header-cell>
-                      <mat-cell *matCellDef="let visit">{{ visit.readDate }}</mat-cell>
+                      <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Read Date</mat-header-cell>
+                      <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.readDate }}</mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
