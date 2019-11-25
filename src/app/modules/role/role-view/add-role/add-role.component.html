@@ -1,7 +1,7 @@
-<div class="innerbody form ">
-  <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-    <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-      <mat-card>
+<div fxLayout="row" fxFlex="100" class="innerbody form ">
+  <div>
+    <div class="portal-widget">
+      <mat-card fxLayout.xs="column" fxFlex="80">
         <div class="form_header">
           <div class="fl">
             <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
@@ -20,10 +20,10 @@
         </div>
         <div class="cl"></div>
         <div mat-dialog-content>
-          <form #roleform="ngForm" fxLayout="column" novalidate>
+          <form fxLayout="column" #roleform="ngForm" novalidate>
             <mat-grid-list cols="3" rowHeight="1:0.15">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field fxFlex>
+                <mat-form-field fxFlex.xs="100" fxFlex>
                   <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3"
                     [(ngModel)]="roleData.title" #roleTitle="ngModel" type="text" required placeholder="Title">
                   <mat-error *ngIf="roleform.submitted && roleTitle.invalid">

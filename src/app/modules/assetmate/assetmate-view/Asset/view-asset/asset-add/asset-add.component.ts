@@ -114,20 +114,19 @@ export class AssetAddComponent implements OnInit {
 
   /*********************************************************** Add New Asset *******************************************************************/
 
-  addAsset(formData: NgForm) {
-
+  addAsset(formData: any) {
+    if (formData.value.description == undefined) {
+      formData.value.description = "";
+    }
     let value = formData.value;
     value.categoryIdFK = this.route.snapshot.params['categoryId'];
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
-
+      this.spinnerService.setSpinnerVisibility(true);
       this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
-
-          this.spinnerService.setSpinnerVisibility(true);
-
           this.assetmateService.addAsset(value).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
@@ -175,26 +174,26 @@ export class AssetAddComponent implements OnInit {
   /*********************************************************** Edit Selected Asset *******************************************************************/
   // on submit of update button send updated data on server 
   editAsset(formData: NgForm) {
+    if (formData.value.description == undefined) {
+      formData.value.description = "";
+    }
     let value = formData.value;
     value.categoryIdFK = this.route.snapshot.params['categoryId'];
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
+      this.spinnerService.setSpinnerVisibility(true);
       this.uploadImageToserver((result) => {
         value.image = result;
         this.uploadPdfToserver((result1) => {
           value.userGuideBook = result1;
-          this.spinnerService.setSpinnerVisibility(true);
           this.assetmateService.editAsset(this.assetData.assetId, value).subscribe(
             res => {
-
               this.spinnerService.setSpinnerVisibility(false);
               this.showSnackBar(res.message);
-
               let categorydata = localStorage.getItem('Category-Object');
               this.category = JSON.parse(categorydata);
               this.dataService.changeData(this.category);
               this.showFirst = !this.showFirst;
-
             },
             error => {
               this.toastr.error(error.message);
@@ -211,7 +210,7 @@ export class AssetAddComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 200);
-    var validImageFormats = ['jpg', 'gif', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
+    var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
       this.imageerror = "";
@@ -231,7 +230,7 @@ export class AssetAddComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 200);
-    var validImageFormats = ['pdf', 'docx', 'doc'];
+    var validImageFormats = ['pdf', 'DOCX', 'DOC', 'XLS', 'XLSX', 'docx', 'doc', 'xls', 'xlsx'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
       this.pdferror = "";
