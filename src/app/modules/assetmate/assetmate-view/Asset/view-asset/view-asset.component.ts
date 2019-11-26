@@ -36,7 +36,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
 
-  displayedColumns: string[] = ['assetCodeImage', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
+  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
@@ -248,4 +248,5 @@ export interface Asset {
   assetTitle: string;
   categoryName: string;
   modelNumber: string;
+  companyAssetNo: string;
 }

@@ -39,8 +39,6 @@ export class AssetAddComponent implements OnInit {
   constructor(private router: Router,
     private assetmateService: AssetmateService,
     private dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
@@ -92,7 +90,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       })
   }
 
@@ -106,7 +104,7 @@ export class AssetAddComponent implements OnInit {
     },
       error => {
         console.log(error);
-        this.toastr.error(error.message);
+        this.showSnackBar("Something went wrong..!!");
 
       }
     );
@@ -130,10 +128,13 @@ export class AssetAddComponent implements OnInit {
           this.assetmateService.addAsset(value).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
-            this.showFirst = !this.showFirst;
+            if (res.status) {
+              this.assetmateService.setBadgeUpdateAction('assetList', true);
+              this.showFirst = !this.showFirst;
+            }
           },
             error => {
+              this.spinnerService.setSpinnerVisibility(false);
               this.showSnackBar("Something went wrong..!!");
             }
           );
@@ -190,13 +191,16 @@ export class AssetAddComponent implements OnInit {
             res => {
               this.spinnerService.setSpinnerVisibility(false);
               this.showSnackBar(res.message);
-              let categorydata = localStorage.getItem('Category-Object');
-              this.category = JSON.parse(categorydata);
-              this.dataService.changeData(this.category);
-              this.showFirst = !this.showFirst;
+              if (res.status) {
+                // let categorydata = localStorage.getItem('Category-Object');
+                // this.category = JSON.parse(categorydata);
+                this.dataService.changeData(this.category);
+                this.showFirst = !this.showFirst;
+              }
             },
             error => {
-              this.toastr.error(error.message);
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!");
             }
           );
         })
@@ -206,10 +210,6 @@ export class AssetAddComponent implements OnInit {
 
   /*********************************************************** Add Asset Photo *****************************************************************/
   imageChange(files: FileList) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 200);
     var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
@@ -226,10 +226,6 @@ export class AssetAddComponent implements OnInit {
 
   /*********************************************************** Add User Guide Book *****************************************************************/
   pdfChange(files: FileList) {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 200);
     var validImageFormats = ['pdf', 'DOCX', 'DOC', 'XLS', 'XLSX', 'docx', 'doc', 'xls', 'xlsx'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
@@ -252,7 +248,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
@@ -266,7 +262,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
@@ -280,7 +276,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
 
@@ -295,7 +291,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
@@ -314,7 +310,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
-        console.log(error);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
