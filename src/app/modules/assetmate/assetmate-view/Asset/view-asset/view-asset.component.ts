@@ -86,14 +86,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllAssets(categoryId: number, pageNo: any) {
-
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllAssets(categoryId, pageNo).subscribe(res => {
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.asset) {
-
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
         } else {
@@ -106,9 +102,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       } else {
         this.showSnackBar(res.message)
       }
-
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     );

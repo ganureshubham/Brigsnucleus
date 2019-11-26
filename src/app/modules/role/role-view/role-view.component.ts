@@ -85,6 +85,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
       }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     )

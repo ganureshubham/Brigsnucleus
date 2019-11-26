@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../../service/assetmate.service';
+import { SpinnerService } from '../../../../../../../../public service/spinner.service';
 
 @Component({
   selector: 'app-view-question',
@@ -35,13 +36,16 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
   checklistId: any;
+  isNoRecordFound: boolean = true;
 
   constructor(private http: HttpClient,
     private router: Router,
     private assetmateService: AssetmateService,
     public dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar,
+    private spinnerService: SpinnerService,
   ) {
 
   }
@@ -72,25 +76,33 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Get All Roles *******************************************************************/
 
-
-
   getQuestAnsList(doneChecklistIdFK: number, pageNo: any) {
-    // this.spinner.show();
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 1000);
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getQuestAnsList(doneChecklistIdFK, pageNo).subscribe(res => {
-      this.paidDataSource = res.questionAnswer;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
-
-
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.questionAnswer) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.paidDataSource = res.questionAnswer;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
     },
       error => {
-        this.toastr.error(error.error.message);
-        console.log(error);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
       }
-    )
+    );
+  }
+
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 
