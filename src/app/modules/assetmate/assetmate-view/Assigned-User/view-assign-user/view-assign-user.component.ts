@@ -33,6 +33,11 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   result: string = '';
   userCatAssignmentId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
+
+
+
 
   displayedColumns: string[] = ['firstName', 'lastName', 'assignmentType', 'Actions'];
   dataSource: MatTableDataSource<AssignUser> = new MatTableDataSource();
@@ -67,8 +72,10 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId']
+    this.categoryID = this.route.snapshot.params['categoryId'];
+    this.spinnerService.setSpinnerVisibility(true);
     this.getAllAssignUsers(this.pageNumber);
+    this.spinnerService.setSpinnerVisibility(false);
   }
 
   ngOnDestroy(): void { }
@@ -76,23 +83,24 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllAssignUsers(pageNo: any) {
-
     this.spinnerService.setSpinnerVisibility(true);
-
     this.assetmateService.getAllAssignUsers(pageNo, this.categoryID).subscribe(res => {
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.assignedUsers) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.dataSource = res.assignedUsers;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
         this.showSnackBar(res.message);
       }
-
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     );

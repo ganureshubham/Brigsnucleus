@@ -24,6 +24,10 @@ export class ChecklistQuestionListComponent implements OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   deleteQuestionWithId: number;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
+
+
 
   constructor(
     private router: Router,
@@ -65,6 +69,11 @@ export class ChecklistQuestionListComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       // console.log(resp)
       if (resp.question) {
+        if (resp.currentPage == 0 && resp.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.checklistQuestions = resp.question;
         this.dataSource = this.checklistQuestions;
         this.pageNumber = resp.currentPage;

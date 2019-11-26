@@ -34,6 +34,10 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   result: string = '';
   deletedocWithId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
+
+
 
   displayedColumns: string[] = ['title', 'description', 'Actions'];
   // 'documentId',
@@ -79,23 +83,24 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllDocuments(categoryId, pageNo: any) {
-
     this.spinnerService.setSpinnerVisibility(true);
-
     this.assetmateService.getAllDocuments(categoryId, pageNo).subscribe(res => {
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.categoryDocument) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.dataSource = res.categoryDocument;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
         this.showSnackBar(res.message);
       }
-
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     );

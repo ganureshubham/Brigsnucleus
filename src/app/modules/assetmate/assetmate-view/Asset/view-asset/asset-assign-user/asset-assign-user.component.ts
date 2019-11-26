@@ -33,6 +33,12 @@ export class AssetAssignUserComponent implements OnInit {
   result: string = '';
   deleteUserWithAssignedId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = true;
+
+
+
+
+
 
   displayedColumns: string[] = ['firstName', 'lastName', 'assignmentType', 'Actions'];
   dataSource: MatTableDataSource<AssignUser> = new MatTableDataSource();
@@ -84,6 +90,11 @@ export class AssetAssignUserComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
 
       if (res.assignedUsers) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.dataSource = res.assignedUsers;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
@@ -93,6 +104,7 @@ export class AssetAssignUserComponent implements OnInit {
 
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     );

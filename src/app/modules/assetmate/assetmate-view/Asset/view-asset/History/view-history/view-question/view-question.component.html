@@ -11,22 +11,27 @@
       </button>
     </div>
   </div>
-  <mat-table [dataSource]="paidDataSource">
-    <ng-container matColumnDef="question">
-      <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Question</mat-header-cell>
-      <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.question }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="answer">
-      <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Answers</mat-header-cell>
-      <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.answer }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="isDanger">
-      <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Is Critical</mat-header-cell>
-      <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
+  </div>
+  <ng-template #recordFound>
+    <mat-table [dataSource]="paidDataSource">
+      <ng-container matColumnDef="question">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Question</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.question }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="answer">
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Answers</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.answer }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isDanger">
+        <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Is Critical</mat-header-cell>
+        <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </ng-template>
   <div>
     <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
     </mat-paginator>

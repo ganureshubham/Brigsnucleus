@@ -53,9 +53,8 @@ export class DetailsAssetComponent implements OnInit {
 
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.viewAsset(this.assetId).subscribe(res => {
-
+      console.log('details asset res', res);
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.asset) {
         this.assetData = res.asset;
         this.assetcode = res.asset.assetCode;

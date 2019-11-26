@@ -112,6 +112,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
       }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }

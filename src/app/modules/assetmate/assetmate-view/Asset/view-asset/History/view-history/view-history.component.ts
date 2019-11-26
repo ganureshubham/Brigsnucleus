@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../service/assetmate.service';
+import { SpinnerService } from '../../../../../../../public service/spinner.service';
 
 @Component({
   selector: 'app-view-history',
@@ -22,6 +23,7 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   roleData: any = {};
   showFirst: boolean = false;
+  isNoRecordFound: boolean = true;
 
 
   displayedColumns: string[] = ['checkListTitle', 'doneBy', 'doneOn', 'Actions'];
@@ -42,6 +44,9 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
+
   ) {
 
   }
@@ -70,27 +75,34 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Get All Roles *******************************************************************/
 
 
-
   getAssetHistory(assetIdFK: number, pageNo: any) {
-    // this.spinner.show();
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 1000);
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.doneChecklistLists(assetIdFK, pageNo).subscribe(res => {
-      console.log('doneChecklistLists : ');
-      console.log(res);
-      this.paidDataSource = res.assetHistory;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
-
-
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.assetHistory) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.paidDataSource = res.assetHistory;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
     },
       error => {
-        this.toastr.error(error.error.message);
-        console.log(error);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
       }
-    )
+    );
   }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
 
 
   /*********************************************************** Page Change *******************************************************************/
