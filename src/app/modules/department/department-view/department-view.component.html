@@ -1,5 +1,5 @@
 <!-- class="innerpage department" -->
-<mat-card class="width_90 margin_auto innerpage_title">
+<!-- <mat-card class="width_90 margin_auto innerpage_title">
     <mat-grid-list cols="2" rowHeight="50px">
         <mat-grid-tile>
             <p class="title_header mat-subheading-2 tal dfs">ALL Departments</p>
@@ -10,6 +10,18 @@
             </button>
         </mat-grid-tile>
     </mat-grid-list>
+</mat-card> -->
+<mat-card class="width_90 margin_auto innerpage_title">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <p class="title_header mat-subheading-2 tal dfs">All Departments</p>
+        </div>
+        <div>
+            <button mat-button (click)="addNewDept()" class="bg_white_grey btn_style adddept">
+                <mat-icon>add</mat-icon>Add Department
+            </button>
+        </div>
+    </div>
 </mat-card>
 <mat-card class="department-tree-container">
     <!-- class="width_90 margin_auto department" -->

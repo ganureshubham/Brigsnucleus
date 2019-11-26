@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { AssetCategoryRoutes } from './asset-category-routing.module';
 import { AssetCategoryViewComponent } from './asset-category-view/asset-category-view.component';
 import { AddAssetCategoryComponent } from './asset-category-view/add-asset-category/add-asset-category.component';
@@ -14,7 +14,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule.forChild(AssetCategoryRoutes),
     MaterialModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ]
 })
 export class AssetCategoryModule { }

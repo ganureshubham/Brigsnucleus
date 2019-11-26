@@ -1,6 +1,6 @@
 <!-- class="innerpage department" -->
 <mat-card class="width_90 margin_auto innerpage_title">
-  <mat-grid-list cols="2" rowHeight="50px">
+  <!-- <mat-grid-list cols="2" rowHeight="50px">
     <mat-grid-tile>
       <p class="title_header mat-subheading-2 tal dfs">ALL Asset Categorys</p>
     </mat-grid-tile>
@@ -9,7 +9,17 @@
         <mat-icon>add</mat-icon>Add Asset Category
       </button>
     </mat-grid-tile>
-  </mat-grid-list>
+  </mat-grid-list> -->
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <p class="title_header mat-subheading-2 tal dfs">All Asset Categorys</p>
+    </div>
+    <div>
+      <button mat-button (click)="addNewAssetCategory()" class="bg_white_grey btn_style adddept">
+        <mat-icon>add</mat-icon>Add Asset Category
+      </button>
+    </div>
+  </div>
 </mat-card>
 <mat-card class="department-tree-container">
   <!-- class="width_90 margin_auto department" -->
