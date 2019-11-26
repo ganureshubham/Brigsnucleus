@@ -1,8 +1,11 @@
-::ng-deep .mat-form-field-invalid .mat-input-element,
+/* ::ng-deep .mat-form-field-invalid .mat-input-element,
 .mat-warn .mat-input-element {
     caret-color: #d80166;
 }
 
+::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+  background-color: #50d0fb !important;
+} */
 
 
 .box_background {
@@ -13,4 +16,8 @@
     .box_background {
         flex-direction: column;
     }
+}
+
+.form-container{
+    padding:20px 0;
 }

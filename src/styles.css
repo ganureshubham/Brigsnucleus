@@ -76,6 +76,10 @@ body {
   background: #fff !important;
 }
 
+.form_card .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+  background-color: #fff !important;
+}
+
 .bg_pink {
   background: #8e24aa !important;
 }

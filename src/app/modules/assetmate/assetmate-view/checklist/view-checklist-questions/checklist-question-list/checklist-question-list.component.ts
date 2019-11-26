@@ -148,7 +148,7 @@ export class ChecklistQuestionListComponent implements OnInit {
   }
 
   navigateToQuestionDetails(questionId) {
-    this.router.navigate([`/assetmate/assetmate-details/1/checklist/1/details-question/${questionId}`], { relativeTo: this.activatedRoute });
+    this.router.navigate([`/assetmate/assetmate-details/1/checklist/${this.checklistId}/details-question/${questionId}`], { relativeTo: this.activatedRoute });
   }
 
 }
