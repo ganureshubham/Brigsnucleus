@@ -8,6 +8,7 @@ import { UserRoleRoutes } from './role-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [RoleViewComponent, AddRoleComponent],
@@ -16,9 +17,10 @@ import { NgxSpinnerModule } from "ngx-spinner";
     RouterModule.forChild(UserRoleRoutes),
     MaterialModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FlexLayoutModule
 
-    
+
   ]
 })
 export class RoleModule { } 

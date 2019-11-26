@@ -41,7 +41,7 @@
       <p class="title_header mat-subheading-2">{{formTitle}}</p>
     </div>
     <div class="deptformfield">
-      <mat-form-field *ngIf="this.deptData.parentId!=0" fxFlex>
+      <mat-form-field *ngIf="this.deptData.parentId!=0">
         <mat-select disabled name="parentId" id="parentId" [(ngModel)]="deptData.parentId" #department="ngModel"
           placeholder="Select Parent Department" required>
           <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
@@ -51,7 +51,7 @@
           <mat-error *ngIf="department.errors.required">Department name is required</mat-error>
         </mat-error>
       </mat-form-field>
-      <mat-form-field fxFlex>
+      <mat-form-field>
         <input matInput name="departmentTitle" id="departmentTitle" [(ngModel)]="deptData.departmentTitle"
           #deptTitle="ngModel" type="text" required placeholder="Department Title">
         <mat-error *ngIf="deptForm.submitted && deptTitle.invalid">

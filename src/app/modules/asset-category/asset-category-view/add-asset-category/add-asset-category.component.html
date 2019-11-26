@@ -38,12 +38,11 @@
 
 
 <form #assetCategoryForm="ngForm" class="example-form" class="listing_space add_department">
-
   <div>
     <p class="title_header mat-subheading-2">{{formTitle}}</p>
   </div>
   <div class="categoryformfield">
-    <mat-form-field *ngIf="this.AssetCategoryData.parentId!=0" fxFlex>
+    <mat-form-field *ngIf="this.AssetCategoryData.parentId!=0">
       <mat-select disabled name="parentId" id="parentId" [(ngModel)]="AssetCategoryData.parentId" #Category="ngModel"
         placeholder="Select Parent Asset Category" required>
         <mat-option *ngFor="let AssetCateg of assetcategList" [value]="AssetCateg.categoryId">{{AssetCateg.title}}
@@ -53,7 +52,7 @@
         <mat-error *ngIf="Category.errors.required">Asset Category name is required</mat-error>
       </mat-error>
     </mat-form-field>
-    <mat-form-field fxFlex>
+    <mat-form-field>
       <input matInput name="title" id="title" [(ngModel)]="AssetCategoryData.title" #AssetCatTitle="ngModel" type="text"
         required placeholder="Asset Category Title">
       <mat-error *ngIf="assetCategoryForm.submitted && AssetCatTitle.invalid">
@@ -63,12 +62,11 @@
   </div>
   <div>
     <button *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
-      (click)="addAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Save Asset Category
+      (click)="addAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Save Asset
       Category</button>
     <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!assetCategoryForm.valid"
       (click)="editAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Update Asset
       Category</button>
     <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
   </div>
-
 </form>

@@ -1,6 +1,6 @@
-<div fxLayout="row" class="innerbody table">
+<div fxLayout="row" fxFlex="100" class="innerbody table">
 
-  <div class=" margin_auto padding_container">
+  <div fxFlex="100" class=" margin_auto padding_container">
     <div fxLayout.xs="column" class="portal-widget">
       <mat-card fxFlex="100" fxFlex.lt-md="95">
 
@@ -33,8 +33,8 @@
               <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
-              <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-              <mat-cell *matCellDef="let visit">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
                 <div>
                   <mat-menu #dailyPerformanceMenu="matMenu">
                     <a mat-menu-item (click)="editRole(visit)">
