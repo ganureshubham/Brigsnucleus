@@ -24,6 +24,7 @@ export class ViewChecklistComponent implements OnInit {
   categoryID: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteChecklistWithId;
+  isNoRecordFound: boolean = true;
 
   constructor(
     private assetmateService: AssetmateService,
@@ -53,9 +54,14 @@ export class ViewChecklistComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
 
       if (res.ChecklistData) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.checklistData = res.ChecklistData;
       } else {
-        this.showSnackBar(res.message)
+        this.showSnackBar(res.message);
       }
 
     },

@@ -11,7 +11,10 @@
                     </mat-form-field>
                 </form>
             </div>
-            <mat-card *ngFor="let checklist of checklistData">
+            <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+                <p>No Record Found</p>
+            </div>
+            <mat-card #recordFound *ngFor="let checklist of checklistData">
                 <div class="listing" fxLayout="row" fxLayout.xs="column" fxLayoutGap.xs="20px">
                     <div class="checklist_name" fxFlex="60" fxFlex.sm="50" fxFlex.xs="100">
                         <h4>{{checklist.title}}</h4>

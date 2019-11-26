@@ -67,8 +67,6 @@ export class FilterCategoryComponent implements OnInit {
 
     this.assetmateService.filterCategoryList().subscribe(res => {
       if (res) {
-        // console.log('TREE DATA:');
-        // console.log(res);
         this.TREE_DATA = res.assetCategory;
         this.final_TREE_DATA = [...this.TREE_DATA];
         this.dataSource.data = this.TREE_DATA;
