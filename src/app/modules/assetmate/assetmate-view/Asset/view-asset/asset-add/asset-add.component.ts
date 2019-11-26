@@ -50,7 +50,7 @@ export class AssetAddComponent implements OnInit {
       if (res != null && res != "null" && res != "null") {
         this.isEdited = true;
         this.formTitle = `Edit Asset`;
-        this.getDetails(res);
+        this.getDetails(res.assetId);
       }
     })
     this.getLocationList();
@@ -69,8 +69,10 @@ export class AssetAddComponent implements OnInit {
   getDetails(assetId) {
     this.assetmateService.getDetails(assetId).subscribe(res => {
       if (res.asset) {
-        console.log('getDetails');
         this.assetData = res.asset;
+        if (res.asset.companyAssetNo == "undefined") {
+          this.assetData.companyAssetNo = "";
+        }
         let installationDate = new Date(this.assetData.installationDate);
         this.assetData.installationDate = installationDate;
         this.assetImage = res.asset.image.split('/').pop().split('?')[0];
@@ -78,6 +80,7 @@ export class AssetAddComponent implements OnInit {
       }
     },
       error => {
+        this.showSnackBar("Something went wrong..!!");
       })
   }
 

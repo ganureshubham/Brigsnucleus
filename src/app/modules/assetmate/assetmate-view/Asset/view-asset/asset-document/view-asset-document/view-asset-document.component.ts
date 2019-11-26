@@ -30,6 +30,15 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   codeData: any;
   parentdata: any;
   result: string = '';
+  isNoRecordFound: boolean = true;
+  animal: any;
+  filepath: any;
+  filedata: any = {};
+  assetID: any;
+
+
+
+
   displayedColumns: string[] = ['title', 'description', 'Actions'];
   // 'documentId', 
   dataSource: MatTableDataSource<Document> = new MatTableDataSource();
@@ -40,10 +49,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  animal: any;
-  filepath: any;
-  filedata: any = {};
-  assetID: any;
+
 
   constructor(private http: HttpClient,
     private assetmateService: AssetmateService,
@@ -52,9 +58,10 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
     private dialogService: DialogService,
+    private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+
   ) {
 
   }
@@ -89,14 +96,27 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Get All Assets *******************************************************************/
 
+
   getAllAssetDocuments(assetId, pageNo: any) {
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllAssetDocuments(assetId, pageNo).subscribe(res => {
-      this.dataSource = res.assetDocument;
-      this.pageNumber = res.currentPage;
-      this.totalCount = res.totalCount;
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.assetDocument) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.dataSource = res.assetDocument;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
     },
       error => {
-        this.toastr.error(error.error.message);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }
@@ -122,16 +142,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
-  // deleteDocument(documentId: number) {
-  //   alert('are you sure?');
-  // this.assetmateService.deleteDocument(documentId).subscribe(res => {
-  //   this.toastr.success(res.message);
-  //   this.getAllAssetDocuments(this.assetID, this.page);
-  // })
-  // error => {
-  //   this.toastr.error(error.message);
-  // }
-  // }
+
 
   deleteDocument(documentId: number, documentTite: string) {
 

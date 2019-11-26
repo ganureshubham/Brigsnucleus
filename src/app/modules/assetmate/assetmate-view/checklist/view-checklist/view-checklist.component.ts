@@ -66,6 +66,7 @@ export class ViewChecklistComponent implements OnInit {
 
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       }
     );

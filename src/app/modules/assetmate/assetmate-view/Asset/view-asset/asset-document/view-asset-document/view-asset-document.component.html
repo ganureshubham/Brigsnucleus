@@ -10,45 +10,50 @@
         </mat-form-field>
       </form>
     </div>
-    <mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="title">
-        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Document Title</mat-header-cell>
-        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Document Description
-        </mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
-          {{ visit.description.length>42?visit.description.substring(0,42)+'...':visit.description }}
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-        <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
-          <div>
-            <mat-menu #dailyPerformanceMenu="matMenu">
-              <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
-                <mat-icon matListIcon>get_app</mat-icon>
-                <span i18n>Download Document</span>
-              </a>
-              <a mat-menu-item (click)="editDocument(visit)">
-                <mat-icon matListIcon>edit</mat-icon>
-                <span i18n>Edit Document</span>
-              </a>
-              <a mat-menu-item (click)="deleteDocument(visit.documentId, visit.title)">
-                <mat-icon matListIcon>delete_outline</mat-icon>
-                <span i18n>Delete Document</span>
-              </a>
-            </mat-menu>
-            <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-              <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-            </button>
-          </div>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+      <p>No Record Found</p>
+    </div>
+    <ng-template #recordFound>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="title">
+          <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Document Title</mat-header-cell>
+          <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Document Description
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+            {{ visit.description.length>42?visit.description.substring(0,42)+'...':visit.description }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
+            <div>
+              <mat-menu #dailyPerformanceMenu="matMenu">
+                <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
+                  <mat-icon matListIcon>get_app</mat-icon>
+                  <span i18n>Download Document</span>
+                </a>
+                <a mat-menu-item (click)="editDocument(visit)">
+                  <mat-icon matListIcon>edit</mat-icon>
+                  <span i18n>Edit Document</span>
+                </a>
+                <a mat-menu-item (click)="deleteDocument(visit.documentId, visit.title)">
+                  <mat-icon matListIcon>delete_outline</mat-icon>
+                  <span i18n>Delete Document</span>
+                </a>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-template>
     <div>
       <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
       </mat-paginator>

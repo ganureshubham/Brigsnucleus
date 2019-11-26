@@ -10,45 +10,48 @@
       </mat-form-field>
     </form>
   </div>
-  <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>First Name</mat-header-cell>
-      <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.firstName }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Last Name</mat-header-cell>
-      <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.lastName }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="assignmentType">
-      <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>AssignmentType</mat-header-cell>
-      <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="Actions">
-      <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-      <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
-        <div>
-          <mat-menu #dailyPerformanceMenu="matMenu">
-            <a mat-menu-item (click)="deleteAssignUsers(visit.userCatAssignmentId, visit.firstName, visit.lastName)">
-              <mat-icon matListIcon>delete_outline</mat-icon>
-              <span i18n>Delete Assigned User</span>
-            </a>
-          </mat-menu>
-          <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-            <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-          </button>
-        </div>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
+  </div>
+  <ng-template #recordFound>
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>First Name</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.firstName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Last Name</mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.lastName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="assignmentType">
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>AssignmentType</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assignmentType }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Actions">
+        <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+        <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
+          <div>
+            <mat-menu #dailyPerformanceMenu="matMenu">
+              <a mat-menu-item (click)="deleteAssignUsers(visit.userCatAssignmentId, visit.firstName, visit.lastName)">
+                <mat-icon matListIcon>delete_outline</mat-icon>
+                <span i18n>Delete Assigned User</span>
+              </a>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+              <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </ng-template>
   <div>
     <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
     </mat-paginator>
   </div>
-
 </div>
-
 <div *ngIf="showFirst" fxLayout="column" fxFlex="100">
   <app-add-assign-user></app-add-assign-user>
 </div>

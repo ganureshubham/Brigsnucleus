@@ -27,6 +27,11 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   manufacturerData: any = {};
   totalAlerts: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  Router: any;
+  alertid: any;
+  totalDocumate: any;
+  documentId: number;
+  nonzero: boolean = false;
   isNoRecordFound: boolean = true;
 
 
@@ -39,11 +44,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  Router: any;
-  alertid: any;
-  totalDocumate: any;
-  documentId: number;
-  nonzero: boolean = false;
+
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -90,6 +91,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
       }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }

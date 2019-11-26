@@ -5,6 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../service/assetmate.service';
 import { DataSharingService } from '../../../public service/data-sharing.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { SpinnerService } from '../../../public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-assetmate-view',
@@ -14,6 +16,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class AssetmateViewComponent implements OnInit {
   category: any = [];
   mSearchCategory: any = [];
+  isNoRecordFound: boolean = true;
+
 
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
@@ -28,6 +32,8 @@ export class AssetmateViewComponent implements OnInit {
     public dataService: DataSharingService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
+    private spinnerService: SpinnerService,
+    private snackBar: MatSnackBar,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.tabQuery = media.matchMedia('(max-width: 768px)');
@@ -45,11 +51,35 @@ export class AssetmateViewComponent implements OnInit {
     console.log('mediaQueryListener');
   }
 
+
+  /*********************************************************** Get all Root Category *******************************************************************/
+
   getRootCategoryList() {
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllRootCateg().subscribe(res => {
-      this.category = res.rootCategory;
-    })
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.rootCategory) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.category = res.rootCategory;
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
   }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+
 
   categoryDetail(categoryId: any) {
     // let categoryObj=categ;
