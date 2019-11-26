@@ -131,7 +131,7 @@
     </div>
     <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
       <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
-        <mat-select disabled name="categoryIdFK" id="categoryIdFK" [(ngModel)]="assetData.categoryIdFK"
+        <mat-select [disabled]="!isEdited" name="categoryIdFK" id="categoryIdFK" [(ngModel)]="assetData.categoryIdFK"
           #CategName="ngModel" placeholder="Select Category name" required>
           <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.title}}
           </mat-option>
