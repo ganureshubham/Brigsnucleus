@@ -238,6 +238,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['/assetmate/assetmate-details/' + this.route.snapshot.params['categoryId'] + '/asset-details/' + assetId]);
   }
 
+  printQRcode(assetId) {
+    this.router.navigate([]).then(result => { window.open(`/#/print-qrcode/${assetId}`, '_blank'); });
+  }
+
 }
 
 export interface Asset {

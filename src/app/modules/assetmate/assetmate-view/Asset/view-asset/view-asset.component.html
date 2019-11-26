@@ -60,6 +60,10 @@
                   <mat-icon matListIcon>edit</mat-icon>
                   <span i18n>Edit Asset</span>
                 </a>
+                <a mat-menu-item (click)="printQRcode(visit.assetId)">
+                  <mat-icon matListIcon>print</mat-icon>
+                  <span i18n>Print QRcode</span>
+                </a>
                 <a mat-menu-item (click)="deleteAsset(visit.assetId, visit.assetTitle)">
                   <mat-icon matListIcon>delete_outline</mat-icon>
                   <span i18n>Delete Asset</span>
