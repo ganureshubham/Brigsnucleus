@@ -13,6 +13,8 @@ import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from '../../../../../model/appDialogData';
+import jsPDF from 'jspdf';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-view-asset',
@@ -35,6 +37,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   result: string = '';
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
+  assetForQRcode: any = {};
+  assetCode1: string = '1';
 
   displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
   // 'assetId',
@@ -234,8 +238,80 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['/assetmate/assetmate-details/' + this.route.snapshot.params['categoryId'] + '/asset-details/' + assetId]);
   }
 
-  printQRcode(assetId) {
-    this.router.navigate([]).then(result => { window.open(`/#/print-qrcode/${assetId}`, '_blank'); });
+  printQRcode(asset) {
+
+    this.assetForQRcode = asset;
+    this.assetCode1 = asset.assetCode;
+    // console.log(this.assetCode1);
+
+
+    setTimeout(() => {
+
+      // var qrCodeImg = document.getElementById("qrcode").innerText;
+
+      // console.log('qrCodeImg');
+
+      // var html = this.qrcodechild.el.nativeElement.innerHTML;
+      var html = document.getElementById('qrcode').innerHTML;
+      // console.log(html);
+
+      let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
+      var dispimg64 = 'data:image/png;base64,' + img64;
+      // console.log(dispimg64);
+
+      var doc = new jsPDF('l', 'mm', [370, 150]);
+
+      //QRCODE img
+      doc.addImage(dispimg64, '*', 2, 2, 50, 50);
+
+      //TITLE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 8, 'Asset Title');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 14, this.assetForQRcode.assetTitle);
+
+      //ASSETCODE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 25, 'AssetCode');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 31, this.assetForQRcode.assetCode);
+
+      //ASSETCODE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 41, 'Model No.');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 47, this.assetForQRcode.modelNumber);
+
+      window.open(doc.output('bloburl'), '_blank');
+    }, 50);
+
+    // var doc = new jsPDF('l', 'mm', [297, 150]);
+    // var source = window.document.getElementById("div-print");
+    // doc.fromHTML(source, 0, 0, {}, () => {
+    //   window.open(doc.output('bloburl'), '_blank');
+    // });
+
+    // this.router.navigate([]).then(result => { window.open(`/#/print-qrcode/${assetId}`, '_blank'); });
+    // console.log(assetId);
+    // doc.text('Hello world!', 10, 10)
+    // doc.save('a4.pdf')
+    // console.log(source);
+    // doc.addHTML(source, options, function () {
+    //   doc.save("test.pdf");
+    // });
+    // doc.output('dataurlnewwindow');
+    // doc.save('a4.pdf')
+    // doc.autoPrint();
+
   }
 
 }
