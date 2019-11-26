@@ -25,6 +25,12 @@
           {{ element.questionDescription }}
         </mat-cell>
       </ng-container>
+      <ng-container matColumnDef="questionOptions">
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matHeaderCellDef>
+          Question Options</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matCellDef="let element">
+          {{getQuestionOption(element.questionOptions) }}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
         <mat-cell fxLayoutAlign="end center" *matCellDef="let element">

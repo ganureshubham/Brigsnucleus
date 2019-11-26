@@ -20,7 +20,7 @@ export class ChecklistQuestionListComponent implements OnInit {
   pageNumber = 0;
   totalCount = 0;
   checklistQuestions: any = {};
-  displayedColumns: string[] = ['questionType', 'questionDescription', 'actions'];
+  displayedColumns: string[] = ['questionType', 'questionDescription', 'questionOptions', 'actions'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   deleteQuestionWithId: number;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
@@ -87,6 +87,18 @@ export class ChecklistQuestionListComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       }
     )
+
+  }
+
+
+  getQuestionOption(questionOptions) {
+    console.log(questionOptions);
+    let allquestionOptions = "";
+    for (let questionOption of questionOptions) {
+      allquestionOptions += questionOption.optionTitle + ', ';
+
+    }
+    return allquestionOptions;
 
   }
 
