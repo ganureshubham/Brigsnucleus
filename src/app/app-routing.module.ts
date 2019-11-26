@@ -4,6 +4,7 @@ import { AdminComponent } from './layouts/admin/admin.component';
 // import { AuthGuard } from './public service/auth-guard.service';
 import { AuthGuard } from './guards/auth.guard'
 import { LoginComponent } from './login/login.component';
+import { PrintAssetQrcodeComponent } from './shared/print-asset-qrcode/print-asset-qrcode.component';
 
 
 export const AppRoutes: Routes = [
@@ -112,6 +113,11 @@ export const AppRoutes: Routes = [
   {
     path: "login",
     component: LoginComponent,
+  },
+  {
+    path: "print-qrcode/:assetId",
+    component: PrintAssetQrcodeComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

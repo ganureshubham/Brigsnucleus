@@ -117,7 +117,7 @@ export class AssetAddComponent implements OnInit {
       formData.value.description = "";
     }
     let value = formData.value;
-    value.categoryIdFK = this.route.snapshot.params['categoryId'];
+    value.categoryIdFK = Number(this.route.snapshot.params['categoryId']);
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.spinnerService.setSpinnerVisibility(true);
