@@ -13,6 +13,10 @@ export class ChangePasswordComponent implements OnInit {
 
   password: any;
   newPassword: any;
+  ConfirmPassword: any;
+  hide: boolean = true;
+  hide1: boolean = true;
+  hide2: boolean = true;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -24,9 +28,12 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  /************************************************ Change Password***************************************************************************/
 
   changePassword(value) {
+    let value1: any = {};
+    value1.password = value.password;
+    value1.newPassword = value.newPassword;
     this.spinnerService.setSpinnerVisibility(true);
     this.profileService.changePassword(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
@@ -42,6 +49,14 @@ export class ChangePasswordComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+
+
+
+
+  Cancel() {
+    this.router.navigate(['/dashboard']);
   }
 
 }

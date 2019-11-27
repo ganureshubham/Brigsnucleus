@@ -8,6 +8,7 @@ import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DepartmentFilterComponent } from './department-filter/department-filter.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [UserViewComponent, AddUserComponent, DepartmentFilterComponent],
@@ -16,8 +17,9 @@ import { DepartmentFilterComponent } from './department-filter/department-filter
     RouterModule.forChild(UserRoutes),
     MaterialModule,
     FormsModule,
-    NgxSpinnerModule
-    
+    NgxSpinnerModule,
+    FlexLayoutModule
+
   ]
 })
 export class UserModule { }

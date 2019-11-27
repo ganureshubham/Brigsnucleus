@@ -30,6 +30,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   deptId: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
+  nonzero: boolean = false;
 
 
 
@@ -119,6 +120,26 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+
+  searchUser(keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
+      this.userService.searchUser(this.message.departmentId, keyword).subscribe(res => {
+        if (res && res.data) {
+          this.paidDataSource = res.data;
+        }
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
+    } else {
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllUsers(this.message.departmentId, this.pageNumber);
+      }
+    }
   }
 
 
