@@ -34,8 +34,17 @@
               </ng-container>
               <ng-container matColumnDef="profileImage">
                 <mat-header-cell *matHeaderCellDef>Profile Image</mat-header-cell>
-                <mat-cell *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                    src="{{visit.profileImage}}" alt="photo"></mat-cell>
+                <mat-cell *matCellDef="let visit">
+                  <!-- <img class="imgwrapper rounded img-responsive"
+                    src="{{visit.profileImage}}" alt="photo"> -->
+                  <div [ngStyle]="{
+                      'background-image': 'url(' + visit.profileImage + ')', 
+                      'background-size': 'contain',
+                      'background-position': 'center center', 
+                      'background-repeat': 'no-repeat',
+                      'width':'80px', 
+                      'height':'80px'}"></div>
+                </mat-cell>
               </ng-container>
               <ng-container matColumnDef="departmentTitle">
                 <mat-header-cell *matHeaderCellDef>Department Title</mat-header-cell>

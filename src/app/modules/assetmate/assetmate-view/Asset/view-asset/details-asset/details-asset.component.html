@@ -99,7 +99,13 @@
                                 <h4 class=" mat-h4 db ">Asset Image</h4>
                                 <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100"
                                     fxLayoutAlign="center center">
-                                    <img src="{{assetData.image}}" alt="asset-pic">
+                                    <div [ngStyle]="{
+                                            'background-image': 'url(' + assetData.image + ')', 
+                                            'background-size': 'contain',
+                                            'background-position': 'center center', 
+                                            'background-repeat': 'no-repeat',
+                                            'width':'100%', 
+                                            'height':'100%'}"></div>
                                 </mat-card>
                             </div>
                             <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28">

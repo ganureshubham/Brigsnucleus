@@ -333,8 +333,11 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
               var html = document.getElementById('qrcode' + i).innerHTML;
 
-              let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
+              let img64: string = html.substr(0, html.length - 2).split('base64,')[1].split('"')[0];
               var dispimg64 = 'data:image/png;base64,' + img64;
+              // console.log('----------------------------');
+              // console.log((html.substr(0, html.length - 2).split('base64,')[1]).split('"')[0]);
+              // console.log(dispimg64);
 
               doc.addImage(dispimg64, '*', 2, 2, 50, 50);
 
@@ -373,7 +376,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
             window.open(doc.output('bloburl'), '_blank');
 
           },
-            Number(this.allAssetForQRcode.length * 1000)
+            // Number(this.allAssetForQRcode.length * 1000)
+            50
           );
 
         } else {
