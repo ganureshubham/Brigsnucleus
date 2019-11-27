@@ -319,6 +319,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
     this.spinnerService.setSpinnerVisibility(true);
 
+    let imageLeftMargin = 5;
+    let textLeftMargin = 60;
+    let allCompTopMargin = 5;
+
     this.assetmateService.getAllAssetsByCategoryId(this.categoryID).subscribe(
       resp => {
         if (resp.status) {
@@ -327,7 +331,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
           setTimeout(() => {
 
-            var doc = new jsPDF('l', 'mm', [390, 150]);
+            var doc = new jsPDF('l', 'mm', [470, 170]);
 
             for (let i = 0; i < this.allAssetForQRcode.length; i++) {
 
@@ -339,31 +343,31 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
               // console.log((html.substr(0, html.length - 2).split('base64,')[1]).split('"')[0]);
               // console.log(dispimg64);
 
-              doc.addImage(dispimg64, '*', 2, 2, 50, 50);
+              doc.addImage(dispimg64, '*', imageLeftMargin, allCompTopMargin, 50, 50);
 
               doc.setFontSize(12);
               doc.setFontType("normal");
-              doc.text(60, 8, 'Asset Title');
+              doc.text(textLeftMargin, 8, 'Asset Title');
 
               doc.setFontSize(16);
               doc.setFontType("bold");
-              doc.text(60, 14, this.allAssetForQRcode[i].assetTitle);
+              doc.text(textLeftMargin, 14, this.allAssetForQRcode[i].assetTitle);
 
               doc.setFontSize(12);
               doc.setFontType("normal");
-              doc.text(60, 25, 'AssetCode');
+              doc.text(textLeftMargin, 25, 'AssetCode');
 
               doc.setFontSize(16);
               doc.setFontType("bold");
-              doc.text(60, 31, this.allAssetForQRcode[i].assetCode);
+              doc.text(textLeftMargin, 31, this.allAssetForQRcode[i].assetCode);
 
               doc.setFontSize(12);
               doc.setFontType("normal");
-              doc.text(60, 41, 'Model No.');
+              doc.text(textLeftMargin, 41, 'Model No.');
 
               doc.setFontSize(16);
               doc.setFontType("bold");
-              doc.text(60, 47, this.allAssetForQRcode[i].modelNumber);
+              doc.text(textLeftMargin, 47, this.allAssetForQRcode[i].modelNumber);
 
               if (i != (resp.data.length - 1)) {
                 doc.addPage();
