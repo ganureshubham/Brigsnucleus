@@ -8,11 +8,22 @@ import { ConfigurationService } from '../../../public service/configuration.serv
 })
 export class ProfileService {
 
-  constructor(private httpClient:HttpClient) { } 
-/**************************************************Get Profile Details***************************************************************************/
-  getProfile(){
-    return this.httpClient.get(ConfigurationService.baseUrl+`profile/viewAdminProfile`);
+  constructor(private httpClient: HttpClient) { }
+
+
+  /**************************************************Get Profile Details***************************************************************************/
+  getProfile() {
+    return this.httpClient.get(ConfigurationService.baseUrl + `profile/viewAdminProfile`);
   }
+
+  /**************************************************Change Password***************************************************************************/
+
+  changePassword(value: any): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `profile/changepassword`, value);
+
+  }
+
+
 
 
 }

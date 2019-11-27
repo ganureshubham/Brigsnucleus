@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 export const ProfileRoutes: Routes = [
   {
@@ -8,7 +9,16 @@ export const ProfileRoutes: Routes = [
     children: [
       {
         path: "",
-        component:ViewProfileComponent
+        component: ViewProfileComponent
+      }
+    ]
+  },
+  {
+    path: "",
+    children: [
+      {
+        path: "change-password",
+        component: ChangePasswordComponent
       }
     ]
   },

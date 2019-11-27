@@ -5,14 +5,17 @@ import { RouterModule } from '@angular/router';
 import { ProfileRoutes } from './profile-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [ViewProfileComponent],
+  declarations: [ViewProfileComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ProfileRoutes),
     MaterialModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ]
 })
 export class ProfileModule { } 

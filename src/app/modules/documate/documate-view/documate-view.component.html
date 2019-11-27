@@ -15,7 +15,6 @@
     </div>
     <mat-tab-group class="">
       <mat-tab label="Document">
-
         <div>
           <div fxLayout="column">
             <div>
@@ -46,6 +45,15 @@
                   <ng-container matColumnDef="documentType">
                     <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Document Type</mat-header-cell>
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.documentType }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="documentCodeImage">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef i18n>Document Code Image
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs class="imgwrapper rounded img-responsive" *matCellDef="let visit">
+                      <qrcode (click)="openDialog(visit.documentCode)" [qrdata]="visit.documentCode" [size]="60"
+                        [level]="'M'">
+                      </qrcode>
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="description">

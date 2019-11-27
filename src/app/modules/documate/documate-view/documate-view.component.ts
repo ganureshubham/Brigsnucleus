@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { AddDocumateComponent } from './add-documate/add-documate.component';
+import { DocumateCodeComponent } from '../documate-code/documate-code.component';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['title', 'documentType', 'description', 'Actions'];
+  displayedColumns: string[] = ['documentCodeImage', 'title', 'documentType', 'description', 'Actions'];
   paidDataSource: MatTableDataSource<Alert> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -67,6 +68,16 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.getAllDocumates(this.pageNumber);
+  }
+
+
+  /*********************************************************** Open Document Code Dialog *******************************************************************/
+
+  openDialog(documentCode): void {
+    this.dataService.saveData(documentCode);
+    const dialogRef = this.dialog.open(DocumateCodeComponent, {
+    });
+
   }
 
 
@@ -217,5 +228,6 @@ export interface Alert {
   title: string;
   documentType: string;
   description: string;
+  documentCodeImage: string;
 }
 
