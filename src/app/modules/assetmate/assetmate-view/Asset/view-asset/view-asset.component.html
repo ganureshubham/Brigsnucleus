@@ -1,9 +1,14 @@
 <div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
   <div class="portal-widget">
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
-      <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
-        <mat-icon>add</mat-icon>Add Asset
-      </button>
+      <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" fxLayoutGap.xs="5px">
+        <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
+          <mat-icon>add</mat-icon>Add Asset
+        </button>
+        <button fxFlex.xs="100" mat-button (click)="printAllAssetQRcode()" class="bg_white_grey btn_style">
+          <mat-icon>print</mat-icon>Print All Assets QRCode
+        </button>
+      </div>
       <form class="example-form filter_search" fxFlex.xs="100">
         <mat-form-field class="example-full-width" fxFlex.xs="100">
           <input matInput (keyup)="searchAsset($event.target.value)" placeholder="Search">
@@ -37,8 +42,15 @@
         </ng-container>
         <ng-container matColumnDef="assetImage">
           <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Image</mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-              src="{{visit.assetImage}}" alt="photo"></mat-cell>
+          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+            <div [ngStyle]="{
+                'background-image': 'url(' + visit.assetImage + ')', 
+                'background-size': 'contain',
+                'background-position': 'center center', 
+                'background-repeat': 'no-repeat',
+                'width':'80px', 
+                'height':'80px'}"></div>
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetTitle">
           <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
@@ -123,5 +135,10 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="div-print-bulk" *ngIf="allAssetForQRcode.length > 0">
+  <div class="div-print-bulk" *ngFor="let asset of allAssetForQRcode; let i = index" style="margin-top: 20px;">
+    <qrcode id="{{'qrcode'+i}}" [qrdata]="asset.assetCode" [size]="150" [level]="'M'"></qrcode>
   </div>
 </div>
