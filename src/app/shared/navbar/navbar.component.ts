@@ -35,6 +35,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
+  goToChangePass() {
+    this.router.navigate(['/profile/change-password']);
+  }
+
   logout() {
     this.authService.logout();
   }
