@@ -38,6 +38,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
   assetForQRcode: any = {};
+  allAssetForQRcode: any = [];
   assetCode1: string = '1';
 
   displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
@@ -259,7 +260,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       var dispimg64 = 'data:image/png;base64,' + img64;
       // console.log(dispimg64);
 
-      var doc = new jsPDF('l', 'mm', [370, 150]);
+      var doc = new jsPDF('l', 'mm', [390, 150]);
 
       //QRCODE img
       doc.addImage(dispimg64, '*', 2, 2, 50, 50);
@@ -311,6 +312,80 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     // doc.output('dataurlnewwindow');
     // doc.save('a4.pdf')
     // doc.autoPrint();
+
+  }
+
+  printAllAssetQRcode() {
+
+    this.spinnerService.setSpinnerVisibility(true);
+
+    this.assetmateService.getAllAssetsByCategoryId(this.categoryID).subscribe(
+      resp => {
+        if (resp.status) {
+
+          this.allAssetForQRcode = resp.data;
+
+          setTimeout(() => {
+
+            var doc = new jsPDF('l', 'mm', [390, 150]);
+
+            for (let i = 0; i < this.allAssetForQRcode.length; i++) {
+
+              var html = document.getElementById('qrcode' + i).innerHTML;
+
+              let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
+              var dispimg64 = 'data:image/png;base64,' + img64;
+
+              doc.addImage(dispimg64, '*', 2, 2, 50, 50);
+
+              doc.setFontSize(12);
+              doc.setFontType("normal");
+              doc.text(60, 8, 'Asset Title');
+
+              doc.setFontSize(16);
+              doc.setFontType("bold");
+              doc.text(60, 14, this.allAssetForQRcode[i].assetTitle);
+
+              doc.setFontSize(12);
+              doc.setFontType("normal");
+              doc.text(60, 25, 'AssetCode');
+
+              doc.setFontSize(16);
+              doc.setFontType("bold");
+              doc.text(60, 31, this.allAssetForQRcode[i].assetCode);
+
+              doc.setFontSize(12);
+              doc.setFontType("normal");
+              doc.text(60, 41, 'Model No.');
+
+              doc.setFontSize(16);
+              doc.setFontType("bold");
+              doc.text(60, 47, this.allAssetForQRcode[i].modelNumber);
+
+              if (i != (resp.data.length - 1)) {
+                doc.addPage();
+              }
+
+            }
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.allAssetForQRcode = [];
+            window.open(doc.output('bloburl'), '_blank');
+
+          },
+            Number(this.allAssetForQRcode.length * 1000)
+          );
+
+        } else {
+          this.spinnerService.setSpinnerVisibility(false);
+          this.showSnackBar(resp.message)
+        }
+      },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!")
+      }
+    );
 
   }
 

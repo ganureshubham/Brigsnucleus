@@ -52,6 +52,10 @@ export class AssetmateService {
     return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${pageNo}`);
   }
 
+  getAllAssetsByCategoryId(categoryId: number) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetQrCodeDetailsList/${categoryId}`);
+  }
+
   /*********************************************************** Get All Documents *************************************/
 
   getAllAssetDocuments(assetId: number, pageNo: number): Observable<any> {
