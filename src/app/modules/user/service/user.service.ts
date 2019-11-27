@@ -16,6 +16,15 @@ export class UserService {
     return this.httpClient.get(ConfigurationService.baseUrl + `users/listOfUsers/${departmentId}/${pageNo}`);
   }
 
+  /******************************************************* Search User*******************************************************************/
+  searchUser(departmentId: number, keyword: any): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/userSearch?departmentId=${departmentId}&keyword=${keyword}`);
+
+  }
+
+
+
+
   /*********************************************************** Get All Departments ************************************************/
   getAllDepts(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `departments/departmentList`);

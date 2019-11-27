@@ -1,102 +1,105 @@
-<div class="innerpage assets_view padding_container flex_container margin_auto">
+<div fxLayout.xs="column" fxLayoutAlign.xs="space-around center" fxLayoutGap="30px"
+  class="innerpage assets_view padding_container flex_container margin_auto">
   <app-department-filter (messageEvent)="receiveMessage($event)"></app-department-filter>
 
-  <mat-card class="width_80 right_side_box">
+  <mat-card fxFlex.xs="100" fxFlex="100">
     <div class="innerbody table">
-      <div fxLayout="column" fxLayout.md="row" fxLayout.lg="row" fxLayoutGap="16px">
-        <div class="portal-widget" fxFlex="1 0 auto" fxFlex.gt-sm="70">
-
-          <div class="table_header">
-            <div class="fl">
-              <p class="tabel_heading mat-subheading-2">User {{ DepartmentObj}}</p>
+      <div fxLayout.xs="column" fxLayoutGap="33px" class="portal-widget">
+        <div fxLayout.xs="column" fxLayoutAlign="space-between center" class="table_header">
+          <div class="fl">
+            <p class="tabel_heading mat-subheading-2">User {{ DepartmentObj}}</p>
+          </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+            <div fxFlex.xs="100">
+              <form fxFlex.xs="100" class="filter_search">
+                <mat-form-field fxFlex.xs="100">
+                  <input matInput (keyup)="searchUser($event.target.value)" placeholder="Search">
+                </mat-form-field>
+              </form>
             </div>
-            <div class="fr">
-              <div class="example-button-row btn_style">
-                <button mat-button (click)="addUser()" class="bg_white_grey">
-                  <mat-icon>add</mat-icon>Add User
-                </button>
-              </div>
+            <div fxFlex.xs="100" class="btn_style">
+              <button fxFlex.xs="100" mat-button (click)="addUser()" class="bg_white_grey">
+                <mat-icon>add</mat-icon>Add User
+              </button>
             </div>
           </div>
-          <div class="cl"></div>
-          <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
-            <p>No Record Found</p>
-          </div>
-          <ng-template #recordFound>
-            <mat-table [dataSource]="paidDataSource">
-              <!-- <ng-container matColumnDef="userId">
+        </div>
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+          <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+          <mat-table [dataSource]="paidDataSource">
+            <!-- <ng-container matColumnDef="userId">
               <mat-header-cell *matHeaderCellDef>User Id</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.userId }}</mat-cell>
             </ng-container> -->
-              <ng-container matColumnDef="userName">
-                <mat-header-cell *matHeaderCellDef i18n>User Name </mat-header-cell>
-                <mat-cell *matCellDef="let visit">{{visit.firstName+' '+visit.lastName}}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="profileImage">
-                <mat-header-cell *matHeaderCellDef>Profile Image</mat-header-cell>
-                <mat-cell *matCellDef="let visit">
-                  <!-- <img class="imgwrapper rounded img-responsive"
+            <ng-container matColumnDef="userName">
+              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef i18n>User Name </mat-header-cell>
+              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+                {{visit.firstName+' '+visit.lastName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="profileImage">
+              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Profile Image</mat-header-cell>
+              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+                <!-- <img class="imgwrapper rounded img-responsive"
                     src="{{visit.profileImage}}" alt="photo"> -->
-                  <div [ngStyle]="{
+                <div [ngStyle]="{
                       'background-image': 'url(' + visit.profileImage + ')', 
                       'background-size': 'contain',
                       'background-position': 'center center', 
                       'background-repeat': 'no-repeat',
                       'width':'80px', 
                       'height':'80px'}"></div>
-                </mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="departmentTitle">
-                <mat-header-cell *matHeaderCellDef>Department Title</mat-header-cell>
-                <mat-cell *matCellDef="let visit">{{ visit.departmentTitle }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="mobileNumber">
-                <mat-header-cell *matHeaderCellDef>Mobile Number</mat-header-cell>
-                <mat-cell *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="emailId">
-                <mat-header-cell *matHeaderCellDef>Email Id</mat-header-cell>
-                <mat-cell *matCellDef="let visit">
-                  {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
-              </ng-container>
-              <!-- <ng-container matColumnDef="userRoleIdFK">
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="departmentTitle">
+              <mat-header-cell fxHide.xs *matHeaderCellDef>Department Title</mat-header-cell>
+              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.departmentTitle }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="mobileNumber">
+              <mat-header-cell fxHide.xs *matHeaderCellDef>Mobile Number</mat-header-cell>
+              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="emailId">
+              <mat-header-cell fxHide.xs *matHeaderCellDef>Email Id</mat-header-cell>
+              <mat-cell fxHide.xs *matCellDef="let visit">
+                {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
+            </ng-container>
+            <!-- <ng-container matColumnDef="userRoleIdFK">
               <mat-header-cell *matHeaderCellDef>User RoleId</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.userRoleIdFK }}</mat-cell>
             </ng-container> -->
-              <ng-container matColumnDef="Actions">
-                <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-                <mat-cell *matCellDef="let visit">
-                  <div>
-                    <mat-menu #dailyPerformanceMenu="matMenu">
-                      <!-- <a mat-menu-item (click)="viewUser(visit.assetId)">
+            <ng-container matColumnDef="Actions">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
+                <div>
+                  <mat-menu #dailyPerformanceMenu="matMenu">
+                    <!-- <a mat-menu-item (click)="viewUser(visit.assetId)">
                     <mat-icon matListIcon>visibility</mat-icon>
                     <span i18n>View Asset Detail</span>
                   </a> -->
-                      <a mat-menu-item (click)="editUser(visit)">
-                        <mat-icon matListIcon>edit</mat-icon>
-                        <span i18n>Edit User</span>
-                      </a>
-                      <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
-                        <mat-icon matListIcon>delete_outline</mat-icon>
-                        <span i18n>Delete User</span>
-                      </a>
-                    </mat-menu>
-                    <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-                      <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-                    </button>
-                  </div>
-                </mat-cell>
-              </ng-container>
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            </mat-table>
-          </ng-template>
-
-          <div>
-            <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
-            </mat-paginator>
-          </div>
-
+                    <a mat-menu-item (click)="editUser(visit)">
+                      <mat-icon matListIcon>edit</mat-icon>
+                      <span i18n>Edit User</span>
+                    </a>
+                    <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
+                      <mat-icon matListIcon>delete_outline</mat-icon>
+                      <span i18n>Delete User</span>
+                    </a>
+                  </mat-menu>
+                  <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                    <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                  </button>
+                </div>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </ng-template>
+        <div>
+          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+          </mat-paginator>
         </div>
       </div>
     </div>
