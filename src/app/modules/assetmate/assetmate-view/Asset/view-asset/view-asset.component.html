@@ -32,7 +32,8 @@
         <ng-container matColumnDef="companyAssetNo">
           <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n>Company Asset Number
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{visit.companyAssetNo}}</mat-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+            {{visit.companyAssetNo != 'undefined' ? visit.companyAssetNo : 'NA'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetImage">
           <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Image</mat-header-cell>
@@ -65,7 +66,7 @@
                   <mat-icon matListIcon>edit</mat-icon>
                   <span i18n>Edit Asset</span>
                 </a>
-                <a mat-menu-item (click)="printQRcode(visit.assetId)">
+                <a mat-menu-item (click)="printQRcode(visit)">
                   <mat-icon matListIcon>print</mat-icon>
                   <span i18n>Print QRcode</span>
                 </a>
@@ -94,4 +95,33 @@
 </div>
 <div *ngIf="showFirst" fxLayout="column" fxFlex="100">
   <app-asset-add (assetAddedEmitter)='onAssetAdded($event)'></app-asset-add>
+</div>
+<div id="div-print">
+  <div class="qr-code-container">
+    <div class="qrcode-row" id="printableArea">
+      <div class="col-1">
+        <qrcode id="qrcode" [qrdata]="assetCode1" [size]="150" [level]="'M'"></qrcode>
+      </div>
+      <div class="col-2">
+        <div class="row">
+          <div>
+            <div>Title</div>
+            <div class="asset-value">{{assetForQRcode.assetTitle}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div>AssetCode</div>
+            <div class="asset-value">{{assetForQRcode.assetCode}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div>Model No.</div>
+            <div class="asset-value">{{assetForQRcode.modelNumber}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

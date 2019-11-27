@@ -1,0 +1,55 @@
+.qr-code-container{
+    background-color: white;
+    /* width: 100vw;
+    height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qrcode-row{
+    padding:20px;
+    border: 1px solid #ccc;
+}
+
+.fab-btn-container{
+    position: fixed;
+    bottom: 50px;
+    right: 50;
+}
+
+.asset-value{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#printableArea{
+    display: flex;
+    flex-direction: row;
+    min-width: 474px;
+}
+
+.col-1{
+    flex:3;
+}
+
+.col-2{
+    flex:7;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0px 20px 10px 20px;
+}
+
+.col-5{
+    flex:1;
+}
+
+#div-print{
+    height: 0% !important;
+    width: 0% !important;
+    overflow:hidden;
+}
