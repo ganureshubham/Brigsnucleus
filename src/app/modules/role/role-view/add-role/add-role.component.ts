@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoleService } from '../../service/role.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-role',
@@ -17,6 +17,7 @@ export class AddRoleComponent implements OnInit {
   formTitle: string = "Add User Role";
   roleData: any = {};
   uploadingLoader: boolean = false;
+  cancelbtn = 0;
 
   constructor(private router: Router,
     private roleService: RoleService,
@@ -25,17 +26,20 @@ export class AddRoleComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddRoleComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+
   ) { }
 
+
+
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.roleData.title = res.title;
-        this.roleData.userRoleId = res.userRoleId;
-        this.isEdited = true;
-        this.formTitle = `Edit User Role`;
-      }
-    })
+    if (this.data.type == 'Edit') {
+      this.roleData = this.data;
+      this.isEdited = true;
+      this.formTitle = `Edit User Role`;
+    }
   }
 
   /*********************************************************** Add New Asset *******************************************************************/
@@ -44,9 +48,11 @@ export class AddRoleComponent implements OnInit {
     this.roleService.addRole(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.router.navigate(['/user-role']);
+      this.dialog.closeAll();
+      //this.router.navigate(['/user-role']);
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
@@ -58,13 +64,16 @@ export class AddRoleComponent implements OnInit {
   /*********************************************************** Edit Selected Role *******************************************************************/
 
   editRole(value) {
+    value.userRoleId = this.roleData.userRoleId;
     this.spinnerService.setSpinnerVisibility(true);
     this.roleService.editRole(this.roleData.userRoleId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.router.navigate(['/user-role']);
+      this.dialog.closeAll();
+      // this.router.navigate(['/user-role']);
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }

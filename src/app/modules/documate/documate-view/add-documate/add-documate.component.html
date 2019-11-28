@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap.xs="30px" class="innerbody form">
+<!-- <div fxLayout="column" fxLayoutGap.xs="30px" class="innerbody form">
   <div fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box" class="form_header">
     <div fxFlex.xs="100" fxLayoutAlign="center center" class="fl">
       <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
@@ -72,6 +72,78 @@
         [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Document</button>
       <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary"
         class="btn-cancel" [disabled]="!documentform.valid" (click)="backToList()">Cancel</button>
+    </div>
+  </form>
+</div> -->
+
+
+
+
+<div fxLayout.xs="column" fxLayoutAlign.xs="space-around center" fxLayoutGap="25px" class="form">
+  <div fxLayout.xs="column" fxLayoutAlign.gt-xs="space-around center" class="padding_box" class="form_header">
+    <div class="fl">
+      <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+    </div>
+  </div>
+  <form fxLayout="column" #documentform="ngForm" novalidate>
+    <div fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.xs="100">
+        <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
+          [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
+          <mat-option *ngFor="let doc of documatetypelist" [value]="doc.documentTypeId">
+            {{doc.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="documentform.submitted && DocumentType.invalid">
+          <mat-error *ngIf="DocumentType.errors.required">Document Type is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="3" [(ngModel)]="documentData.title" #DocTitle="ngModel"
+          type="text" required placeholder="Document Title">
+        <mat-error *ngIf="documentform.submitted && DocTitle.invalid">
+          <mat-error *ngIf="DocTitle.errors.required">Document Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayoutGap.gt-xs="30px">
+      <mat-form-field fxFlex.xs="100">
+        <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
+          placeholder="Description" required></textarea>
+        <mat-error *ngIf="documentform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayoutGap.gt-xs="30px">
+      <div fxFlex.xs="100" class="md-form">
+        <label>Document File</label>
+        <div class="file-field">
+          <div class="btn btn-primary btn-sm float-left">
+            <span>Choose file</span>
+            <input type="file" onclick="this.value=null;" (change)="documentChange($event.target.files)">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
+              placeholder="Browse Document File From System">
+            <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear" (click)="filepath=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="error hide text-error">{{documenterror}}</div>
+      </div>
+    </div>
+    <div class="savebtn">
+      <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+        [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
+        [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
+      <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+        [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Document</button>
+      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
     </div>
   </form>
 </div>
