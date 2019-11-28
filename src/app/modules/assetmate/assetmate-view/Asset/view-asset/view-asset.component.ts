@@ -283,7 +283,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       doc.setFontType("bold");
       doc.text(60, 31, this.assetForQRcode.assetCode);
 
-      //ASSETCODE
+      //MODELNO
       doc.setFontSize(12);
       doc.setFontType("normal");
       doc.text(60, 41, 'Model No.');

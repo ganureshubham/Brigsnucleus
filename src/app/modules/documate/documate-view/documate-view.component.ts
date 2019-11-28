@@ -11,6 +11,7 @@ import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { AddDocumateComponent } from './add-documate/add-documate.component';
 import { DocumateCodeComponent } from '../documate-code/documate-code.component';
+import jsPDF from 'jspdf';
 
 
 @Component({
@@ -34,6 +35,9 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   documentId: number;
   nonzero: boolean = false;
   isNoRecordFound: boolean = true;
+  documentForQRcode: any = {};
+  allDocumentForQRcode: any = [];
+  documentCode1: string = '1';
 
 
 
@@ -191,6 +195,47 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
         this.getAllDocumates(this.pageNumber);
       }
     }
+  }
+
+
+  /*********************************************************** Print Particular Qr-Code Document *******************************************************************/
+
+
+  printQRcode(documate) {
+    this.documentForQRcode = documate;
+    this.documentCode1 = documate.documentCode;
+
+    setTimeout(() => {
+      var html = document.getElementById('qrcode').innerHTML;
+      let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
+      var dispimg64 = 'data:image/png;base64,' + img64;
+      var doc = new jsPDF('l', 'mm', [470, 170]);
+      //QRCODE img
+      doc.addImage(dispimg64, '*', 5, 5, 50, 50);
+
+      //TITLE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 8, 'Document Title');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 14, this.documentForQRcode.title);
+
+      //DOCUMENTCODE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 25, 'DocumentCode');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 31, this.documentForQRcode.documentCode);
+
+      window.open(doc.output('bloburl'), '_blank');
+    }, 50);
+
+
+
   }
 
 
