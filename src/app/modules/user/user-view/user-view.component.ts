@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -11,6 +11,22 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
+import { AddUserComponent } from './add-user/add-user.component';
+
+
+interface userDialogData {
+  type: string;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+  userRoleIdFK: number;
+  departmentTitle: string;
+  mobileNumber: number;
+  emailId: string;
+  password: string;
+
+}
 
 @Component({
   selector: 'app-user-view',
@@ -31,6 +47,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
   nonzero: boolean = false;
+  dialogData: userDialogData;
 
 
 
@@ -55,6 +72,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    public dialog: MatDialog
 
   ) {
 
@@ -153,16 +171,43 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.getAllUsers(this.message.departmentId, this.page);
   }
 
-  /*********************************************************** Edit Particular Asset  *******************************************************************/
+  /*********************************************************** Edit Particular User  *******************************************************************/
+
+  // editUser(visit) {
+  //   this.dataService.changeData(visit);
+  //   this.router.navigate(['/user/add-user']);
+  // }
 
   editUser(visit) {
-    this.dataService.changeData(visit);
-    this.router.navigate(['/user/add-user']);
+    this.dialogData = {
+      type: 'Edit',
+      userId: visit.userId,
+      firstName: visit.firstName,
+      lastName: visit.lastName,
+      profileImage: visit.profileImage,
+      userRoleIdFK: visit.userRoleIdFK,
+      departmentTitle: visit.departmentTitle,
+      mobileNumber: visit.mobileNumber,
+      emailId: visit.emailId,
+      password: visit.password,
+    }
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      data: this.dialogData,
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllUsers(this.message.departmentId, this.pageNumber);
+      }
+    })
+
+
   }
 
 
 
-  /*********************************************************** Delete Particular Asset *******************************************************************/
+  /*********************************************************** Delete Particular User *******************************************************************/
 
   deleteUser(userId: number, firstName: string, lastName: string) {
     this.userId = userId;
@@ -195,15 +240,40 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  /*********************************************************** Add User *******************************************************************/
 
+  // addUser() {
+  //   let selectedUser = null;
+  //   this.dataService.changeData(selectedUser);
+  //   this.router.navigate(['/user/add-user']);
+  // }
 
   addUser() {
-    let selectedUser = null;
-    this.dataService.changeData(selectedUser);
-    this.router.navigate(['/user/add-user']);
+    this.dialogData = {
+      type: 'Add',
+      userId: 0,
+      firstName: '',
+      lastName: '',
+      profileImage: '',
+      userRoleIdFK: 0,
+      departmentTitle: '',
+      mobileNumber: 0,
+      emailId: '',
+      password: '',
+    }
+
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      data: this.dialogData,
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllUsers(this.message.departmentId, this.pageNumber);
+      }
+    })
+
   }
-
-
 
 }
 
@@ -215,7 +285,7 @@ export interface User {
   profileImage: string,
   userRoleIdFK: number,
   departmentTitle: string,
-  mobileNumber: string,
+  mobileNumber: number,
   emailId: string,
   password: string
 }

@@ -11,6 +11,19 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
+import { AddSupplierComponent } from './add-supplier/add-supplier.component';
+
+
+interface supplierDialogData {
+  type: string;
+  supplierId: number;
+  firstName: string;
+  lastName: string;
+  businessName: string;
+  mobileNumber: number;
+  emailId: string;
+
+}
 
 @Component({
   selector: 'app-supplier-view',
@@ -28,6 +41,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   supplierName: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
+  dialogData: supplierDialogData;
+
 
 
 
@@ -110,11 +125,36 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
+  /*********************************************************** Add Supplier *******************************************************************/
+
+  // addSupplier() {
+  //   let selectedSupplier = null;
+  //   this.dataService.changeData(selectedSupplier);
+  //   this.router.navigate(['/supplier/add-supplier'])
+  // }
+
   addSupplier() {
-    let selectedSupplier = null;
-    this.dataService.changeData(selectedSupplier);
-    this.router.navigate(['/supplier/add-supplier'])
+    this.dialogData = {
+      type: 'Add',
+      supplierId: 0,
+      firstName: '',
+      lastName: '',
+      businessName: '',
+      mobileNumber: 0,
+      emailId: '',
+    }
+    const dialogRef = this.dialog.open(AddSupplierComponent, {
+      data: this.dialogData,
+      width: '450px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllSuppliers(this.pageNumber);
+      }
+    });
+
   }
+
 
   /*********************************************************** Delete Particular Supplier *******************************************************************/
 
@@ -152,9 +192,33 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Supplier  *******************************************************************/
 
-  editSupplier(visit: number) {
-    this.dataService.changeData(visit);
-    this.router.navigate(['/supplier/add-supplier']);
+  // editSupplier(visit: number) {
+  //   this.dataService.changeData(visit);
+  //   this.router.navigate(['/supplier/add-supplier']);
+  // }
+
+  editSupplier(visit: any) {
+    this.dialogData = {
+      type: 'Edit',
+      supplierId: visit.supplierId,
+      firstName: visit.firstName,
+      lastName: visit.lastName,
+      businessName: visit.businessName,
+      mobileNumber: visit.mobileNumber,
+      emailId: visit.emailId,
+    }
+
+    const dialogRef = this.dialog.open(AddSupplierComponent, {
+      data: this.dialogData,
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllSuppliers(this.pageNumber);
+      }
+    });
+
   }
 
 

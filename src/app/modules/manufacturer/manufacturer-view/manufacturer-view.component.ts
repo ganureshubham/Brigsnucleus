@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,6 +12,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
+import { AddManufacturerComponent } from './add-manufacturer/add-manufacturer.component';
+
+interface manufacturerDialogData {
+  type: string;
+  manufacturerId: number;
+  title: string;
+
+}
+
 
 @Component({
   selector: 'app-manufacturer-view',
@@ -41,6 +50,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
   manufacturerId: number;
+  dialogData: manufacturerDialogData;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -49,6 +59,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    public dialog: MatDialog
   ) {
 
   }
@@ -107,12 +118,36 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     this.getAllmanufacturers(this.page);
   }
 
+  /*********************************************************** Page Change *******************************************************************/
+
+
+  // addManufacturer() {
+  //   let selectedManufacturer = null;
+  //   this.dataService.changeData(selectedManufacturer);
+  //   this.router.navigate(['/manufacturer/add-manufacturer']);
+  // }
 
   addManufacturer() {
-    let selectedManufacturer = null;
-    this.dataService.changeData(selectedManufacturer);
-    this.router.navigate(['/manufacturer/add-manufacturer']);
+    this.dialogData = {
+      type: 'Add',
+      manufacturerId: 0,
+      title: '',
+
+    }
+    const dialogRef = this.dialog.open(AddManufacturerComponent, {
+      data: this.dialogData,
+      width: '450px'
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllmanufacturers(this.pageNumber);
+      }
+
+    })
   }
+
 
   /*********************************************************** Delete Particular Role *******************************************************************/
 
@@ -152,10 +187,31 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
-  editManufacturer(manufacturerId: number) {
-    this.dataService.changeData(manufacturerId);
-    this.router.navigate(['/manufacturer/add-manufacturer']);
+  // editManufacturer(manufacturerId: number) {
+  //   this.dataService.changeData(manufacturerId);
+  //   this.router.navigate(['/manufacturer/add-manufacturer']);
+  // }
+
+  editManufacturer(visit: any) {
+    this.dialogData = {
+      type: 'Edit',
+      manufacturerId: visit.manufacturerId,
+      title: visit.title,
+    }
+    const dialogRef = this.dialog.open(AddManufacturerComponent, {
+      data: this.dialogData,
+      width: '450px'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllmanufacturers(this.pageNumber);
+      }
+
+    })
+
   }
+
 
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { NgForm } from '@angular/forms';
@@ -6,7 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-user',
@@ -25,6 +26,7 @@ export class AddUserComponent implements OnInit {
   userRoleList: any;
   formTitle: string = "Add User";
   hide = true;
+  cancelbtn = 0;
 
 
   constructor(private router: Router,
@@ -32,17 +34,27 @@ export class AddUserComponent implements OnInit {
     private dataService: DataSharingService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+
   ) { }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.userData = res;
-        this.profileImage = res.profileImage.split('/').pop().split('?')[0];
-        this.isEdited = true;
-        this.formTitle = `Edit User`;
-      }
-    })
+    if (this.data.type = 'Edit') {
+      this.userData = this.data;
+      this.profileImage = this.data.profileImage.split('/').pop().split('?')[0];
+      this.isEdited = true;
+      this.formTitle = `Edit User`;
+    }
+    // this.dataService.currentData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.userData = res;
+    //     this.profileImage = res.profileImage.split('/').pop().split('?')[0];
+    //     this.isEdited = true;
+    //     this.formTitle = `Edit User`;
+    //   }
+    // })
     this.getDeptList();
     this.getUserRoleList();
   }
@@ -57,9 +69,11 @@ export class AddUserComponent implements OnInit {
         this.userService.addUser(value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
           this.showSnackBar(res.message);
-          this.router.navigate(['/user/user-list']);
+          this.dialog.closeAll();
+          // this.router.navigate(['/user/user-list']);
         },
           error => {
+            this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           })
       })
@@ -94,9 +108,11 @@ export class AddUserComponent implements OnInit {
         this.userService.editUser(this.userData.userId, value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
           this.showSnackBar(res.message);
-          this.router.navigate(['/user/user-list']);
+          this.dialog.closeAll();
+          // this.router.navigate(['/user/user-list']);
         },
           error => {
+            this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           })
       })
