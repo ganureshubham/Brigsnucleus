@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SupplierService } from '../../service/supplier.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-supplier',
@@ -16,28 +17,26 @@ export class AddSupplierComponent implements OnInit {
   isEdited: boolean = false;
   formTitle: string = "Add Supplier";
   supplierData: any = {};
+  cancelbtn = 0;
 
   constructor(private router: Router,
     private supplierService: SupplierService,
     public dataService: DataSharingService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddSupplierComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+
   ) { }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.supplierData.businessName = res.businessName;
-        this.supplierData.firstName = res.firstName;
-        this.supplierData.lastName = res.lastName;
-        this.supplierData.emailId = res.emailId;
-        this.supplierData.mobileNumber = res.mobileNumber;
-        this.supplierData.supplierId = res.supplierId;
-        this.supplierData.supplierName = res.supplierName;
-        this.isEdited = true;
-        this.formTitle = `Edit Supplier`;
-      }
-    })
+    console.log('data', this.data);
+    if (this.data.type == 'Edit') {
+      this.supplierData = this.data;
+      this.isEdited = true;
+      this.formTitle = `Edit Supplier`;
+    }
   }
 
   /*********************************************************** Add New Asset *******************************************************************/
@@ -46,7 +45,8 @@ export class AddSupplierComponent implements OnInit {
     this.supplierService.addSupplier(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.router.navigate(['/supplier']);
+      this.dialog.closeAll();
+      //this.router.navigate(['/supplier']);
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
@@ -54,6 +54,7 @@ export class AddSupplierComponent implements OnInit {
 
   }
   showSnackBar(message: string) {
+    this.spinnerService.setSpinnerVisibility(false);
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
@@ -63,9 +64,11 @@ export class AddSupplierComponent implements OnInit {
     this.supplierService.editSupplier(this.supplierData.supplierId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.router.navigate(['/supplier']);
+      this.dialog.closeAll();
+      // this.router.navigate(['/supplier']);
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
