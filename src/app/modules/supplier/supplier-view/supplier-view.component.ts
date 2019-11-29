@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -48,6 +48,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private dialog: MatDialog
   ) {
 
   }

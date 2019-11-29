@@ -1,13 +1,13 @@
 <div class="innerbody table">
   <div fxLayout="column">
     <div class="portal-widget">
-      <mat-card fxFlex="98">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around center" class="table_header">
+      <mat-card fxFlex.xs="90" fxFlex="98">
+        <div fxLayout.xs="column" fxLayoutAlign.xs="space-around center" class="table_header">
           <div class="fl">
             <p class="tabel_heading mat-subheading-2">Suppliers List</p>
           </div>
           <div fxFlex.xs="100" class="fr">
-            <div fxFlex.xs="100" class="example-button-row btn_style">
+            <div fxFlex.xs="100" class="btn_style">
               <button fxFlex.xs="100" mat-button (click)="addSupplier()" class="bg_white_grey">
                 <mat-icon>add</mat-icon>Add Supplier
               </button>
@@ -25,25 +25,27 @@
             <mat-cell *matCellDef="let visit">{{ visit.supplierId }}</mat-cell> 
           </ng-container> -->
             <ng-container matColumnDef="supplierName">
-              <mat-header-cell *matHeaderCellDef>Supplier Name</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.firstName+' '+visit.lastName }}</mat-cell>
+              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Supplier Name</mat-header-cell>
+              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+                {{ visit.firstName+' '+visit.lastName }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="businessName">
-              <mat-header-cell *matHeaderCellDef>Business Name</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.businessName }}</mat-cell>
+              <mat-header-cell fxHide.xs *matHeaderCellDef>Business Name</mat-header-cell>
+              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.businessName }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="mobileNumber">
-              <mat-header-cell *matHeaderCellDef>Mobile Number</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
+              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Mobile Number</mat-header-cell>
+              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="emailId">
-              <mat-header-cell *matHeaderCellDef>Email Id</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.emailId }}</mat-cell>
+              <mat-header-cell fxHide.xs *matHeaderCellDef>Email Id</mat-header-cell>
+              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.emailId }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="Actions">
-              <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
-              <mat-cell *matCellDef="let visit">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
                 <div>
                   <mat-menu #dailyPerformanceMenu="matMenu">
 
