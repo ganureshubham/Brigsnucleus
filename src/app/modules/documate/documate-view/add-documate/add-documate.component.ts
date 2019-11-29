@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DocumateService } from '../../service/documate.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-documate',
@@ -20,6 +21,7 @@ export class AddDocumateComponent implements OnInit {
   filepath: any;
   fileToUpload1: File = null;
   isEdited: boolean;
+  cancelbtn = 0;
 
 
   constructor(
@@ -28,20 +30,32 @@ export class AddDocumateComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     public dataService: DataSharingService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddDocumateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+
   ) { }
 
   ngOnInit() {
-    this.dataService.currentData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.documentData = res;
-        this.filepath = res.filepath.split('/').pop().split('?')[0];
-        this.isEdited = true;
-        this.formTitle = `Edit Document`;
+    // this.dataService.currentData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.documentData = res;
+    //     this.filepath = res.filepath.split('/').pop().split('?')[0];
+    //     this.isEdited = true;
+    //     this.formTitle = `Edit Document`;
 
-      } else {
-        this.documentData.documentTypeIdFK = 3;
-      }
-    })
+    //   } else {
+    //     this.documentData.documentTypeIdFK = 3;
+    //   }
+    // })
+    if (this.data.type == 'Add') {
+      this.documentData.documentTypeIdFK = 3;
+    } else if (this.data.type == 'Edit') {
+      this.documentData = this.data;
+      this.filepath = this.data.filepath.split('/').pop().split('?')[0];
+      this.isEdited = true;
+      this.formTitle = `Edit Document`;
+    }
     this.selectDocumentType();
   }
 
@@ -73,9 +87,11 @@ export class AddDocumateComponent implements OnInit {
           res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            this.router.navigate(['/documate']);
+            this.dialog.closeAll();
+            //this.router.navigate(['/documate']);
           },
           error => {
+            this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           }
         );
@@ -105,6 +121,7 @@ export class AddDocumateComponent implements OnInit {
 
   editDocumate(formData: NgForm) {
     let value = formData.value;
+    value.documentId = this.documentData.documentId;
     if (formData.valid) {
       this.uploadDocToserver((result1) => {
         value.filepath = result1;
@@ -113,9 +130,11 @@ export class AddDocumateComponent implements OnInit {
           res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            this.router.navigate(['/documate']);
+            this.dialog.closeAll();
+            // this.router.navigate(['/documate']);
           },
           error => {
+            this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           }
         );

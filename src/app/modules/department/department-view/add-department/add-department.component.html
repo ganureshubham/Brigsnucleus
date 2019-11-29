@@ -27,7 +27,7 @@
         (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save Department</button>
       <button *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'" [disabled]="!deptForm.valid"
         (click)="editDept(deptForm.value)" mat-raised-button i18n color="primary">Update Department</button>
-      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
+      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button> 
     </mat-list-item>
   </mat-list>
 </form> -->
@@ -35,7 +35,8 @@
 
 
 
-<form #deptForm="ngForm" class="listing_space add_department">
+<form fxLayout.xs="column" fxLayoutAlign.xs="space-around center" #deptForm="ngForm"
+  class="listing_space add_department">
   <div>
     <div>
       <p class="title_header mat-subheading-2">{{formTitle}}</p>

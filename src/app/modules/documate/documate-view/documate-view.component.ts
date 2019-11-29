@@ -11,6 +11,18 @@ import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { AddDocumateComponent } from './add-documate/add-documate.component';
 import { DocumateCodeComponent } from '../documate-code/documate-code.component';
+import jsPDF from 'jspdf';
+
+interface documateDialogData {
+  type: string;
+  title: string;
+  documentType: string;
+  description: string;
+  documentCodeImage: string;
+  filepath: string;
+  documentTypeIdFK: number;
+  documentId: number;
+}
 
 
 @Component({
@@ -34,6 +46,10 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   documentId: number;
   nonzero: boolean = false;
   isNoRecordFound: boolean = true;
+  documentForQRcode: any = {};
+  allDocumentForQRcode: any = [];
+  documentCode1: string = '1';
+  dialogData: documateDialogData;
 
 
 
@@ -122,10 +138,33 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** View Particular Alert  *******************************************************************/
 
 
+  // editDocumate(visit: any) {
+  //   this.dataService.changeData(visit);
+  //   this.router.navigate(['/documate/add-documate']);
+  // }
+
   editDocumate(visit: any) {
-    this.dataService.changeData(visit);
-    this.router.navigate(['/documate/add-documate']);
+    this.dialogData = {
+      type: 'Edit',
+      documentId: visit.documentId,
+      title: visit.title,
+      documentType: visit.documentType,
+      description: visit.description,
+      documentCodeImage: visit.documentCodeImage,
+      filepath: visit.filepath,
+      documentTypeIdFK: visit.documentTypeIdFK
+    }
+    const dialogRef = this.dialog.open(AddDocumateComponent, {
+      data: this.dialogData,
+      width: '450px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllDocumates(this.pageNumber);
+      }
+    });
   }
+
 
   /*********************************************************** Download Particular Document  *******************************************************************/
 
@@ -194,27 +233,77 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  /*********************************************************** Add  Documate *******************************************************************/
+  /*********************************************************** Print Particular Qr-Code Document *******************************************************************/
 
-  addDocumate() {
-    let selectedManufacturer = null;
-    this.dataService.changeData(selectedManufacturer);
-    this.router.navigate(['/documate/add-documate']);
+
+  printQRcode(documate) {
+    this.documentForQRcode = documate;
+    this.documentCode1 = documate.documentCode;
+
+    setTimeout(() => {
+      var html = document.getElementById('qrcode').innerHTML;
+      let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
+      var dispimg64 = 'data:image/png;base64,' + img64;
+      var doc = new jsPDF('l', 'mm', [470, 170]);
+      //QRCODE img
+      doc.addImage(dispimg64, '*', 5, 5, 50, 50);
+
+      //TITLE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 8, 'Document Title');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 14, this.documentForQRcode.title);
+
+      //DOCUMENTCODE
+      doc.setFontSize(12);
+      doc.setFontType("normal");
+      doc.text(60, 25, 'DocumentCode');
+
+      doc.setFontSize(16);
+      doc.setFontType("bold");
+      doc.text(60, 31, this.documentForQRcode.documentCode);
+
+      window.open(doc.output('bloburl'), '_blank');
+    }, 50);
+
+
+
   }
 
-  // addDocumate(): void {
+
+  /*********************************************************** Add  Documate *******************************************************************/
+
+  // addDocumate() {
   //   let selectedManufacturer = null;
   //   this.dataService.changeData(selectedManufacturer);
-  //   const dialogRef = this.dialog.open(AddDocumateComponent, {
-  //     // data: this.dialogData,
-  //     width: '500px'
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     // if (result !== 0) {
-  //     //   this.getAllDept();
-  //     // }
-  //   });
+  //   this.router.navigate(['/documate/add-documate']);
+
   // }
+
+  addDocumate(): void {
+    this.dialogData = {
+      type: 'Add',
+      documentId: 0,
+      title: '',
+      documentType: '',
+      description: '',
+      documentCodeImage: '',
+      filepath: '',
+      documentTypeIdFK: 0
+    }
+    const dialogRef = this.dialog.open(AddDocumateComponent, {
+      data: this.dialogData,
+      width: '500px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllDocumates(this.pageNumber);
+      }
+    });
+  }
 
 
 

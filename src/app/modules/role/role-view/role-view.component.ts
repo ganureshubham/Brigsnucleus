@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { RoleService } from '../service/role.service';
@@ -8,6 +8,14 @@ import { DataSharingService } from 'src/app/public service/data-sharing.service'
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { DialogService } from '../../../public service/dialog.service';
+import { AddRoleComponent } from './add-role/add-role.component';
+
+
+interface roleDialogData {
+  userRoleId: number;
+  title: string;
+  type: string;
+}
 
 @Component({
   selector: 'app-role-view',
@@ -25,6 +33,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   userRoleId: number;
   isNoRecordFound: boolean = true;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  dialogData: roleDialogData;
 
 
 
@@ -44,7 +53,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     public dataService: DataSharingService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public dialog: MatDialog,
   ) {
 
   }
@@ -106,10 +116,21 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Add Role *******************************************************************/
 
-  addRole() {
-    let selectedAsset = null;
-    this.dataService.changeData(selectedAsset);
-    this.router.navigate(['/user-role/add-user-role']);
+  addRole(): void {
+    this.dialogData = {
+      type: 'Add',
+      userRoleId: 0,
+      title: '',
+    }
+    const dialogRef = this.dialog.open(AddRoleComponent, {
+      data: this.dialogData,
+      width: '450px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllRoles(this.pageNumber);
+      }
+    });
   }
 
   /*********************************************************** Delete Particular Role *******************************************************************/
@@ -138,6 +159,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
             this.showSnackBar(res.message);
             this.getAllRoles(this.page);
           }, error => {
+            this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           });
         }
@@ -149,9 +171,22 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
-  editRole(userRoleId: number) {
-    this.dataService.changeData(userRoleId);
-    this.router.navigate(['/user-role/add-user-role']);
+  editRole(visit: any) {
+    this.dialogData = {
+      type: 'Edit',
+      userRoleId: visit.userRoleId,
+      title: visit.title
+    }
+    const dialogRef = this.dialog.open(AddRoleComponent, {
+      data: this.dialogData,
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllRoles(this.pageNumber);
+      }
+    })
   }
 
 
