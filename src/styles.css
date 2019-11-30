@@ -1193,3 +1193,11 @@ body {
   text-transform: uppercase;
   font-weight: 500;
 }
+
+.dialog-content-container{
+  padding: 10px;
+}
+
+.dialog-toolbar{
+  padding: 0px 10px;
+}

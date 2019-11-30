@@ -50,14 +50,18 @@ export class AssetAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.isEdited = true;
-        this.formTitle = `Edit Asset`;
-        this.getDetails(res.assetId);
-      }
-    })
+
+    this.categoryID = this.data.categoryId;
+
+    if (this.data.action == "add") {
+      this.formTitle = "Add Asset";
+      this.isEdited = false;
+    } else {
+      this.formTitle = "Edit Asset"
+      this.getDetails(this.data.assetId)
+      this.isEdited = true;
+    }
+
     this.getLocationList();
     this.getDeptList();
     this.get_c_DurationList();
@@ -65,12 +69,15 @@ export class AssetAddComponent implements OnInit {
     this.getManufList();
     this.getsuppList();
     this.getcategoryList();
+
   }
 
   /*********************************************************** Get Installation Location List *******************************************************************/
 
   getDetails(assetId) {
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getDetails(assetId).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
       if (res.asset) {
         this.assetData = res.asset;
         if (res.asset.companyAssetNo == "undefined") {
@@ -80,9 +87,13 @@ export class AssetAddComponent implements OnInit {
         this.assetData.installationDate = installationDate;
         this.assetImage = res.asset.image.split('/').pop().split('?')[0];
         this.userGuideBook = res.asset.userGuideBook.split('/').pop().split('?')[0];
+      } else {
+        this.showSnackBar(res.message);
       }
+
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }

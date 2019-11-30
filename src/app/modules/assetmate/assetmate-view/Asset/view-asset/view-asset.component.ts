@@ -12,6 +12,7 @@ import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from '../../../../../model/appDialogData';
 import jsPDF from 'jspdf';
 import { AssetAddComponent } from '../../Asset/view-asset/asset-add/asset-add.component';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-view-asset',
@@ -37,7 +38,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   assetForQRcode: any = {};
   allAssetForQRcode: any = [];
   assetCode1: string = '1';
-
+  mobileQuery: MediaQueryList;
   displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
@@ -51,6 +52,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   deleteAssetWithId: number;
 
   constructor(private http: HttpClient,
+    media: MediaMatcher,
     private route: ActivatedRoute,
     private assetmateService: AssetmateService,
     private router: Router,
@@ -60,7 +62,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar,
     private dialogService: DialogService
   ) {
-
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngAfterViewInit(): void {
@@ -140,9 +142,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
     const dialogRef = this.dialog.open(AssetAddComponent, {
-      // width: '50vw',
-      // height: '80vh',
-      disableClose: true
+      width: this.mobileQuery.matches ? '90vw' : '80vw',
+      height: this.mobileQuery.matches ? '90vh' : '70vh',
+      disableClose: true,
+      data: { categoryId: this.categoryID, action: "add" }
     })
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -205,10 +208,21 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
   editAsset(assetId: number) {
-    this.showFirst = !this.showFirst;
-    this.dataService.saveData(assetId);
+    // this.showFirst = !this.showFirst;
+    // this.dataService.saveData(assetId);
     // this.dataService.changeData(assetId);
     // this.router.navigate(['/asset/add-asset']);
+
+    const dialogRef = this.dialog.open(AssetAddComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '80vw',
+      height: this.mobileQuery.matches ? '90vh' : '70vh',
+      disableClose: true,
+      data: { categoryId: this.categoryID, action: "edit", assetId: assetId }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
   }
 
   /*********************************************************** View Particular Asset  *******************************************************************/
