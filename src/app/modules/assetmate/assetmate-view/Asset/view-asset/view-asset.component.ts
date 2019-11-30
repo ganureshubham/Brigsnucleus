@@ -3,18 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { AssetCodeComponent } from '../asset-code/asset-code.component';
-import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../../../shared/confirm-dialog/confirm-dialog.component';
 import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from '../../../../../model/appDialogData';
 import jsPDF from 'jspdf';
-import { QRCodeComponent } from 'angularx-qrcode';
+import { AssetAddComponent } from '../../Asset/view-asset/asset-add/asset-add.component';
 
 @Component({
   selector: 'app-view-asset',
@@ -58,8 +55,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     private assetmateService: AssetmateService,
     private router: Router,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
@@ -144,10 +139,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
-    // this.router.navigate(['/asset/add-asset'])
+    const dialogRef = this.dialog.open(AssetAddComponent, {
+      // width: '50vw',
+      // height: '80vh',
+      disableClose: true
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   /*********************************************************** Print Asset Code *******************************************************************/
@@ -164,26 +163,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
-  // deleteAsset(assetId: number) {
-  //   // alert('are you sure?');
-  //   const message = `Are you sure you want to do this?`;
-  //   const dialogData = new ConfirmDialogModel("Confirm Action", message);
-  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-  //     maxWidth: "1000px",
-  //     data: dialogData
-  //   });
-  //   dialogRef.afterClosed().subscribe(dialogResult => {
-  //     this.result = dialogResult;
-  //   });
-  //   this.assetmateService.deleteAsset(assetId).subscribe(res => {
-  //     this.toastr.success(res.message);
-  //     this.getAllAssets(this.categoryID, this.page);
-  //   })
-  //   error => {
-  //     this.toastr.error(error.message);
-  //   }
-  // }
-
   deleteAsset(assetId: number, assetTitle: string) {
 
     this.deleteAssetWithId = assetId;
