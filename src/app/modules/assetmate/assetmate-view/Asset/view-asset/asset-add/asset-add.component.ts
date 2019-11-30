@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-asset-add',
@@ -42,7 +41,13 @@ export class AssetAddComponent implements OnInit {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
   ngOnInit() {
     this.categoryID = this.route.snapshot.params['categoryId'];
@@ -61,8 +66,6 @@ export class AssetAddComponent implements OnInit {
     this.getsuppList();
     this.getcategoryList();
   }
-
-
 
   /*********************************************************** Get Installation Location List *******************************************************************/
 

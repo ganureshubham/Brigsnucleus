@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AssetmateRoutes } from './assetmate-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AssetModule } from '../asset/asset.module';
 import { AssetmateLayoutComponent } from './assetmate-layout/assetmate-layout.component';
 import { ViewAssetComponent } from './assetmate-view/Asset/view-asset/view-asset.component';
 import { AssetAddComponent } from './assetmate-view/Asset/view-asset/asset-add/asset-add.component';
@@ -73,6 +72,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     QRCodeModule,
     FlexLayoutModule
   ],
-  entryComponents: [AssetCodeComponent, ConfirmDialogComponent]
+  entryComponents: [AssetCodeComponent, ConfirmDialogComponent, AssetAddComponent]
 })
 export class AssetmateModule { } 
