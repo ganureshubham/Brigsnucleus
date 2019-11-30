@@ -22,6 +22,7 @@ interface userDialogData {
   profileImage: string;
   userRoleIdFK: number;
   departmentTitle: string;
+  departmentIdFK: number;
   mobileNumber: number;
   emailId: string;
   password: string;
@@ -181,6 +182,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   editUser(visit) {
     this.dialogData = {
       type: 'Edit',
+      departmentIdFK: visit.departmentIdFK,
       userId: visit.userId,
       firstName: visit.firstName,
       lastName: visit.lastName,
@@ -193,7 +195,8 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddUserComponent, {
       data: this.dialogData,
-      width: '500px'
+      width: '500px',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -242,15 +245,10 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Add User *******************************************************************/
 
-  // addUser() {
-  //   let selectedUser = null;
-  //   this.dataService.changeData(selectedUser);
-  //   this.router.navigate(['/user/add-user']);
-  // }
-
   addUser() {
     this.dialogData = {
       type: 'Add',
+      departmentIdFK: 0,
       userId: 0,
       firstName: '',
       lastName: '',
@@ -264,7 +262,9 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
     const dialogRef = this.dialog.open(AddUserComponent, {
       data: this.dialogData,
-      width: '500px'
+      width: '500px',
+      disableClose: true
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -285,6 +285,7 @@ export interface User {
   profileImage: string,
   userRoleIdFK: number,
   departmentTitle: string,
+  departmentIdFK: number,
   mobileNumber: number,
   emailId: string,
   password: string

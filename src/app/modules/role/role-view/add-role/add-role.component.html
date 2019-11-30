@@ -1,23 +1,26 @@
 <div fxLayout="column" fxFlex="100" class="form">
-  <div fxLayout.xs="column" fxLayoutAlign="space-around center" class="form_header">
-    <div fxLayout="column" fxLayoutAlign="space-between center" class="fl">
-      <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="fl">
+      <p class="page-title">{{formTitle}}</p>
     </div>
   </div>
   <form fxLayout="column" #roleform="ngForm" novalidate>
-    <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap.gt-xs="30px">
-      <mat-form-field fxFlex.xs="100">
-        <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
-          #roleTitle="ngModel" type="text" required placeholder="Title">
-        <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
-          <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
-        </mat-error>
-        <mat-error *ngIf="roleTitle.errors?.minlength">
-          Title length Must be atleast 3!
-        </mat-error>
-      </mat-form-field>
+    <div>
+      <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap.gt-xs="30px">
+        <mat-form-field fxFlex.xs="100">
+          <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
+            #roleTitle="ngModel" type="text" required placeholder="Title">
+          <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
+            <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
+          </mat-error>
+          <mat-error *ngIf="roleTitle.errors?.minlength">
+            Title length Must be atleast 3!
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="savebtn">
+    <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end end" fxLayoutGap="10px" class="savebtn">
+      <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
       <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n
         [disabled]="!roleform.valid" color="primary"
         [matTooltip]="!roleform.valid ? 'You must complete all the required fields.' : null" type="submit"
@@ -25,7 +28,6 @@
       <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
         mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
         Role</button>
-      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
     </div>
   </form>
 </div>

@@ -137,7 +137,8 @@ export class DepartmentViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -159,7 +160,8 @@ export class DepartmentViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -181,7 +183,8 @@ export class DepartmentViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {

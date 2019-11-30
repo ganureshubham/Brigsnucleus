@@ -145,7 +145,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddSupplierComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -192,10 +193,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Supplier  *******************************************************************/
 
-  // editSupplier(visit: number) {
-  //   this.dataService.changeData(visit);
-  //   this.router.navigate(['/supplier/add-supplier']);
-  // }
 
   editSupplier(visit: any) {
     this.dialogData = {
@@ -210,7 +207,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
     const dialogRef = this.dialog.open(AddSupplierComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

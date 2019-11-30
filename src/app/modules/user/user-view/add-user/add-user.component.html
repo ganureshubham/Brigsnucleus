@@ -1,7 +1,7 @@
 <div fxLayout="column">
-  <div fxLayoutAlign="center center" class="form_header">
+  <div>
     <div class="fl">
-      <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+      <p class="page-title">{{formTitle}}</p>
     </div>
   </div>
   <div fxLayout="row" fxFlex="100">
@@ -79,9 +79,9 @@
           <mat-error *ngIf="UserRoleName.errors.required">User Role Name is required</mat-error>
         </mat-error>
       </mat-form-field>
-      <div class="md-form" fxFlex.gt-xs="35">
+      <div fxLayout.xs="column" class="md-form" fxFlex.gt-xs="35">
         <label>Profile Image</label>
-        <div class="file-field">
+        <div fxLayout.xs="column" class="file-field">
           <div class="btn btn-primary btn-sm float-left">
             <span>Choose file</span>
             <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
@@ -97,13 +97,13 @@
           <div class="error hide text-error">{{imageerror}}</div>
         </div>
       </div>
-      <div class="savebtn">
+      <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxLayoutGap="10px" class="savebtn">
+        <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [matTooltip]="!userform.valid ? 'You must complete all the required fields.' : null" type="submit"
           [disabled]="!userform.valid" (click)="addUser(userform)">Save User</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
           [disabled]="!userform.valid" (click)="editUser(userform)">Update User</button>
-        <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
       </div>
     </form>
   </div>

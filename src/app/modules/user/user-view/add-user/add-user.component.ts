@@ -14,7 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit { 
 
   userData: any = {}
   fileToUpload: File = null;
@@ -41,20 +41,15 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.type = 'Edit') {
+    if (this.data.type == 'Add') {
+
+    } else if (this.data.type = 'Edit') {
+      console.log('edit', this.data);
       this.userData = this.data;
       this.profileImage = this.data.profileImage.split('/').pop().split('?')[0];
       this.isEdited = true;
       this.formTitle = `Edit User`;
     }
-    // this.dataService.currentData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     this.userData = res;
-    //     this.profileImage = res.profileImage.split('/').pop().split('?')[0];
-    //     this.isEdited = true;
-    //     this.formTitle = `Edit User`;
-    //   }
-    // })
     this.getDeptList();
     this.getUserRoleList();
   }
