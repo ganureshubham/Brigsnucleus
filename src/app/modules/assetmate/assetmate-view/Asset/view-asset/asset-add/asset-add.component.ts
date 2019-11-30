@@ -46,7 +46,7 @@ export class AssetAddComponent implements OnInit {
   ) { }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ action: false });
   }
 
   ngOnInit() {
@@ -134,7 +134,7 @@ export class AssetAddComponent implements OnInit {
       formData.value.description = "";
     }
     let value = formData.value;
-    value.categoryIdFK = Number(this.route.snapshot.params['categoryId']);
+    value.categoryIdFK = Number(this.data.categoryId);
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.spinnerService.setSpinnerVisibility(true);
@@ -147,7 +147,7 @@ export class AssetAddComponent implements OnInit {
             this.showSnackBar(res.message);
             if (res.status) {
               this.assetmateService.setBadgeUpdateAction('assetList', true);
-              this.showFirst = !this.showFirst;
+              this.dialogRef.close({ action: true });
             }
           },
             error => {
@@ -212,7 +212,7 @@ export class AssetAddComponent implements OnInit {
                 // let categorydata = localStorage.getItem('Category-Object');
                 // this.category = JSON.parse(categorydata);
                 this.dataService.changeData(this.category);
-                this.showFirst = !this.showFirst;
+                this.dialogRef.close({ action: true });
               }
             },
             error => {

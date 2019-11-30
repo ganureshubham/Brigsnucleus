@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
@@ -7,6 +7,7 @@ import { DataSharingService } from '../../../../../../../../public service/data-
 import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../../../../../../../../public service/spinner.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-asset-document',
@@ -35,22 +36,26 @@ export class AddAssetDocumentComponent implements OnInit {
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
     private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
-    this.assetId = this.route.snapshot.params['assetId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.documentData = res;
-        this.filepath = res.filepath.split('/').pop().split('?')[0];
-        this.isEdited = true;
-        this.formTitle = 'Edit Document';
-      } else {
-        //Hardcoded documentTypeIdFK for asset it is 2
-        this.documentData.documentTypeIdFK = 2;
-        this.documentData.masterId = Number(this.assetId);
-      }
-    })
+
+    this.assetId = this.data.assetId;
+
+    if (this.data.action == "add") {
+      this.formTitle = "Add Document";
+      this.isEdited = false;
+      this.documentData.documentTypeIdFK = 2;
+      this.documentData.masterId = Number(this.assetId);
+    } else {
+      this.formTitle = "Edit Document"
+      this.isEdited = true;
+      this.documentData = this.data.documentData;
+      this.filepath = this.data.documentData.filepath.split('/').pop().split('?')[0];
+    }
+
     this.getDocumentList();
     this.getAssetLists();
   }
@@ -66,6 +71,10 @@ export class AddAssetDocumentComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close({ action: false });
   }
 
   /*********************************************************** Get Asset List *******************************************************************/
@@ -120,13 +129,13 @@ export class AddAssetDocumentComponent implements OnInit {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
 
-            let categorydata = localStorage.getItem('Category-Object');
-            this.category = JSON.parse(categorydata);
-            this.dataService.changeData(this.category);
-            this.showFirst = !this.showFirst;
+            // let categorydata = localStorage.getItem('Category-Object');
+            // this.category = JSON.parse(categorydata);
+            // this.dataService.changeData(this.category);
+            // this.showFirst = !this.showFirst;
 
             this.assetmateService.setBadgeUpdateAction('assetDetails', true);
-
+            this.dialogRef.close({ action: true });
           },
           error => {
             this.showSnackBar("Something went wrong..!!");
@@ -162,10 +171,11 @@ export class AddAssetDocumentComponent implements OnInit {
           res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            let categorydata = localStorage.getItem('Category-Object');
-            this.category = JSON.parse(categorydata);
-            this.dataService.changeData(this.category);
-            this.showFirst = !this.showFirst;
+            // let categorydata = localStorage.getItem('Category-Object');
+            // this.category = JSON.parse(categorydata);
+            // this.dataService.changeData(this.category);
+            // this.showFirst = !this.showFirst;
+            this.dialogRef.close({ action: true });
           },
           error => {
             this.showSnackBar("Something went wrong..!!");

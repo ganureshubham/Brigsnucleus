@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Output, EventEm
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { saveAs } from 'file-saver';
@@ -12,6 +12,9 @@ import { AppDialogData } from '../../../../../../../model/appDialogData';
 import { DialogService } from '../../../../../../../public service/dialog.service';
 import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../../../../../../../public service/spinner.service';
+import { AddAssetDocumentComponent } from './add-asset-document/add-asset-document.component';
+import { MediaMatcher } from '@angular/cdk/layout';
+
 
 @Component({
   selector: 'app-view-asset-document',
@@ -35,6 +38,8 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   filepath: any;
   filedata: any = {};
   assetID: any;
+  mobileQuery: MediaQueryList;
+
 
 
 
@@ -61,9 +66,10 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    media: MediaMatcher,
 
   ) {
-
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngAfterViewInit(): void {
@@ -73,24 +79,9 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
-    // console.log('Inside asset doc init')
-    // this.dataService.mSaveData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     console.log('asset document res', res);
     this.assetID = this.route.snapshot.params['assetId'];
     this.getAllAssetDocuments(this.assetID, this.pageNumber);
-
-    // this.assetID = res.assetId;
-    // this.getAllAssetDocuments(this.assetID, this.pageNumber);
-    //   }
-
-    // })
-
-
   }
-
-
 
   ngOnDestroy(): void { }
 
@@ -135,10 +126,17 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
-    // this.router.navigate(['/asset/add-asset']) 
+    const dialogRef = this.dialog.open(AddAssetDocumentComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '40vw',
+      height: this.mobileQuery.matches ? '90vh' : '60vh',
+      disableClose: true,
+      data: { assetId: this.assetID, action: "add" }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action) {
+        this.getAllAssetDocuments(this.assetID, this.pageNumber);
+      }
+    });
   }
 
   /*********************************************************** Delete Particular Asset *******************************************************************/
@@ -192,8 +190,19 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
   editDocument(visit: number) {
-    this.showFirst = !this.showFirst;
-    this.dataService.saveData(visit);
+    // this.showFirst = !this.showFirst;
+    // this.dataService.saveData(visit);
+    const dialogRef = this.dialog.open(AddAssetDocumentComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '40vw',
+      // height: this.mobileQuery.matches ? '90vh' : '70vh',
+      disableClose: true,
+      data: { assetId: this.assetID, action: "edit", documentData: visit }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action) {
+        this.getAllAssetDocuments(this.assetID, this.pageNumber);
+      }
+    });
   }
 
   /*********************************************************** Download Particular Document  *******************************************************************/

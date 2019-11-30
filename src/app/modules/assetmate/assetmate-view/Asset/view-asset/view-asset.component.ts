@@ -143,12 +143,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   addAsset() {
     const dialogRef = this.dialog.open(AssetAddComponent, {
       width: this.mobileQuery.matches ? '90vw' : '80vw',
-      height: this.mobileQuery.matches ? '90vh' : '70vh',
+      // height: this.mobileQuery.matches ? '90vh' : '70vh',
       disableClose: true,
       data: { categoryId: this.categoryID, action: "add" }
     })
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result.action) {
+        this.getAllAssets(this.categoryID, this.pageNumber);
+      }
     });
   }
 
@@ -220,7 +222,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       data: { categoryId: this.categoryID, action: "edit", assetId: assetId }
     })
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result.action) {
+        this.getAllAssets(this.categoryID, this.pageNumber);
+      }
     });
 
   }
