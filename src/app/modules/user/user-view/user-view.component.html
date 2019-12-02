@@ -2,27 +2,25 @@
   <app-department-filter (messageEvent)="receiveMessage($event)"></app-department-filter>
   <mat-card fxFlex.xs="100" fxFlex="100">
     <div class="table">
-      <div fxLayout.xs="column" fxLayoutGap="33px" class="portal-widget">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="table_header">
-          <div fxLayoutAlign.xs="" class="fl">
-            <p class="tabel_heading mat-subheading-2">User {{ DepartmentObj}}</p>
+      <div fxLayout.xs="column" fxLayoutGap="33px" fxLayoutGap.xs="13px">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
+          <div fxFlex.xs="100">
+            <p class="page-title">User {{ DepartmentObj}}</p>
           </div>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
-            <div fxFlex.xs="100">
-              <form fxFlex.xs="100" class="filter_search">
-                <mat-form-field fxFlex.xs="100">
-                  <input matInput (keyup)="searchUser($event.target.value)" placeholder="Search">
-                </mat-form-field>
-              </form>
-            </div>
-
+          <div fxLayout="row" fxFlex.xs="100">
+            <form fxFlex.xs="100" class="filter_search">
+              <mat-form-field fxFlex.xs="100">
+                <input matInput (keyup)="searchUser($event.target.value)" placeholder="Search">
+              </mat-form-field>
+            </form>
           </div>
-
         </div>
-        <div fxLayout="row" fxLayoutAlign.gt-xs="end center" class="btn_style">
-          <button fxFlex.xs="100" mat-button (click)="addUser()" class="bg_white_grey">
-            <mat-icon>add</mat-icon>Add User
-          </button>
+        <div fxLayout="row" fxLayoutAlign.gt-xs="end center">
+          <div fxFlex.xs="100" class="btn_style">
+            <button fxFlex.xs="100" mat-button (click)="addUser()" class="bg_white_grey">
+              <mat-icon>add</mat-icon>Add User
+            </button>
+          </div>
         </div>
         <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
           <p>No Record Found</p>
