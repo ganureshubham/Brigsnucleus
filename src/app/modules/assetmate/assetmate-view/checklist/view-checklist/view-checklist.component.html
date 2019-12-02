@@ -1,4 +1,91 @@
-<div *ngIf="!showFirst" class="table" fxLayout="column" fxFlex="100">
+<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+        <button fxFlex.xs="100" mat-button (click)="addChecklist()" class="bg_white_grey btn_style">
+            <mat-icon>add</mat-icon>Add Checklist
+        </button>
+        <form class="example-form filter_search" fxFlex.xs="100">
+            <mat-form-field class="example-full-width" fxFlex.xs="100">
+                <input matInput (keyup)="searchChecklist($event.target.value)" placeholder="Search">
+            </mat-form-field>
+        </form>
+    </div>
+    <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+        <p>No Record Found</p>
+    </div>
+    <ng-template #recordFound>
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="title">
+                <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Checklist Title</mat-header-cell>
+                <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="totalQuestions">
+                <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Total Questions
+                </mat-header-cell>
+                <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+                    {{ visit.totalQuestions}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+                <mat-cell (click)="$event.stopPropagation()" fxLayoutAlign="end center" *matCellDef="let visit">
+                    <div>
+                        <mat-menu #dailyPerformanceMenu="matMenu">
+                            <a mat-menu-item (click)="navigateToChecklistQuestionView(visit.checklistId)"
+                                target="blank">
+                                <mat-icon matListIcon>visibility</mat-icon>
+                                <span i18n>View Checklist Questions</span>
+                            </a>
+                            <a mat-menu-item (click)="editChecklist(visit)">
+                                <mat-icon matListIcon>edit</mat-icon>
+                                <span i18n>Edit Checklist </span>
+                            </a>
+                            <a mat-menu-item (click)="deleteChecklist(visit.checklistId, visit.title)">
+                                <mat-icon matListIcon>delete_outline</mat-icon>
+                                <span i18n>Delete Checklist </span>
+                            </a>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                            <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="example-element-row" (click)="navigateToChecklistQuestionView(visit.checklistId)"
+                *matRowDef="let visit; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </ng-template>
+    <div>
+        <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+        </mat-paginator>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div *ngIf="!showFirst" class="table" fxLayout="column" fxFlex="100">
     <div fxLayout="column">
         <div class="portal-widget checklist_list">
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
@@ -37,4 +124,4 @@
 
 <div *ngIf="showFirst" fxLayout="column" fxFlex="100">
     <app-checklist-add></app-checklist-add>
-</div>
+</div> -->

@@ -7,7 +7,7 @@
           <div fxLayoutAlign.xs="" class="fl">
             <p class="tabel_heading mat-subheading-2">User {{ DepartmentObj}}</p>
           </div>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
             <div fxFlex.xs="100">
               <form fxFlex.xs="100" class="filter_search">
                 <mat-form-field fxFlex.xs="100">
@@ -15,12 +15,14 @@
                 </mat-form-field>
               </form>
             </div>
-            <div fxFlex.xs="100" class="btn_style">
-              <button fxFlex.xs="100" mat-button (click)="addUser()" class="bg_white_grey">
-                <mat-icon>add</mat-icon>Add User
-              </button>
-            </div>
+
           </div>
+
+        </div>
+        <div fxLayout="row" fxLayoutAlign.gt-xs="end center" class="btn_style">
+          <button fxFlex.xs="100" mat-button (click)="addUser()" class="bg_white_grey">
+            <mat-icon>add</mat-icon>Add User
+          </button>
         </div>
         <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
           <p>No Record Found</p>

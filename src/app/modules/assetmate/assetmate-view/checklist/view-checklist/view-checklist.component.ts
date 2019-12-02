@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AssetmateService } from '../../../service/assetmate.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../../public service/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from 'src/app/model/appDialogData';
+import { AddChecklistComponent } from '../../../../checklist/checklist-view/add-checklist/add-checklist.component';
+import { ChecklistAddComponent } from './checklist-add/checklist-add.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-checklist',
   templateUrl: './view-checklist.component.html',
   styleUrls: ['./view-checklist.component.css']
 })
-export class ViewChecklistComponent implements OnInit {
+export class ViewChecklistComponent implements AfterViewInit, OnInit {
   pageNumber = 0;
   totalCount = 0;
   checklistData: any = [];
@@ -25,6 +28,19 @@ export class ViewChecklistComponent implements OnInit {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteChecklistWithId;
   isNoRecordFound: boolean = true;
+  nonzero: boolean = false;
+
+
+
+
+
+  displayedColumns: string[] = ['title', 'totalQuestions', 'Actions'];
+  dataSource: MatTableDataSource<checklist> = new MatTableDataSource();
+
+  @ViewChild('paidPaginator') paginator: MatPaginator;
+
+  previousSubscription: Subscription;
+  upcomingSubscription: Subscription;
 
   constructor(
     private assetmateService: AssetmateService,
@@ -35,7 +51,8 @@ export class ViewChecklistComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -43,27 +60,31 @@ export class ViewChecklistComponent implements OnInit {
     this.getAllChecklists(this.categoryID, this.pageNumber);
   }
 
+  ngAfterViewInit(): void {
+    // Add paginators to datastore here, because we need the view to
+    // have created the paginator elements
+    this.dataSource.paginator = this.paginator;
+  }
+
+
   /*********************************************************** Get All Checklists *******************************************************************/
 
   getAllChecklists(categoryId: number, pageNo: any) {
-
     this.spinnerService.setSpinnerVisibility(true);
-
     this.assetmateService.getAllChecklists(categoryId, pageNo).subscribe(res => {
-
       this.spinnerService.setSpinnerVisibility(false);
-
       if (res.ChecklistData) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
         } else {
           this.isNoRecordFound = false;
         }
-        this.checklistData = res.ChecklistData;
+        this.dataSource = res.ChecklistData;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
       } else {
         this.showSnackBar(res.message);
       }
-
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -76,16 +97,46 @@ export class ViewChecklistComponent implements OnInit {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-  addChecklist() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
+  /*********************************************************** Page Change *******************************************************************/
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getAllChecklists(this.categoryID, this.page);
   }
 
-  editChecklist(checklistId: number) {
-    this.showFirst = !this.showFirst;
-    this.dataService.saveData(checklistId);
+
+  /*********************************************************** Add Checklist**********************************************************************************************/
+
+  addChecklist() {
+    const dialogRef = this.dialog.open(ChecklistAddComponent, {
+      data: { categoryid: this.categoryID, type: 'Add', },
+      width: '450px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllChecklists(this.categoryID, this.pageNumber);
+      }
+    });
   }
+
+
+  /*********************************************************** Edit Checklist**********************************************************************************************/
+
+  editChecklist(visit: any) {
+    const dialogRef = this.dialog.open(ChecklistAddComponent, {
+      data: { categoryid: this.categoryID, type: 'Edit', checklistdata: visit },
+      width: '450px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.getAllChecklists(this.categoryID, this.pageNumber);
+      }
+    });
+  }
+
+
 
   navigateToChecklistQuestionView(checklistId: number) {
     this.router.navigate(['/assetmate/assetmate-details/' + this.categoryID + '/checklist/' + checklistId]);
@@ -93,16 +144,7 @@ export class ViewChecklistComponent implements OnInit {
 
   /*********************************************************** Delete Particular Checklist *******************************************************************/
   deleteChecklist(checklistId: number, checklistTitle: string) {
-    // alert('are you sure?');
-    // this.assetmateService.deleteChecklist(checklistId).subscribe(res => {
-    //   this.toastr.success(res.message);
-    //   this.getAllChecklists(this.categoryID, this.page);
-    // })
-    // error => {
-    //   this.toastr.error(error.message);
-    // }
     this.deleteChecklistWithId = checklistId;
-
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE ASSET',
@@ -112,25 +154,20 @@ export class ViewChecklistComponent implements OnInit {
     }
 
     this.dialogService.setDialogVisibility(appDialogData);
-
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
       this.dialogService.getUserDialogAction().subscribe(userAction => {
         if (userAction == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (userAction == 1) {
-
           this.dialogService.setUserDialogAction(0);
-
           //User has approved delete operation 
           this.spinnerService.setSpinnerVisibility(true);
           this.assetmateService.deleteChecklist(this.deleteChecklistWithId).subscribe(res => {
-
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
             this.assetmateService.setBadgeUpdateAction('assetList', true);
             this.getAllChecklists(this.categoryID, this.page);
-
           }, error => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
@@ -140,30 +177,43 @@ export class ViewChecklistComponent implements OnInit {
     }
   }
 
-  // checklistId(checklistId: any, page: any) {
-  //   throw new Error("Method not implemented.");
-  // }
 
   /*********************************************************** Search Particular Checklist ************************************************************/
 
   searchChecklist(keyword: any) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchChecklist(this.categoryID, keyword).subscribe((res: any) => {
-        this.checklistData = res.data;
-
-
+        if (res && res.data) {
+          this.dataSource = res.data;
+        }
       },
         error => {
-          console.log(error);
-          this.toastr.error(error.error.errors[0].msg)
-
+          console.log(error.errors.msg);
         })
     } else {
-      this.getAllChecklists(this.categoryID, this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllChecklists(this.categoryID, this.pageNumber);
+      }
     }
-
   }
 
 
+
+
+
+
+
+
+}
+
+export interface checklist {
+  checklistId: number,
+  title: string,
+  checkingDuration: number,
+  durationTypeIdFK: number,
+  durationType: string,
+  totalQuestions: number
 
 }

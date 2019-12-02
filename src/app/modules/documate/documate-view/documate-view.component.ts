@@ -156,7 +156,8 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddDocumateComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -296,7 +297,8 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddDocumateComponent, {
       data: this.dialogData,
-      width: '500px'
+      width: '500px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {

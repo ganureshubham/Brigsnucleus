@@ -33,7 +33,7 @@
       </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-        <mat-cell fxLayoutAlign="end center" *matCellDef="let element">
+        <mat-cell (click)="$event.stopPropagation()" fxLayoutAlign="end center" *matCellDef="let element">
           <div>
             <mat-menu #dailyPerformanceMenu="matMenu">
               <a mat-menu-item (click)="navigateToQuestionDetails(element.questionId)">
@@ -56,7 +56,8 @@
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row class="example-element-row" (click)="navigateToQuestionDetails(element.questionId)"
+        *matRowDef="let element; columns: displayedColumns;"></mat-row>
     </mat-table>
   </ng-template>
   <div>
