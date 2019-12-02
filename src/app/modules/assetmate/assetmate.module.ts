@@ -74,6 +74,18 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     QRCodeModule,
     FlexLayoutModule
   ],
-  entryComponents: [AssetCodeComponent, ChecklistAddComponent, ConfirmDialogComponent, AssetAddComponent]
+
+
+  entryComponents: [
+    AssetCodeComponent,
+    ConfirmDialogComponent,
+    AssetAddComponent,
+    AddAssetDocumentComponent,
+    AssetAssignNewUsersComponent,
+    AddAssignUserComponent,
+    AddCategoryDocumentComponent,
+   ChecklistAddComponent
+  ]
+
 })
 export class AssetmateModule { } 
