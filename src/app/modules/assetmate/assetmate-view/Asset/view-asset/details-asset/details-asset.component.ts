@@ -34,6 +34,9 @@ export class DetailsAssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.assetData.image = "assets/img/user.png";
+    console.log(this.assetData);
+
     this.categoryId = this.route.snapshot.params['categoryId'];
     this.assetId = this.route.snapshot.params['assetId'];
     this.viewAsset();
@@ -53,11 +56,11 @@ export class DetailsAssetComponent implements OnInit {
 
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.viewAsset(this.assetId).subscribe(res => {
-      console.log('details asset res', res);
       this.spinnerService.setSpinnerVisibility(false);
       if (res.asset) {
         this.assetData = res.asset;
         this.assetcode = res.asset.assetCode;
+        console.log(this.assetData);
         // this.userGuideBook = res.asset.userGuideBook.split('/').pop().split('?')[0];
         let arrSplittedUserGuidePath: string[] = res.asset.userGuideBook.split('.');
         this.userGuideFileExtension = arrSplittedUserGuidePath[arrSplittedUserGuidePath.length - 1];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'
 import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-category-document',
@@ -30,26 +31,37 @@ export class AddCategoryDocumentComponent implements OnInit {
     private assetmateService: AssetmateService,
     private dataService: DataSharingService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
-    private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
-    this.categoryId = this.route.snapshot.params['categoryId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.documentData = res;
-        this.filepath = res.filepath.split('/').pop().split('?')[0];
-        this.isEdited = true;
-        this.formTitle = 'Edit Document';
-      } else {
-        //Hardcoded for Category
-        this.documentData.documentTypeIdFK = 1;
-        this.documentData.masterId = Number(this.categoryId);
-      }
-    })
+    this.categoryId = Number(this.data.categoryId);
+    if (this.data.action == "add") {
+      this.formTitle = "Add Document";
+      this.isEdited = false;
+      this.documentData.documentTypeIdFK = 2;
+      this.documentData.masterId = this.categoryId;
+    } else {
+      this.formTitle = "Edit Document"
+      this.isEdited = true;
+      this.documentData = this.data.documentData;
+      this.filepath = this.data.documentData.filepath.split('/').pop().split('?')[0];
+    }
+    // this.dataService.mSaveData.subscribe(res => {
+    //   if (res != null && res != "null" && res != "null") {
+    //     this.documentData = res;
+    //     this.filepath = res.filepath.split('/').pop().split('?')[0];
+    //     this.isEdited = true;
+    //     this.formTitle = 'Edit Document';
+    //   } else {
+    //     //Hardcoded for Category
+    //     this.documentData.documentTypeIdFK = 1;
+    //     this.documentData.masterId = Number(this.categoryId);
+    //   }
+    // })
     this.getDocumentList();
     this.getcategoryLists();
   }
@@ -65,6 +77,10 @@ export class AddCategoryDocumentComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close({ action: false });
   }
 
   /*********************************************************** Get Category List *******************************************************************/
@@ -112,6 +128,7 @@ export class AddCategoryDocumentComponent implements OnInit {
             this.showSnackBar(res.message)
             this.showFirst = !this.showFirst;
             this.assetmateService.setBadgeUpdateAction('assetList', true);
+            this.dialogRef.close({ action: true });
           },
           error => {
             this.showSnackBar("Something went wrong..!!");
@@ -149,7 +166,7 @@ export class AddCategoryDocumentComponent implements OnInit {
           res => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-            this.showFirst = !this.showFirst;
+            this.dialogRef.close({ action: true });
           },
           error => {
             this.toastr.error(error.message);
