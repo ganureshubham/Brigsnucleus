@@ -1,7 +1,7 @@
 <div fxLayout="column">
-  <div fxLayoutAlign="center center" class="form_header">
-    <div class="fl">
-      <p class="form_heading mat-subheading-2 fl">{{formTitle}}</p>
+  <div fxLayoutAlign="start center">
+    <div>
+      <p class="page-title">{{formTitle}}</p>
     </div>
   </div>
   <div fxLayout="row" fxFlex="100">
@@ -50,14 +50,14 @@
           Please type your e-mail address in the format <b> name@example.com </b>!
         </mat-error>
       </mat-form-field>
-      <div class="savebtn">
+      <div fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center">
+        <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [disabled]="!supplierform.valid"
           [matTooltip]="!supplierform.valid ? 'You must complete all the required fields.' : null" type="submit"
           (click)="addSupplier(supplierform.value)">Save Supplier</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
           [disabled]="!supplierform.valid" (click)="editSupplier(supplierform.value)">Update Supplier</button>
-        <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
       </div>
     </form>
   </div>

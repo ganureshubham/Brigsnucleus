@@ -136,7 +136,8 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddManufacturerComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
 
     });
 
@@ -187,11 +188,6 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
-  // editManufacturer(manufacturerId: number) {
-  //   this.dataService.changeData(manufacturerId);
-  //   this.router.navigate(['/manufacturer/add-manufacturer']);
-  // }
-
   editManufacturer(visit: any) {
     this.dialogData = {
       type: 'Edit',
@@ -200,7 +196,8 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(AddManufacturerComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     })
 
     dialogRef.afterClosed().subscribe(result => {

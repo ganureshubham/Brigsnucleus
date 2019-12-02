@@ -1,7 +1,7 @@
 <div fxLayout="column">
-  <div fxLayoutAlign.xs="center center" fxLayoutAlign="center center" class="form_header">
+  <div>
     <div class="fl">
-      <p class="form_heading mat-subheading-2 ">{{formTitle}}</p>
+      <p class="page-title">{{formTitle}}</p>
     </div>
   </div>
   <form fxLayout="column" fxFlex="100" #manufacturerform="ngForm" novalidate>
@@ -15,7 +15,8 @@
         Title length Must be atleast 3!
       </mat-error>
     </mat-form-field>
-    <div class="savebtn">
+    <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxLayoutGap="10px">
+      <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
       <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
         [disabled]="!manufacturerform.valid"
         [matTooltip]="!manufacturerform.valid ? 'You must complete all the required fields.' : null" type="submit"
@@ -23,7 +24,6 @@
       <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
         [disabled]="!manufacturerform.valid" (click)="editManufacturer(manufacturerform.value)">Update
         Manufacturer</button>
-      <button mat-raised-button [mat-dialog-close]="cancelbtn" class="fr">Cancel</button>
     </div>
   </form>
 </div>

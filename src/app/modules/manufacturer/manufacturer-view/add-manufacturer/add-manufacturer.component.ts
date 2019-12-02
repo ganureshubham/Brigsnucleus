@@ -32,7 +32,9 @@ export class AddManufacturerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.type == 'Edit') {
+    if (this.data.type == 'Add') {
+
+    } else if (this.data.type == 'Edit') {
       this.manufacturerData = this.data;
       this.isEdited = true;
       this.formTitle = `Edit Manufacturer`;

@@ -31,7 +31,6 @@ export class AddSupplierComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('data', this.data);
     if (this.data.type == 'Edit') {
       this.supplierData = this.data;
       this.isEdited = true;

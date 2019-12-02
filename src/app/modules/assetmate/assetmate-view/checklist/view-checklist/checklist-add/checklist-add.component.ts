@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AssetmateService } from '../../../../service/assetmate.service';
 import { DataSharingService } from '../../../../../../public service/data-sharing.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerService } from '../../../../../../public service/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-checklist-add',
@@ -22,6 +22,7 @@ export class ChecklistAddComponent implements OnInit {
   isEdited: boolean = false;
   categoryID: any;
   durationList: any;
+  cancelbtn = 0;
 
   constructor(private assetmateService: AssetmateService,
     private dataService: DataSharingService,
@@ -30,20 +31,22 @@ export class ChecklistAddComponent implements OnInit {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ChecklistAddComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
 
   ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.checklistData = res;
-        this.checklistData.categoryId = this.categoryID;
-        this.isEdited = true;
-        this.formTitle = `Edit Checklist`;
-        this.checklistData.checklistId = res.checklistId;
-      }
-    })
+    this.categoryID = Number(this.data.categoryid);
+    if (this.data.type == 'Add') {
+      this.checklistData.categoryId = this.categoryID;
+    } else if (this.data.type == 'Edit') {
+      this.checklistData = this.data.checklistdata;
+      this.isEdited = true;
+      this.formTitle = `Edit Checklist`;
+      this.checklistData.categoryId = this.categoryID;
+    }
     this.getCategoryList();
     this.getDurationList();
   }
@@ -82,17 +85,13 @@ export class ChecklistAddComponent implements OnInit {
 
   /*********************************************************** Add New Checklist *******************************************************************/
   addChecklist(value) {
-    value.categoryId = Number(this.route.snapshot.params['categoryId']);
-
+    value.categoryId = this.categoryID;
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.addChecklist(value).subscribe(res => {
-
-
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.showFirst = !this.showFirst;
+      this.dialog.closeAll();
       this.assetmateService.setBadgeUpdateAction('assetList', true);
-
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -106,14 +105,12 @@ export class ChecklistAddComponent implements OnInit {
 
   /*********************************************************** Add New Checklist *******************************************************************/
   editChecklist(value) {
-
-    value.categoryId = Number(this.route.snapshot.params['categoryId']);
-
+    value.categoryId = this.categoryID;
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.editChecklist(this.checklistData.checklistId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
-      this.showFirst = !this.showFirst;
+      this.dialog.closeAll();
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);

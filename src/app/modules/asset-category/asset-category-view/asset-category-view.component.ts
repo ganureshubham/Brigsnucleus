@@ -133,7 +133,8 @@ export class AssetCategoryViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -155,7 +156,8 @@ export class AssetCategoryViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
@@ -177,7 +179,8 @@ export class AssetCategoryViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AddAssetCategoryComponent, {
       data: this.dialogData,
-      width: '450px'
+      width: '450px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {

@@ -122,6 +122,7 @@ input {
   width: 100%;
   padding: 0 10px;
   margin-top: -4px;
+  border: 1px solid #eee;
 }
 .md-form .validate {
   margin-bottom: 2.5rem;

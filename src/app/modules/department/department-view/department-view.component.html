@@ -1,23 +1,10 @@
-<!-- class="innerpage department" -->
-<!-- <mat-card class="width_90 margin_auto innerpage_title">
-    <mat-grid-list cols="2" rowHeight="50px">
-        <mat-grid-tile>
-            <p class="title_header mat-subheading-2 tal dfs">ALL Departments</p>
-        </mat-grid-tile>
-        <mat-grid-tile class="tar">
-            <button mat-button (click)="addNewDept()" class="bg_white_grey btn_style adddept">
-                <mat-icon>add</mat-icon>Add Department
-            </button>
-        </mat-grid-tile>
-    </mat-grid-list>
-</mat-card> -->
 <mat-card class="width_90 margin_auto innerpage_title">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div>
-            <p class="title_header mat-subheading-2 tal dfs">All Departments</p>
+    <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap.xs="12px">
+        <div fxLayoutAlign.xs="space-around center">
+            <p class="title_header mat-subheading-2  dfs">All Departments</p>
         </div>
-        <div>
-            <button mat-button (click)="addNewDept()" class="bg_white_grey btn_style adddept">
+        <div fxFlex.xs="100">
+            <button fxFlex.xs="100" mat-button (click)="addNewDept()" class="bg_white_grey btn_style adddept">
                 <mat-icon>add</mat-icon>Add Department
             </button>
         </div>

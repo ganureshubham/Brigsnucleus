@@ -34,6 +34,7 @@ import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-
 import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/details-checklist-question/details-checklist-question.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+
 @NgModule({
   declarations: [
     AssetmateViewComponent,
@@ -61,6 +62,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     AddChecklistQuestionComponent,
     EditChecklistQuestionComponent,
     DetailsChecklistQuestionComponent,
+
   ],
   imports: [
     CommonModule,
@@ -72,6 +74,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     QRCodeModule,
     FlexLayoutModule
   ],
+
+
   entryComponents: [
     AssetCodeComponent,
     ConfirmDialogComponent,
@@ -79,7 +83,9 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     AddAssetDocumentComponent,
     AssetAssignNewUsersComponent,
     AddAssignUserComponent,
-    AddCategoryDocumentComponent
+    AddCategoryDocumentComponent,
+   ChecklistAddComponent
   ]
+
 })
 export class AssetmateModule { } 
