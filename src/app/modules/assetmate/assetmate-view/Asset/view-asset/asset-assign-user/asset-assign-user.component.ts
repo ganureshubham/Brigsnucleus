@@ -11,6 +11,8 @@ import { SpinnerService } from '../../../../../../public service/spinner.service
 import { MatSnackBar } from '@angular/material';
 import { AppDialogData } from 'src/app/model/appDialogData';
 import { DialogService } from '../../../../../../public service/dialog.service';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { AssetAssignNewUsersComponent } from './asset-assign-new-users/asset-assign-new-users.component';
 
 @Component({
   selector: 'app-asset-assign-user',
@@ -35,7 +37,7 @@ export class AssetAssignUserComponent implements OnInit {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
 
-
+  mobileQuery: MediaQueryList;
 
 
 
@@ -62,8 +64,9 @@ export class AssetAssignUserComponent implements OnInit {
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
+    media: MediaMatcher,
   ) {
-
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngAfterViewInit(): void {
@@ -146,9 +149,18 @@ export class AssetAssignUserComponent implements OnInit {
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
+    const dialogRef = this.dialog.open(AssetAssignNewUsersComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '30vw',
+      // height: this.mobileQuery.matches ? '90vh' : '60vh',
+      disableClose: false,
+      data: { assetId: this.assetId, action: "add" }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action) {
+        this.getAllAssignUsers(this.pageNumber);
+      }
+    });
+
   }
 
   /*********************************************************** Delete Particular Asset *******************************************************************/

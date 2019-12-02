@@ -133,7 +133,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
       data: { assetId: this.assetID, action: "add" }
     })
     dialogRef.afterClosed().subscribe(result => {
-      if (result.action) {
+      if (result && result.action) {
         this.getAllAssetDocuments(this.assetID, this.pageNumber);
       }
     });

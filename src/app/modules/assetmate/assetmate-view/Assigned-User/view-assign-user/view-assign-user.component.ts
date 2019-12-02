@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../service/assetmate.service';
@@ -11,6 +10,8 @@ import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { AppDialogData } from 'src/app/model/appDialogData';
 import { DialogService } from '../../../../../public service/dialog.service';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { AddAssignUserComponent } from './add-assign-user/add-assign-user.component';
 
 @Component({
   selector: 'app-view-assign-user',
@@ -34,13 +35,9 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   userCatAssignmentId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
-
-
-
-
-
   displayedColumns: string[] = ['firstName', 'lastName', 'assignmentType', 'Actions'];
   dataSource: MatTableDataSource<AssignUser> = new MatTableDataSource();
+  mobileQuery: MediaQueryList;
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,9 +57,10 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    media: MediaMatcher,
   ) {
-
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngAfterViewInit(): void {
@@ -135,9 +133,20 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
+    // this.showFirst = !this.showFirst;
+    // let selectedAsset = null;
+    // this.dataService.saveData(selectedAsset);
+    const dialogRef = this.dialog.open(AddAssignUserComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '30vw',
+      // height: this.mobileQuery.matches ? '90vh' : '60vh',
+      disableClose: false,
+      data: { categoryId: this.categoryID, action: "add" }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action) {
+        this.getAllAssignUsers(this.pageNumber);
+      }
+    });
   }
 
   /*********************************************************** Delete Particular Asset *******************************************************************/

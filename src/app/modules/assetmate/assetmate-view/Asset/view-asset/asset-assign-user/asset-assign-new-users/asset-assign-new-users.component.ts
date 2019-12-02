@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssetmateService } from '../../../../../service/assetmate.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-asset-assign-new-users',
@@ -12,12 +13,13 @@ export class AssetAssignNewUsersComponent implements OnInit {
 
   showFirst: boolean = false;
   assignUserData: any = {};
-  formTitle: string = "Add Assigned User";
+  formTitle: string = "Assign New Users";
   isEdited: boolean = false;
   categoryLists: any;
   category: any;
   assignmentLists: any;
   userLists: any;
+  assetId: number;
 
   @Output() onAssetNewUserAssigned = new EventEmitter<boolean>();
 
@@ -25,12 +27,15 @@ export class AssetAssignNewUsersComponent implements OnInit {
     private assetmateService: AssetmateService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
     //Hardcoded for asset
     this.assignUserData.assignmentTypeIdFK = 3;
-    this.assignUserData.masterIdFK = Number(this.route.snapshot.params['assetId']);
+    this.assetId = Number(this.data.assetId);
+    this.assignUserData.masterIdFK = this.assetId;
     this.getcategoryList();
     this.getassignmentLists();
     this.getuserLists();
@@ -38,6 +43,10 @@ export class AssetAssignNewUsersComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close({ action: false });
   }
 
   /*********************************************************** Get Category List *******************************************************************/
@@ -88,11 +97,12 @@ export class AssetAssignNewUsersComponent implements OnInit {
     });
     value.users = users;
     value.assignmentTypeIdFK = 3;
-    value.masterIdFK = Number(this.route.snapshot.params['assetId']);
+    value.masterIdFK = this.assetId;
     this.assetmateService.addAssignUser(value).subscribe(res => {
       this.showSnackBar(res.message);
-      this.onAssetNewUserAssigned.emit(true);
+      // this.onAssetNewUserAssigned.emit(true);
       this.assetmateService.setBadgeUpdateAction('assetDetails', true);
+      this.dialogRef.close({ action: true });
     },
       error => {
         this.showSnackBar("Something went wrong..!!");
