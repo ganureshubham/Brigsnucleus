@@ -46,18 +46,22 @@ export class AssetAddComponent implements OnInit {
   ) { }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ action: false });
   }
 
   ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId'];
-    this.dataService.mSaveData.subscribe(res => {
-      if (res != null && res != "null" && res != "null") {
-        this.isEdited = true;
-        this.formTitle = `Edit Asset`;
-        this.getDetails(res.assetId);
-      }
-    })
+
+    this.categoryID = this.data.categoryId;
+
+    if (this.data.action == "add") {
+      this.formTitle = "Add Asset";
+      this.isEdited = false;
+    } else {
+      this.formTitle = "Edit Asset"
+      this.getDetails(this.data.assetId)
+      this.isEdited = true;
+    }
+
     this.getLocationList();
     this.getDeptList();
     this.get_c_DurationList();
@@ -65,12 +69,15 @@ export class AssetAddComponent implements OnInit {
     this.getManufList();
     this.getsuppList();
     this.getcategoryList();
+
   }
 
   /*********************************************************** Get Installation Location List *******************************************************************/
 
   getDetails(assetId) {
+    this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getDetails(assetId).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
       if (res.asset) {
         this.assetData = res.asset;
         if (res.asset.companyAssetNo == "undefined") {
@@ -80,9 +87,13 @@ export class AssetAddComponent implements OnInit {
         this.assetData.installationDate = installationDate;
         this.assetImage = res.asset.image.split('/').pop().split('?')[0];
         this.userGuideBook = res.asset.userGuideBook.split('/').pop().split('?')[0];
+      } else {
+        this.showSnackBar(res.message);
       }
+
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
@@ -123,7 +134,7 @@ export class AssetAddComponent implements OnInit {
       formData.value.description = "";
     }
     let value = formData.value;
-    value.categoryIdFK = Number(this.route.snapshot.params['categoryId']);
+    value.categoryIdFK = Number(this.data.categoryId);
     value.installationDate = moment(value.installationDate).format("YYYY/MM/DD");
     if (formData.valid) {
       this.spinnerService.setSpinnerVisibility(true);
@@ -136,7 +147,7 @@ export class AssetAddComponent implements OnInit {
             this.showSnackBar(res.message);
             if (res.status) {
               this.assetmateService.setBadgeUpdateAction('assetList', true);
-              this.showFirst = !this.showFirst;
+              this.dialogRef.close({ action: true });
             }
           },
             error => {
@@ -201,7 +212,7 @@ export class AssetAddComponent implements OnInit {
                 // let categorydata = localStorage.getItem('Category-Object');
                 // this.category = JSON.parse(categorydata);
                 this.dataService.changeData(this.category);
-                this.showFirst = !this.showFirst;
+                this.dialogRef.close({ action: true });
               }
             },
             error => {

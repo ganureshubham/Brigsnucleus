@@ -1,4 +1,4 @@
-<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
+<div fxLayout="column" fxFlex="100">
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
     <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
       <mat-icon>add</mat-icon>Add Document
@@ -57,7 +57,4 @@
     <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
     </mat-paginator>
   </div>
-</div>
-<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
-  <app-add-category-document></app-add-category-document>
 </div>

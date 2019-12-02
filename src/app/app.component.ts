@@ -6,6 +6,7 @@ import { AppDialogData } from './model/appDialogData';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd
 } from '@angular/router';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 export interface DialogData {
   title: string;
@@ -26,13 +27,16 @@ export class AppComponent implements OnInit {
   userAction: number = 0;
   name: string;
   isAppDialogAlreadyOpened: boolean = false;
+  mobileQuery: MediaQueryList;
 
   constructor(
     private spinnerService: SpinnerService,
     public dialog: MatDialog,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    media: MediaMatcher,
   ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngOnInit() {
@@ -73,7 +77,7 @@ export class AppComponent implements OnInit {
   openDialog(appDialogData: AppDialogData): void {
 
     const dialogRef = this.dialog.open(AppDialog, {
-      width: '40vw',
+      width: this.mobileQuery.matches ? '90vw' : '40vw',
       data: {
         title: appDialogData.title,
         message: appDialogData.message,

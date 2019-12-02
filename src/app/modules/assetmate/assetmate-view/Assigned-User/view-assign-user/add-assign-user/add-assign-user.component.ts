@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../service/assetmate.service';
@@ -6,6 +6,7 @@ import { DataSharingService } from '../../../../../../public service/data-sharin
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-assign-user',
@@ -32,28 +33,17 @@ export class AddAssignUserComponent implements OnInit {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
 
-    this.categoryId = this.route.snapshot.params['categoryId'];
+    this.categoryId = Number(this.data.categoryId);
 
     //Hardcoded for the category option;
     this.assignUserData.assignmentTypeIdFK = 1;
-    this.assignUserData.masterIdFK = Number(this.categoryId);
-
-    // this.dataService.mSaveData.subscribe(res=>{
-    //   if (res != null && res != "null" && res != "null"){
-    //     console.log('doc edit res',res);
-    //     this.documentData=res;
-    //     this.filepath = res.filepath.split('/').pop().split('?')[0];
-
-
-    //     this.isEdited = true;
-    //     this.formTitle = `Edit Document`;
-    //   }
-    // })
-    // this.getDocumentList();
+    this.assignUserData.masterIdFK = this.categoryId;
     this.getcategoryList();
     this.getassignmentLists();
     this.getuserLists();
@@ -75,6 +65,11 @@ export class AddAssignUserComponent implements OnInit {
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
+
+  onNoClick(): void {
+    this.dialogRef.close({ action: false });
+  }
+
 
   /*********************************************************** Get Assignment List *******************************************************************/
 
@@ -126,6 +121,7 @@ export class AddAssignUserComponent implements OnInit {
       this.showSnackBar(res.message);
       this.showFirst = !this.showFirst;
       this.assetmateService.setBadgeUpdateAction('assetList', true);
+      this.dialogRef.close({ action: true });
     },
       error => {
         this.showSnackBar("Something went wrong..!!");

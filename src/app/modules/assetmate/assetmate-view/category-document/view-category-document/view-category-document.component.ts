@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,6 +12,8 @@ import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from 'src/app/model/appDialogData';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { AddCategoryDocumentComponent } from './add-category-document/add-category-document.component';
 
 @Component({
   selector: 'app-view-category-document',
@@ -35,6 +37,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   deletedocWithId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
+  mobileQuery: MediaQueryList;
 
 
 
@@ -63,8 +66,9 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
+    media: MediaMatcher,
   ) {
-
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngAfterViewInit(): void {
@@ -124,10 +128,17 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    this.showFirst = !this.showFirst;
-    let selectedAsset = null;
-    this.dataService.saveData(selectedAsset);
-    // this.router.navigate(['/asset/add-asset'])
+    const dialogRef = this.dialog.open(AddCategoryDocumentComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '40vw',
+      // height: this.mobileQuery.matches ? '90vh' : '60vh',
+      disableClose: true,
+      data: { categoryId: this.categoryID, action: "add" }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action) {
+        this.getAllDocuments(this.categoryID, this.pageNumber);
+      }
+    });
   }
 
 
@@ -175,9 +186,18 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
-  editDocument(visit: number) {
-    this.showFirst = !this.showFirst;
-    this.dataService.saveData(visit);
+  editDocument(visit) {
+    const dialogRef = this.dialog.open(AddCategoryDocumentComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '40vw',
+      // height: this.mobileQuery.matches ? '90vh' : '70vh',
+      disableClose: true,
+      data: { categoryId: this.categoryID, action: "edit", documentData: visit }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action) {
+        this.getAllDocuments(this.categoryID, this.pageNumber);
+      }
+    });
   }
 
   /*********************************************************** Download Particular Document  *******************************************************************/

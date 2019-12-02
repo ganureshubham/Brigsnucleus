@@ -1,17 +1,10 @@
-<div *ngIf="!showFirst" fxLayout="column" fxFlex="100">
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
-    <div fxFlex.xs="100" fxLayoutAlign="center center">
-      <p class="page-title">{{formTitle}}</p>
-    </div>
-    <div fxFlex.xs="100" *ngIf="!isEdited" class="example-button-row btn_style bg_white_grey">
-      <button fxFlex.xs="100" mat-button (click)="backToList()">
-        <mat-icon>list</mat-icon> Document Lists
-      </button>
-    </div>
+<div fxLayout="column" fxFlex="100">
+  <div>
+    <p class="page-title">{{formTitle}}</p>
   </div>
-  <form #documentform="ngForm" fxLayout="column" novalidate>
+  <form #documentform="ngForm" fxLayout="column" fxLayoutGap="10px" novalidate>
 
-    <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.gt-xs="30px">
+    <div fxLayout="column" style="overflow-y: auto;">
       <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
         <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
           [(ngModel)]="documentData.documentTypeIdFK" placeholder="Select Document Type" required>
@@ -41,9 +34,7 @@
         </mat-error>
         <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
       </mat-form-field>
-    </div>
 
-    <div fxLayout="row">
       <mat-form-field fxFlex="100">
         <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
           placeholder="Description" required></textarea>
@@ -51,19 +42,17 @@
           <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
         </mat-error>
       </mat-form-field>
-    </div>
 
-    <div fxLayout="row">
       <div class="md-form" fxFlex="50" fxFlex.xs="100">
         <label>Document File</label>
-        <div class="file-field">
+        <div class="file-field" fxLayout.xs="column">
           <div class="btn btn-primary btn-sm float-left">
             <span>Choose file</span>
             <input type="file" onclick="this.value=null" (change)="documentChange($event.target.files)">
           </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
-              placeholder="Browse Document File From System">
+          <div class="file-path-wrapper" fxLayout.xs="row">
+            <input fxFlex.xs="100" class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text"
+              required placeholder="Browse Document File From System">
             <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear" (click)="filepath=''">
               <mat-icon>close</mat-icon>
             </button>
@@ -73,19 +62,14 @@
       </div>
     </div>
 
-    <div fxLayout="row" fxLayout.xs="column" class="savebtn">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
+      <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
       <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
         [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
         [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
       <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
         [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
-      <button fxFlex.xs="100" *ngIf="isEdited" mat-stroked-button i18n color="primary" class="btn-cancel"
-        (click)="backToList()">Cancel</button>
     </div>
   </form>
 
-</div>
-
-<div *ngIf="showFirst" fxLayout="column" fxFlex="100">
-  <app-view-category-document></app-view-category-document>
 </div>
