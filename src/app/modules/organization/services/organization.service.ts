@@ -16,4 +16,8 @@ export class OrganizationService {
     return this.httpClient.get(ConfigurationService.baseUrl + `organization/selectOrganization`);
   }
 
+  searchOrganization(keyword) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `organization/organizationSearch?keyword=${keyword}`);
+  }
+
 }

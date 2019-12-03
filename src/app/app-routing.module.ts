@@ -25,6 +25,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: "superadmin/sys-admins",
+        loadChildren: "./modules/system-admins/system-admins.module#SystemAdminsModule",
+        canActivate: [AuthGuard]
+      },
+      {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
         canActivate: [AuthGuard]

@@ -2,11 +2,18 @@
   <mat-card>
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between center"
       fxLayoutAlign.lt-sm="center center">
-      <div class="page-title">Organizations</div>
-      <div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="start center" fxLayoutGap.gt-xs="30px">
+        <div class="page-title">Organizations</div>
+        <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+          <button fxFlex.xs="100" mat-button (click)="addNewOrganization()" class="bg_white_grey btn_style">
+            <mat-icon>add</mat-icon>Add New Organization
+          </button>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
         <form class="example-form filter_search">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Search" (keyup)="searchCategory($event.target.value)">
+            <input matInput placeholder="Search" (keyup)="searchOrganization($event.target.value)">
           </mat-form-field>
         </form>
       </div>
@@ -20,13 +27,14 @@
       <mat-grid-tile *ngFor="let organization of arrOrganization" class="category-card-tile">
         <mat-card class="category-card">
           <h4 class="title_header">{{organization.organizationName}}</h4>
-          <!-- <div class="category_counter">
-            <p><b>{{categ.totalAssets}}</b><span>Total Assets</span></p>
-            <p><b>{{categ.totalChecklists}}</b><span>Checklists</span></p>
-            <p><b>{{categ.totalDocuments}}</b><span>Documents</span></p>
-            <p><b>{{categ.totalAssignedUsers}}</b><span>Assigned Users</span></p>
-          </div> -->
-          <div class="dfe btns"><button mat-button>View</button>
+          <div class="category_counter">
+            <p><b>{{organization.totalAssets}}</b><span>Total Assets</span></p>
+            <p><b>{{organization.totalAdmins}}</b><span>Total Admins</span></p>
+          </div>
+          <div class="card-btns" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center"
+            fxLayoutGap.gt-xs="10px">
+            <button mat-button>Edit</button>
+            <button mat-stroked-button color="primary">View</button>
           </div>
         </mat-card>
       </mat-grid-tile>

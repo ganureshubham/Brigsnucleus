@@ -18,6 +18,7 @@ export class OrganizationViewComponent implements OnInit {
   tabQuery: MediaQueryList;
   screen_1366x768Query: MediaQueryList;
   screen_1920x1080Query: MediaQueryList;
+  isSearchRequestAllowed: boolean = true;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
@@ -43,7 +44,12 @@ export class OrganizationViewComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       // console.log(resp);
       if (resp && resp.organization) {
-        this.arrOrganization = resp.organization;
+        if (resp.organization.length > 0) {
+          this.isNoRecordFound = false;
+          this.arrOrganization = resp.organization;
+        } else {
+          this.isNoRecordFound = true;
+        }
       }
     },
       err => {
@@ -67,6 +73,33 @@ export class OrganizationViewComponent implements OnInit {
     //1920 resolution screen
     else if (this.screen_1920x1080Query.matches) {
       return 5;
+    }
+  }
+
+  searchOrganization(keyword) {
+    if (keyword) {
+      this.isSearchRequestAllowed = true;
+      this.spinnerService.setSpinnerVisibility(true);
+      this.organizationService.searchOrganization(keyword).subscribe(res => {
+        this.spinnerService.setSpinnerVisibility(false);
+        if (res && res.data) {
+          this.arrOrganization = [];
+          this.arrOrganization = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.arrOrganization = [];
+          this.isNoRecordFound = true;
+        }
+      },
+        error => {
+          this.spinnerService.setSpinnerVisibility(false);
+        })
+    } else {
+      if (this.isSearchRequestAllowed) {
+        this.isNoRecordFound = false;
+        this.isSearchRequestAllowed = false;
+        this.getAllOrganizations();
+      }
     }
   }
 

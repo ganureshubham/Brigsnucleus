@@ -1,0 +1,105 @@
+<div fxLayout="row" fxFlex="100" fxLayoutAlign="space-evenly start"
+  class="innerpage assets_view padding_container flex_container margin_auto">
+  <mat-card fxFlex="100" fxFlex.lt-md="95" class="width_80 right_side_box">
+    <div class="innerpage_title">
+      <div class="header_title flex_container">
+        <div class="width_75">
+          <p class="title_header mat-subheading-2 tal">Admins</p>
+        </div>
+      </div>
+      <div>
+        <div class="fl total">
+          <p><b>0</b><span>Total Admins</span></p>
+        </div>
+      </div>
+      <div class="cl"></div>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="Admins">
+        <div>
+          <div fxLayout="column">
+            <div>
+              <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+                <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+                  <button fxFlex.xs="100" mat-button (click)="addNewAdmin()" class="bg_white_grey btn_style">
+                    <mat-icon>add</mat-icon>Add New Admin
+                  </button>
+                </div>
+                <div fxFlex.xs="100">
+                  <form fxFlex.xs="100" class="filter_search">
+                    <mat-form-field fxFlex.xs="100">
+                      <input matInput (keyup)="searchAlert($event.target.value)" placeholder="Search">
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+              <!-- <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+                <p>No Record Found</p>
+              </div>
+              <ng-template #recordFound>
+                <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="alertName">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Alert Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="title">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="alertImage">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Alert Image</mat-header-cell>
+                    <mat-cell fxHide.xs *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
+                        src="{{visit.alertImage}}" alt="photo"></mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isRead">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Is Read</mat-header-cell>
+                    <mat-cell fxHide.xs class="isRead" *matCellDef="let visit">{{ visit.isRead }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="isDeliver">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Is Delivered</mat-header-cell>
+                    <mat-cell fxHide.xs class="isDeliver" *matCellDef="let visit">{{ visit.isDeliver }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="message">
+                    <mat-header-cell fxHide.xs *matHeaderCellDef>Message</mat-header-cell>
+                    <mat-cell fxHide.xs *matCellDef="let visit">
+                      {{ visit.message.length>62?visit.message.substring(0,62)+'...':visit.message }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">
+                      <div>
+                        <mat-menu #dailyPerformanceMenu="matMenu">
+                          <a mat-menu-item (click)="viewAlert(visit.alertId)">
+                            <mat-icon matListIcon>visibility</mat-icon>
+                            <span i18n>View Alert Detail</span>
+                          </a>
+                          <a mat-menu-item (click)="deleteAlert(visit.alertId,visit.title)">
+                            <mat-icon matListIcon>delete_outline</mat-icon>
+                            <span i18n>Delete Alert</span>
+                          </a>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                          <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                        </button>
+                      </div>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row class="example-element-row" (click)="viewAlert(visit.alertId)"
+                    *matRowDef="let visit; columns: displayedColumns;">
+                  </mat-row>
+                </mat-table>
+              </ng-template>
+              <div>
+                <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
+                  (page)="pageChange($event)">
+                </mat-paginator>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
