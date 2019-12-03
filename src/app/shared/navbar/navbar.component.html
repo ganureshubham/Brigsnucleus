@@ -29,7 +29,7 @@
             </a>
           </div>
           <div>
-            <a mat-button routerLink="/dashboard" routerLinkActive="is-active-super-route" fxLayout="row"
+            <a mat-button routerLink="/dashboard/admin" routerLinkActive="is-active-super-route" fxLayout="row"
               fxLayoutAlign="start center">
               <mat-icon color="primary">developer_board</mat-icon><span i18n class="item-toolbar">MANAGE
                 ORGANIZATIONS</span>
@@ -75,7 +75,7 @@
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="!isSuperadminNavigating" class="toolbar-row-2" fxHide.lt-sm="true">
-      <a mat-button routerLink="/dashboard" routerLinkActive="is-active">
+      <a mat-button [routerLink]="getDashboardRoute()" routerLinkActive="is-active">
         <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
       </a>
       <a mat-button routerLink="/assetmate" routerLinkActive="is-active">

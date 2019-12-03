@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthGuard } from './guards/auth.guard'
 import { LoginComponent } from './login/login.component';
+import { PagenotfoundComponent } from './shared/pagenotfound/pagenotfound.component';
 
 export const AppRoutes: Routes = [
   {
@@ -78,6 +79,14 @@ export const AppRoutes: Routes = [
   {
     path: "login",
     component: LoginComponent,
+  },
+  {
+    path: '404',
+    component: PagenotfoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   }
 ];
 

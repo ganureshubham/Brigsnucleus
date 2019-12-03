@@ -14,6 +14,10 @@ export const DashboardRoutes: Routes = [
       {
         path: 'superadmin',
         component: SuperadminDashboardComponent,
+      },
+      {
+        path: 'admin',
+        component: DashboardComponent,
       }
     ]
   }

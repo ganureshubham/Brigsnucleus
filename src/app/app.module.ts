@@ -56,6 +56,7 @@ import {
 import { config, from } from 'rxjs';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { PagenotfoundComponent } from './shared/pagenotfound/pagenotfound.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ export class MaterialModule { }
     AuthComponent,
     LoginComponent,
     AppDialog,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
