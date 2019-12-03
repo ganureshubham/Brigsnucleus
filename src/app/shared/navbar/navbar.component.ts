@@ -72,6 +72,16 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  navigateToDashboard() {
+
+    if (JSON.parse(localStorage.getItem('currentUser')).data.role != 0) {
+      this.router.navigate([JSON.parse(localStorage.getItem('currentUser')).data.role == 0 ? '/dashboard/admin' : '/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard/superadmin'])
+    }
+
+  }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
