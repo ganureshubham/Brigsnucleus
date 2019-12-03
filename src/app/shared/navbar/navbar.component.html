@@ -1,8 +1,41 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary">
-    <mat-toolbar-row fxHide.lt-sm="true" class="toolbar-row-1" fxLayout="row" fxLayoutAlign="space-between center">
-      <div title="Brigs Nucleus Dashboard" class="logo">
-        <img src="assets/img/logo.png" alt="brigs logo">
+    <mat-toolbar-row [ngClass]="{'superadmin-toolbar': isCurrentUserSuperAdmin()}" fxHide.lt-sm="true"
+      class="toolbar-row-1" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div title="Dashboard" (click)="navigateToDashboard()" [ngStyle]="{
+          'background-image': 'url('+'assets/img/logo.png'+')', 
+          'background-size': 'contain',
+          'background-position': 'center center', 
+          'background-repeat': 'no-repeat',
+          'margin-left': '20px',
+          'width':'220px', 
+          'height':'55px',
+          'cursor':'pointer'
+        }">
+        </div>
+        <div *ngIf="isCurrentUserSuperAdmin()" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <div>
+            <a mat-button routerLink="/dashboard/superadmin" routerLinkActive="is-active-super-route" fxLayout="row"
+              fxLayoutAlign="start center" fxLayoutGap="10px">
+              <mat-icon color="primary">assessment</mat-icon><span i18n class="item-toolbar">SYSTEM DASHBOARD</span>
+            </a>
+          </div>
+          <div>
+            <a mat-button routerLink="/superadmin/organization" routerLinkActive="is-active-super-route" fxLayout="row"
+              fxLayoutAlign="start center">
+              <mat-icon color="primary">supervised_user_circle</mat-icon><span i18n
+                class="item-toolbar">ORGANIZATIONS</span>
+            </a>
+          </div>
+          <div>
+            <a mat-button routerLink="/dashboard" routerLinkActive="is-active-super-route" fxLayout="row"
+              fxLayoutAlign="start center">
+              <mat-icon color="primary">developer_board</mat-icon><span i18n class="item-toolbar">MANAGE
+                ORGANIZATIONS</span>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="toolbar-menu" fxLayout="row" fxLayoutAlign="center">
         <div class="admin_profile">
@@ -41,7 +74,7 @@
         <img src="assets/img/logo.png" width="170px" height="50px" alt="brigs logo" style="padding-right: 20px;">
       </div>
     </mat-toolbar-row>
-    <mat-toolbar-row class="toolbar-row-2" fxHide.lt-sm="true">
+    <mat-toolbar-row *ngIf="!isSuperadminNavigating" class="toolbar-row-2" fxHide.lt-sm="true">
       <a mat-button routerLink="/dashboard" routerLinkActive="is-active">
         <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
       </a>

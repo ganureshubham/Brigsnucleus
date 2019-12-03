@@ -1,0 +1,42 @@
+.dashboard_part {
+    border-bottom: 1px solid #f1f1f1;
+    min-height: 110px;
+  }
+  
+  .dashboard_part ul li:first-child {
+    width: 45px;
+    padding-right: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  
+  .dashboard_part ul li:first-child img {
+    opacity: 0.2;
+    width: 75%;
+  }
+  
+  .dashboard_part ul {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashboard_part ul li:nth-child(2) {
+    width: 200px;
+    padding-right: 15px;
+    color: #6d6c6c;
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  
+  .dashboard_part ul li:last-child {
+    /* width: 114px; */
+    text-align: center;
+  }
+
+  .verticle-divider{
+      width: 1px;
+      height: 150px;
+      min-height: 150px;
+      background-color: #eee;
+  }

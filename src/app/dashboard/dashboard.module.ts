@@ -7,9 +7,10 @@ import { DashboardRoutes } from './dashboard.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../app.module';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { SuperadminDashboardComponent } from './superadmin-dashboard/superadmin-dashboard.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, SuperadminDashboardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(DashboardRoutes),

@@ -59,7 +59,11 @@ export class LoginComponent implements OnInit {
 
         if (res.auth) {
           localStorage.setItem('currentUser', JSON.stringify(res));
-          this.router.navigate(["/dashboard"]);
+          if (JSON.parse(localStorage.getItem('currentUser')).data.role != 0) {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/dashboard/superadmin'])
+          }
         }
 
       },

@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   displayOrg: String = '';
   panelOpenState: boolean = false;
   mobileQuery: MediaQueryList;
-
+  isSuperadminNavigating: boolean = false;
   private _mobileQueryListener: () => void;
 
   constructor(
@@ -28,7 +28,37 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.router.events.subscribe((val) => {
+      if (this.router.url.includes('superadmin')) {
+        this.isSuperadminNavigating = true;
+      } else {
+        this.isSuperadminNavigating = false;
+      }
+    });
+
+    if (this.router.url.includes('superadmin')) {
+      this.isSuperadminNavigating = true;
+    } else {
+      this.isSuperadminNavigating = false;
+    }
+
     this.users();
+
+  }
+
+  navigateToDashboard() {
+
+    if (JSON.parse(localStorage.getItem('currentUser')).data.role != 0) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard/superadmin'])
+    }
+
+  }
+
+  isCurrentUserSuperAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
   }
 
   goToProfile() {
