@@ -20,4 +20,8 @@ export class OrganizationService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `organization/organizationSearch?keyword=${keyword}`);
   }
 
+  addOrganization(organizationDetails) {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `organization/addOrganization`, organizationDetails);
+  }
+
 }

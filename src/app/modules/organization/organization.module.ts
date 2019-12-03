@@ -5,6 +5,7 @@ import { MaterialModule } from '../../app.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { OrganizationViewComponent } from './components/organization-view/organization-view.component';
 import { OrganizationAddEditComponent } from './components/organization-add-edit/organization-add-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [OrganizationViewComponent, OrganizationAddEditComponent],
@@ -12,7 +13,12 @@ import { OrganizationAddEditComponent } from './components/organization-add-edit
     CommonModule,
     OrganizationRoutingModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  entryComponents: [
+    OrganizationAddEditComponent
   ]
 })
 export class OrganizationModule { }

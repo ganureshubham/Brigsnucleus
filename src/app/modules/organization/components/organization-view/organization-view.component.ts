@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { OrganizationService } from '../../services/organization.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { OrganizationAddEditComponent } from '../organization-add-edit/organization-add-edit.component';
 
 @Component({
   selector: 'app-organization-view',
@@ -24,7 +26,8 @@ export class OrganizationViewComponent implements OnInit {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private organizationService: OrganizationService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.tabQuery = media.matchMedia('(max-width: 768px)');
@@ -101,6 +104,32 @@ export class OrganizationViewComponent implements OnInit {
         this.getAllOrganizations();
       }
     }
+  }
+
+  addNewOrganization() {
+    const dialogRef = this.dialog.open(OrganizationAddEditComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '30vw',
+      disableClose: true,
+      data: { action: "add" }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action) {
+        this.getAllOrganizations();
+      }
+    });
+  }
+
+  editOrganization(organization) {
+    const dialogRef = this.dialog.open(OrganizationAddEditComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '30vw',
+      disableClose: true,
+      data: { action: "edit", organization: organization }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action) {
+        this.getAllOrganizations();
+      }
+    });
   }
 
 }
