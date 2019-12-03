@@ -1,11 +1,7 @@
 import { Routes } from '@angular/router';
-import { AuthComponent } from './layouts/auth/auth.component';
 import { AdminComponent } from './layouts/admin/admin.component';
-// import { AuthGuard } from './public service/auth-guard.service';
 import { AuthGuard } from './guards/auth.guard'
 import { LoginComponent } from './login/login.component';
-import { PrintAssetQrcodeComponent } from './shared/print-asset-qrcode/print-asset-qrcode.component';
-
 
 export const AppRoutes: Routes = [
   {
@@ -22,16 +18,6 @@ export const AppRoutes: Routes = [
         loadChildren: "./dashboard/dashboard.module#DashboardModule",
         canActivate: [AuthGuard]
       },
-      // {
-      //   path: "asset",
-      //   loadChildren: "./modules/asset/asset.module#AssetModule",
-      //   canActivate: [AuthGuard]
-      // },
-      // {
-      //   path: "asset-category",
-      //   loadChildren: "./modules/asset-category/asset-category.module#AssetCategoryModule",
-      //   canActivate: [AuthGuard]
-      // },
       {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
@@ -67,11 +53,6 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/assetmate/assetmate.module#AssetmateModule",
         canActivate: [AuthGuard]
       },
-      // {
-      //   path: "checklist",
-      //   loadChildren: "./modules/checklist/checklist.module#ChecklistModule",
-      //   canActivate: [AuthGuard]
-      // },
       {
         path: "profile",
         loadChildren: "./modules/profile/profile.module#ProfileModule",
@@ -87,37 +68,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/asset-category/asset-category.module#AssetCategoryModule",
         canActivate: [AuthGuard]
       },
-      // {
-      //   path: "category-Document",
-      //   loadChildren: "./modules/category-document/category-document.module#CategoryDocumentModule",
-      //   canActivate: [AuthGuard]
-
-      // },
-      //  {
-      //      path :"assetmate",
-      //      loadChildren : "./modules/assetmate/assetmate.module#AssetmateModule",
-
-      //    },
     ]
   },
-  // {
-  //   path: "",
-  //   component: AuthComponent,
-  //   children: [
-  //     {
-  //       path: "",
-  //       loadChildren: "./login/login.module#LoginModule"
-  //     }
-  //   ]
-  // }
   {
     path: "login",
     component: LoginComponent,
-  },
-  {
-    path: "print-qrcode/:assetId",
-    component: PrintAssetQrcodeComponent,
-    canActivate: [AuthGuard]
   }
 ];
 

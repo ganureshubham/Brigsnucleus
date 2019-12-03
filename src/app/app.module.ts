@@ -16,7 +16,6 @@ import { ConfigurationService } from './public service/configuration.service';
 import { AuthInterceptor } from './guards/auth.interceptor';
 import { MaterialFileInputModule, NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 import { ToastrModule } from 'ngx-toastr';
-import { AuthGuard } from './public service/auth-guard.service';
 import { QRCodeModule } from 'angularx-qrcode';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
@@ -57,7 +56,6 @@ import {
 import { config, from } from 'rxjs';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
-import { PrintAssetQrcodeComponent } from './shared/print-asset-qrcode/print-asset-qrcode.component';
 
 
 @NgModule({
@@ -107,7 +105,6 @@ export class MaterialModule { }
     AuthComponent,
     LoginComponent,
     AppDialog,
-    PrintAssetQrcodeComponent
   ],
   imports: [
     BrowserModule,
