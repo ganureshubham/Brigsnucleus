@@ -12,15 +12,19 @@ import 'rxjs/add/observable/timer';
 })
 export class NotificationService {
   baseUrl = ConfigurationService.baseUrl;
-  
+
   constructor(private httpClient: HttpClient) { }
 
-  
 
-  
+
+
 
   getDashboardDetails(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + `dashboard/home` );
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/home`);
+  }
+
+  getSuperAdminDashboardDetails(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/superAdminCount`);
   }
 
 

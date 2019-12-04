@@ -1201,3 +1201,7 @@ body {
 .dialog-toolbar{
   padding: 0px 10px;
 }
+
+.dialog-actions{
+  padding: 0px 10px;
+}
