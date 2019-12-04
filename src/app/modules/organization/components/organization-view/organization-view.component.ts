@@ -1,9 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { OrganizationService } from '../../services/organization.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { OrganizationAddEditComponent } from '../organization-add-edit/organization-add-edit.component';
+import { AppDialogData } from 'src/app/model/appDialogData';
+import { DialogService } from '../../../../public service/dialog.service';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organization-view',
@@ -12,6 +16,7 @@ import { OrganizationAddEditComponent } from '../organization-add-edit/organizat
 })
 export class OrganizationViewComponent implements OnInit {
 
+  page: number = 0;
   arrOrganization: any[] = [];
   mSearchOrganization: any = [];
   isNoRecordFound: boolean = false;
@@ -21,6 +26,14 @@ export class OrganizationViewComponent implements OnInit {
   screen_1366x768Query: MediaQueryList;
   screen_1920x1080Query: MediaQueryList;
   isSearchRequestAllowed: boolean = true;
+  pageNumber = 0;
+  totalCount = 0;
+  displayedColumns: string[] = ['OrganizationName', 'OrganizationDescription', 'TotalAdmins', 'TotalAssets', 'Actions'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
+  deleteOrgId: number;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
@@ -28,6 +41,9 @@ export class OrganizationViewComponent implements OnInit {
     private organizationService: OrganizationService,
     private spinnerService: SpinnerService,
     private dialog: MatDialog,
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.tabQuery = media.matchMedia('(max-width: 768px)');
@@ -38,21 +54,26 @@ export class OrganizationViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllOrganizations();
+    this.getListOfOrganizations(this.pageNumber);
   }
 
-  getAllOrganizations() {
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getListOfOrganizations(pageNumber) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.organizationService.getAllOrganizations().subscribe((resp: any) => {
+    this.organizationService.getListOfOrganizations(pageNumber).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
-      // console.log(resp);
-      if (resp && resp.organization) {
-        if (resp.organization.length > 0) {
-          this.isNoRecordFound = false;
-          this.arrOrganization = resp.organization;
-        } else {
+      if (resp && resp.organizations) {
+        if (resp.currentPage == 0 && resp.totalCount == 0) {
           this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
         }
+        this.dataSource = resp.organizations;
+        this.pageNumber = resp.currentPage;
+        this.totalCount = resp.totalCount;
       }
     },
       err => {
@@ -86,11 +107,10 @@ export class OrganizationViewComponent implements OnInit {
       this.organizationService.searchOrganization(keyword).subscribe(res => {
         this.spinnerService.setSpinnerVisibility(false);
         if (res && res.data) {
-          this.arrOrganization = [];
-          this.arrOrganization = res.data;
+          this.dataSource = res.data;
           this.isNoRecordFound = false;
         } else {
-          this.arrOrganization = [];
+          this.dataSource = new MatTableDataSource<object>([]);
           this.isNoRecordFound = true;
         }
       },
@@ -101,7 +121,7 @@ export class OrganizationViewComponent implements OnInit {
       if (this.isSearchRequestAllowed) {
         this.isNoRecordFound = false;
         this.isSearchRequestAllowed = false;
-        this.getAllOrganizations();
+        this.getListOfOrganizations(this.pageNumber);
       }
     }
   }
@@ -114,7 +134,7 @@ export class OrganizationViewComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.action) {
-        this.getAllOrganizations();
+        this.getListOfOrganizations(this.pageNumber);
       }
     });
   }
@@ -127,8 +147,78 @@ export class OrganizationViewComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.action) {
-        this.getAllOrganizations();
+        this.getListOfOrganizations(this.pageNumber);
       }
+    });
+  }
+
+  deleteOrganization(organization) {
+
+    this.deleteOrgId = organization.organizationId;
+    let deleteOrgTitle = organization.organizationName;
+
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ORGANIZATION',
+      message: `Are your sure you want to delete organization "${deleteOrgTitle}" ?`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+
+    this.dialogService.setDialogVisibility(appDialogData);
+
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+
+          this.dialogService.setUserDialogAction(0);
+
+          //User has approved delete operation 
+          this.spinnerService.setSpinnerVisibility(true);
+          this.organizationService.deleteOrganization(this.deleteOrgId).subscribe(res => {
+
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getListOfOrganizations(this.page);
+
+          }, error => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
+
+  }
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getListOfOrganizations(this.page);
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  goToParticularOrganization(organizationId) {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.organizationService.getOrganizationSpecificToken(organizationId).subscribe((resp: any) => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (resp.status) {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        currentUser.data.token = resp.token;
+        currentUser.data.OrgNameForSuperAdmin = resp.organizationName;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.router.navigate(['/dashboard/admin']);
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
+    }, err => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar("Something went wrong..!!");
     });
   }
 

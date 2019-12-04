@@ -80,48 +80,54 @@
         <img src="assets/img/logo.png" width="170px" height="50px" alt="brigs logo" style="padding-right: 20px;">
       </div>
     </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="!isSuperadminNavigating" class="toolbar-row-2" fxHide.lt-sm="true">
-      <a mat-button [routerLink]="getDashboardRoute()" routerLinkActive="is-active">
-        <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
-      </a>
-      <a mat-button routerLink="/assetmate" routerLinkActive="is-active">
-        <mat-icon>assignment</mat-icon><span i18n>Assetmate</span>
-      </a>
-      <a mat-button routerLink="/documate" routerLinkActive="is-active">
-        <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
-      </a>
-      <a mat-button routerLink="/alert" routerLinkActive="is-active">
-        <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
-      </a>
-      <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
-        <mat-icon>settings_applications</mat-icon>Settings
-      </a>
-      <mat-menu #appsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
-        <a mat-menu-item routerLink="/user-role">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>User Role</span>
+    <mat-toolbar-row *ngIf="!isSuperadminNavigating" class="toolbar-row-2" fxHide.lt-sm="true" fxLayout="row"
+      fxLayoutAlign="space-between center">
+      <div>
+        <a mat-button [routerLink]="getDashboardRoute()" routerLinkActive="is-active">
+          <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
         </a>
-        <a mat-menu-item routerLink="/supplier">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>Supplier</span>
+        <a mat-button routerLink="/assetmate" routerLinkActive="is-active">
+          <mat-icon>assignment</mat-icon><span i18n>Assetmate</span>
         </a>
-        <a mat-menu-item routerLink="/manufacturer">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>Manufacturer</span>
+        <a mat-button routerLink="/documate" routerLinkActive="is-active">
+          <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
         </a>
-        <a mat-menu-item routerLink="/user/user-list">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>User</span>
+        <a mat-button routerLink="/alert" routerLinkActive="is-active">
+          <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
         </a>
-        <a mat-menu-item routerLink="/department">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>Department</span>
+        <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
+          <mat-icon>settings_applications</mat-icon>Settings
         </a>
-        <a mat-menu-item routerLink="/asset-category">
-          <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-          <span i18n>Asset-Category</span>
-        </a>
-      </mat-menu>
+        <mat-menu #appsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+          <a mat-menu-item routerLink="/user-role">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>User Role</span>
+          </a>
+          <a mat-menu-item routerLink="/supplier">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Supplier</span>
+          </a>
+          <a mat-menu-item routerLink="/manufacturer">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Manufacturer</span>
+          </a>
+          <a mat-menu-item routerLink="/user/user-list">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>User</span>
+          </a>
+          <a mat-menu-item routerLink="/department">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Department</span>
+          </a>
+          <a mat-menu-item routerLink="/asset-category">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Asset-Category</span>
+          </a>
+        </mat-menu>
+      </div>
+      <div *ngIf="isCurrentUserSuperAdmin()">
+        <p> <span class="org-title-key">Organization Title: </span>{{getOrganizationNameMangingBySuperAdmin()}}</p>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
   <!-- [style.marginTop.px]="mobileQuery.matches ? 56 : 0" -->

@@ -44,7 +44,8 @@ export class OrganizationAddEditComponent implements OnInit {
   setFormControls() {
     this.organizationForm = this.formBuilder.group({
       organizationName: ['', Validators.required],
-      organizationDescription: ['', Validators.required]
+      organizationDescription: ['', Validators.required],
+      organizationCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]]
     });
   }
 
@@ -63,7 +64,7 @@ export class OrganizationAddEditComponent implements OnInit {
 
     let organizationDetails: OrganizationDetails = {
       organizationName: '',
-      description: ''
+      description: '',
     };
 
     organizationDetails.organizationName = this.organizationForm.get('organizationName').value;
@@ -116,6 +117,11 @@ export class OrganizationAddEditComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  onOrganizationNameChange(orgName) {
+    let autoSuggestedOrgCode = orgName.replace(/\s/g, "").substring(0, 4);
+    this.organizationForm.controls['organizationCode'].setValue(autoSuggestedOrgCode.toUpperCase());
   }
 
 }

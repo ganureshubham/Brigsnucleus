@@ -16,6 +16,10 @@ export class OrganizationService {
     return this.httpClient.get(ConfigurationService.baseUrl + `organization/selectOrganization`);
   }
 
+  getListOfOrganizations(pageNo) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `organization/listOfOrganizations/${pageNo}`);
+  }
+
   searchOrganization(keyword) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `organization/organizationSearch?keyword=${keyword}`);
   }
@@ -26,6 +30,14 @@ export class OrganizationService {
 
   editOrganization(organizationId, organizationDetails) {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `organization/updateOrganization/${organizationId}`, organizationDetails);
+  }
+
+  deleteOrganization(organizationId) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `organization/deleteOrganization/${organizationId}`, {});
+  }
+
+  getOrganizationSpecificToken(organizationId) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `organization/getOrganizationSpecificToken/${organizationId}`);
   }
 
 }

@@ -131,3 +131,8 @@
   .item-toolbar{
     color: #6a1c7e;
   }
+
+  .org-title-key{
+    font-size: 13px;
+    padding-right: 5px;
+  }

@@ -7,11 +7,18 @@
     <form [formGroup]="organizationForm" (submit)="saveOrganization()">
       <div fxLayout="column">
         <mat-form-field fxFlex="100">
-          <input matInput type="text" required placeholder="Organization Name" formControlName="organizationName">
+          <input matInput type="text" required placeholder="Organization Name" formControlName="organizationName"
+            (input)="onOrganizationNameChange($event.target.value)">
         </mat-form-field>
         <mat-form-field fxFlex="100">
           <textarea matInput type="text" required placeholder="About Organization"
             formControlName="organizationDescription" rows="4"></textarea>
+        </mat-form-field>
+        <mat-form-field fxFlex="100">
+          <input style="font-size:40px" matInput type="text" required placeholder="Organization Code (4-CHAR)"
+            formControlName="organizationCode" maxlength="4">
+          <mat-error>Organization code must have 4 characters</mat-error>
+          <mat-hint>Organization code will be prefix for all assets and documents codes</mat-hint>
         </mat-form-field>
       </div>
     </form>

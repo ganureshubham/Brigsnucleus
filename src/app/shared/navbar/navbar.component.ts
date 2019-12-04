@@ -90,4 +90,8 @@ export class NavbarComponent implements OnInit {
     return JSON.parse(localStorage.getItem('currentUser')).data.role == 0 ? '/dashboard/admin' : '/dashboard';
   }
 
+  getOrganizationNameMangingBySuperAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+  }
+
 }
