@@ -4,7 +4,7 @@
   </div>
 
   <div class="dialog-content-container">
-    <form [formGroup]="organizationForm" (submit)="saveOrganization()">
+    <form [formGroup]="organizationForm">
       <div fxLayout="column">
         <mat-form-field fxFlex="100">
           <input matInput type="text" required placeholder="Organization Name" formControlName="organizationName"
