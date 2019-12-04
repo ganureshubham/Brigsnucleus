@@ -35,8 +35,8 @@
             </a>
           </div>
           <div>
-            <a mat-button routerLink="/dashboard/admin" routerLinkActive="is-active-super-route" fxLayout="row"
-              fxLayoutAlign="start center">
+            <a mat-button (click)="chooseOrganizationAndNavigate()" routerLinkActive="is-active-super-route"
+              fxLayout="row" fxLayoutAlign="start center">
               <mat-icon color="primary">developer_board</mat-icon><span i18n class="item-toolbar">MANAGE
                 ORGANIZATIONS</span>
             </a>

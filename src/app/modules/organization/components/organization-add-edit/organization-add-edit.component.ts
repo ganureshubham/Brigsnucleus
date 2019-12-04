@@ -7,7 +7,8 @@ import { MatSnackBar } from '@angular/material';
 
 interface OrganizationDetails {
   organizationName: string,
-  description: string
+  description: string,
+  organizationCode: string
 }
 
 @Component({
@@ -45,13 +46,14 @@ export class OrganizationAddEditComponent implements OnInit {
     this.organizationForm = this.formBuilder.group({
       organizationName: ['', Validators.required],
       organizationDescription: ['', Validators.required],
-      organizationCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]]
+      organizationCode: [{ value: '', disabled: this.data.action == 'edit' ? true : false }, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]]
     });
   }
 
   setFormControlsValue() {
     this.organizationForm.controls['organizationName'].setValue(this.organization.organizationName);
     this.organizationForm.controls['organizationDescription'].setValue(this.organization.description);
+    this.organizationForm.controls['organizationCode'].setValue(this.organization.organizationCode);
   }
 
   onNoClick(): void {
@@ -65,10 +67,12 @@ export class OrganizationAddEditComponent implements OnInit {
     let organizationDetails: OrganizationDetails = {
       organizationName: '',
       description: '',
+      organizationCode: ''
     };
 
     organizationDetails.organizationName = this.organizationForm.get('organizationName').value;
     organizationDetails.description = this.organizationForm.get('organizationDescription').value;
+    organizationDetails.organizationCode = this.organizationForm.get('organizationCode').value;
 
     this.organizationService.addOrganization(organizationDetails).subscribe(resp => {
       if (resp && resp.status) {
@@ -94,7 +98,8 @@ export class OrganizationAddEditComponent implements OnInit {
 
     let organizationDetails: OrganizationDetails = {
       organizationName: '',
-      description: ''
+      description: '',
+      organizationCode: ''
     };
 
     organizationDetails.organizationName = this.organizationForm.get('organizationName').value;
@@ -116,12 +121,14 @@ export class OrganizationAddEditComponent implements OnInit {
   }
 
   showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+    this.snackBar.open(message, '', { duration: 4000 });
   }
 
   onOrganizationNameChange(orgName) {
-    let autoSuggestedOrgCode = orgName.replace(/\s/g, "").substring(0, 4);
-    this.organizationForm.controls['organizationCode'].setValue(autoSuggestedOrgCode.toUpperCase());
+    if (this.data.action == 'add') {
+      let autoSuggestedOrgCode = orgName.replace(/\s/g, "").substring(0, 4);
+      this.organizationForm.controls['organizationCode'].setValue(autoSuggestedOrgCode.toUpperCase());
+    }
   }
 
 }

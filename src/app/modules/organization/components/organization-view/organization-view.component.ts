@@ -28,7 +28,7 @@ export class OrganizationViewComponent implements OnInit {
   isSearchRequestAllowed: boolean = true;
   pageNumber = 0;
   totalCount = 0;
-  displayedColumns: string[] = ['OrganizationName', 'OrganizationDescription', 'TotalAdmins', 'TotalAssets', 'Actions'];
+  displayedColumns: string[] = ['OrganizationName', 'OrganizationCode', 'OrganizationDescription', 'TotalAdmins', 'TotalAssets', 'Actions'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteOrgId: number;

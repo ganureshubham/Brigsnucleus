@@ -2,6 +2,8 @@ import { AuthenticationService } from '../../public service/authentication.servi
 import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ManageOrganizationComponent } from '../manage-organization/manage-organization.component';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +22,8 @@ export class NavbarComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher
+    media: MediaMatcher,
+    public dialog: MatDialog,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -92,6 +95,13 @@ export class NavbarComponent implements OnInit {
 
   getOrganizationNameMangingBySuperAdmin() {
     return JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+  }
+
+  chooseOrganizationAndNavigate() {
+    const dialogRef = this.dialog.open(ManageOrganizationComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '30vw',
+      height: this.mobileQuery.matches ? '90vh' : '80vh',
+    });
   }
 
 }

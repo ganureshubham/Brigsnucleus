@@ -44,6 +44,11 @@
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.organizationName }}
                     </mat-cell>
                   </ng-container>
+                  <ng-container matColumnDef="OrganizationCode">
+                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Organization Code</mat-header-cell>
+                    <mat-cell fxLayoutAlign="center center" *matCellDef="let element">{{ element.organizationCode }}
+                    </mat-cell>
+                  </ng-container>
                   <ng-container matColumnDef="OrganizationDescription">
                     <mat-header-cell fxFlex="30" fxLayoutAlign="center center" *matHeaderCellDef>Organization
                       Description
@@ -68,7 +73,7 @@
                     <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let element">
                       <div>
                         <mat-menu #dailyPerformanceMenu="matMenu">
-                          <a mat-menu-item (click)="viewAlert(visit.alertId)">
+                          <a mat-menu-item (click)="goToParticularOrganization(element.organizationId)">
                             <mat-icon matListIcon>visibility</mat-icon>
                             <span i18n>View Org. Detail</span>
                           </a>
