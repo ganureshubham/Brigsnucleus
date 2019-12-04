@@ -1,6 +1,6 @@
 <div>
   <div class="dialog-toolbar">
-    <p class="dialog-toolbar-title">Add Organization</p>
+    <p class="dialog-toolbar-title">{{isCurrentOperationEdit ? 'Edit Organization' : 'Add Organization'}}</p>
   </div>
 
   <div class="dialog-content-container">
@@ -20,9 +20,8 @@
   <div class="dialog-actions" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
     <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
     <button fxFlex.xs="100" *ngIf="!isCurrentOperationEdit" mat-raised-button i18n color="primary" type="submit"
-      [disabled]="!organizationForm.valid" (click)="addOrganization()">Save Organization</button>
+      [disabled]="!organizationForm.valid" (click)="addOrganization()">Add</button>
     <button fxFlex.xs="100" *ngIf="isCurrentOperationEdit" mat-raised-button i18n color="primary" type="submit"
-      [disabled]="!organizationForm.valid" (click)="editOrganization()">Update Organization
-      User</button>
+      [disabled]="!organizationForm.valid" (click)="editOrganization()">Update</button>
   </div>
 </div>

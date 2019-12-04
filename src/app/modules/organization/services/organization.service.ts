@@ -24,4 +24,8 @@ export class OrganizationService {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `organization/addOrganization`, organizationDetails);
   }
 
+  editOrganization(organizationId, organizationDetails) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `organization/updateOrganization/${organizationId}`, organizationDetails);
+  }
+
 }

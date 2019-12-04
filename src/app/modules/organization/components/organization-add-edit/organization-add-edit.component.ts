@@ -34,9 +34,10 @@ export class OrganizationAddEditComponent implements OnInit {
     this.setFormControls();
     if (this.data.action == 'edit') {
       this.organization = this.data.organization;
-      console.log(this.organization);
-
       this.setFormControlsValue();
+      this.isCurrentOperationEdit = true;
+    } else {
+      this.isCurrentOperationEdit = false;
     }
   }
 
@@ -76,6 +77,33 @@ export class OrganizationAddEditComponent implements OnInit {
       } else {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(resp.message);
+      }
+    },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    );
+
+  }
+
+  editOrganization() {
+
+    this.spinnerService.setSpinnerVisibility(true);
+
+    let organizationDetails: OrganizationDetails = {
+      organizationName: '',
+      description: ''
+    };
+
+    organizationDetails.organizationName = this.organizationForm.get('organizationName').value;
+    organizationDetails.description = this.organizationForm.get('organizationDescription').value;
+
+    this.organizationService.editOrganization(this.data.organization.organizationId, organizationDetails).subscribe(resp => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(resp.message);
+      if (resp && resp.status) {
+        this.dialogRef.close({ action: true });
       }
     },
       err => {
