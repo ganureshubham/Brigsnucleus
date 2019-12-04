@@ -1,0 +1,112 @@
+<div fxLayout="row" fxFlex="100" fxLayoutAlign="space-evenly start" class="width_90 margin_auto padding_container">
+  <mat-card fxFlex="100" fxFlex.lt-md="95" class="width_80 right_side_box">
+    <div class="innerpage_title">
+      <div class="header_title flex_container">
+        <div class="width_75">
+          <p class="title_header mat-subheading-2 tal">Complaint</p>
+        </div>
+      </div>
+      <div>
+        <div class="fl total">
+          <p><b>{{totalComplaints}}</b><span>Total Complaints</span></p>
+        </div>
+      </div>
+      <div class="cl"></div>
+    </div>
+    <mat-tab-group class="">
+      <mat-tab label="Complaint">
+        <div>
+          <div fxLayout="column">
+            <div>
+              <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
+                <div fxFlex.xs="100">
+                  <button fxFlex.xs="100" mat-button (click)="addComplaint()" class="bg_white_grey btn_style">
+                    <mat-icon>add</mat-icon>Add Complaint
+                  </button>
+                </div>
+                <div fxLayout.xs="column">
+                  <form fxFlex.xs="100" class="filter_search">
+                    <mat-form-field fxFlex.xs="100">
+                      <input matInput (keyup)="searchComplaint($event.target.value)" placeholder="Search">
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+              <div class="cl"></div>
+              <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+                <p>No Record Found</p>
+              </div>
+              <ng-template #recordFound>
+                <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="typeOfComplaint">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Complaint
+                    </mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfComplaint }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="title">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="assetTitle">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.assetTitle }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="assetCode">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Code</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.assetCode }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="complaintStatus">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Status
+                    </mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.complaintStatus }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="typeOfUser">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="raisedByName">
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+                    <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
+                      <div>
+                        <mat-menu #dailyPerformanceMenu="matMenu">
+                          <a mat-menu-item (click)="viewComplaint(visit)">
+                            <mat-icon matListIcon>visibility</mat-icon>
+                            <span i18n>View Complaint</span>
+                          </a>
+                          <a mat-menu-item (click)="deleteComplaint(visit.complaintId,visit.title)">
+                            <mat-icon matListIcon>delete_outline</mat-icon>
+                            <span i18n>Delete Complaint</span>
+                          </a>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
+                          <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
+                        </button>
+                      </div>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+              </ng-template>
+              <div>
+                <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
+                  (page)="pageChange($event)">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

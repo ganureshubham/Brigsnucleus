@@ -13,7 +13,7 @@ export class DocumateService {
 
   /******************************************************* get All Documate*******************************************************************/
   getAllDocumates(pageNo: number): Observable<any> {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `document/listOfDocuments/${pageNo}`);
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `document/listOfDocuments/${pageNo}`); 
 
   }
 
