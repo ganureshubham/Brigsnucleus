@@ -14,6 +14,7 @@ import { MaterialModule } from '../../app.module';
     SystemAdminsRoutingModule,
     FlexLayoutModule,
     MaterialModule,
-  ]
+  ],
+  entryComponents: [SystemAdminsAddEditComponent]
 })
 export class SystemAdminsModule { }

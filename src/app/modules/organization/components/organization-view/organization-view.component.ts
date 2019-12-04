@@ -74,10 +74,13 @@ export class OrganizationViewComponent implements OnInit {
         this.dataSource = resp.organizations;
         this.pageNumber = resp.currentPage;
         this.totalCount = resp.totalCount;
+      } else {
+        this.showSnackBar(resp.message);
       }
     },
       err => {
         this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong..!!');
       })
   }
 
@@ -188,6 +191,7 @@ export class OrganizationViewComponent implements OnInit {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");
           });
+
         }
       })
     }
