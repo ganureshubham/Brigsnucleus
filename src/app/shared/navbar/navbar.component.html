@@ -4,12 +4,12 @@
       class="toolbar-row-1" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <div title="Dashboard" (click)="navigateToDashboard()" [ngStyle]="{
-          'background-image': 'url('+'assets/img/logo.png'+')', 
+          'background-image': 'url('+'assets/img/logo.png'+')',
           'background-size': 'contain',
-          'background-position': 'center center', 
+          'background-position': 'center center',
           'background-repeat': 'no-repeat',
           'margin-left': '20px',
-          'width':'220px', 
+          'width':'220px',
           'height':'55px',
           'cursor':'pointer'
         }">
@@ -95,6 +95,9 @@
         <a mat-button routerLink="/alert" routerLinkActive="is-active">
           <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
         </a>
+         <a mat-button routerLink="/complaints" routerLinkActive="is-active">
+        <mat-icon>menu_book</mat-icon><span i18n>Complaint</span>
+      </a>
         <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
           <mat-icon>settings_applications</mat-icon>Settings
         </a>
@@ -149,6 +152,9 @@
         </a>
         <a mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
           <mat-icon color="primary">notification_important</mat-icon><span i18n>&nbsp; Alerts</span>
+        </a>
+         <a mat-list-item routerLink="/complaints" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
         </a>
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true">

@@ -68,7 +68,7 @@ export class DetailsAssetComponent implements OnInit {
 
     },
       error => {
-        this.showSnackBar('Something went wrong..!!')
+        this.showSnackBar('Something went wrong..!!');
       })
 
   }

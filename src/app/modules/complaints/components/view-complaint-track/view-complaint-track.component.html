@@ -1,0 +1,62 @@
+<div fxLayout="column" fxFlex="100">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center">
+    <!-- <button fxFlex.xs="100" mat-button (click)="addChecklist()" class="bg_white_grey btn_style">
+      <mat-icon>add</mat-icon>Add Checklist
+    </button> -->
+    <form class="example-form filter_search" fxFlex.xs="100">
+      <mat-form-field class="example-full-width" fxFlex.xs="100">
+        <input matInput (keyup)="searchComplaintTrack($event.target.value)" placeholder="Search">
+      </mat-form-field>
+    </form>
+  </div>
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
+  </div>
+  <ng-template #recordFound>
+    <mat-table [dataSource]="dataSource">
+      <!-- <ng-container matColumnDef="userProfile">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>User Profile</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.userProfile }}</mat-cell>
+      </ng-container> -->
+      <ng-container matColumnDef="userProfile">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>User Profile</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">
+          <div [ngStyle]="{
+                'background-image': 'url(' + visit.userProfile + ')', 
+                'background-size': 'contain',
+                'background-position': 'center center', 
+                'background-repeat': 'no-repeat',
+                'width':'80px', 
+                'height':'80px'}"></div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="typeOfComplaint">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Type Of Complaint</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.typeOfComplaint }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="typeOfUser">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Type Of User</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.typeOfUser }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>User Name</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.userName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Created Date</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.createdDate }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="complaintStatus">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Complaint Status</mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" class="complaintstatus" *matCellDef="let visit">
+          {{ visit.complaintStatus }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="example-element-row" *matRowDef="let visit; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </ng-template>
+  <div>
+    <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+    </mat-paginator>
+  </div>
+</div>

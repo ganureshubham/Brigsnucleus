@@ -79,6 +79,13 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/asset-category/asset-category.module#AssetCategoryModule",
         canActivate: [AuthGuard]
       },
+
+      {
+        path: "complaints",
+        loadChildren: "./modules/complaints/complaints.module#ComplaintsModule",
+        canActivate: [AuthGuard]
+      },
+    
     ]
   },
   {

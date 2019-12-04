@@ -105,9 +105,7 @@ export class AddAssignUserComponent implements OnInit {
 
   /*********************************************************** Add New Assigned User *******************************************************************/
   addAssignUser(value) {
-
     this.spinnerService.setSpinnerVisibility(true);
-
     let users = []
     value.users.forEach(element => {
       users.push({ userIdFK: element })
@@ -115,7 +113,6 @@ export class AddAssignUserComponent implements OnInit {
     value.users = users;
     value.assignmentTypeIdFK = 1;
     value.masterIdFK = Number(this.categoryId);
-
     this.assetmateService.addAssignUser(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
@@ -126,7 +123,6 @@ export class AddAssignUserComponent implements OnInit {
       error => {
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
 
   /*********************************************************** Edit Document *******************************************************************/

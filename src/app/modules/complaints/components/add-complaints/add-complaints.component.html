@@ -1,0 +1,154 @@
+<div fxLayout="column" fxLayoutGap="25px">
+  <div fxLayoutAlign="start center">
+    <span class="page-title">{{formTitle}}</span>
+  </div>
+  <div fxLayout="column" mat-dialog-content>
+    <form fxLayout="column" fxFlex="100" #complaintform="ngForm" novalidate>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select name="assetIdFK" id="assetIdFK" #complaintType="ngModel" [(ngModel)]="complaintData.assetIdFK"
+          placeholder="Asset Title" required>
+          <mat-option *ngFor="let asset of assetList" [value]="asset.assetId">
+            {{asset.assetTitle}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintform.submitted && complaintType.invalid">
+          <mat-error *ngIf="complaintType.errors.required">Asset Title is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="3" [(ngModel)]="complaintData.title"
+          #complaintTitle="ngModel" type="text" required placeholder="Complaint Title">
+        <mat-error *ngIf="complaintform.submitted && complaintTitle.invalid">
+          <mat-error *ngIf="complaintTitle.errors.required">Complaint Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="complaintTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select multiple name="users" id="users" [(ngModel)]="complaintData.users" #UsersName="ngModel"
+          placeholder="Select Users" required>
+          <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
+            {{user.firstName+' '+user.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintform.submitted && UsersName.invalid">
+          <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <textarea name="message" id="message" [(ngModel)]="complaintData.message" matInput #desc="ngModel"
+          placeholder="Message" required></textarea>
+        <mat-error *ngIf="complaintform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Message is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div fxLayout="column" fxFlex="100" class="md-form" fxFlex.gt-xs="48">
+      <label>Complaint Image</label>
+      <div class="file-field" fxLayout.xs="column">
+        <div class="btn btn-primary btn-sm float-left">
+          <span>Choose file</span>
+          <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" name="complaintImage" [(ngModel)]="complaintImage" type="text" required
+            placeholder="Upload your Complaint image file">
+          <button mat-button *ngIf="complaintImage" matSuffix mat-icon-button aria-label="Clear"
+            (click)="complaintImage=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="error hide text-error">{{complainterror}}</div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxFlex="100" fxLayoutGap="10px">
+    <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+    <button [color]="'success'" mat-raised-button i18n color="primary"
+      [matTooltip]="!complaintform.valid ? 'You must complete all the required fields.' : null" type="submit"
+      [disabled]="!complaintform.valid" (click)="addComplaint(complaintform.value)">Save Complaint</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div fxLayout="column">
+  <div fxLayout="row">
+    <p class="page-title">{{formTitle}}</p>
+  </div>
+  <form #complaintform="ngForm" fxLayout="column" novalidate>
+    <div fxLayout="column">
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select disabled name="assetIdFK" id="assetIdFK" #complaintType="ngModel"
+          [(ngModel)]="complaintData.assetIdFK" placeholder="Asset Title" required>
+          <mat-option *ngFor="let asset of assetList" [value]="asset.assetId">
+            {{asset.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintform.submitted && complaintType.invalid">
+          <mat-error *ngIf="complaintType.errors.required">Asset Title is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="3" [(ngModel)]="complaintData.title" #complaintTitle="ngModel"
+          type="text" required placeholder="Complaint Title">
+        <mat-error *ngIf="complaintform.submitted && complaintTitle.invalid">
+          <mat-error *ngIf="complaintTitle.errors.required">Complaint Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="complaintTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select multiple name="users" id="users" [(ngModel)]="complaintData.users" #UsersName="ngModel"
+          placeholder="Select Users" required>
+          <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
+            {{user.firstName+' '+user.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintform.submitted && UsersName.invalid">
+          <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <textarea name="description" id="description" [(ngModel)]="complaintData.message" matInput #desc="ngModel"
+          placeholder="Description" required></textarea>
+        <mat-error *ngIf="documentform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
+      <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
+      <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
+        [matTooltip]="!complaintform.valid ? 'You must complete all the required fields.' : null" type="submit"
+        [disabled]="!complaintform.valid" (click)="addAssignUser(complaintform.value)">Save Assign User</button>
+      <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
+        [disabled]="!complaintform.valid" (click)="editAssignUser(complaintform.value)">Update Assign
+        User</button>
+    </div>
+  </form>
+</div> -->
