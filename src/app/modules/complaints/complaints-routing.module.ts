@@ -7,23 +7,12 @@ export const ComplaintRoutes: Routes = [
   {
     path: '',
     component: ViewComplaintsComponent,
-    children: [
-      {
-        path: 'add-complaint',
-        component: AddComplaintsComponent
-      }
-    ]
   },
 
-  // {
-  //   path : 'details-complaints',
-  //   component : DetailsComplaintsComponent, 
-  //   children : [
-  //     {
-  //       path : ''
-  //     }
-  //   ]
-  // }
+  {
+    path: 'details-complaints/:complaintId',
+    component: DetailsComplaintsComponent,
+  }
 
 
 ]

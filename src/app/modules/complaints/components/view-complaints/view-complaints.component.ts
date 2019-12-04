@@ -27,6 +27,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   isNoRecordFound: boolean = true;
   totalComplaints: any;
+  complaintId: number;
 
 
   displayedColumns: string[] = ['typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'Actions'];
@@ -36,7 +37,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  complaintId: number;
+
 
 
   constructor(private http: HttpClient,
@@ -121,7 +122,9 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
 
 
-  viewComplaint() { }
+  viewComplaint(complaintId: number) {
+    this.router.navigate(['complaints/details-complaints/' + complaintId]);
+  }
 
 
 
@@ -129,7 +132,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
 
   deleteComplaint(complaintId: number, title: string) {
-    console.log(complaintId);
     this.complaintId = complaintId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,

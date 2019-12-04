@@ -1,3 +1,133 @@
-<p>
-  details-complaints works!
-</p>
+<div fxLayout="row" class="margin_auto" fxLayoutAlign="space-evenly start">
+  <mat-card fxFlex="95">
+    <div class="innerpage_title" fxLayout="column" fxLayoutGap="30px">
+      <div class="header_title flex_container">
+        <div>
+          <button mat-button (click)="backToList()" class="back btn_style round_squer bg_pink_navy text_white">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+        </div>
+        <div class="width_75">
+          <p class="title_header mat-subheading-2 tal">{{complaintData.title}}</p>
+        </div>
+        <div class="dfe add_action" style="width:19.5%">
+        </div>
+      </div>
+      <!-- <div>
+        <div class="fl total">
+          <p><b>{{complaintData.totalDoneChecklist}}</b><span>Total Complaints</span></p>
+        </div>
+        <div class="fl total">
+          <p><b>{{complaintData.totalDocuments}}</b><span>Total User Complaints Track</span></p>
+        </div>
+        <div class="fl total">
+          <p><b>{{complaintData.totalAssignedUsers}}</b><span>Total User Complaints Transfer</span></p>
+        </div>
+      </div> -->
+      <div class="cl"></div>
+    </div>
+    <div class="asset_view_detail">
+      <mat-tab-group>
+        <mat-tab label="Complaint Details">
+          <div class="tab_content" fxLayout="column" fxLayoutGap="30px" fxLayoutGap.xs="20px" fxFlex="100">
+            <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Type Of Complaint</h4>
+                <span>{{complaintData.typeOfComplaint}}</span>
+              </div>
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Title</h4>
+                <span>{{complaintData.title}}</span>
+              </div>
+
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Asset Title</h4>
+                <span>{{complaintData.assetTitle}}</span>
+              </div>
+            </div>
+            <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Asset Code</h4>
+                <span>{{complaintData.assetCode}}</span>
+              </div>
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Complaint Status </h4>
+                <span class="complainStatus">{{complaintData.complaintStatus}}</span>
+              </div>
+
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Type Of User</h4>
+                <span>{{complaintData.typeOfUser}}</span>
+              </div>
+              <!-- <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Raised By Name</h4>
+                <span>{{complaintData.raisedByName}}</span>
+              </div> -->
+            </div>
+            <div fxLayout="column">
+              <h4 class=" mat-h4 db ">Raised By Name</h4>
+              <span>{{complaintData.raisedByName}}</span>
+            </div>
+            <div fxLayout="column">
+              <h4 class=" mat-h4 db ">Message</h4>
+              <span>{{complaintData.message}}</span>
+            </div>
+            <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
+              <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
+                <h4 class=" mat-h4 db ">Complaint Image</h4>
+                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                  <div [ngStyle]="{
+                                          'background-image': 'url(' + complaintData.complaintImage + ')',  
+                                          'background-size': 'contain',
+                                          'background-position': 'center center', 
+                                          'background-repeat': 'no-repeat',
+                                          'width':'100%', 
+                                          'height':'100%',
+                                          'min-height':'100px'
+                                      }"></div>
+                </mat-card>
+              </div>
+              <!-- <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28">
+                <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
+                <mat-card class="asset-img-container-card" fxLayoutAlign="center center">
+                  <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode" [size]="160" [level]="'M'">
+                  </qrcode>
+                </mat-card>
+              </div> -->
+            </div>
+            <!-- <div fxLayout="column">
+              <h4 class="mat-h4 db">Asset User Guide</h4>
+              <div class="userguide" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="15px"
+                fxLayoutAlign.gt-xs="flex-start center">
+                <div fxFlex="20" fxFlex.xs="100" fxLayoutAlign="center center">
+                  <span class="round">
+                    .{{userGuideFileExtension}}
+                  </span>
+                </div>
+                <span fxFlex="60" fxFlex.xs="100" fxLayoutAlign="center center">
+                  {{userGuideFileName}}
+                </span>
+                <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns">
+                  <button mat-button (click)="downloadDocument(assetData.userGuideBook)">Download</button>
+                </span>
+              </div>
+            </div> -->
+          </div>
+        </mat-tab>
+        <mat-tab label="Complaint Track">
+          <div class="tab_content">
+            <app-view-complaint-track></app-view-complaint-track>
+            <!-- <app-view-asset-document>
+            </app-view-asset-document> -->
+          </div>
+        </mat-tab>
+        <mat-tab label="Transfer Complaint">
+          <div class="tab_content">
+            <app-view-transfer-complaint></app-view-transfer-complaint>
+            <!-- <app-view-history></app-view-history> -->
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </mat-card>
+</div>

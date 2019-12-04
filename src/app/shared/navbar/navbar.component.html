@@ -55,7 +55,7 @@
         <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
       </a>
       <a mat-button routerLink="/complaints" routerLinkActive="is-active">
-        <mat-icon>menu_book</mat-icon><span i18n>Complaints</span>
+        <mat-icon>menu_book</mat-icon><span i18n>Complaint</span>
       </a>
       <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
         <mat-icon>settings_applications</mat-icon>Settings
@@ -107,6 +107,9 @@
         </a>
         <a mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
           <mat-icon color="primary">notification_important</mat-icon><span i18n>&nbsp; Alerts</span>
+        </a>
+        <a mat-list-item routerLink="/complaints" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
         </a>
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true">

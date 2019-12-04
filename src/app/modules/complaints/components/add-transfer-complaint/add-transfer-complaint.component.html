@@ -1,3 +1,38 @@
-<p>
-  add-transfer-complaint works!
-</p>
+<div fxLayout="column" fxLayoutGap="25px">
+  <div fxLayoutAlign="start center">
+    <span class="page-title">{{formTitle}}</span>
+  </div>
+  <div fxLayout="column" mat-dialog-content>
+    <form fxLayout="column" fxFlex="100" #complaintTransferform="ngForm" novalidate>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select name="fromUserIdFK" id="fromUserIdFK" [(ngModel)]="complaintTransferData.fromUserIdFK"
+          #UsersName="ngModel" placeholder="From User" required>
+          <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
+            {{user.firstName+' '+user.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintTransferform.submitted && UsersName.invalid">
+          <mat-error *ngIf="UsersName.errors.required">From Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select name="toUserIdFK" id="toUserIdFK" [(ngModel)]="complaintTransferData.toUserIdFK"
+          #RespUsersName="ngModel" placeholder="To User" required>
+          <mat-option *ngFor="let user1 of responsibleuserlist" [value]="user1.userID">
+            {{user1.userName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="complaintTransferform.submitted && RespUsersName.invalid">
+          <mat-error *ngIf="RespUsersName.errors.required">To Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxFlex="100" fxLayoutGap="10px">
+    <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+    <button [color]="'success'" mat-raised-button i18n color="primary"
+      [matTooltip]="!complaintTransferform.valid ? 'You must complete all the required fields.' : null" type="submit"
+      [disabled]="!complaintTransferform.valid" (click)="addComplaintTransfer(complaintTransferform.value)">Save
+      Complaint</button>
+  </div>
+</div>

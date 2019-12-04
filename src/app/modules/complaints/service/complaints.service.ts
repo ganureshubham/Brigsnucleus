@@ -33,11 +33,18 @@ export class ComplaintsService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/selectAssets`);
   }
 
-  /******************************************************* Select User *******************************************************************/
+  /******************************************************* Select  User *******************************************************************/
 
   getuserLists(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/selectUser`);
   }
+
+  /******************************************************* Select Responsible User *******************************************************************/
+
+  getResponsibleUser(complaintId: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/selectResponsibleUsers/${complaintId}`);
+  }
+
 
   /******************************************************* Add Complaint *******************************************************************/
 
@@ -57,6 +64,51 @@ export class ComplaintsService {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `complaints/uploadComplaintImage/${complaintId}`, imageData);
   }
 
+  /******************************************************* View Particular Complaint *******************************************************************/
+
+  viewComplaint(complaintId: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/viewParticularComplaint/${complaintId}`);
+
+  }
+
+  /******************************************************* get All Complaint Track*******************************************************************/
+
+  getAllComplaintsTrack(complaintId: number, pageNo: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/complaintsTrackList/${complaintId}/${pageNo}`);
+  }
+
+  /******************************************************* Search Complaint Track*******************************************************************/
+
+  searchComplaintTrack(complaintId: number, keyword: any): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/complaintTrackSearch?complaintId=${complaintId}&keyword=${keyword}`);
+  }
+
+
+  /******************************************************* get All Transfer Complaints*******************************************************************/
+
+  getAllTransferComplaints(complaintId: number, pageNo: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/transferComplaintsList/${complaintId}/${pageNo}`);
+
+  }
+
+  /******************************************************* Search Complaint Transfer*******************************************************************/
+
+  searchComplaintTransfer(complaintId: number, keyword: any): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `complaints/complaintTransferSearch?complaintId=${complaintId}&keyword=${keyword}`);
+  }
+
+  /******************************************************* Add New Complaint Transfer*******************************************************************/
+
+  addComplaintTransfer(complaintId: number, complaintTransferData: any): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `complaints/addTransferComplaint/${complaintId}`, complaintTransferData);
+  }
+
+
+  /******************************************************* Delete Complaint  Transfer*******************************************************************/
+
+  deleteComplaintTransfer(complaintId: number): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `complaints/deleteTransferComplaint/${complaintId}`, {});
+  }
 
 
 

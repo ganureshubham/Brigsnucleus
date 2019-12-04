@@ -29,6 +29,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     FormsModule,
     FlexLayoutModule
-  ]
+  ],
+
+  entryComponents: [AddComplaintsComponent, AddTransferComplaintComponent]
+
 })
 export class ComplaintsModule { } 

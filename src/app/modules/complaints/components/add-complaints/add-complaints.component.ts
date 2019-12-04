@@ -57,7 +57,7 @@ export class AddComplaintsComponent implements OnInit {
 
 
 
-  /*********************************************************** Get User List *******************************************************************/
+  /*********************************************************** Select User List *******************************************************************/
 
   getuserLists() {
     this.complaintsService.getuserLists().subscribe(res => {
@@ -81,6 +81,7 @@ export class AddComplaintsComponent implements OnInit {
       this.fileToUpload = files.item(0);
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
       this.complaintImage = files.item(0).name;
+
     } else {
       this.complainterror = "please select image only";
     }
@@ -91,19 +92,17 @@ export class AddComplaintsComponent implements OnInit {
   /*********************************************************** Add Complaint *****************************************************************/
 
 
-  addComplaint(formData: any) {
-    let value = formData.value;
+  addComplaint(value: any) {
     var users = [];
     value.users.forEach(element => {
       users.push({ userIdFK: element })
     });
     value.users = users;
-    console.log('value', value);
-
+    this.spinnerService.setSpinnerVisibility(true);
     this.complaintsService.addComplaint(value).subscribe(res => {
       if (res.status == true) {
         this.complaintID = res.complaintId;
-        this.uploadImageToserver(res.complaintId)
+        this.uploadImageToserver()
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(res.message);
         this.dialog.closeAll();
@@ -120,15 +119,14 @@ export class AddComplaintsComponent implements OnInit {
   }
 
 
-  uploadImageToserver = (callback) => {
+  uploadImageToserver = () => {
     if (this.fileToUpload == null) {
-      callback(this.complaintImage)
+      //callback(this.complaintImage)
     } else {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
       this.complaintsService.imageUpload(this.complaintID, formData).subscribe(res => {
-        console.log('image Upload res', res);
-        callback(res.ImageName)
+        // callback(res.ImageName)
       })
     }
   }
