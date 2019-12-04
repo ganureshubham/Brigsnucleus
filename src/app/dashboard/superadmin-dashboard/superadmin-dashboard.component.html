@@ -1,0 +1,40 @@
+<mat-card class="width_90 margin_auto">
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+    <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
+      <div class="dashboard_part">
+        <ul>
+          <li><img src="assets/img/asset_icon.svg" alt="" srcset=""></li>
+          <li>Total Organizations</li>
+          <li>
+            <h2 class="count">{{superAdminDashboardCounts.totalOrganizations}}</h2>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="cl"></div><br> <button mat-button color="primary" routerLink="/superadmin/organization"
+          class="fr">More Info
+          <mat-icon>keyboard_arrow_right
+          </mat-icon></button>
+      </div>
+    </div>
+    <div class="verticle-divider" fxHide.lt-sm="true">
+    </div>
+    <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
+      <div class="dashboard_part">
+        <ul>
+          <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
+          <li>Total Admins</li>
+          <li>
+            <h2 class="count">{{superAdminDashboardCounts.totalAdmins}}</h2>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="cl"></div><br><button mat-button routerLink="/superadmin/sys-admins" color="primary" class="fr">More
+          Info
+          <mat-icon>keyboard_arrow_right
+          </mat-icon></button>
+      </div>
+    </div>
+  </div>
+</mat-card>

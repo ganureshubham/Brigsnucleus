@@ -1,0 +1,24 @@
+<div style="height: 100%;" fxLayout="column">
+  <div fxFlex="10">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div class="page-title">Manage Organization</div>
+      <p>Click organization to manage</p>
+    </div>
+  </div>
+  <div mat-dialog-content fxFlex="80">
+    <div style="overflow-y: auto;">
+      <div *ngFor="let organization of arrOrganizations">
+        <div class="organization-item" (click)="goToParticularOrganization(organization.organizationId)">
+          <div class="org-title">{{organization.organizationName}}</div>
+          <span class="org-sub-title">Total Admins: {{organization.totalAdmins}}</span> &nbsp; &nbsp; <span
+            class="org-sub-title"></span>
+          &nbsp; &nbsp; <span class="org-sub-title">Total
+            Assets: {{organization.totalAssets}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-actions" fxFlex="10" fxLayout="row" fxLayoutAlign="end end">
+    <button mat-stroked-button (click)="onNoClick()">Cancel</button>
+  </div>
+</div>

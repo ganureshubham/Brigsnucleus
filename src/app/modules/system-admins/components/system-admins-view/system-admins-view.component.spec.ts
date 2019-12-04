@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrintAssetQrcodeComponent } from './print-asset-qrcode.component';
+import { SystemAdminsViewComponent } from './system-admins-view.component';
 
-describe('PrintAssetQrcodeComponent', () => {
-  let component: PrintAssetQrcodeComponent;
-  let fixture: ComponentFixture<PrintAssetQrcodeComponent>;
+describe('SystemAdminsViewComponent', () => {
+  let component: SystemAdminsViewComponent;
+  let fixture: ComponentFixture<SystemAdminsViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrintAssetQrcodeComponent ]
+      declarations: [ SystemAdminsViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrintAssetQrcodeComponent);
+    fixture = TestBed.createComponent(SystemAdminsViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

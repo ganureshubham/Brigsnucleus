@@ -73,6 +73,10 @@
     background: #6a1c7e;
   }
 
+  .is-active-super-route{
+    background: #6a1c7e10;
+  }
+
   .is-active-mobile{
     background: #eeacff4b;
   }
@@ -120,4 +124,15 @@
     padding:0px 15px 0px 0px;
   }
   
-  
+  .superadmin-toolbar{
+    border-bottom: 1px solid #6a1c7e25;
+  }
+
+  .item-toolbar{
+    color: #6a1c7e;
+  }
+
+  .org-title-key{
+    font-size: 13px;
+    padding-right: 5px;
+  }
