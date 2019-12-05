@@ -30,7 +30,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   complaintId: number;
 
 
-  displayedColumns: string[] = ['typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'Actions'];
+  displayedColumns: string[] = ['typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdOn', 'Actions'];
   paidDataSource: MatTableDataSource<Complaint> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;

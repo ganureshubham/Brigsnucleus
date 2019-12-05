@@ -8,7 +8,6 @@ import { SpinnerService } from '../../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { DialogService } from '../../../../../public service/dialog.service';
 import { AppDialogData } from 'src/app/model/appDialogData';
-import { AddChecklistComponent } from '../../../../checklist/checklist-view/add-checklist/add-checklist.component';
 import { ChecklistAddComponent } from './checklist-add/checklist-add.component';
 import { Subscription } from 'rxjs';
 

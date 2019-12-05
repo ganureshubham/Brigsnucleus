@@ -80,6 +80,12 @@
                     <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
                     </mat-cell>
                   </ng-container>
+                  <ng-container matColumnDef="createdOn">
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created On
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}
+                    </mat-cell>
+                  </ng-container>
                   <ng-container matColumnDef="Actions">
                     <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
                     <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">

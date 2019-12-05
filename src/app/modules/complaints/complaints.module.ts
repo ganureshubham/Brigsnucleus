@@ -5,7 +5,6 @@ import { ViewComplaintsComponent } from './components/view-complaints/view-compl
 import { AddComplaintsComponent } from './components/add-complaints/add-complaints.component';
 import { DetailsComplaintsComponent } from './components/details-complaints/details-complaints.component';
 import { ViewComplaintTrackComponent } from './components/view-complaint-track/view-complaint-track.component';
-import { EditComplaintTrackComponent } from './components/edit-complaint-track/edit-complaint-track.component';
 import { ViewTransferComplaintComponent } from './components/view-transfer-complaint/view-transfer-complaint.component';
 import { AddTransferComplaintComponent } from './components/add-transfer-complaint/add-transfer-complaint.component';
 import { RouterModule } from '@angular/router';
@@ -19,7 +18,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AddComplaintsComponent,
     DetailsComplaintsComponent,
     ViewComplaintTrackComponent,
-    EditComplaintTrackComponent,
     ViewTransferComplaintComponent,
     AddTransferComplaintComponent
   ],
