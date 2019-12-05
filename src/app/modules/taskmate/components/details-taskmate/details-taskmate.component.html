@@ -8,20 +8,20 @@
           </button>
         </div>
         <div class="width_75">
-          <p class="title_header mat-subheading-2 tal">{{complaintData.title}}</p>
+          <p class="title_header mat-subheading-2 tal">{{taskmateData.title}}</p>
         </div>
         <div class="dfe add_action" style="width:19.5%">
         </div>
       </div>
       <!-- <div>
         <div class="fl total">
-          <p><b>{{complaintData.totalDoneChecklist}}</b><span>Total Complaints</span></p>
+          <p><b>{{taskmateData.totalDoneChecklist}}</b><span>Total Complaints</span></p>
         </div>
         <div class="fl total">
-          <p><b>{{complaintData.totalDocuments}}</b><span>Total User Complaints Track</span></p>
+          <p><b>{{taskmateData.totalDocuments}}</b><span>Total User Complaints Track</span></p>
         </div>
         <div class="fl total">
-          <p><b>{{complaintData.totalAssignedUsers}}</b><span>Total User Complaints Transfer</span></p>
+          <p><b>{{taskmateData.totalAssignedUsers}}</b><span>Total User Complaints Transfer</span></p>
         </div>
       </div> -->
       <div class="cl"></div>
@@ -33,51 +33,51 @@
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Type Of Complaint</h4>
-                <span>{{complaintData.typeOfComplaint}}</span>
+                <span>{{taskmateData.typeOfComplaint}}</span>
               </div>
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Title</h4>
-                <span>{{complaintData.title}}</span>
+                <span>{{taskmateData.title}}</span>
               </div>
 
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Asset Title</h4>
-                <span>{{complaintData.assetTitle}}</span>
+                <span>{{taskmateData.assetTitle}}</span>
               </div>
             </div>
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Asset Code</h4>
-                <span>{{complaintData.assetCode}}</span>
+                <span>{{taskmateData.assetCode}}</span>
               </div>
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Complaint Status </h4>
-                <span class="complainStatus">{{complaintData.complaintStatus}}</span>
+                <span class="complainStatus">{{taskmateData.complaintStatus}}</span>
               </div>
 
               <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Type Of User</h4>
-                <span>{{complaintData.typeOfUser}}</span>
+                <span>{{taskmateData.typeOfUser}}</span>
               </div>
               <!-- <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Raised By Name</h4>
-                <span>{{complaintData.raisedByName}}</span>
+                <span>{{taskmateData.raisedByName}}</span>
               </div> -->
             </div>
             <div fxLayout="column">
-              <h4 class=" mat-h4 db ">Raised By</h4>
-              <span>{{complaintData.raisedByName}}</span>
+              <h4 class=" mat-h4 db ">Raised By Name</h4>
+              <span>{{taskmateData.raisedByName}}</span>
             </div>
             <div fxLayout="column">
               <h4 class=" mat-h4 db ">Message</h4>
-              <span>{{complaintData.message}}</span>
+              <span>{{taskmateData.message}}</span>
             </div>
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
                 <h4 class=" mat-h4 db ">Complaint Image</h4>
                 <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
                   <div [ngStyle]="{
-                                          'background-image': 'url(' + complaintData.complaintImage + ')',  
+                                          'background-image': 'url(' + taskmateData.complaintImage + ')',  
                                           'background-size': 'contain',
                                           'background-position': 'center center', 
                                           'background-repeat': 'no-repeat',
@@ -116,14 +116,14 @@
         </mat-tab>
         <mat-tab label="Complaint Track">
           <div class="tab_content">
-            <app-view-complaint-track></app-view-complaint-track>
+            <app-view-taskmate-track></app-view-taskmate-track>
             <!-- <app-view-asset-document>
             </app-view-asset-document> -->
           </div>
         </mat-tab>
-        <mat-tab label="Transfer Log">
+        <mat-tab label="Transfer Complaint">
           <div class="tab_content">
-            <app-view-transfer-complaint></app-view-transfer-complaint>
+            <app-view-taskmate-transfer></app-view-taskmate-transfer>
             <!-- <app-view-history></app-view-history> -->
           </div>
         </mat-tab>

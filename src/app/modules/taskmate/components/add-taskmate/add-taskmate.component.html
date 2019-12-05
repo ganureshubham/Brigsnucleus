@@ -1,0 +1,59 @@
+<div fxLayout="column" fxLayoutGap="25px">
+  <div fxLayoutAlign="start center">
+    <span class="page-title">{{formTitle}}</span>
+  </div>
+  <div fxLayout="column" mat-dialog-content>
+    <form fxLayout="column" fxFlex="100" #taskmateform="ngForm" novalidate>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="3" [(ngModel)]="taskmateData.title" #taskmateTitle="ngModel"
+          type="text" required placeholder="Complaint Title">
+        <mat-error *ngIf="taskmateform.submitted && taskmateTitle.invalid">
+          <mat-error *ngIf="taskmateTitle.errors.required">Taskmate Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="taskmateTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <mat-select multiple name="users" id="users" [(ngModel)]="taskmateData.users" #UsersName="ngModel"
+          placeholder="Select Users" required>
+          <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
+            {{user.firstName+' '+user.lastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="taskmateform.submitted && UsersName.invalid">
+          <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <textarea name="message" id="message" [(ngModel)]="taskmateData.message" matInput #desc="ngModel"
+          placeholder="Message" required></textarea>
+        <mat-error *ngIf="taskmateform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Message is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div fxLayout="column" fxFlex="100" class="md-form" fxFlex.gt-xs="48">
+      <label>Taskmate Image</label>
+      <div class="file-field" fxLayout.xs="column">
+        <div class="btn btn-primary btn-sm float-left">
+          <span>Choose file</span>
+          <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" name="taskmateImage" [(ngModel)]="taskmateImage" type="text" required
+            placeholder="Upload your Taskmate image file">
+          <button mat-button *ngIf="taskmateImage" matSuffix mat-icon-button aria-label="Clear"
+            (click)="taskmateImage=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="error hide text-error">{{taskmateerror}}</div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxFlex="100" fxLayoutGap="10px">
+    <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+    <button [color]="'success'" mat-raised-button i18n color="primary"
+      [matTooltip]="!taskmateform.valid ? 'You must complete all the required fields.' : null" type="submit"
+      [disabled]="!taskmateform.valid" (click)="addTaskmate(taskmateform.value)">Save Taskmate</button>
+  </div>
+</div>
