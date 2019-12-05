@@ -23,4 +23,16 @@ export class SystemadminsService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `admin/deleteAdmin/${adminId}`, {});
   }
 
+  getAllOrganizations() {
+    return this.httpClient.get(ConfigurationService.baseUrl + `organization/selectOrganization`);
+  }
+
+  addAdmin(adminDetails) {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `admin/addAdmin`, adminDetails);
+  }
+
+  editAdmin(adminId, adminDetails) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `admin/updateAdmin/${adminId}`, adminDetails);
+  }
+
 }

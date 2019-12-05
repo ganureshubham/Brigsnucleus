@@ -80,7 +80,7 @@
                     </mat-cell>
                   </ng-container>
                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                  <mat-row (click)="viewAlert(visit.alertId)" *matRowDef="let visit; columns: displayedColumns;">
+                  <mat-row *matRowDef="let visit; columns: displayedColumns;">
                   </mat-row>
                 </mat-table>
               </ng-template>

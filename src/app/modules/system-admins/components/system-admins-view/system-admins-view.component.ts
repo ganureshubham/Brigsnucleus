@@ -107,7 +107,7 @@ export class SystemAdminsViewComponent implements OnInit {
   addNewAdmin() {
     const dialogRef = this.dialog.open(SystemAdminsAddEditComponent, {
       width: this.mobileQuery.matches ? '90vw' : '30vw',
-      disableClose: false,
+      disableClose: true,
       data: { action: "add" }
     })
     dialogRef.afterClosed().subscribe(result => {
@@ -120,7 +120,7 @@ export class SystemAdminsViewComponent implements OnInit {
   editOrganization(admin) {
     const dialogRef = this.dialog.open(SystemAdminsAddEditComponent, {
       width: this.mobileQuery.matches ? '90vw' : '30vw',
-      disableClose: false,
+      disableClose: true,
       data: { action: "edit", admin: admin }
     })
     dialogRef.afterClosed().subscribe(result => {
@@ -134,9 +134,6 @@ export class SystemAdminsViewComponent implements OnInit {
 
     this.deleteAdminId = admin.adminId;
     let deleteAdminName = admin.adminName;
-
-    console.log(this.deleteAdminId);
-
 
     let appDialogData: AppDialogData = {
       visibilityStatus: true,

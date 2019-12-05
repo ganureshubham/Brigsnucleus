@@ -6,6 +6,7 @@ import { SystemAdminsViewComponent } from './components/system-admins-view/syste
 import { SystemAdminsAddEditComponent } from './components/system-admins-add-edit/system-admins-add-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../app.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SystemAdminsViewComponent, SystemAdminsAddEditComponent],
@@ -14,6 +15,8 @@ import { MaterialModule } from '../../app.module';
     SystemAdminsRoutingModule,
     FlexLayoutModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [SystemAdminsAddEditComponent]
 })
