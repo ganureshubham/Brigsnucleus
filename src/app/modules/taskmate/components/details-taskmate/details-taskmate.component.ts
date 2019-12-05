@@ -54,7 +54,7 @@ export class DetailsTaskmateComponent implements OnInit {
 
 
   backToList() {
-    this.router.navigate(['/complaints'])
+    this.router.navigate(['/taskmate']);
   }
 
 }
