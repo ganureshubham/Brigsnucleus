@@ -1,58 +1,39 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ComplaintsService } from '../../service/complaints.service';
-import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { TaskmateService } from '../../service/taskmate.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-add-complaints',
-  templateUrl: './add-complaints.component.html',
-  styleUrls: ['./add-complaints.component.css']
+  selector: 'app-add-taskmate',
+  templateUrl: './add-taskmate.component.html',
+  styleUrls: ['./add-taskmate.component.css']
 })
-export class AddComplaintsComponent implements OnInit {
+export class AddTaskmateComponent implements OnInit {
 
-  formTitle: string = 'Add Complaint';
-  complaintData: any = {};
+  formTitle: string = 'Add Taskmate';
+  taskmateData: any = {};
   assetList: any;
-  complainterror: any;
+  taskmateerror: any;
   filepath: any;
   cancelbtn = 0;
   userLists: any;
   fileToUpload: File = null;
-  complaintImage: string;
+  taskmateImage: string;
   complaintID: any;
 
 
 
   constructor(
-    private complaintsService: ComplaintsService,
+    private taskmateService: TaskmateService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<AddComplaintsComponent>,
+    public dialogRef: MatDialogRef<AddTaskmateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit() {
-    this.selectAssetTitle();
     this.getuserLists();
-  }
-
-
-  /*********************************************************** Select Asset Title *****************************************************************/
-
-  selectAssetTitle() {
-    this.complaintsService.selectAssetTitle().subscribe(res => {
-      if (res.asset) {
-        this.assetList = res.asset;
-      }
-    },
-      error => {
-        this.showSnackBar("Something went wrong..!!");
-      })
-  }
-
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 
@@ -60,7 +41,7 @@ export class AddComplaintsComponent implements OnInit {
   /*********************************************************** Select User List *******************************************************************/
 
   getuserLists() {
-    this.complaintsService.getuserLists().subscribe(res => {
+    this.taskmateService.getuserLists().subscribe(res => {
       if (res.user) {
         this.userLists = res.user;
       }
@@ -71,35 +52,40 @@ export class AddComplaintsComponent implements OnInit {
     );
   }
 
-  /*********************************************************** Add Complaint Photo *****************************************************************/
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  /*********************************************************** Add Taskmate Photo *****************************************************************/
+
   imageChange(files: FileList) {
     var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
     if (validImageFormats.includes(extension)) {
-      this.complainterror = "";
+      this.taskmateerror = "";
       let formData: FormData = new FormData();
       this.fileToUpload = files.item(0);
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
-      this.complaintImage = files.item(0).name;
+      this.taskmateImage = files.item(0).name;
 
     } else {
-      this.complainterror = "please select image only";
+      this.taskmateerror = "please select image only";
     }
   }
 
 
 
-  /*********************************************************** Add Complaint *****************************************************************/
+  /*********************************************************** Add Taskmate *****************************************************************/
 
 
-  addComplaint(value: any) {
+  addTaskmate(value: any) {
     var users = [];
     value.users.forEach(element => {
       users.push({ userIdFK: element })
     });
     value.users = users;
     this.spinnerService.setSpinnerVisibility(true);
-    this.complaintsService.addComplaint(value).subscribe(res => {
+    this.taskmateService.addTaskmate(value).subscribe(res => {
       if (res.status == true) {
         this.complaintID = res.complaintId;
         this.uploadImageToserver()
@@ -118,14 +104,13 @@ export class AddComplaintsComponent implements OnInit {
       })
   }
 
-
   uploadImageToserver = () => {
     if (this.fileToUpload == null) {
       //callback(this.complaintImage)
     } else {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
-      this.complaintsService.imageUpload(this.complaintID, formData).subscribe(res => {
+      this.taskmateService.taskmateImageUpload(this.complaintID, formData).subscribe(res => {
         // callback(res.ImageName)
       })
     }

@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddTransferComplaintComponent implements OnInit {
 
-  formTitle: string = 'Add Transfer Complaint';
+  formTitle: string = 'Transfer Complaint';
   complaintTransferData: any = {};
   cancelbtn = 0;
   userLists: any;

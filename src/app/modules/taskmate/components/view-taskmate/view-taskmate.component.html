@@ -3,31 +3,31 @@
     <div class="innerpage_title">
       <div class="header_title flex_container">
         <div class="width_75">
-          <p class="title_header mat-subheading-2 tal">Complaint</p>
+          <p class="title_header mat-subheading-2 tal">Taskmate</p>
         </div>
       </div>
       <div>
         <div class="fl total">
-          <p><b>{{totalComplaints}}</b><span>Total Complaints</span></p>
+          <p><b>{{totalTasks}}</b><span>Total Taskmates</span></p>
         </div>
       </div>
       <div class="cl"></div>
     </div>
     <mat-tab-group class="">
-      <mat-tab label="Complaint">
+      <mat-tab label="Taskmate">
         <div>
           <div fxLayout="column">
             <div>
               <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
                 <div fxFlex.xs="100">
-                  <button fxFlex.xs="100" mat-button (click)="addComplaint()" class="bg_white_grey btn_style">
-                    <mat-icon>add</mat-icon>Add Complaint
+                  <button fxFlex.xs="100" mat-button (click)="addTaskmate()" class="bg_white_grey btn_style">
+                    <mat-icon>add</mat-icon>Add Taskmate
                   </button>
                 </div>
                 <div fxLayout.xs="column">
                   <form fxFlex.xs="100" class="filter_search">
                     <mat-form-field fxFlex.xs="100">
-                      <input matInput (keyup)="searchComplaint($event.target.value)" placeholder="Search">
+                      <input matInput (keyup)="searchTaskmate($event.target.value)" placeholder="Search">
                     </mat-form-field>
                   </form>
                 </div>
@@ -39,45 +39,34 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
                   <ng-container matColumnDef="typeOfComplaint">
-                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of Complaint
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Complaint
                     </mat-header-cell>
-                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       {{ visit.typeOfComplaint }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="title">
-                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Title
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Title
                     </mat-header-cell>
-                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.title }}
-                    </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="assetTitle">
-                    <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-                    <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}
-                    </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="assetCode">
-                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Asset Code
-                    </mat-header-cell>
-                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetCode }}
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="complaintStatus">
-                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Status
                     </mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       <span class="complainStatus">{{ visit.complaintStatus }}</span>
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="typeOfUser">
-                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of User
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User
                     </mat-header-cell>
-                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="raisedByName">
-                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.raisedByName }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">
@@ -85,13 +74,13 @@
                     <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let visit">
                       <div>
                         <mat-menu #dailyPerformanceMenu="matMenu">
-                          <a mat-menu-item (click)="viewComplaint(visit.complaintId)">
+                          <a mat-menu-item (click)="viewTaskmate(visit.complaintId)">
                             <mat-icon matListIcon>visibility</mat-icon>
-                            <span i18n>View Complaint</span>
+                            <span i18n>View Taskmate</span>
                           </a>
-                          <a mat-menu-item (click)="deleteComplaint(visit.complaintId,visit.title)">
+                          <a mat-menu-item (click)="deleteTaskmate(visit.complaintId,visit.title)">
                             <mat-icon matListIcon>delete_outline</mat-icon>
-                            <span i18n>Delete Complaint</span>
+                            <span i18n>Delete Taskmate</span>
                           </a>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
@@ -101,7 +90,7 @@
                     </mat-cell>
                   </ng-container>
                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                  <mat-row class="example-element-row" (click)="viewComplaint(visit.complaintId)"
+                  <mat-row class="example-element-row" (click)="viewTaskmate(visit.complaintId)"
                     *matRowDef="let visit; columns: displayedColumns;"></mat-row>
                 </mat-table>
               </ng-template>
