@@ -20,7 +20,8 @@
             <div>
               <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
                 <div fxFlex.xs="100">
-                  <button fxFlex.xs="100" mat-button (click)="addComplaint()" class="bg_white_grey btn_style">
+                  <button *ngIf="!isCurrentUserSuperAdmin()" fxFlex.xs="100" mat-button (click)="addComplaint()"
+                    class="bg_white_grey btn_style">
                     <mat-icon>add</mat-icon>Add Complaint
                   </button>
                 </div>

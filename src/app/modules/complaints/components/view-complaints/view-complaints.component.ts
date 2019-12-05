@@ -192,7 +192,9 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void { }
 
-
+  isCurrentUserSuperAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
+  }
 
 
 }
