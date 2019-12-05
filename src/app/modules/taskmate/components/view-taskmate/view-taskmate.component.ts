@@ -30,7 +30,7 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
   complaintId: number;
 
 
-  displayedColumns: string[] = ['typeOfComplaint', 'title', 'complaintStatus', 'typeOfUser', 'raisedByName', 'Actions'];
+  displayedColumns: string[] = ['typeOfComplaint', 'title', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdDate', 'Actions'];
   paidDataSource: MatTableDataSource<Complaint> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -173,13 +173,19 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
   searchTaskmate(keyword) {
     if (keyword.length > 0) {
       this.nonzero = true;
+      this.spinnerService.setSpinnerVisibility(true);
       this.taskmateService.searchTaskmate(keyword).subscribe(res => {
+        this.spinnerService.setSpinnerVisibility(false);
         if (res && res.data) {
           this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
       },
         error => {
-          console.log(error.errors.msg);
+          this.spinnerService.setSpinnerVisibility(false);
         })
     } else {
       if (this.nonzero == true) {
@@ -189,7 +195,9 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
+  isCurrentUserSuperAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
+  }
 
 
 
@@ -208,6 +216,7 @@ export interface Complaint {
   typeOfComplaint: string,
   complaintStatus: string,
   typeOfUser: string,
-  raisedByName: string
+  raisedByName: string,
+  createdDate: string
 }
 

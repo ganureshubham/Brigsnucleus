@@ -220,7 +220,12 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
       this.documateService.searchDocumate(keyword).subscribe(res => {
         if (res && res.data) {
           this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
+
       },
         error => {
           console.log(error.errors.msg);

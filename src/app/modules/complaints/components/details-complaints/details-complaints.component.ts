@@ -54,7 +54,7 @@ export class DetailsComplaintsComponent implements OnInit {
 
 
   backToList() {
-    this.router.navigate(['/complaints'])
+    this.router.navigate(['/complaints']);
   }
 
 }

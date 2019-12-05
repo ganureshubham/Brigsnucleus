@@ -28,7 +28,7 @@
     </div>
     <div class="asset_view_detail">
       <mat-tab-group>
-        <mat-tab label="Complaint Details">
+        <mat-tab label="Taskmate Details">
           <div class="tab_content" fxLayout="column" fxLayoutGap="30px" fxLayoutGap.xs="20px" fxFlex="100">
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="33">
@@ -39,34 +39,24 @@
                 <h4 class=" mat-h4 db ">Title</h4>
                 <span>{{taskmateData.title}}</span>
               </div>
-
               <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Asset Title</h4>
-                <span>{{taskmateData.assetTitle}}</span>
+                <h4 class=" mat-h4 db ">Complaint Status </h4>
+                <span class="taskmateStatus">{{taskmateData.complaintStatus}}</span>
               </div>
             </div>
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Asset Code</h4>
-                <span>{{taskmateData.assetCode}}</span>
-              </div>
-              <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Complaint Status </h4>
-                <span class="complainStatus">{{taskmateData.complaintStatus}}</span>
-              </div>
-
-              <div fxFlex="33">
                 <h4 class=" mat-h4 db ">Type Of User</h4>
                 <span>{{taskmateData.typeOfUser}}</span>
               </div>
-              <!-- <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Raised By Name</h4>
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Raised By</h4>
                 <span>{{taskmateData.raisedByName}}</span>
-              </div> -->
-            </div>
-            <div fxLayout="column">
-              <h4 class=" mat-h4 db ">Raised By Name</h4>
-              <span>{{taskmateData.raisedByName}}</span>
+              </div>
+              <div fxFlex="33">
+                <h4 class=" mat-h4 db ">Created Date</h4>
+                <span>{{taskmateData.createdDate}}</span>
+              </div>
             </div>
             <div fxLayout="column">
               <h4 class=" mat-h4 db ">Message</h4>
@@ -87,44 +77,17 @@
                                       }"></div>
                 </mat-card>
               </div>
-              <!-- <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28">
-                <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
-                <mat-card class="asset-img-container-card" fxLayoutAlign="center center">
-                  <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode" [size]="160" [level]="'M'">
-                  </qrcode>
-                </mat-card>
-              </div> -->
             </div>
-            <!-- <div fxLayout="column">
-              <h4 class="mat-h4 db">Asset User Guide</h4>
-              <div class="userguide" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="15px"
-                fxLayoutAlign.gt-xs="flex-start center">
-                <div fxFlex="20" fxFlex.xs="100" fxLayoutAlign="center center">
-                  <span class="round">
-                    .{{userGuideFileExtension}}
-                  </span>
-                </div>
-                <span fxFlex="60" fxFlex.xs="100" fxLayoutAlign="center center">
-                  {{userGuideFileName}}
-                </span>
-                <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns">
-                  <button mat-button (click)="downloadDocument(assetData.userGuideBook)">Download</button>
-                </span>
-              </div>
-            </div> -->
           </div>
         </mat-tab>
-        <mat-tab label="Complaint Track">
+        <mat-tab label="Taskmate Track">
           <div class="tab_content">
             <app-view-taskmate-track></app-view-taskmate-track>
-            <!-- <app-view-asset-document>
-            </app-view-asset-document> -->
           </div>
         </mat-tab>
-        <mat-tab label="Transfer Complaint">
+        <mat-tab label="Transfer Log">
           <div class="tab_content">
             <app-view-taskmate-transfer></app-view-taskmate-transfer>
-            <!-- <app-view-history></app-view-history> -->
           </div>
         </mat-tab>
       </mat-tab-group>

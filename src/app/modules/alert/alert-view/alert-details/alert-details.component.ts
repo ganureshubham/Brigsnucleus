@@ -4,6 +4,7 @@ import { AlertService } from '../../service/alert.service';
 import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
+import { SpinnerService } from '../../../../public service/spinner.service';
 
 @Component({
   selector: 'app-alert-details',
@@ -19,6 +20,7 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
   pageNumber = 0;
   totalCount = 0;
   isNoRecordFound: boolean = true;
+  nonzero: boolean = false;
 
 
 
@@ -38,6 +40,7 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
     private alertService: AlertService,
     private dataService: DataSharingService,
     private snackBar: MatSnackBar,
+    private spinnerService: SpinnerService,
   ) { }
 
   ngOnInit() {
@@ -105,14 +108,27 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   searchTrackingAlert(keyword) {
 
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
+      this.spinnerService.setSpinnerVisibility(true);
       this.alertService.searchTrackingAlert(this.alertid, keyword).subscribe(res => {
-        this.paidDataSource = res.data;
+        this.spinnerService.setSpinnerVisibility(false);
+        if (res && res.data) {
+          this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
       }, error => {
-        console.log(error);
+        this.spinnerService.setSpinnerVisibility(false);
       })
-    } else {
-      this.getAllTrackingList(this.alertid, this.pageNumber);
+    }
+    else {
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllTrackingList(this.alertid, this.pageNumber);
+      }
     }
   }
 

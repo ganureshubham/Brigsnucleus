@@ -142,16 +142,25 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
+
+  /***********************************************************Search Users *******************************************************************/
+
   searchUser(keyword) {
     if (keyword.length > 0) {
       this.nonzero = true;
+      this.spinnerService.setSpinnerVisibility(true);
       this.userService.searchUser(this.message.departmentId, keyword).subscribe(res => {
+        this.spinnerService.setSpinnerVisibility(false);
         if (res && res.data) {
           this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
       },
         error => {
-          console.log(error.errors.msg);
+          this.spinnerService.setSpinnerVisibility(false);
         })
     } else {
       if (this.nonzero == true) {

@@ -152,13 +152,20 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   searchAlert(keyword) {
     if (keyword.length > 0) {
       this.nonzero = true;
+      this.spinnerService.setSpinnerVisibility(true);
       this.alertService.searchAlert(keyword).subscribe(res => {
+        this.spinnerService.setSpinnerVisibility(false);
         if (res && res.data) {
           this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
+
       },
         error => {
-          console.log(error.errors.msg);
+          this.spinnerService.setSpinnerVisibility(false);
         })
     } else {
       if (this.nonzero == true) {
