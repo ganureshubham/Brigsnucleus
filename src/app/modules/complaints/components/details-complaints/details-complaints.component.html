@@ -64,9 +64,15 @@
                 <span>{{complaintData.raisedByName}}</span>
               </div> -->
             </div>
-            <div fxLayout="column">
-              <h4 class=" mat-h4 db ">Raised By</h4>
-              <span>{{complaintData.raisedByName}}</span>
+            <div fxLayout="row" fxLayout.xs="column">
+              <div fxFlex="34" fxFlex.xs="100">
+                <h4 class=" mat-h4 db ">Raised By</h4>
+                <span>{{complaintData.raisedByName}}</span>
+              </div>
+              <div fxFlex="34" fxFlex.xs="100">
+                <h4 class=" mat-h4 db ">Created On</h4>
+                <span>{{complaintData.createdDate}}</span>
+              </div>
             </div>
             <div fxLayout="column">
               <h4 class=" mat-h4 db ">Message</h4>

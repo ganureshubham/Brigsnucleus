@@ -20,7 +20,8 @@
             <div>
               <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="padding_box">
                 <div fxFlex.xs="100">
-                  <button fxFlex.xs="100" mat-button (click)="addComplaint()" class="bg_white_grey btn_style">
+                  <button *ngIf="!isCurrentUserSuperAdmin()" fxFlex.xs="100" mat-button (click)="addComplaint()"
+                    class="bg_white_grey btn_style">
                     <mat-icon>add</mat-icon>Add Complaint
                   </button>
                 </div>
@@ -78,6 +79,12 @@
                   <ng-container matColumnDef="raisedByName">
                     <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
                     <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="createdOn">
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created On
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">

@@ -134,7 +134,9 @@ export class ViewTransferComplaintComponent implements AfterViewInit, OnInit {
   }
 
 
-
+  isCurrentUserSuperAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
+  }
 
 
 

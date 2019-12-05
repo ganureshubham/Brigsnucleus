@@ -28,7 +28,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
         let token = localStorage.getItem('currentUser');
+
         if (token != "undefined" && token !== null) {
             request = request.clone({
                 setHeaders: {
@@ -37,16 +39,17 @@ export class AuthInterceptor implements HttpInterceptor {
             });
         }
 
-        return next.handle(request).pipe(tap((
-
-        ) => { },
-            err => {
-                if (err.status === 401) {
-                    this.authenticationService.logout();
-                    this.router.navigateByUrl('/login');
-
+        return next.handle(request).pipe(
+            tap(
+                () => { },
+                err => {
+                    if (err.status === 500) {
+                        this.authenticationService.logout();
+                        this.router.navigateByUrl('/login');
+                    }
                 }
-            }
-        ));
+            )
+        );
+
     }
 }

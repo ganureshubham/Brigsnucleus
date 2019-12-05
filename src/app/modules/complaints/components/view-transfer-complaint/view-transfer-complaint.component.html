@@ -1,8 +1,11 @@
 <div fxLayout="column" fxFlex="100">
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
-    <button fxFlex.xs="100" mat-button (click)="addTransferComplaint()" class="bg_white_grey btn_style">
-      <mat-icon>sync_alt</mat-icon>Transfer Complaint
-    </button>
+    <div fxFlex.xs="100">
+      <button *ngIf="!isCurrentUserSuperAdmin()" fxFlex.xs="100" mat-button (click)="addTransferComplaint()"
+        class="bg_white_grey btn_style">
+        <mat-icon>sync_alt</mat-icon>Transfer Complaint
+      </button>
+    </div>
     <form class="example-form filter_search" fxFlex.xs="100">
       <mat-form-field class="example-full-width" fxFlex.xs="100">
         <input matInput (keyup)="searchTransferComplaint($event.target.value)" placeholder="Search">
