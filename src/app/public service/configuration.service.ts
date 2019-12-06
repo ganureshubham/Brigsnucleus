@@ -10,7 +10,11 @@ export class ConfigurationService {
 	public static baseUrl = `http://15.206.181.222:8085/`;  //server side
 
 
+
+  
+
 	// public static baseUrl = `http://192.168.0.117:7001/`;  //local-Ajay
+
 
 
 

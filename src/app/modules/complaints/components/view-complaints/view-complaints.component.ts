@@ -30,7 +30,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   complaintId: number;
 
 
-  displayedColumns: string[] = ['typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdOn', 'Actions'];
+  displayedColumns: string[] = ['complaintImage', 'typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdOn', 'Actions'];
   paidDataSource: MatTableDataSource<Complaint> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -89,6 +89,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
       if (res.complaintList) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }
@@ -208,6 +209,7 @@ export interface Complaint {
   assetCode: number,
   complaintStatus: string,
   typeOfUser: string,
-  raisedByName: string
+  raisedByName: string,
+  complaintImage: string
 }
 

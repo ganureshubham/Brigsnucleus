@@ -84,6 +84,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
       if (res.userroles) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }

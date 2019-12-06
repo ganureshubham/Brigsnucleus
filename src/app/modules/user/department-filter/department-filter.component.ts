@@ -97,6 +97,8 @@ export class DepartmentFilterComponent implements OnInit {
   }
 
   handleCategoryTreeNodeClick(node) {
+    console.log('node', node);
+
     this.messageEvent.emit(node);
     // this.router.navigate([`/user/user-list/${node.departmentId}`]).then(() => {
     //   location.reload();

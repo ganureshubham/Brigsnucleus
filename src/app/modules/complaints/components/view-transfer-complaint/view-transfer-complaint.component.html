@@ -18,16 +18,16 @@
   <ng-template #recordFound>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="complaintTitle">
-        <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Complaint Title</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="fromUser">
-        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>From User</mat-header-cell>
-        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.fromUser }}</mat-cell>
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>From User</mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.fromUser }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="toUser">
-        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>To User</mat-header-cell>
-        <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.toUser }}</mat-cell>
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>To User</mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.toUser }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="transferStatus">
         <mat-header-cell fxLayoutAlign.xs="end center" *matHeaderCellDef>Transfer Status</mat-header-cell>
@@ -36,26 +36,10 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
-        <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>Created Date</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created Date</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
           {{ visit.createdDate }}</mat-cell>
       </ng-container>
-      <!-- <ng-container matColumnDef="Actions">
-        <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-        <mat-cell (click)="$event.stopPropagation()" fxLayoutAlign="end center" *matCellDef="let visit">
-          <div>
-            <mat-menu #dailyPerformanceMenu="matMenu">
-              <a mat-menu-item (click)="deleteTransferComplaint(visit.assetId, visit.assetTitle)">
-                <mat-icon matListIcon>delete_outline</mat-icon>
-                <span i18n>Delete Transfer Complaint</span>
-              </a>
-            </mat-menu>
-            <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
-              <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
-            </button>
-          </div>
-        </mat-cell>
-      </ng-container> -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row class="example-element-row" *matRowDef="let visit; columns: displayedColumns;"></mat-row>
     </mat-table>

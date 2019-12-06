@@ -23,7 +23,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   manufacturerData: any = {};
-  totalAlerts: any;
+  totalAlertsCount: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
 
@@ -72,13 +72,13 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
     this.spinnerService.setSpinnerVisibility(true);
     this.alertService.getAlertList(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.totalAlerts) {
+      if (res.alert) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
         } else {
           this.isNoRecordFound = false;
         }
-        this.totalAlerts = res.totalAlerts;
+        this.totalAlertsCount = res.totalAlerts;
         this.paidDataSource = res.alert;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;

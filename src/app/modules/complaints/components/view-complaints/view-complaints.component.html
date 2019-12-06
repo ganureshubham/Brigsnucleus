@@ -39,6 +39,19 @@
               </div>
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="complaintImage">
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Image
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
+                      <div [ngStyle]="{
+                                'background-image': 'url(' + visit.complaintImage + ')',  
+                                'background-size': 'contain',
+                                'background-position': 'center center', 
+                                'background-repeat': 'no-repeat', 
+                                'width':'80px', 
+                                'height':'80px'}"></div>
+                    </mat-cell>
+                  </ng-container>
                   <ng-container matColumnDef="typeOfComplaint">
                     <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of Complaint
                     </mat-header-cell>
