@@ -32,3 +32,9 @@ img{
     border-radius: 2px;
     padding:5px 0;
   }
+
+  #div-print {
+    height: 0% !important;
+    width: 0% !important;
+    overflow: hidden;
+  }

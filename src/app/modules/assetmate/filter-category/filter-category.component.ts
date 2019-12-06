@@ -5,129 +5,129 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { AssetmateService } from '../service/assetmate.service';
 
 interface CategoryNode {
-  categoryId: number;
-  title: String;
-  childData?: CategoryNode[];
+	categoryId: number;
+	title: String;
+	childData?: CategoryNode[];
 }
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  categoryId: number;
-  level: number;
+	expandable: boolean;
+	name: string;
+	categoryId: number;
+	level: number;
 }
 
 /****************************************End filter****************************************/
 @Component({
-  selector: 'app-filter-category',
-  templateUrl: './filter-category.component.html',
-  styleUrls: ['./filter-category.component.css'],
+	selector: 'app-filter-category',
+	templateUrl: './filter-category.component.html',
+	styleUrls: ['./filter-category.component.css'],
 })
 export class FilterCategoryComponent implements OnInit {
 
-  categoryID;
-  TREE_DATA: CategoryNode[] = [];
-  local_TREE_DATA: CategoryNode[] = [];
-  final_TREE_DATA: CategoryNode[] = [];
-  isTreeDataReady: boolean = false;
+	categoryID;
+	TREE_DATA: CategoryNode[] = [];
+	local_TREE_DATA: CategoryNode[] = [];
+	final_TREE_DATA: CategoryNode[] = [];
+	isTreeDataReady: boolean = false;
 
-  private transformer = (node: CategoryNode, level: number) => {
-    return {
-      expandable: !!node.childData && node.childData.length > 0,
-      name: node.title,
-      categoryId: node.categoryId,
-      level: level,
-    };
-  }
+	private transformer = (node: CategoryNode, level: number) => {
+		return {
+			expandable: !!node.childData && node.childData.length > 0,
+			name: node.title,
+			categoryId: node.categoryId,
+			level: level,
+		};
+	}
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
+	treeControl = new FlatTreeControl<ExampleFlatNode>(
+		node => node.level, node => node.expandable);
 
-  treeFlattener = new MatTreeFlattener(
-    this.transformer, node => node.level, node => node.expandable, node => node.childData);
+	treeFlattener = new MatTreeFlattener(
+		this.transformer, node => node.level, node => node.expandable, node => node.childData);
 
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+	dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private assetmateService: AssetmateService
-  ) {
-  }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private assetmateService: AssetmateService
+	) {
+	}
 
-  ngOnInit() {
-    this.categoryID = this.route.snapshot.params['categoryId'];
-    this.loadAllCategories();
-  }
+	ngOnInit() {
+		this.categoryID = this.route.snapshot.params['categoryId'];
+		this.loadAllCategories();
+	}
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+	hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  loadAllCategories() {
+	loadAllCategories() {
 
-    this.assetmateService.filterCategoryList().subscribe(res => {
-      if (res) {
-        this.TREE_DATA = res.assetCategory;
-        this.final_TREE_DATA = [...this.TREE_DATA];
-        this.dataSource.data = this.TREE_DATA;
-        this.isTreeDataReady = true;
-      }
-    },
-      error => {
-        console.log(error.error.message);
-      })
+		this.assetmateService.filterCategoryList().subscribe(res => {
+			if (res) {
+				this.TREE_DATA = res.assetCategory;
+				this.final_TREE_DATA = [...this.TREE_DATA];
+				this.dataSource.data = this.TREE_DATA;
+				this.isTreeDataReady = true;
+			}
+		},
+			error => {
+				console.log(error.error.message);
+			})
 
-  }
+	}
 
-  handleCategoryTreeNodeClick(node) {
-    this.router.navigate([`/assetmate/assetmate-details/${node.categoryId}`]).then(() => {
-      location.reload();
-    })
-  }
+	handleCategoryTreeNodeClick(node) {
+		this.router.navigate([`/assetmate/assetmate-details/${node.categoryId}`]).then(() => {
+			location.reload();
+		})
+	}
 
-  onSearchCategoryTxtChange(searchedText: string) {
+	onSearchCategoryTxtChange(searchedText: string) {
 
-    // // console.log(searchedText);
+		// // console.log(searchedText);
 
-    // this.local_TREE_DATA = [...this.TREE_DATA];
-    // // console.log(this.TREE_DATA);
-    // // console.log(this.local_TREE_DATA);
+		// this.local_TREE_DATA = [...this.TREE_DATA];
+		// // console.log(this.TREE_DATA);
+		// // console.log(this.local_TREE_DATA);
 
-    // if (searchedText.length == 0) {
-    //   this.TREE_DATA = [];
-    //   this.TREE_DATA = [...this.final_TREE_DATA];
-    //   // console.log('Length 0');
-    //   // console.log(this.local_TREE_DATA);
-    //   // console.log(this.TREE_DATA);
-    //   this.dataSource.data = this.TREE_DATA;
-    // } else {
-    //   for (let i = 0; i < this.TREE_DATA.length; i++) {
-    //     // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
-    //     // console.log(this.local_TREE_DATA);
-    //     if (
-    //       this.TREE_DATA[i].title.includes(searchedText) ||
-    //       this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
-    //       this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
-    //     ) {
-    //       this.TREE_DATA = [];
-    //       this.TREE_DATA.push(this.local_TREE_DATA[i]);
-    //       this.dataSource.data = this.TREE_DATA;
-    //       // console.log('Length > 0');
-    //       // console.log(this.dataSource.data)
-    //       break;
-    //     }
-    //   }
-    // }
+		// if (searchedText.length == 0) {
+		//   this.TREE_DATA = [];
+		//   this.TREE_DATA = [...this.final_TREE_DATA];
+		//   // console.log('Length 0');
+		//   // console.log(this.local_TREE_DATA);
+		//   // console.log(this.TREE_DATA);
+		//   this.dataSource.data = this.TREE_DATA;
+		// } else {
+		//   for (let i = 0; i < this.TREE_DATA.length; i++) {
+		//     // console.log(this.TREE_DATA[i].title + ' - ' + searchedText);
+		//     // console.log(this.local_TREE_DATA);
+		//     if (
+		//       this.TREE_DATA[i].title.includes(searchedText) ||
+		//       this.TREE_DATA[i].title.includes(searchedText.toLowerCase()) ||
+		//       this.TREE_DATA[i].title.includes(searchedText.toUpperCase())
+		//     ) {
+		//       this.TREE_DATA = [];
+		//       this.TREE_DATA.push(this.local_TREE_DATA[i]);
+		//       this.dataSource.data = this.TREE_DATA;
+		//       // console.log('Length > 0');
+		//       // console.log(this.dataSource.data)
+		//       break;
+		//     }
+		//   }
+		// }
 
-    if (searchedText.length == 0) {
-      this.TREE_DATA = [];
-      this.local_TREE_DATA = [];
-      this.TREE_DATA = [...this.final_TREE_DATA];
-      this.dataSource.data = this.TREE_DATA;
-    } else {
-      this.dataSource.data = this.TREE_DATA.filter(d => d.title.toLocaleLowerCase().indexOf(searchedText.toLocaleLowerCase()) > -1);
-    }
+		if (searchedText.length == 0) {
+			this.TREE_DATA = [];
+			this.local_TREE_DATA = [];
+			this.TREE_DATA = [...this.final_TREE_DATA];
+			this.dataSource.data = this.TREE_DATA;
+		} else {
+			this.dataSource.data = this.TREE_DATA.filter(d => d.title.toLocaleLowerCase().indexOf(searchedText.toLocaleLowerCase()) > -1);
+		}
 
-  }
+	}
 
 }
