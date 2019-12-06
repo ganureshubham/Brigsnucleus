@@ -172,13 +172,19 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   searchComplaint(keyword) {
     if (keyword.length > 0) {
       this.nonzero = true;
+      this.spinnerService.setSpinnerVisibility(true);
       this.complaintsService.searchComplaint(keyword).subscribe(res => {
+        this.spinnerService.setSpinnerVisibility(false);
         if (res && res.data) {
           this.paidDataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.paidDataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
       },
         error => {
-          console.log(error.errors.msg);
+          this.spinnerService.setSpinnerVisibility(false);
         })
     } else {
       if (this.nonzero == true) {
@@ -187,7 +193,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
       }
     }
   }
-
 
 
 

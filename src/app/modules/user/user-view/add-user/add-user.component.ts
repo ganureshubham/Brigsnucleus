@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-add-user',
@@ -28,6 +29,7 @@ export class AddUserComponent implements OnInit {
   placeholder: string = "Password"
   hide = true;
   cancelbtn = 0;
+  password: any;
 
 
   constructor(private router: Router,
@@ -45,8 +47,8 @@ export class AddUserComponent implements OnInit {
     if (this.data.type == 'Add') {
 
     } else if (this.data.type = 'Edit') {
-      console.log('edit', this.data);
       this.userData = this.data;
+      this.password = this.data.password;
       this.userData.password = '';
       this.profileImage = this.data.profileImage.split('/').pop().split('?')[0];
       this.isEdited = true;
@@ -99,6 +101,9 @@ export class AddUserComponent implements OnInit {
 
   editUser(formData: NgForm) {
     let value = formData.value;
+    if (value.password == '') {
+      value.password = this.password;
+    }
     if (formData.valid) {
       this.uploadImageToserver((result) => {
         value.profileImage = result;
