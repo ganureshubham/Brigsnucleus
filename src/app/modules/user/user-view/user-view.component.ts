@@ -95,13 +95,12 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   receiveMessage($event) {
     this.message = $event;
-    if (this.message.departmentTitle) {
-      this.DepartmentObj = '(' + this.message.departmentTitle + ')';
+    if (this.message) {
+      if (this.message.name) {
+        this.DepartmentObj = '(' + this.message.name + ')';
+      }
+      this.getAllUsers(this.message.departmentId, this.pageNumber);
     }
-    if (this.message.name) {
-      this.DepartmentObj = '(' + this.message.name + ')';
-    }
-    this.getAllUsers(this.message.departmentId, this.pageNumber);
   }
 
 
@@ -117,10 +116,13 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   getAllUsers(departmentId: number, pageNo: number) {
     this.spinnerService.setSpinnerVisibility(true);
     this.userService.getAllUsers(departmentId, pageNo).subscribe(res => {
+      console.log(res);
+
       this.spinnerService.setSpinnerVisibility(false);
       if (res.users) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }

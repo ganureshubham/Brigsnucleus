@@ -45,6 +45,7 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.alertid = this.route.snapshot.params['alertId'];
+    this.alertData.alertImage = '';
     this.viewAlert(this.alertid);
     this.getAllTrackingList(this.alertid, this.pageNumber);
   }
@@ -136,6 +137,10 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
 
   backToList() {
     this.router.navigate(['/alert']);
+  }
+
+  alertImg() {
+    return this.alertData.alertImage.length == 0 ? 'assets/img/defaultalert.png' : this.alertData.alertImage;
   }
 
 

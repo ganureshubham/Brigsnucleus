@@ -60,12 +60,8 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
-            <input name="password" [type]="hide ? 'password' : 'text'" id="password" minlength="6"
-              [(ngModel)]="userData.password" #pass="ngModel" matInput type="password" required placeholder="Password">
-            <!-- <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                          [attr.aria-pressed]="hide">
-                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button> -->
+            <input name="password" id="password" minlength="6" [(ngModel)]="userData.password" #pass="ngModel" matInput
+              type="password" required placeholder="{{placeholder}}">
             <mat-error *ngIf="userform.submitted && pass.invalid">
               <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
             </mat-error>

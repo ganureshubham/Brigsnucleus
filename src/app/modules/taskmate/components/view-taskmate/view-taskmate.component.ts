@@ -30,7 +30,7 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
   complaintId: number;
 
 
-  displayedColumns: string[] = ['typeOfComplaint', 'title', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdDate', 'Actions'];
+  displayedColumns: string[] = ['complaintImage', 'typeOfComplaint', 'title', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdDate', 'Actions'];
   paidDataSource: MatTableDataSource<Complaint> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -91,6 +91,7 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
       if (res.tasksList) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }
@@ -217,6 +218,7 @@ export interface Complaint {
   complaintStatus: string,
   typeOfUser: string,
   raisedByName: string,
-  createdDate: string
+  createdDate: string,
+  complaintImage: string
 }
 

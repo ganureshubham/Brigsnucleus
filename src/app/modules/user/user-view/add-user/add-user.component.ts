@@ -14,7 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements OnInit { 
+export class AddUserComponent implements OnInit {
 
   userData: any = {}
   fileToUpload: File = null;
@@ -25,6 +25,7 @@ export class AddUserComponent implements OnInit {
   deptList: any;
   userRoleList: any;
   formTitle: string = "Add User";
+  placeholder: string = "Password"
   hide = true;
   cancelbtn = 0;
 
@@ -46,9 +47,11 @@ export class AddUserComponent implements OnInit {
     } else if (this.data.type = 'Edit') {
       console.log('edit', this.data);
       this.userData = this.data;
+      this.userData.password = '';
       this.profileImage = this.data.profileImage.split('/').pop().split('?')[0];
       this.isEdited = true;
       this.formTitle = `Edit User`;
+      this.placeholder = `Change Password`;
     }
     this.getDeptList();
     this.getUserRoleList();

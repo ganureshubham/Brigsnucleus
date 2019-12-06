@@ -39,8 +39,21 @@
               </div>
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
+                  <ng-container matColumnDef="complaintImage">
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Taskmate Image
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
+                      <div [ngStyle]="{
+                                    'background-image': 'url(' + visit.complaintImage + ')',  
+                                    'background-size': 'contain',
+                                    'background-position': 'center center', 
+                                    'background-repeat': 'no-repeat', 
+                                    'width':'80px', 
+                                    'height':'80px'}"></div>
+                    </mat-cell>
+                  </ng-container>
                   <ng-container matColumnDef="typeOfComplaint">
-                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Complaint
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Taskmate
                     </mat-header-cell>
                     <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       {{ visit.typeOfComplaint }}
@@ -53,7 +66,7 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="complaintStatus">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Status
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Taskmate Status
                     </mat-header-cell>
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       <span class="complainStatus">{{ visit.complaintStatus }}</span>
@@ -66,7 +79,7 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="raisedByName">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By Name</mat-header-cell>
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By</mat-header-cell>
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.raisedByName }}
                     </mat-cell>
                   </ng-container>

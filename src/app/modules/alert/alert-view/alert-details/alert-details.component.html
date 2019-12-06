@@ -24,38 +24,49 @@
       </div>
       <div class="cl"></div>
     </div>
-    <div class="asset_view_detail">
+    <div class="alert-detail">
       <mat-tab-group>
         <mat-tab label="Alerts">
-          <div fxFlex="100" fxLayout="column" class="tab_content">
-            <div fxLayout.xs="column" fxFlex.xs="100" class=" form_column">
-              <div class="padding_container field">
-                <div class=" img_block margin-right">
-                  <h4 class=" mat-h4 db ">Asset Image</h4>
-                  <mat-card fxLayout.xs="column" fxLayoutAlign.xs="center center" class="mat-card-img">
-                    <img src="{{alertData.alertImage}}" alt="Alert-pic">
-                  </mat-card>
+          <div fxLayout.xs="column" fxLayoutAlign="center center" fxLayout="row" class="tab_content">
+            <div fxFlex="50">
+              <div fxLayout.xs="column" class=" form_column">
+                <div class="padding_container field">
+                  <div class="block">
+                    <h4 class=" mat-h4 db ">Alert Name</h4>
+                    <span>{{alertData.alertName}}</span>
+                  </div>
+                </div>
+                <div class="padding_container field">
+                  <div class="block">
+                    <h4 class=" mat-h4 db ">Alert Title</h4>
+                    <span>{{alertData.title}}</span>
+                  </div>
+                </div>
+                <div class="padding_container  ">
+                  <div class="block">
+                    <h4 class=" mat-h4 db ">Message</h4>
+                    <p>{{alertData.message}} </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div fxLayout.xs="column" fxFlex.xs="100" class=" form_column">
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Alert Name</h4>
-                  <span>{{alertData.alertName}}</span>
-                </div>
-              </div>
-              <div class="padding_container width_30 field">
-                <div class="block">
-                  <h4 class=" mat-h4 db ">Alert Title</h4>
-                  <span>{{alertData.title}}</span>
-                </div>
-              </div>
-            </div>
-            <div fxLayout.xs="column" fxFlex.xs="100" class="padding_container field ">
-              <div fxFlex.xs="80" class="block">
-                <h4 class=" mat-h4 db ">Message</h4>
-                <p>{{alertData.message}} </p>
+            <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50">
+              <div fxLayout="column" fxLayoutAlign="center center" class=" img_block margin-right">
+                <h4 class=" mat-h4 db ">Asset Image</h4>
+                <!-- <mat-card class="mat-card-img">
+                  <img src="{{alertData.alertImage}}" alt="Alert-pic">
+                </mat-card> -->
+                <mat-card class="mat-card-img">
+                  <div [ngStyle]="{
+                        'background-image': 'url(' + alertImg() + ')',  
+                        'background-size': 'contain',
+                        'background-position': 'center center', 
+                        'background-repeat': 'no-repeat',
+                        'width':'100%', 
+                        'height':'100%',
+                        'min-height':'100px'
+                    }"></div>
+                </mat-card>
               </div>
             </div>
           </div>

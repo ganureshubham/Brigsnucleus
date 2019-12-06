@@ -106,6 +106,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
       if (res.document) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }
