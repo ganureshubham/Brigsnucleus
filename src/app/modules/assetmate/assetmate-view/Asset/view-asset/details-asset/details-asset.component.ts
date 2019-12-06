@@ -100,7 +100,7 @@ export class DetailsAssetComponent implements OnInit {
 		saveAs(file, Ext);
 	}
 
-	printQRcode(asset) {
+	printQRcode() {
 
 		this.assetForQRcode = this.assetData;
 		this.assetCode1 = this.assetData.assetCode;
