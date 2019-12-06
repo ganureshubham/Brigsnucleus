@@ -116,8 +116,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   getAllUsers(departmentId: number, pageNo: number) {
     this.spinnerService.setSpinnerVisibility(true);
     this.userService.getAllUsers(departmentId, pageNo).subscribe(res => {
-      console.log(res);
-
       this.spinnerService.setSpinnerVisibility(false);
       if (res.users) {
         if (res.currentPage == 0 && res.totalCount == 0) {

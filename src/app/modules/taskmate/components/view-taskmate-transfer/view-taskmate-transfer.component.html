@@ -41,7 +41,7 @@
           {{ visit.createdDate }}</mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row class="example-element-row" *matRowDef="let visit; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let visit; columns: displayedColumns;"></mat-row>
     </mat-table>
   </ng-template>
   <div>

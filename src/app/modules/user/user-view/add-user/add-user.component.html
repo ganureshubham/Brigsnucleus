@@ -61,7 +61,7 @@
           </mat-form-field>
           <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
             <input name="password" id="password" minlength="6" [(ngModel)]="userData.password" #pass="ngModel" matInput
-              type="password" required placeholder="{{placeholder}}">
+              type="password" placeholder="{{placeholder}}">
             <mat-error *ngIf="userform.submitted && pass.invalid">
               <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
             </mat-error>
