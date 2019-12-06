@@ -72,7 +72,7 @@ export class SystemAdminsAddEditComponent implements OnInit {
 			organization: [1, Validators.required],
 			mobileNo: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/), Validators.minLength(10), Validators.maxLength(10)]],
 			emailId: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
-			password: ['', this.data.action != 'edit' ? [Validators.required, Validators.minLength(6)] : null]
+			password: ['', this.data.action != 'edit' ? [Validators.required, Validators.minLength(6)] : Validators.minLength(6)]
 		});
 	}
 
