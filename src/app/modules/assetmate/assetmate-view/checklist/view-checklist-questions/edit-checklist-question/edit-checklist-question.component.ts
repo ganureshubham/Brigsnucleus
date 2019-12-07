@@ -270,14 +270,7 @@ export class EditChecklistQuestionComponent implements OnInit {
   }
 
   updateQuestion() {
-
-    // console.log('submitForm : --' + this.formGroup.valid);
-    // console.log(this.formGroup);
-
     let formGroupFormArray: any = (this.formGroup.get('formArray'));
-    // console.log('formGroupFormArray');
-    // console.log(formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value);
-
     let checklistQuestion: any = {
       questionId: this.questionId,
       title: formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value,
@@ -288,11 +281,6 @@ export class EditChecklistQuestionComponent implements OnInit {
     }
 
     if (this.isQuestionOptionSectionAllowed()) {
-
-      // console.log('isQuestionOptionSectionAllowed');
-      // console.log(formGroupFormArray.controls[2]);
-
-      //Insert default option0 and checkbox0
       checklistQuestion.options.push(
         {
           questionOptionId: this.questionDetails.Question.questionOptions[0].questionOptionId,
@@ -316,10 +304,6 @@ export class EditChecklistQuestionComponent implements OnInit {
     }
 
     this.spinnerService.setSpinnerVisibility(true);
-
-    // console.log('checklistQuestion');
-    // console.log(checklistQuestion);
-
     this.assetmateService.updateChecklistQuestion(checklistQuestion).subscribe(resp => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(resp.message);

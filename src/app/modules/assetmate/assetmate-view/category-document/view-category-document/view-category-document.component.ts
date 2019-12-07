@@ -38,6 +38,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
   mobileQuery: MediaQueryList;
+  nonzero: boolean = false;
 
 
 
@@ -215,25 +216,29 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Search Document *******************************************************************/
 
-
-
   searchDocument(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchDocumentByCategoryId(keyword, this.categoryID).subscribe(res => {
-        this.dataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
+        if (res && res.data) {
+          this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
+
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAllDocuments(this.categoryID, this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllDocuments(this.categoryID, this.pageNumber);
+      }
     }
   }
-
-
-  // viewAsset = (assetId: number) => {
-  //   this.dataService.changeData(assetId);
-  //   this.router.navigate(['/asset/asset-details']);
-  // }
 
 
 

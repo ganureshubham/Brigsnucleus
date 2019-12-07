@@ -156,51 +156,20 @@ export class AddChecklistQuestionComponent implements OnInit {
   }
 
   onNewOptionAddClicked() {
-
     let randomNo = this.getRandomInt();
-
     this.questionOptions.addControl('option' + randomNo, new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
     this.questionOptions.addControl('checkbox' + randomNo, new FormControl(''));
-
     this.arrOption.push({
       optionControl: 'option' + randomNo,
       checkboxControl: 'checkbox' + randomNo
     });
-
-    // console.log('this.arrOption add --- >');
-    // console.log(this.arrOption);
-
-    // this.questionOptions.addControl('option' + (this.arrOption.length + 1), new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])));
-    // this.questionOptions.addControl('checkbox' + (this.arrOption.length + 1), new FormControl(''));
-
-    // this.arrOption.push({
-    //   optionControl: 'option' + (this.arrOption.length + 1),
-    //   checkboxControl: 'checkbox' + (this.arrOption.length + 1)
-    // });
-
-    // console.log('this.arrOption add --- >');
-    // console.log(this.arrOption);
-
   }
 
   onQuestionOptionDelete(optionIndex) {
-
     let formControlLable = this.arrOption[optionIndex];
-
     this.arrOption.splice(optionIndex, 1);
     this.questionOptions.removeControl('option' + formControlLable);
     this.questionOptions.removeControl('checkbox' + formControlLable);
-
-    // console.log('this.arrOption --- >');
-    // console.log(this.arrOption);
-
-    // this.arrOption.splice(optionIndex, 1);
-    // this.questionOptions.removeControl('option' + this.arrOption.length);
-    // this.questionOptions.removeControl('checkbox' + this.arrOption.length);
-
-    // console.log('this.arrOption --- >');
-    // console.log(this.arrOption);
-
   }
 
   isQuestionOptionSectionAllowed() {
@@ -214,14 +183,7 @@ export class AddChecklistQuestionComponent implements OnInit {
   }
 
   addNewQuestion() {
-
-    // console.log('submitForm : --' + this.formGroup.valid);
-    // console.log(this.formGroup);
-
     let formGroupFormArray: any = (this.formGroup.get('formArray'));
-    // console.log('formGroupFormArray');
-    // console.log(formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value);
-
     let checklistQuestion: checklistQuestion = {
       title: formGroupFormArray.controls[1].get('questionDescriptionFormCtrl').value,
       questionTypeIdFK: formGroupFormArray.controls[0].get('selectQuestionTypeFormCtrl').value,
@@ -231,11 +193,6 @@ export class AddChecklistQuestionComponent implements OnInit {
     }
 
     if (this.isQuestionOptionSectionAllowed()) {
-
-      // console.log('isQuestionOptionSectionAllowed');
-      // console.log(formGroupFormArray.controls[2]);
-
-      //Insert default option0 and checkbox0
       checklistQuestion.options.push(
         {
           optionTitle: formGroupFormArray.controls[2].get('option0').value,

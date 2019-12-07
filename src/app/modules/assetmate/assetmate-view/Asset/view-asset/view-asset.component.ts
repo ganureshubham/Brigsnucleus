@@ -37,6 +37,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   isNoRecordFound: boolean = true;
   assetForQRcode: any = {};
   allAssetForQRcode: any = [];
+  nonzero: boolean = false;
   assetCode1: string = '1';
   mobileQuery: MediaQueryList;
   displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
@@ -123,21 +124,29 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Search Category *******************************************************************/
 
-
-
   searchAsset(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchAsset(this.categoryID, keyword).subscribe(res => {
-        this.dataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
+        if (res && res.data) {
+          this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
 
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAllAssets(this.categoryID, this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllAssets(this.categoryID, this.pageNumber);
+      }
     }
   }
-
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
@@ -210,11 +219,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Asset  *******************************************************************/
   editAsset(assetId: number) {
-    // this.showFirst = !this.showFirst;
-    // this.dataService.saveData(assetId);
-    // this.dataService.changeData(assetId);
-    // this.router.navigate(['/asset/add-asset']);
-
     const dialogRef = this.dialog.open(AssetAddComponent, {
       width: this.mobileQuery.matches ? '90vw' : '80vw',
       height: this.mobileQuery.matches ? '90vh' : '70vh',
@@ -244,12 +248,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
 
     setTimeout(() => {
-
-      // var qrCodeImg = document.getElementById("qrcode").innerText;
-
-      // console.log('qrCodeImg');
-
-      // var html = this.qrcodechild.el.nativeElement.innerHTML;
       var html = document.getElementById('qrcode').innerHTML;
       // console.log(html);
 
@@ -291,24 +289,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
       window.open(doc.output('bloburl'), '_blank');
     }, 50);
-
-    // var doc = new jsPDF('l', 'mm', [297, 150]);
-    // var source = window.document.getElementById("div-print");
-    // doc.fromHTML(source, 0, 0, {}, () => {
-    //   window.open(doc.output('bloburl'), '_blank');
-    // });
-
-    // this.router.navigate([]).then(result => { window.open(`/#/print-qrcode/${assetId}`, '_blank'); });
-    // console.log(assetId);
-    // doc.text('Hello world!', 10, 10)
-    // doc.save('a4.pdf')
-    // console.log(source);
-    // doc.addHTML(source, options, function () {
-    //   doc.save("test.pdf");
-    // });
-    // doc.output('dataurlnewwindow');
-    // doc.save('a4.pdf')
-    // doc.autoPrint();
 
   }
 

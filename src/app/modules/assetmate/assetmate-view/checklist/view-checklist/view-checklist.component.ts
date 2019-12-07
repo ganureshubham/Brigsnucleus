@@ -179,12 +179,17 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
 
   /*********************************************************** Search Particular Checklist ************************************************************/
 
+
   searchChecklist(keyword: any) {
     if (keyword.length > 0) {
       this.nonzero = true;
       this.assetmateService.searchChecklist(this.categoryID, keyword).subscribe((res: any) => {
         if (res && res.data) {
           this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
         }
       },
         error => {
@@ -197,13 +202,6 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
       }
     }
   }
-
-
-
-
-
-
-
 
 }
 

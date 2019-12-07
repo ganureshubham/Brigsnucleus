@@ -30,6 +30,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: "superadmin/location-type",
+        loadChildren: "./modules/location-type/location-type.module#LocationTypeModule",
+        canActivate: [AuthGuard]
+      },
+      {
         path: "user-role",
         loadChildren: "./modules/role/role.module#RoleModule",
         canActivate: [AuthGuard]

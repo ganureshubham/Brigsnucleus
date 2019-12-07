@@ -43,6 +43,20 @@
                 ORGANIZATIONS</span>
             </a>
           </div>
+          <div>
+            <a mat-button fxLayout="row" fxLayoutAlign="start center" [matMenuTriggerFor]="SuperAdminMenu" i18n>
+              <!-- <mat-icon color="primary">settings_applications</mat-icon>Settings -->
+              <mat-icon color="primary">settings_applications</mat-icon>&nbsp;&nbsp;<span i18n
+                class="item-toolbar">SYSTEM
+                SETTINGS</span>
+            </a>
+          </div>
+          <mat-menu #SuperAdminMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+            <a mat-menu-item routerLink="/superadmin/location-type">
+              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+              <span class="item-toolbar" i18n>Asset Installation Location</span>
+            </a>
+          </mat-menu>
         </div>
       </div>
       <div class="toolbar-menu" fxLayout="row" fxLayoutAlign="center">

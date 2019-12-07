@@ -125,10 +125,7 @@ export class ChecklistAddComponent implements OnInit {
 
   backToList() {
     let categorydata = localStorage.getItem('Category-Object');
-    // this.category = JSON.parse(categorydata);
-    // this.dataService.changeData(this.category);
     this.showFirst = !this.showFirst;
-    // this.router.navigate(['/asset']);   
 
   }
 

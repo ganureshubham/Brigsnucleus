@@ -125,37 +125,6 @@ export class AddAssignUserComponent implements OnInit {
       })
   }
 
-  /*********************************************************** Edit Document *******************************************************************/
-  editAssignUser() { }
-  // editDocument(formData: NgForm) {
-  //   let value = formData.value;
-  //   if (formData.valid) {
-  //     this.uploadDocToserver((result1) => {
-  //       value.filepath = result1;
-  //       // console.log(JSON.stringify(value));
-  //       this.assetmateService.editDocument(this.documentData.documentId,value).subscribe(
-  //         res => {
-  //           this.spinner.show();
-  //           setTimeout(() => {
-  //             this.toastr.success(res.message);
-  //             let categorydata = localStorage.getItem('Category-Object');
-  //             this.category = JSON.parse(categorydata);
-  //             this.dataService.changeData(this.category);
-  //             this.showFirst = !this.showFirst;
-  //             // this.router.navigate(['/asset']); 
-  //             this.spinner.hide();
-  //           }, 1000);
-  //         },
-  //         error => {
-  //           this.toastr.error(error.message);
-  //         }
-  //       );
-  //     })
-  //   }
-
-  //  }
-
-
   /*********************************************************** Back to Asset List *******************************************************************/
 
   backToList() {
