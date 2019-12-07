@@ -17,6 +17,7 @@ export class AssetmateViewComponent implements OnInit {
   category: any = [];
   mSearchCategory: any = [];
   isNoRecordFound: boolean = true;
+  nonzero: boolean = false;
 
 
   private _mobileQueryListener: () => void;
@@ -91,21 +92,31 @@ export class AssetmateViewComponent implements OnInit {
 
   /*********************************************************** Search Category *******************************************************************/
 
+
   searchCategory(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchCategory(keyword).subscribe(res => {
         if (res && res.data) {
           this.category = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.category = [];
+          this.isNoRecordFound = true;
         }
+
       },
         error => {
-          console.log(error.error.message);
-          this.toastr.error(error.error.message);
+          console.log(error.errors.msg);
         })
     } else {
-      this.getRootCategoryList();
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getRootCategoryList();
+      }
     }
   }
+
 
 
   getColumnCount() {

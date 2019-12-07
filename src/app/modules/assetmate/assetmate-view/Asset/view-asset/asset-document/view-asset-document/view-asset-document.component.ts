@@ -34,6 +34,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   parentdata: any;
   result: string = '';
   isNoRecordFound: boolean = true;
+  nonzero: boolean = false;
   animal: any;
   filepath: any;
   filedata: any = {};
@@ -220,27 +221,28 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Search Document *******************************************************************/
 
-
-
   searchDocument(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchDocumentByAssetId(keyword, this.assetID).subscribe(res => {
-        this.dataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
-
+        if (res && res.data) {
+          this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAllAssetDocuments(this.assetID, this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllAssetDocuments(this.assetID, this.pageNumber);
+      }
     }
   }
-
-
-  // viewAsset = (assetId: number) => {
-  //   this.dataService.changeData(assetId);
-  //   this.router.navigate(['/asset/asset-details']);
-  // }
-
 
 
 }

@@ -97,7 +97,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  /*********************************************************** Get all Alerts *******************************************************************/
+  /*********************************************************** Get all Documents *******************************************************************/
 
   getAllDocumates(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
@@ -136,13 +136,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.getAllDocumates(this.page);
   }
 
-  /*********************************************************** View Particular Alert  *******************************************************************/
-
-
-  // editDocumate(visit: any) {
-  //   this.dataService.changeData(visit);
-  //   this.router.navigate(['/documate/add-documate']);
-  // }
+  /*********************************************************** Edit Particular Document  *******************************************************************/
 
   editDocumate(visit: any) {
     this.dialogData = {
@@ -179,7 +173,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  /*********************************************************** Delete Particular Alert *******************************************************************/
+  /*********************************************************** Delete Particular Document *******************************************************************/
 
 
   deleteDocumate(documentId: number, title: string) {
@@ -283,12 +277,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Add  Documate *******************************************************************/
 
-  // addDocumate() {
-  //   let selectedManufacturer = null;
-  //   this.dataService.changeData(selectedManufacturer);
-  //   this.router.navigate(['/documate/add-documate']);
-
-  // }
 
   addDocumate(): void {
     this.dialogData = {

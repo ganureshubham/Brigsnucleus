@@ -50,18 +50,6 @@ export class AddCategoryDocumentComponent implements OnInit {
       this.documentData = this.data.documentData;
       this.filepath = this.data.documentData.filepath.split('/').pop().split('?')[0];
     }
-    // this.dataService.mSaveData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") {
-    //     this.documentData = res;
-    //     this.filepath = res.filepath.split('/').pop().split('?')[0];
-    //     this.isEdited = true;
-    //     this.formTitle = 'Edit Document';
-    //   } else {
-    //     //Hardcoded for Category
-    //     this.documentData.documentTypeIdFK = 1;
-    //     this.documentData.masterId = Number(this.categoryId);
-    //   }
-    // })
     this.getDocumentList();
     this.getcategoryLists();
   }

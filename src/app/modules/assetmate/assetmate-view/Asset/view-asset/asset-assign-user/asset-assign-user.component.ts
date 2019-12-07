@@ -36,7 +36,7 @@ export class AssetAssignUserComponent implements OnInit {
   deleteUserWithAssignedId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
-
+  nonzero: boolean = false;
   mobileQuery: MediaQueryList;
 
 
@@ -82,7 +82,7 @@ export class AssetAssignUserComponent implements OnInit {
 
   ngOnDestroy(): void { }
 
-  /*********************************************************** Get All Assets *******************************************************************/
+  /*********************************************************** Get All Assign Users *******************************************************************/
 
   getAllAssignUsers(pageNo: any) {
 
@@ -133,19 +133,30 @@ export class AssetAssignUserComponent implements OnInit {
   }
 
 
-  /*********************************************************** Search Category *******************************************************************/
+  /*********************************************************** Search Assign Users *******************************************************************/
+
   searchAssignUsers(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchAssignUsersToAsset(keyword, this.assetId).subscribe(res => {
-        this.dataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
+        if (res && res.data) {
+          this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAllAssignUsers(this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllAssignUsers(this.pageNumber);
+      }
     }
   }
-
 
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
@@ -163,7 +174,7 @@ export class AssetAssignUserComponent implements OnInit {
 
   }
 
-  /*********************************************************** Delete Particular Asset *******************************************************************/
+  /*********************************************************** Delete Particular Assign Users *******************************************************************/
   deleteAssignUsers(userCatAssignmentId: number, userFirstName: string, userLastName: string) {
 
     this.deleteUserWithAssignedId = userCatAssignmentId;

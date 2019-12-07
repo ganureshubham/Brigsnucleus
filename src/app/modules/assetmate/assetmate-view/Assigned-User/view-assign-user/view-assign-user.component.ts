@@ -32,6 +32,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   codeData: any;
   parentdata: any;
   result: string = '';
+  nonzero: boolean = false;
   userCatAssignmentId;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
@@ -78,7 +79,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void { }
 
-  /*********************************************************** Get All Assets *******************************************************************/
+  /*********************************************************** Get All Assign Users *******************************************************************/
 
   getAllAssignUsers(pageNo: any) {
     this.spinnerService.setSpinnerVisibility(true);
@@ -117,25 +118,33 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  /*********************************************************** Search Category *******************************************************************/
+  /*********************************************************** Search Assign Users *******************************************************************/
   searchAssignUsers(keyword) {
-    if (keyword) {
+    if (keyword.length > 0) {
+      this.nonzero = true;
       this.assetmateService.searchAssignUsersToCategory(keyword, this.categoryID).subscribe(res => {
-        this.dataSource = res.data;
-      }, error => {
-        console.log(error);
-      })
+        if (res && res.data) {
+          this.dataSource = res.data;
+          this.isNoRecordFound = false;
+        } else {
+          this.dataSource = new MatTableDataSource<any>([]);
+          this.isNoRecordFound = true;
+        }
+
+      },
+        error => {
+          console.log(error.errors.msg);
+        })
     } else {
-      this.getAllAssignUsers(this.pageNumber);
+      if (this.nonzero == true) {
+        this.nonzero = false;
+        this.getAllAssignUsers(this.pageNumber);
+      }
     }
   }
 
-
   /*********************************************************** Go to Add Asset Form *******************************************************************/
   addAsset() {
-    // this.showFirst = !this.showFirst;
-    // let selectedAsset = null;
-    // this.dataService.saveData(selectedAsset);
     const dialogRef = this.dialog.open(AddAssignUserComponent, {
       width: this.mobileQuery.matches ? '90vw' : '30vw',
       // height: this.mobileQuery.matches ? '90vh' : '60vh',
@@ -149,19 +158,9 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  /*********************************************************** Delete Particular Asset *******************************************************************/
+  /*********************************************************** Delete Particular Assign User *******************************************************************/
   deleteAssignUsers(userCatAssignmentId: number, firstName: string, lastName: string) {
-
-    // this.assetmateService.deleteAssignUsers(userCatAssignmentId).subscribe(res => {
-    //   this.toastr.success(res.message);
-    //   this.getAllAssignUsers(this.page);
-    // })
-    // error => {
-    //   this.toastr.error(error.message);
-    // }
-
     this.userCatAssignmentId = userCatAssignmentId;
-
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE CATEGORY ASSIGNED USER',
@@ -169,18 +168,14 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
-
     this.dialogService.setDialogVisibility(appDialogData);
-
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
       this.dialogService.getUserDialogAction().subscribe(userAction => {
         if (userAction == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (userAction == 1) {
-
           this.dialogService.setUserDialogAction(0);
-
           //User has approved delete operation 
           this.spinnerService.setSpinnerVisibility(true);
           this.assetmateService.deleteAssignUsers(this.userCatAssignmentId).subscribe(res => {
@@ -198,19 +193,6 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
     }
 
   }
-
-  /*********************************************************** Edit Particular Asset  *******************************************************************/
-  // editDocument(visit: number) {
-  //   this.showFirst = !this.showFirst;
-  //   this.dataService.saveData(visit);
-  // }
-
-
-
-  // viewAsset = (assetId: number) => {
-  //   this.dataService.changeData(assetId);
-  //   this.router.navigate(['/asset/asset-details']);
-  // }
 
 
 

@@ -12,9 +12,9 @@
                     <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p>
                 </div>
                 <div class="dfe add_action" style="width:19.5%">
-                  <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
-                    <mat-icon>print</mat-icon>Print QRCode
-                  </button>
+                    <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
+                        <mat-icon>print</mat-icon>Print QRCode
+                    </button>
                 </div>
             </div>
             <div>
@@ -161,31 +161,31 @@
     </mat-card>
 </div>
 <div id="div-print">
-  <div class="qr-code-container">
-    <div class="qrcode-row" id="printableArea">
-      <div class="col-1">
-        <qrcode id="qrcode" [qrdata]="assetCode1" [size]="150" [level]="'M'"></qrcode>
-      </div>
-      <div class="col-2">
-        <div class="row">
-          <div>
-            <div>Title</div>
-            <div class="asset-value">{{assetForQRcode.assetTitle}}</div>
-          </div>
+    <div class="qr-code-container">
+        <div class="qrcode-row" id="printableArea">
+            <div class="col-1">
+                <qrcode id="qrcode" [qrdata]="assetCode1" [size]="150" [level]="'M'"></qrcode>
+            </div>
+            <div class="col-2">
+                <div class="row">
+                    <div>
+                        <div>Title</div>
+                        <div class="asset-value">{{assetForQRcode.assetTitle}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div>AssetCode</div>
+                        <div class="asset-value">{{assetForQRcode.assetCode}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div>Model No.</div>
+                        <div class="asset-value">{{assetForQRcode.modelNumber}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div>
-            <div>AssetCode</div>
-            <div class="asset-value">{{assetForQRcode.assetCode}}</div>
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <div>Model No.</div>
-            <div class="asset-value">{{assetForQRcode.modelNumber}}</div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
