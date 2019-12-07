@@ -3,7 +3,7 @@
     <div fxFlex.xs="100">
       <button *ngIf="!isCurrentUserSuperAdmin()" fxFlex.xs="100" mat-button (click)="addTransferTask()"
         class="bg_white_grey btn_style">
-        <mat-icon>sync_alt</mat-icon>Transfer Taskmate
+        <mat-icon>sync_alt</mat-icon>Transfer Task
       </button>
     </div>
     <form class="example-form filter_search" fxFlex.xs="100">
@@ -18,7 +18,7 @@
   <ng-template #recordFound>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="complaintTitle">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Taskmate Title</mat-header-cell>
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Task Title</mat-header-cell>
         <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="fromUser">

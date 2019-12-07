@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddTaskmateTransferComponent implements OnInit {
 
-  formTitle: string = 'Transfer Taskmate';
+  formTitle: string = 'Transfer Task';
   taskmateTransferData: any = {};
   cancelbtn = 0;
   userLists: any;

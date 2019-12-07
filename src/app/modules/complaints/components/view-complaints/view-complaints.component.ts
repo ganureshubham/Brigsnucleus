@@ -8,6 +8,7 @@ import { SpinnerService } from '../../../../public service/spinner.service';
 import { Subscription } from 'rxjs';
 import { AddComplaintsComponent } from '../add-complaints/add-complaints.component';
 import { AppDialogData } from '../../../../model/appDialogData';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-complaints',
@@ -200,6 +201,16 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   isCurrentUserSuperAdmin() {
     return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
+  }
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Complaint', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
 

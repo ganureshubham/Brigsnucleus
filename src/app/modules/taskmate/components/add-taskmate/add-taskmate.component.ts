@@ -10,7 +10,7 @@ import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/
 })
 export class AddTaskmateComponent implements OnInit {
 
-  formTitle: string = 'Add Taskmate';
+  formTitle: string = 'Add Task';
   taskmateData: any = {};
   assetList: any;
   taskmateerror: any;

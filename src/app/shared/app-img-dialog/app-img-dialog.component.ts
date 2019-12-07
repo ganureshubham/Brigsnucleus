@@ -23,4 +23,10 @@ export class AppImgDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  getDownloadPath() {
+    console.log((this.image.imageUrl.split(':')[2]).substring(4));
+
+    return (this.image.imageUrl.split(':')[2]).substring(4);
+  }
+
 }

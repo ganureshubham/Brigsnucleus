@@ -15,8 +15,8 @@
   <ng-template #recordFound>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="userProfile">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>User Profile</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+        <mat-header-cell fxHide.xs *matHeaderCellDef>User Profile</mat-header-cell>
+        <mat-cell fxHide.xs *matCellDef="let visit">
           <div [ngStyle]="{
                   'background-image': 'url(' + visit.userProfile + ')',  
                   'background-size': 'contain',
@@ -27,7 +27,7 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="typeOfComplaint">
-        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Type Of Taskmate</mat-header-cell>
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Type Of Task</mat-header-cell>
         <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.typeOfComplaint }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="typeOfUser">
@@ -43,7 +43,7 @@
         <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="complaintStatus">
-        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Taskmate Status</mat-header-cell>
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Task Status</mat-header-cell>
         <mat-cell fxLayoutAlign="center center" class="taskmatestatus" *matCellDef="let visit">
           {{ visit.complaintStatus }}</mat-cell>
       </ng-container>
