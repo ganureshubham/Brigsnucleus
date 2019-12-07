@@ -3,6 +3,7 @@ import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { TaskmateService } from '../../service/taskmate.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-details-taskmate',
@@ -55,6 +56,16 @@ export class DetailsTaskmateComponent implements OnInit {
 
   backToList() {
     this.router.navigate(['/taskmate']);
+  }
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Task', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
 }

@@ -1136,58 +1136,6 @@ body {
   cursor: pointer;
 }
 
-/* .mat-dialog-container{
-  padding:0px !important;
-} */
-
-/* .dialog-container{
-  position: relative;
-}
-
-.dialog-toolbar{
-  border-bottom: 1px solid #eee;
-  padding: 0px 30px;
-}
-
-
-
-.dialog-toolbar-close-ic{
-  color: #808080;
-  padding:10px;
-  cursor: pointer;
-}
-
-.dialog-toolbar-close-ic:hover {
-  background-color: #eee;
-  border-radius: 50%;
-}
-
-.dialog-content-container{
-  padding: 30px;
-  overflow-y: scroll;
-  height: calc(100% - 1000px);
-}
-
-.dialog-actions{
-
-} */
-
-/* .dialog-container{
-  height: 100%;
-} */
-
-/* .dialog-toolbar{
-  height: 20%;
-}
-
-.dialog-content-container{
-  height: 80%;
-}
-
-.dialog-actions{
-  height: 10%;
-} */
-
 .dialog-toolbar-title{
   font-size: 25px;
   text-transform: uppercase;
@@ -1204,4 +1152,17 @@ body {
 
 .dialog-actions{
   padding: 0px 10px;
+}
+
+.app-img-dialog mat-dialog-container{
+    padding: 0;
+    background: #3a3a3a;
+}
+
+.app-img-dialog-backdrop{
+  background-color: #000000c4;
+}
+
+.asset-img-container-card{
+  cursor: pointer;
 }

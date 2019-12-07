@@ -8,6 +8,7 @@ import { DialogService } from '../../../../public service/dialog.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { AddTaskmateComponent } from '../add-taskmate/add-taskmate.component';
 import { AppDialogData } from '../../../../model/appDialogData';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-taskmate',
@@ -205,6 +206,15 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void { }
 
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Task', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
+  }
 
 
 

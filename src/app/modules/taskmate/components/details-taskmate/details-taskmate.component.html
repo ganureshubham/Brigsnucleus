@@ -28,11 +28,11 @@
     </div>
     <div class="asset_view_detail">
       <mat-tab-group>
-        <mat-tab label="Taskmate Details">
+        <mat-tab label="Task Details">
           <div class="tab_content" fxLayout="column" fxLayoutGap="30px" fxLayoutGap.xs="20px" fxFlex="100">
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Type Of Taskmate</h4>
+                <h4 class=" mat-h4 db ">Type Of Task</h4>
                 <span>{{taskmateData.typeOfComplaint}}</span>
               </div>
               <div fxFlex="33">
@@ -40,7 +40,7 @@
                 <span>{{taskmateData.title}}</span>
               </div>
               <div fxFlex="33">
-                <h4 class=" mat-h4 db ">Taskmate Status </h4>
+                <h4 class=" mat-h4 db ">Task Status </h4>
                 <span class="taskmateStatus">{{taskmateData.complaintStatus}}</span>
               </div>
             </div>
@@ -64,23 +64,19 @@
             </div>
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
-                <h4 class=" mat-h4 db ">Taskmate Image</h4>
-                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
-                  <div [ngStyle]="{
-                                          'background-image': 'url(' + taskmateData.complaintImage + ')',  
-                                          'background-size': 'contain',
-                                          'background-position': 'center center', 
-                                          'background-repeat': 'no-repeat',
-                                          'width':'100%', 
-                                          'height':'100%',
-                                          'min-height':'100px'
-                                      }"></div>
+                <h4 class=" mat-h4 db ">Task Image</h4>
+                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center"
+                  (click)="priviewImage(taskmateData.title, taskmateData.complaintImage)">
+                  <div [ngStyle]=" { 'background-image' : 'url(' + taskmateData.complaintImage + ')'
+                  , 'background-size' : 'contain' , 'background-position' : 'center center' , 'background-repeat'
+                  : 'no-repeat' , 'width' :'100%', 'height' :'100%', 'min-height' :'100px' }">
+                  </div>
                 </mat-card>
               </div>
             </div>
           </div>
         </mat-tab>
-        <mat-tab label="Taskmate Track">
+        <mat-tab label="Task Track">
           <div class="tab_content">
             <app-view-taskmate-track></app-view-taskmate-track>
           </div>

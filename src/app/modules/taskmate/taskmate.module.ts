@@ -11,6 +11,8 @@ import { TaskmateRoutes } from './taskmate-routing.module';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,16 +21,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     DetailsTaskmateComponent,
     ViewTaskmateTrackComponent,
     ViewTaskmateTransferComponent,
-    AddTaskmateTransferComponent
+    AddTaskmateTransferComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(TaskmateRoutes),
     MaterialModule,
     FormsModule,
-    FlexLayoutModule
-
+    FlexLayoutModule,
+    SharedModule
   ],
-  entryComponents: [AddTaskmateComponent, AddTaskmateTransferComponent]
+  entryComponents: [AddTaskmateComponent, AddTaskmateTransferComponent, AppImgDialogComponent]
 })
 export class TaskmateModule { } 

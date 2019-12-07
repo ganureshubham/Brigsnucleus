@@ -3,6 +3,7 @@ import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ComplaintsService } from '../../service/complaints.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-details-complaints',
@@ -19,7 +20,7 @@ export class DetailsComplaintsComponent implements OnInit {
     private dialog: MatDialog,
     private complaintsService: ComplaintsService,
     private routes: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -55,6 +56,16 @@ export class DetailsComplaintsComponent implements OnInit {
 
   backToList() {
     this.router.navigate(['/complaints']);
+  }
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Complaint', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
 }

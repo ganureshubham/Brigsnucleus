@@ -22,7 +22,7 @@
                 <div fxFlex.xs="100">
                   <button *ngIf="!isCurrentUserSuperAdmin()" fxFlex.xs="100" mat-button (click)="addTaskmate()"
                     class="bg_white_grey btn_style">
-                    <mat-icon>add</mat-icon>Add Taskmate
+                    <mat-icon>add</mat-icon>Add Task
                   </button>
                 </div>
                 <div fxLayout.xs="column">
@@ -40,10 +40,11 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
                   <ng-container matColumnDef="complaintImage">
-                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Taskmate Image
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Task Image
                     </mat-header-cell>
                     <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
-                      <div [ngStyle]="{
+                      <div (click)="$event.stopPropagation(); priviewImage(visit.title, visit.complaintImage);"
+                        [ngStyle]="{
                                     'background-image': 'url(' + visit.complaintImage + ')',  
                                     'background-size': 'contain',
                                     'background-position': 'center center', 
@@ -53,7 +54,7 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="typeOfComplaint">
-                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Taskmate
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Task
                     </mat-header-cell>
                     <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       {{ visit.typeOfComplaint }}
@@ -66,7 +67,7 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="complaintStatus">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Taskmate Status
+                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Task Status
                     </mat-header-cell>
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
                       <span class="complainStatus">{{ visit.complaintStatus }}</span>

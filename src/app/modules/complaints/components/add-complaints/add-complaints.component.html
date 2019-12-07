@@ -5,8 +5,16 @@
   <div fxLayout="column" mat-dialog-content>
     <form fxLayout="column" fxFlex="100" #complaintform="ngForm" novalidate>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <input matInput name="title" id="title" minlength="3" [(ngModel)]="complaintData.title"
+          #complaintTitle="ngModel" type="text" required placeholder="Complaint Title">
+        <mat-error *ngIf="complaintform.submitted && complaintTitle.invalid">
+          <mat-error *ngIf="complaintTitle.errors.required">Complaint Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="complaintTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
         <mat-select name="assetIdFK" id="assetIdFK" #complaintType="ngModel" [(ngModel)]="complaintData.assetIdFK"
-          placeholder="Asset Title" required>
+          placeholder="Select Asset" required>
           <mat-option *ngFor="let asset of assetList" [value]="asset.assetId">
             {{asset.assetTitle}}
           </mat-option>
@@ -14,14 +22,6 @@
         <mat-error *ngIf="complaintform.submitted && complaintType.invalid">
           <mat-error *ngIf="complaintType.errors.required">Asset Title is required</mat-error>
         </mat-error>
-      </mat-form-field>
-      <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input matInput name="title" id="title" minlength="3" [(ngModel)]="complaintData.title"
-          #complaintTitle="ngModel" type="text" required placeholder="Complaint Title">
-        <mat-error *ngIf="complaintform.submitted && complaintTitle.invalid">
-          <mat-error *ngIf="complaintTitle.errors.required">Complaint Title is required</mat-error>
-        </mat-error>
-        <mat-error *ngIf="complaintTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
       </mat-form-field>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
         <mat-select multiple name="users" id="users" [(ngModel)]="complaintData.users" #UsersName="ngModel"

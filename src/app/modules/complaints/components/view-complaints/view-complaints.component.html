@@ -43,7 +43,8 @@
                     <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Image
                     </mat-header-cell>
                     <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
-                      <div [ngStyle]="{
+                      <div (click)="$event.stopPropagation(); priviewImage(visit.title, visit.complaintImage)"
+                        [ngStyle]="{
                                 'background-image': 'url(' + visit.complaintImage + ')',  
                                 'background-size': 'contain',
                                 'background-position': 'center center', 
