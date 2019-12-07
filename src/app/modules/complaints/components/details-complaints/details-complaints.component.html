@@ -81,7 +81,8 @@
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
               <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
                 <h4 class=" mat-h4 db ">Complaint Image</h4>
-                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center"
+                  (click)="priviewImage(complaintData.title, complaintData.complaintImage)">
                   <div [ngStyle]="{
                                           'background-image': 'url(' + complaintData.complaintImage + ')',  
                                           'background-size': 'contain',
@@ -89,7 +90,8 @@
                                           'background-repeat': 'no-repeat',
                                           'width':'100%', 
                                           'height':'100%',
-                                          'min-height':'100px'
+                                          'min-height':'100px',
+                                          'cursor': 'pointer'
                                       }"></div>
                 </mat-card>
               </div>

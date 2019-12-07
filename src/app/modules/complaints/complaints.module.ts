@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from '../../shared/shared.module';
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RouterModule.forChild(ComplaintRoutes),
     MaterialModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedModule
   ],
-
-  entryComponents: [AddComplaintsComponent, AddTransferComplaintComponent]
-
+  entryComponents: [AddComplaintsComponent, AddTransferComplaintComponent, AppImgDialogComponent]
 })
 export class ComplaintsModule { } 
