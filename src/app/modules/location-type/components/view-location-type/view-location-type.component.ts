@@ -75,7 +75,7 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.locationTypeService.getAllLocationList().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.installationLocationList) {
-        if (res.currentPage == 0 && res.totalCount == 0) {
+        if (res.installationLocationList.length == 0) {
           this.isNoRecordFound = true;
           this.showSnackBar(res.message);
         } else {
