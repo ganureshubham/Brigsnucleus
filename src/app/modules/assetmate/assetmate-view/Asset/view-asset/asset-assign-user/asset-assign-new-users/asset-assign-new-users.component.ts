@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AssetmateService } from '../../../../../service/assetmate.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SpinnerService } from '../../../../../../../public service/spinner.service';
 
 @Component({
   selector: 'app-asset-assign-new-users',
@@ -28,6 +29,7 @@ export class AssetAssignNewUsersComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<any>,
+    private spinnerService: SpinnerService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -81,10 +83,35 @@ export class AssetAssignNewUsersComponent implements OnInit {
     this.assetmateService.getuserLists().subscribe(res => {
       if (res.user) {
         this.userLists = res.user;
+        this.getAlreadyAssignedUsers();
       }
     },
       error => {
         console.log(error);
+      }
+    );
+  }
+
+  getAlreadyAssignedUsers() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.getAlreadyAssignedUserListForAsset(this.assetId).subscribe(
+      res => {
+        this.spinnerService.setSpinnerVisibility(false);
+        if (res.assignedUsers) {
+          let filteredAssignedUser = this.userLists;
+          for (let user of res.assignedUsers) {
+            filteredAssignedUser = filteredAssignedUser.filter(
+              element => {
+                return element.userIdFK != user.userIdFK;
+              }
+            )
+          }
+          this.userLists = filteredAssignedUser;
+        }
+      },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
       }
     );
   }

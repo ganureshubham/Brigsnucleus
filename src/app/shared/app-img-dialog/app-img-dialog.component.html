@@ -8,9 +8,10 @@
   <div class="app-img-dialog-toolbar">
     <span class="app-img-dialog-title">{{image.imageType + ' - ' + image.imageTitle.substring(0,100)}}</span>
     <div fxLayout="row" fxLayoutGap="20px">
-      <!-- <a class="download-ic" href="" download="{{getDownloadPath()}}">
+      <!-- /allUploads/complaintImages/image-1575712364331.jpeg -->
+      <a class="download-ic" href="{{getDownloadPath()}}" download>
         <mat-icon matTooltip="download" class="app-img-dialog-ic_close" (click)="closeDialog()">get_app</mat-icon>
-      </a> -->
+      </a>
       <mat-icon matTooltip="close" class="app-img-dialog-ic_close" (click)="closeDialog()">close</mat-icon>
     </div>
   </div>

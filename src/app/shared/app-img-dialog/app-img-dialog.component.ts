@@ -17,6 +17,7 @@ export class AppImgDialogComponent implements OnInit {
 
   ngOnInit() {
     this.image = this.data;
+    this.getDownloadPath()
   }
 
   closeDialog() {
@@ -24,9 +25,42 @@ export class AppImgDialogComponent implements OnInit {
   }
 
   getDownloadPath() {
-    console.log((this.image.imageUrl.split(':')[2]).substring(4));
 
-    return (this.image.imageUrl.split(':')[2]).substring(4);
+    // console.log('getDownloadPath: ');
+
+    // Image Type to decide download path
+    // 1. Complaint
+    // 2. Task
+    // 3. User
+    // 4. Alert
+    // 5. Asset
+
+    let basePath = '/allUploads'
+
+    switch (this.image.imageType) {
+      case 'Complaint':
+        basePath += '/complaintImages';
+        break;
+      case 'Task':
+        basePath += '/complaintImages';
+        break;
+      case 'User':
+        basePath += '/userImages';
+        break;
+      case 'Alert':
+        basePath += '/alertImages';
+        break;
+      case 'Asset':
+        basePath += '/assetImages';
+        break;
+      default:
+        basePath = '';
+    }
+
+    basePath += (this.image.imageUrl.split(':')[2]).substring(4)
+    // console.log('basePath : ' + basePath);
+    return basePath;
+
   }
 
 }
