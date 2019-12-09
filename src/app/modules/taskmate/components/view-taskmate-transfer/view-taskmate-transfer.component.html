@@ -18,8 +18,8 @@
   <ng-template #recordFound>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="complaintTitle">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Task Title</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
+        <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>Task Title</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="fromUser">
         <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>From User</mat-header-cell>

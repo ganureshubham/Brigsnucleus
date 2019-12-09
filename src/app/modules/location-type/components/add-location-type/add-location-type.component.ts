@@ -28,8 +28,7 @@ export class AddLocationTypeComponent implements OnInit {
 
     }
     if (this.data.type == 'Edit') {
-      console.log(this.data);
-
+      this.InstallationLocData = this.data.value;
       this.isEdited = true;
       this.formTitle = "Edit Installation Location";
       this.InstallationLocData = this.data.value;

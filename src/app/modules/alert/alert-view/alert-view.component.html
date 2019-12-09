@@ -36,16 +36,6 @@
               </div>
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
-                  <!-- <ng-container matColumnDef="serialnumber">
-                  <mat-header-cell *matHeaderCellDef> Sr.No </mat-header-cell> 
-                  <mat-cell *matCellDef="let visit; let j = index">
-                    {{ (j+1) + (myPaginator.pageIndex * myPaginator.pageSize) }} 
-                  </mat-cell>
-                </ng-container> -->
-                  <!-- <ng-container matColumnDef="alertId">
-                  <mat-header-cell *matHeaderCellDef>Alert Id </mat-header-cell>
-                  <mat-cell *matCellDef="let visit">{{ visit.alertId }}</mat-cell>
-                </ng-container> -->
                   <ng-container matColumnDef="alertName">
                     <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Alert Name</mat-header-cell>
                     <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
@@ -56,8 +46,18 @@
                   </ng-container>
                   <ng-container matColumnDef="alertImage">
                     <mat-header-cell fxHide.xs *matHeaderCellDef>Alert Image</mat-header-cell>
-                    <mat-cell fxHide.xs *matCellDef="let visit"><img class="imgwrapper rounded img-responsive"
-                        src="{{visit.alertImage}}" alt="photo"></mat-cell>
+                    <mat-cell fxHide.xs *matCellDef="let visit">
+                      <!-- <img class="imgwrapper rounded img-responsive"
+                        src="{{visit.alertImage}}" alt="photo"> -->
+                      <div (click)="$event.stopPropagation(); priviewImage(visit.title, visit.alertImage)" [ngStyle]="{
+                          'background-image': 'url(' + visit.alertImage + ')', 
+                          'background-size': 'contain',
+                          'background-position': 'center center',  
+                          'background-repeat': 'no-repeat',  
+                          'width':'40px', 
+                          'border-radius': '50%', 
+                          'height':'40px'}"></div>
+                    </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="isRead">
                     <mat-header-cell fxHide.xs *matHeaderCellDef>Is Read</mat-header-cell>

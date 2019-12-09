@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DepartmentFilterComponent } from './department-filter/department-filter.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AppImgDialogComponent } from '../../shared/app-img-dialog/app-img-dialog.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [UserViewComponent, AddUserComponent, DepartmentFilterComponent],
@@ -18,8 +20,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     FormsModule,
     NgxSpinnerModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedModule
 
-  ]
+  ],
+  entryComponents: [AppImgDialogComponent]
 })
 export class UserModule { }

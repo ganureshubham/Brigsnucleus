@@ -17,7 +17,7 @@
       <ng-container matColumnDef="userProfile">
         <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>User Profile</mat-header-cell>
         <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">
-          <div [ngStyle]="{
+          <div (click)="$event.stopPropagation(); priviewImage( visit.userName,visit.userProfile)" [ngStyle]="{
                 'background-image': 'url(' + visit.userProfile + ')',  
                 'background-size': 'contain',
                 'background-position': 'center center', 

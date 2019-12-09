@@ -43,11 +43,11 @@
         <ng-container matColumnDef="assetImage">
           <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Image</mat-header-cell>
           <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
-            <div [ngStyle]="{
+            <div (click)="$event.stopPropagation(); priviewImage( visit.assetTitle, visit.assetImage)" [ngStyle]="{ 
                 'background-image': 'url(' + visit.assetImage + ')', 
                 'background-size': 'contain',
-                'background-position': 'center center', 
-                'background-repeat': 'no-repeat',
+                'background-position': 'center center',  
+                'background-repeat': 'no-repeat', 
                 'width':'80px', 
                 'height':'80px'}"></div>
           </mat-cell>

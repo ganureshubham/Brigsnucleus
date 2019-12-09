@@ -79,7 +79,7 @@
               <span>{{complaintData.message}}</span>
             </div>
             <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
-              <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
+              <div fxFlex="8" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
                 <h4 class=" mat-h4 db ">Complaint Image</h4>
                 <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100" fxLayoutAlign="center center"
                   (click)="priviewImage(complaintData.title, complaintData.complaintImage)">
@@ -95,44 +95,17 @@
                                       }"></div>
                 </mat-card>
               </div>
-              <!-- <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28">
-                <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
-                <mat-card class="asset-img-container-card" fxLayoutAlign="center center">
-                  <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode" [size]="160" [level]="'M'">
-                  </qrcode>
-                </mat-card>
-              </div> -->
             </div>
-            <!-- <div fxLayout="column">
-              <h4 class="mat-h4 db">Asset User Guide</h4>
-              <div class="userguide" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="15px"
-                fxLayoutAlign.gt-xs="flex-start center">
-                <div fxFlex="20" fxFlex.xs="100" fxLayoutAlign="center center">
-                  <span class="round">
-                    .{{userGuideFileExtension}}
-                  </span>
-                </div>
-                <span fxFlex="60" fxFlex.xs="100" fxLayoutAlign="center center">
-                  {{userGuideFileName}}
-                </span>
-                <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns">
-                  <button mat-button (click)="downloadDocument(assetData.userGuideBook)">Download</button>
-                </span>
-              </div>
-            </div> -->
           </div>
         </mat-tab>
         <mat-tab label="Complaint Track">
           <div class="tab_content">
             <app-view-complaint-track></app-view-complaint-track>
-            <!-- <app-view-asset-document>
-            </app-view-asset-document> -->
           </div>
         </mat-tab>
         <mat-tab label="Transfer Log">
           <div class="tab_content">
             <app-view-transfer-complaint></app-view-transfer-complaint>
-            <!-- <app-view-history></app-view-history> -->
           </div>
         </mat-tab>
       </mat-tab-group>
