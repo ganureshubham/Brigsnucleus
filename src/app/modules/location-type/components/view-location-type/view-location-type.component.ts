@@ -155,8 +155,14 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
 
 
   editLocationType(visit: any) {
+
+    let dialogData = {
+      type: 'Edit',
+      value: visit
+    }
+
     const dialogRef = this.dialog.open(AddLocationTypeComponent, {
-      data: { type: 'Edit', value: visit },
+      data: dialogData,
       width: '450px',
       disableClose: true
     });

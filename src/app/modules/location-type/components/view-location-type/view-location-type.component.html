@@ -4,12 +4,12 @@
       <mat-card fxFlex.xs="90" fxFlex="50">
         <div fxLayout.xs="column" class="table_header">
           <div fxLayoutAlign.xs="space-around center" class="fl">
-            <p class="tabel_heading mat-subheading-2">Asset Installation Locations</p>
+            <p class="tabel_heading mat-subheading-2">Asset Installation Location Types</p>
           </div>
           <div fxFlex.xs="100" class="fr">
             <div fxFlex.xs="100" class="btn_style">
               <button fxFlex.xs="100" mat-button (click)="addLocationType()" class="bg_white_grey">
-                <mat-icon>add</mat-icon>Add Installation Location
+                <mat-icon>add</mat-icon>Add Installation Location Type
               </button>
             </div>
           </div>
@@ -21,7 +21,7 @@
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
             <ng-container matColumnDef="installationLocationName">
-              <mat-header-cell *matHeaderCellDef>Installation Location Name</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Installation Location Type</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.installationLocationName }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">

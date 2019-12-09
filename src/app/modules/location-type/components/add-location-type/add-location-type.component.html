@@ -7,9 +7,8 @@
   <div fxLayout="row" fxFlex="100">
     <form fxLayout="column" fxFlex="100" #installlocationform="ngForm">
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input matInput name="installationLocationName" id="installationLocationName"
-          [(ngModel)]="InstallationLocData.installationLocationName" #FirstName="ngModel" type="text" required
-          placeholder="Installation Location Title ">
+        <input matInput name="installationLocationName" id="installationLocationName" [(ngModel)]="installationLocType"
+          #FirstName="ngModel" type="text" required placeholder="Installation Location Title ">
         <mat-error *ngIf="installlocationform.submitted && FirstName.invalid">
           <mat-error *ngIf="FirstName.errors.required">InstallationLocation Title is required</mat-error>
         </mat-error>
