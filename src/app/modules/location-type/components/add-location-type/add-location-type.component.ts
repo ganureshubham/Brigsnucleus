@@ -9,10 +9,13 @@ import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/
   styleUrls: ['./add-location-type.component.css']
 })
 export class AddLocationTypeComponent implements OnInit {
-  InstallationLocData: any = {};
+
   isEdited: boolean = false;
   formTitle: string = "Add Installation Location";
   cancelbtn = 0;
+
+  installationLocationTypeId: number;
+  installationLocType: string = '';
 
   constructor(
     private locationTypeService: LocationTypeService,
@@ -24,14 +27,11 @@ export class AddLocationTypeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.type == 'Add') {
-
-    }
     if (this.data.type == 'Edit') {
-      this.InstallationLocData = this.data.value;
       this.isEdited = true;
       this.formTitle = "Edit Installation Location";
-      this.InstallationLocData = this.data.value;
+      this.installationLocationTypeId = this.data.value.installationLocationTypeId;
+      this.installationLocType = this.data.value.installationLocationName;
     }
   }
 
@@ -60,7 +60,7 @@ export class AddLocationTypeComponent implements OnInit {
 
   editInstallationLocation(value) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.locationTypeService.editInstallationLoc(this.InstallationLocData.installationLocationTypeId, value).subscribe(res => {
+    this.locationTypeService.editInstallationLoc(this.installationLocationTypeId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       this.showSnackBar(res.message);
       this.dialog.closeAll();
