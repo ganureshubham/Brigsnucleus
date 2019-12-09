@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SpinnerService } from '../../../../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-add-assign-user',
@@ -91,6 +92,7 @@ export class AddAssignUserComponent implements OnInit {
     this.assetmateService.getuserLists().subscribe(res => {
       if (res.user) {
         this.userLists = res.user;
+        this.getAlreadyAssignedUsers();
       }
     },
       error => {
@@ -99,6 +101,29 @@ export class AddAssignUserComponent implements OnInit {
     );
   }
 
+  getAlreadyAssignedUsers() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.getAlreadyAssignedUserList(this.categoryId).subscribe(
+      res => {
+        this.spinnerService.setSpinnerVisibility(false);
+        if (res.assignedUsers) {
+          let filteredAssignedUser = this.userLists;
+          for (let user of res.assignedUsers) {
+            filteredAssignedUser = filteredAssignedUser.filter(
+              element => {
+                return element.userIdFK != user.userIdFK;
+              }
+            )
+          }
+          this.userLists = filteredAssignedUser;
+        }
+      },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    );
+  }
 
 
 

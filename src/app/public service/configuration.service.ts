@@ -13,7 +13,7 @@ export class ConfigurationService {
 
 
 
-	//public static baseUrl = `http://192.168.0.108:7001/`;  //local-Ajay
+	// public static baseUrl = `http://192.168.0.108:7001/`;  //local-Ajay
 
 
 

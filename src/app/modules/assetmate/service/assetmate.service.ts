@@ -352,6 +352,13 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/selectUser`);
   }
 
+  getAlreadyAssignedUserList(categoryId) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `userCatAssign/assignedUsersByCategoryId/${categoryId}`);
+  }
+
+  getAlreadyAssignedUserListForAsset(assetId) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `userCatAssign/assignedUsersByAssetId/${assetId}`);
+  }
   /*********************************************************** Add New Assign User *******************************************************************/
 
   addAssignUser(assignUserData: any): Observable<any> {
