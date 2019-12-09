@@ -1,10 +1,10 @@
 <div class="innerbody table">
   <div fxLayout="column">
     <div class="portal-widget">
-      <mat-card fxFlex.xs="90" fxFlex="98">
+      <mat-card fxFlex.xs="90" fxFlex="50">
         <div fxLayout.xs="column" class="table_header">
           <div fxLayoutAlign.xs="space-around center" class="fl">
-            <p class="tabel_heading mat-subheading-2">Asset Installation Locations List</p>
+            <p class="tabel_heading mat-subheading-2">Asset Installation Locations</p>
           </div>
           <div fxFlex.xs="100" class="fr">
             <div fxFlex.xs="100" class="btn_style">
@@ -21,8 +21,8 @@
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
             <ng-container matColumnDef="installationLocationName">
-              <mat-header-cell fxHide.xs *matHeaderCellDef>Installation Location Name</mat-header-cell>
-              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.installationLocationName }}</mat-cell>
+              <mat-header-cell *matHeaderCellDef>Installation Location Name</mat-header-cell>
+              <mat-cell *matCellDef="let visit">{{ visit.installationLocationName }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
               <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>

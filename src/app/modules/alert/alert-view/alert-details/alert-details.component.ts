@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../service/alert.service';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
+import { AppImgDialogComponent } from '../../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-alert-details',
@@ -41,6 +42,7 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
     private dataService: DataSharingService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -70,6 +72,19 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
       })
 
   }
+
+  /*********************************************************** Preview Particular Alert Image  *******************************************************************/
+
+  priviewImage(type, title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: type, imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
+  }
+
 
   /*********************************************************** Page Change *******************************************************************/
 

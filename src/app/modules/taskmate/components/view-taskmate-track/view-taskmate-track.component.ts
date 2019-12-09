@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { SpinnerService } from '../../../../public service/spinner.service';
-import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { TaskmateService } from '../../service/taskmate.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AppImgDialogComponent } from '../../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-taskmate-track',
@@ -39,7 +40,8 @@ export class ViewTaskmateTrackComponent implements AfterViewInit, OnInit {
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     private taskmateService: TaskmateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
   ) { }
 
 
@@ -84,6 +86,18 @@ export class ViewTaskmateTrackComponent implements AfterViewInit, OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  /*********************************************************** Preview Particular Task track Image  *******************************************************************/
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'User', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
   /*********************************************************** Page Change *******************************************************************/

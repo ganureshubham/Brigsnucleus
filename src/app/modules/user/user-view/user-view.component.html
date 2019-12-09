@@ -27,10 +27,6 @@
         </div>
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
-            <!-- <ng-container matColumnDef="userId">
-              <mat-header-cell *matHeaderCellDef>User Id</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.userId }}</mat-cell>
-            </ng-container> -->
             <ng-container matColumnDef="userName">
               <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef i18n>User Name </mat-header-cell>
               <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
@@ -39,13 +35,13 @@
             <ng-container matColumnDef="profileImage">
               <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Profile Image</mat-header-cell>
               <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
-                <!-- <img class="imgwrapper rounded img-responsive"
-                    src="{{visit.profileImage}}" alt="photo"> -->
-                <div [ngStyle]="{
+                <div
+                  (click)="$event.stopPropagation(); priviewImage( visit.firstName+' '+visit.lastName, visit.profileImage)"
+                  [ngStyle]="{
                       'background-image': 'url(' + visit.profileImage + ')', 
                       'background-size': 'contain',
                       'background-position': 'center center', 
-                      'background-repeat': 'no-repeat',
+                      'background-repeat': 'no-repeat',  
                       'width':'80px', 
                       'height':'80px'}"></div>
               </mat-cell>
@@ -63,19 +59,11 @@
               <mat-cell fxHide.xs *matCellDef="let visit">
                 {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
             </ng-container>
-            <!-- <ng-container matColumnDef="userRoleIdFK">
-              <mat-header-cell *matHeaderCellDef>User RoleId</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.userRoleIdFK }}</mat-cell>
-            </ng-container> -->
             <ng-container matColumnDef="Actions">
               <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
               <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">
                 <div>
                   <mat-menu #dailyPerformanceMenu="matMenu">
-                    <!-- <a mat-menu-item (click)="viewUser(visit.assetId)">
-                    <mat-icon matListIcon>visibility</mat-icon>
-                    <span i18n>View Asset Detail</span>
-                  </a> -->
                     <a mat-menu-item (click)="editUser(visit)">
                       <mat-icon matListIcon>edit</mat-icon>
                       <span i18n>Edit User</span>

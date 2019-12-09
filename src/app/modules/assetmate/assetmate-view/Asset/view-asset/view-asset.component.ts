@@ -13,6 +13,7 @@ import { AppDialogData } from '../../../../../model/appDialogData';
 import jsPDF from 'jspdf';
 import { AssetAddComponent } from '../../Asset/view-asset/asset-add/asset-add.component';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { AppImgDialogComponent } from '../../../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-asset',
@@ -231,6 +232,19 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       }
     });
 
+  }
+
+
+  /*********************************************************** Preview Particular Asset Image  *******************************************************************/
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Asset', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
   /*********************************************************** View Particular Asset  *******************************************************************/

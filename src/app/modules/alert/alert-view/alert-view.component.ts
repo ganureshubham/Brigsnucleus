@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
@@ -9,6 +9,7 @@ import { AlertService } from '../service/alert.service';
 import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { SpinnerService } from '../../../public service/spinner.service';
+import { AppImgDialogComponent } from '../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-alert-view',
@@ -50,6 +51,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
     private spinnerService: SpinnerService,
+    public dialog: MatDialog,
 
   ) {
 
@@ -90,6 +92,18 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
+  }
+
+  /*********************************************************** Preview Particular Alert Image  *******************************************************************/
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Alert', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
   /*********************************************************** Page Change *******************************************************************/

@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { ComplaintsService } from '../../service/complaints.service';
 import { ActivatedRoute } from '@angular/router';
+import { AppImgDialogComponent } from '../../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-complaint-track',
@@ -39,7 +40,8 @@ export class ViewComplaintTrackComponent implements AfterViewInit, OnInit {
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     private complaintsService: ComplaintsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
 
@@ -84,6 +86,18 @@ export class ViewComplaintTrackComponent implements AfterViewInit, OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  /*********************************************************** Preview Particular Complaint Track Image  *******************************************************************/
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'User', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
   /*********************************************************** Page Change *******************************************************************/

@@ -33,6 +33,8 @@ import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-c
 import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/details-checklist-question/details-checklist-question.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -72,7 +74,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     ReactiveFormsModule,
     NgxSpinnerModule,
     QRCodeModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedModule
   ],
 
 
@@ -84,7 +87,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     AssetAssignNewUsersComponent,
     AddAssignUserComponent,
     AddCategoryDocumentComponent,
-   ChecklistAddComponent
+    ChecklistAddComponent,
+    AppImgDialogComponent
+
+
   ]
 
 })

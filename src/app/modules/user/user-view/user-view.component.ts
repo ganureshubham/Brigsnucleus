@@ -12,6 +12,7 @@ import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AppImgDialogComponent } from '../../../shared/app-img-dialog/app-img-dialog.component';
 
 
 interface userDialogData {
@@ -179,6 +180,18 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.loading = true;
     this.page = pageNo.pageIndex;
     this.getAllUsers(this.message.departmentId, this.page);
+  }
+
+  /*********************************************************** Preview Particular User Image  *******************************************************************/
+
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'User', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
   }
 
   /*********************************************************** Edit Particular User  *******************************************************************/

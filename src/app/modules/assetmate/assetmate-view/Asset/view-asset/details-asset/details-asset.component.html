@@ -99,7 +99,8 @@
                         <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
                             <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
                                 <h4 class=" mat-h4 db ">Asset Image</h4>
-                                <mat-card class="asset-img-container-card" fxLayout="column" fxFlex="100"
+                                <mat-card (click)="priviewImage( assetData.assetTitle, assetData.image)"
+                                    class="asset-img-container-card" fxLayout="column" fxFlex="100"
                                     fxLayoutAlign="center center">
                                     <div [ngStyle]="{
                                             'background-image': 'url(' + assetData.image + ')',
@@ -114,9 +115,9 @@
                             </div>
                             <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28">
                                 <h4 class=" mat-h4 db ">Asset Qr-Code</h4>
-                                <mat-card class="asset-img-container-card" fxLayoutAlign="center center">
-                                    <qrcode (click)="openQRCodeDialog(assetcode)" [qrdata]="assetcode" [size]="160"
-                                        [level]="'M'"></qrcode>
+                                <mat-card (click)="openQRCodeDialog(assetcode)" class="asset-img-container-card"
+                                    fxLayoutAlign="center center">
+                                    <qrcode [qrdata]="assetcode" [size]="160" [level]="'M'"></qrcode>
                                 </mat-card>
                             </div>
                         </div>

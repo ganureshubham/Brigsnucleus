@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   mobileQuery: MediaQueryList;
   isSuperadminNavigating: boolean = false;
   private _mobileQueryListener: () => void;
+  orgNameFromLocStorage: any;
 
   constructor(
     private authService: AuthenticationService,
@@ -94,7 +95,13 @@ export class NavbarComponent implements OnInit {
   }
 
   getOrganizationNameMangingBySuperAdmin() {
-    return JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+    this.orgNameFromLocStorage = JSON.parse(localStorage.getItem('currentUser'));
+    if (this.orgNameFromLocStorage.data.role == 0) {
+      return JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+    } else if (this.orgNameFromLocStorage.data.role == 1) {
+      return JSON.parse(localStorage.getItem('currentUser')).data.organizationName;
+    }
+
   }
 
   chooseOrganizationAndNavigate() {
