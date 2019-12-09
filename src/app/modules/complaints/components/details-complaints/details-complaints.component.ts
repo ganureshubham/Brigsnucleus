@@ -68,4 +68,11 @@ export class DetailsComplaintsComponent implements OnInit {
     });
   }
 
+  getComplaintImagePath(imageUrl) {
+    if (imageUrl != null && imageUrl.length > 0) {
+      return imageUrl;
+    }
+    return 'assets/img/defaultImage.png';
+  }
+
 }

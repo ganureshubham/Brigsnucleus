@@ -35,6 +35,7 @@ export class AddComplaintsComponent implements OnInit {
   ngOnInit() {
     this.selectAssetTitle();
     this.getuserLists();
+
   }
 
 

@@ -194,14 +194,13 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
       }
     }
   }
-
-
-
   ngOnDestroy(): void { }
 
   isCurrentUserSuperAdmin() {
     return JSON.parse(localStorage.getItem('currentUser')).data.role == 0;
   }
+
+  /********************************************Preview Particular Complaint Image*************************************************/
 
   priviewImage(title, imageUrl) {
     this.dialog.open(AppImgDialogComponent, {
@@ -214,7 +213,16 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   }
 
 
+  getComplaintImagePath(imageUrl) {
+    if (imageUrl != null && imageUrl.length > 0) {
+      return imageUrl;
+    }
+    return 'assets/img/defaultImage.png';
+  }
+
 }
+
+
 
 
 export interface Complaint {
