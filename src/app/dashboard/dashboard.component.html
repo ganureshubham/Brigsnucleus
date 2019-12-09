@@ -1,6 +1,6 @@
 <mat-card class="width_90 margin_auto">
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
-    <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
+    <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
       <div class="dashboard_part">
         <ul>
           <li><img src="assets/img/asset_icon.svg" alt="" srcset=""></li>
@@ -18,7 +18,7 @@
     </div>
     <div class="verticle-divider" fxHide.lt-sm="true">
     </div>
-    <div fxFlex="40" fxFlex.lt-md="100" fxLayout="column">
+    <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
       <div class="dashboard_part">
         <ul>
           <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
@@ -30,6 +30,42 @@
       </div>
       <div>
         <div class="cl"></div><br><button mat-button routerLink="/documate" color="primary" class="fr">More Info
+          <mat-icon>keyboard_arrow_right
+          </mat-icon></button>
+      </div>
+    </div>
+    <div class="verticle-divider" fxHide.lt-sm="true">
+    </div>
+    <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
+      <div class="dashboard_part">
+        <ul>
+          <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
+          <li>Total Taskmate</li>
+          <li>
+            <h2 class="count">{{rows.totalTaskMate}}</h2>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="cl"></div><br><button mat-button routerLink="/taskmate" color="primary" class="fr">More Info
+          <mat-icon>keyboard_arrow_right
+          </mat-icon></button>
+      </div>
+    </div>
+    <div class="verticle-divider" fxHide.lt-sm="true">
+    </div>
+    <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
+      <div class="dashboard_part">
+        <ul>
+          <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
+          <li>Total Complaints</li>
+          <li>
+            <h2 class="count">{{rows.totalComplaints}}</h2>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="cl"></div><br><button mat-button routerLink="/complaints" color="primary" class="fr">More Info
           <mat-icon>keyboard_arrow_right
           </mat-icon></button>
       </div>

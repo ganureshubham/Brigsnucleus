@@ -17,11 +17,22 @@ export class AppImgDialogComponent implements OnInit {
 
   ngOnInit() {
     this.image = this.data;
-    this.getDownloadPath()
+    this.getDownloadPath();
+  }
+
+  isDownloadImageAllowed() {
+    return (this.image.imageUrl == undefined) || (this.image.imageUrl == null) || (this.image.imageUrl.length == 0) || this.image.imageType == 'User';
   }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  getImagePath(imageUrl) {
+    if ((this.image.imageUrl == undefined) || (this.image.imageUrl == null) || (this.image.imageUrl.length == 0)) {
+      return 'assets/img/defaultImage.png';
+    }
+    return imageUrl;
   }
 
   getDownloadPath() {
@@ -38,12 +49,9 @@ export class AppImgDialogComponent implements OnInit {
     let basePath = '/allUploads'
 
     if ((this.image.imageUrl == undefined) || (this.image.imageUrl == null) || (this.image.imageUrl.length == 0)) {
-
-      basePath = 'assets/img/defaultImage.png';
+      basePath = '/'
       return basePath;
-
     } else {
-
       switch (this.image.imageType) {
         case 'Complaint':
           basePath += '/complaintImages';
@@ -66,9 +74,7 @@ export class AppImgDialogComponent implements OnInit {
 
       basePath += (this.image.imageUrl.split(':')[2]).substring(4)
       return basePath;
-
     }
-
 
   }
 
