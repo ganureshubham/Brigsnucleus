@@ -38,7 +38,10 @@ export class AppImgDialogComponent implements OnInit {
     let basePath = '/allUploads'
 
     switch (this.image.imageType) {
-      case 'Complaint' || 'Task':
+      case 'Complaint':
+        basePath += '/complaintImages';
+        break;
+      case 'Task':
         basePath += '/complaintImages';
         break;
       case 'User':
@@ -54,8 +57,10 @@ export class AppImgDialogComponent implements OnInit {
         basePath = '';
     }
 
-    // console.log((this.image.imageUrl.split(':')[2]).substring(4));
-    return basePath + (this.image.imageUrl.split(':')[2]).substring(4);
+    basePath += (this.image.imageUrl.split(':')[2]).substring(4)
+    // console.log('basePath : ' + basePath);
+    return basePath;
+
   }
 
 }
