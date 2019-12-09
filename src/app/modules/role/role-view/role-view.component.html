@@ -1,8 +1,7 @@
 <div fxLayout="row" fxFlex="100" class="table">
   <div fxFlex="100" class=" margin_auto padding_container">
-    <div fxLayout.xs="column" class="portal-widget">
-      <mat-card fxFlex="100" fxFlex.lt-md="95">
-
+    <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center" class="portal-widget">
+      <mat-card fxFlex="50" fxFlex.lt-md="95">
         <div fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="table_header">
           <div fxLayoutAlign="center center" fxFlex.xs="100" class="fl">
             <p class="tabel_heading mat-subheading-2">User Roles List</p>
@@ -21,10 +20,6 @@
         </div>
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
-            <!-- <ng-container matColumnDef="userRoleId">
-            <mat-header-cell *matHeaderCellDef>User Role Id</mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.userRoleId }}</mat-cell>
-          </ng-container> -->
             <ng-container matColumnDef="title">
               <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
               <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
