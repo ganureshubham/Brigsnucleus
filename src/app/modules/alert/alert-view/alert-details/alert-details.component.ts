@@ -155,7 +155,7 @@ export class AlertDetailsComponent implements AfterViewInit, OnInit {
   }
 
   alertImg() {
-    return this.alertData.alertImage.length == 0 ? 'assets/img/defaultalert.png' : this.alertData.alertImage;
+    return this.alertData.alertImage.length == 0 ? 'assets/img/defaultImage.png' : this.alertData.alertImage;
   }
 
 

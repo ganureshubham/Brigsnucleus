@@ -50,7 +50,7 @@
                       <!-- <img class="imgwrapper rounded img-responsive"
                         src="{{visit.alertImage}}" alt="photo"> -->
                       <div (click)="$event.stopPropagation(); priviewImage(visit.title, visit.alertImage)" [ngStyle]="{
-                          'background-image': 'url(' + visit.alertImage + ')', 
+                          'background-image': 'url(' + getAlertImagePath(visit.alertImage)  + ')', 
                           'background-size': 'contain',
                           'background-position': 'center center',  
                           'background-repeat': 'no-repeat',  
