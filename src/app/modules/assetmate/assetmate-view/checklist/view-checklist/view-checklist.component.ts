@@ -33,7 +33,7 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
 
 
 
-  displayedColumns: string[] = ['title', 'totalQuestions', 'Actions'];
+  displayedColumns: string[] = ['title', 'duration', 'totalQuestions', 'Actions'];
   dataSource: MatTableDataSource<checklist> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
