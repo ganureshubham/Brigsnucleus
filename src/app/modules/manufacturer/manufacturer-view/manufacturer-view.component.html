@@ -1,7 +1,7 @@
 <div class="innerbody table">
   <div fxLayout="column">
     <div class="portal-widget">
-      <mat-card fxFlex="98" fxFlex.xs="90">
+      <mat-card fxFlex="50" fxFlex.xs="90">
         <div fxLayout.xs="column" class="table_header">
           <div fxLayoutAlign.xs="space-around center" class="fl">
             <p class="tabel_heading mat-subheading-2">Manufacturers List</p>
@@ -20,10 +20,6 @@
         </div>
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
-            <!-- <ng-container matColumnDef="manufacturerId">
-            <mat-header-cell *matHeaderCellDef>Manufacturer Id </mat-header-cell>
-            <mat-cell *matCellDef="let visit">{{ visit.manufacturerId }}</mat-cell> 
-          </ng-container> -->
             <ng-container matColumnDef="title">
               <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
               <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}</mat-cell>

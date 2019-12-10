@@ -8,7 +8,7 @@
     <div>
       <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap.gt-xs="30px">
         <mat-form-field fxFlex.xs="100">
-          <input matInput name="title" id="title" pattern="[a-zA-Z]*" minlength="3" [(ngModel)]="roleData.title"
+          <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
             #roleTitle="ngModel" type="text" required placeholder="Title">
           <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
             <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
