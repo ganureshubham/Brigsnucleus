@@ -7,16 +7,16 @@
   <div fxLayout="row" fxFlex="100">
     <form fxLayout="column" fxFlex="100" #supplierform="ngForm">
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input matInput name="firstName" id="firstName" pattern="[a-zA-Z ]*" [(ngModel)]="supplierData.firstName"
-          #FirstName="ngModel" type="text" required placeholder="First Name">
+        <input matInput name="firstName" (keydown.space)="$event.preventDefault();" id="firstName" pattern="[a-zA-Z ]*"
+          [(ngModel)]="supplierData.firstName" #FirstName="ngModel" type="text" required placeholder="First Name">
         <mat-error *ngIf="supplierform.submitted && FirstName.invalid">
           <mat-error *ngIf="FirstName.errors.required">First Name is required</mat-error>
         </mat-error>
         <mat-error *ngIf="FirstName.errors?.pattern"> Please Enter Only Characters</mat-error>
       </mat-form-field>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input matInput name="lastName" id="lastName" pattern="[a-zA-Z ]*" [(ngModel)]="supplierData.lastName"
-          #LastName="ngModel" type="text" required placeholder="Last Name">
+        <input matInput name="lastName" (keydown.space)="$event.preventDefault();" id="lastName" pattern="[a-zA-Z ]*"
+          [(ngModel)]="supplierData.lastName" #LastName="ngModel" type="text" required placeholder="Last Name">
         <mat-error *ngIf="supplierform.submitted && LastName.invalid">
           <mat-error *ngIf="LastName.errors.required">Last Name is required</mat-error>
         </mat-error>
@@ -30,9 +30,9 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input matInput name="mobileNumber" pattern="[0-9]+" minlength="10" maxlength="10" id="mobileNumber"
-          [(ngModel)]="supplierData.mobileNumber" #MobileNumber="ngModel" type="text" required
-          placeholder="Mobile Number">
+        <input matInput name="mobileNumber" (keydown.space)="$event.preventDefault();" pattern="[0-9]+" minlength="10"
+          maxlength="10" id="mobileNumber" [(ngModel)]="supplierData.mobileNumber" #MobileNumber="ngModel" type="text"
+          required placeholder="Mobile Number">
         <mat-error *ngIf="supplierform.submitted && MobileNumber.invalid">
           <mat-error *ngIf="MobileNumber.errors.required">Mobile Number is required</mat-error>
         </mat-error>
@@ -41,8 +41,9 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <input name="emailId" id="emailId" [(ngModel)]="supplierData.emailId" #EmailId="ngModel"
-          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" matInput type="text" required placeholder="Email Id">
+        <input name="emailId" (keydown.space)="$event.preventDefault();" id="emailId" [(ngModel)]="supplierData.emailId"
+          #EmailId="ngModel" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" matInput type="text" required
+          placeholder="Email Id">
         <mat-error *ngIf="supplierform.submitted && EmailId.invalid">
           <mat-error *ngIf="EmailId.errors.required">Email Id is required</mat-error>
         </mat-error>
