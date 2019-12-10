@@ -34,13 +34,13 @@
       </mat-step>
       <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
         <ng-template matStepLabel>
-          <div>Question Description</div>
+          <div>Question Title</div>
         </ng-template>
         <div fxLayout="column" fxLayoutGap="15px">
           <div class="stepper-step-container" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px"
             fxLayoutAlign.gt-xs="start center">
             <mat-form-field fxFlex="28" fxFlex.sm="40" fxFlex.xs="100">
-              <mat-label>Define Question Description</mat-label>
+              <mat-label>Enter Question Title</mat-label>
               <input matInput formControlName="questionDescriptionFormCtrl" required>
               <mat-error>Please describe question (minimum 10 character)</mat-error>
             </mat-form-field>

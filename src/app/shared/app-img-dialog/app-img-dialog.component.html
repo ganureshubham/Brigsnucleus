@@ -1,5 +1,5 @@
 <div class="app-img-dialog" [ngStyle]="{
-  'background-image': 'url(' + image.imageUrl + ')',  
+  'background-image': 'url(' + getImagePath(image.imageUrl) + ')',  
   'background-size': 'contain',
   'background-position': 'center center', 
   'background-repeat': 'no-repeat',
@@ -8,8 +8,7 @@
   <div class="app-img-dialog-toolbar">
     <span class="app-img-dialog-title">{{image.imageType + ' - ' + image.imageTitle.substring(0,100)}}</span>
     <div fxLayout="row" fxLayoutGap="20px">
-      <!-- /allUploads/complaintImages/image-1575712364331.jpeg -->
-      <a class="download-ic" href="{{getDownloadPath()}}" download>
+      <a *ngIf="!isDownloadImageAllowed()" class="download-ic" href="{{getDownloadPath()}}" download>
         <mat-icon matTooltip="download" class="app-img-dialog-ic_close" (click)="closeDialog()">get_app</mat-icon>
       </a>
       <mat-icon matTooltip="close" class="app-img-dialog-ic_close" (click)="closeDialog()">close</mat-icon>

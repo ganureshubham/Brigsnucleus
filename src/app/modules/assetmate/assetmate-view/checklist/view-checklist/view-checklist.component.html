@@ -18,6 +18,12 @@
                 <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Checklist Title</mat-header-cell>
                 <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="duration">
+                <mat-header-cell fxLayoutAlign="center center" fxHide.xs *matHeaderCellDef>Checking Duration
+                </mat-header-cell>
+                <mat-cell fxLayoutAlign="center center" fxHide.xs *matCellDef="let visit">
+                    {{ visit.checkingDuration + ' ' + visit.durationType }}</mat-cell>
+            </ng-container>
             <ng-container matColumnDef="totalQuestions">
                 <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Total Questions
                 </mat-header-cell>
