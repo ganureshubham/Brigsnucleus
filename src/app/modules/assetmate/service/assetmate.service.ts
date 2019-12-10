@@ -158,6 +158,10 @@ export class AssetmateService {
     return this.httpClient.get(ConfigurationService.baseUrl + `questions/questionsList/${checklistId}/${pageNo}`);
   }
 
+  getAllChecklistQuestions(checklistId) {
+    return this.httpClient.get(ConfigurationService.baseUrl + `questions/sequenceQuestionsList/${checklistId}`);
+  }
+
   addChecklistQuestion(checklistQuestion): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `questions/addQuestion`, checklistQuestion);
   }

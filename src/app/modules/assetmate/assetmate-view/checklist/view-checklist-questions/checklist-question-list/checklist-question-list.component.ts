@@ -92,7 +92,7 @@ export class ChecklistQuestionListComponent implements OnInit {
 
 
   getQuestionOption(questionOptions) {
-    console.log(questionOptions);
+    // console.log(questionOptions);
     let allquestionOptions = "";
     for (let questionOption of questionOptions) {
       allquestionOptions += questionOption.optionTitle + ', ';
