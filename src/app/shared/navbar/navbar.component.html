@@ -103,8 +103,11 @@
         <a mat-button routerLink="/complaints" routerLinkActive="is-active">
           <mat-icon>menu_book</mat-icon><span i18n>Complaint</span>
         </a>
-        <a mat-button [matMenuTriggerFor]="appsMenu" i18n>
-          <mat-icon>settings_applications</mat-icon>Settings
+        <a mat-button routerLink="/reports" routerLinkActive="is-active">
+          <mat-icon>style</mat-icon><span i18n>Reports</span>
+        </a>
+        <a mat-button [matMenuTriggerFor]="appsMenu">
+          <mat-icon>settings_applications</mat-icon><span i18n>Settings</span>
         </a>
         <mat-menu #appsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
           <a mat-menu-item routerLink="/user-role">
