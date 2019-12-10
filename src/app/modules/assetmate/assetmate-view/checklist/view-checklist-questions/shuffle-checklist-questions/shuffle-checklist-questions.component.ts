@@ -58,7 +58,7 @@ export class ShuffleChecklistQuestionsComponent implements OnInit {
     this.assetmateService.getAllChecklistQuestions(checklistId).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
       if (resp.question) {
-        if (resp.currentPage == 0 && resp.totalCount == 0) {
+        if (resp.question.length == 0) {
           this.isNoRecordFound = true;
         } else {
           this.isNoRecordFound = false;
@@ -110,7 +110,7 @@ export class ShuffleChecklistQuestionsComponent implements OnInit {
     // console.log(finalChecklistQuestions);
     // this.assetmateService.updateCheckListQuestionSequence().subscribe(resp => { }, err => { });
 
-    // this.location.back();
+    this.location.back();
   }
 
 }
