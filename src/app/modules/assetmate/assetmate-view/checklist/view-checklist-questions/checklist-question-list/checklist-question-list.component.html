@@ -3,10 +3,17 @@
     <div fxFlex.xs="100" fxLayoutAlign="center center">
       <p class="page-title">Question List</p>
     </div>
-    <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
-      <button fxFlex.xs="100" mat-button (click)="addNewChecklistQuestion()" class="bg_white_grey btn_style">
-        <mat-icon>add</mat-icon>Add New Question
-      </button>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+        <button fxFlex.xs="100" mat-button (click)="addNewChecklistQuestion()" class="bg_white_grey btn_style">
+          <mat-icon>add</mat-icon>Add New Question
+        </button>
+      </div>
+      <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+        <button fxFlex.xs="100" mat-button (click)="reorderQuestions()" class="bg_white_grey btn_style">
+          <mat-icon>import_export</mat-icon>Change Sequense
+        </button>
+      </div>
     </div>
   </div>
   <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">

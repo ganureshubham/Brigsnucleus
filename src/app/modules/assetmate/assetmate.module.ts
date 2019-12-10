@@ -35,6 +35,7 @@ import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/vi
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ShuffleChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/shuffle-checklist-questions/shuffle-checklist-questions.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { SharedModule } from '../../shared/shared.module';
     AddChecklistQuestionComponent,
     EditChecklistQuestionComponent,
     DetailsChecklistQuestionComponent,
+    ShuffleChecklistQuestionsComponent,
 
   ],
   imports: [

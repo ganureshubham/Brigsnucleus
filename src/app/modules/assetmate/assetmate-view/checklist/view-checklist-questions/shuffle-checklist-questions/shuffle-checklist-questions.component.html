@@ -1,0 +1,27 @@
+<div class="padding_box">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">Re-Order Question List</p>
+    </div>
+    <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="backToList()" class="bg_white_grey btn_style">
+        <mat-icon>keyboard_backspace</mat-icon>Save and Back
+      </button>
+    </div>
+  </div>
+  <div>
+    <div class="guideline">
+      <div class="guideline-title">
+        Guideline
+      </div>
+      <div class="guideline-text">
+        <ul>
+          <li>Drag and drop the question you want to re-order to the desired seqence no.</li>
+          <li>You can repeate the same for another question if you want to shuffle multiple questions</li>
+          <li>Make sure you are pressing "Save and Back" button at top once after complete rearrangement otherwise
+            sequense will not be updated</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -48,13 +48,17 @@
     font-weight: 600;
   }
 
-  .toolbar-row-2 .mat-button {
+  /* .toolbar-row-2 .mat-button {
     padding: 13px 24px;
     border-radius: 0px;
     font-size: 14px;
     font-weight: 500;
-  }
+  } */
   
+  .toolbar-row-2{
+    padding: 0px 10px 0px 0px;
+  }
+
   .toolbar-row-2 .mat-button:hover {
     background: #3f104b;
   }
@@ -67,6 +71,10 @@
     text-transform: uppercase;
     font-size: 17px;
     font-weight: 400;
+    padding: 13px 15px;
+    border-radius: 0px;
+    /* font-size: 14px;
+    font-weight: 500; */
   }
 
   .is-active{
@@ -134,5 +142,4 @@
 
   .org-title-key{
     font-size: 13px;
-    padding-right: 5px;
   }
