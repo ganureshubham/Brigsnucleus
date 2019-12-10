@@ -92,7 +92,7 @@ export class ChecklistQuestionListComponent implements OnInit {
 
 
   getQuestionOption(questionOptions) {
-    console.log(questionOptions);
+    // console.log(questionOptions);
     let allquestionOptions = "";
     for (let questionOption of questionOptions) {
       allquestionOptions += questionOption.optionTitle + ', ';
@@ -164,12 +164,12 @@ export class ChecklistQuestionListComponent implements OnInit {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-  navigaetToAddQuestion() {
-    this.router.navigate(['/assetmate/assetmate-details/1/checklist/1/add-question'], { relativeTo: this.activatedRoute });
+  navigateToQuestionDetails(questionId) {
+    this.router.navigate([`/assetmate/assetmate-details/${this.categoryId}/checklist/${this.checklistId}/details-question/${questionId}`], { relativeTo: this.activatedRoute });
   }
 
-  navigateToQuestionDetails(questionId) {
-    this.router.navigate([`/assetmate/assetmate-details/1/checklist/${this.checklistId}/details-question/${questionId}`], { relativeTo: this.activatedRoute });
+  reorderQuestions() {
+    this.router.navigate([`/assetmate/assetmate-details/${this.categoryId}/checklist/${this.checklistId}/shuffle-questions`], { relativeTo: this.activatedRoute });
   }
 
 }

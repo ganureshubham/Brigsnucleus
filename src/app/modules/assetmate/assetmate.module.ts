@@ -35,7 +35,8 @@ import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/vi
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
 import { SharedModule } from '../../shared/shared.module';
-
+import { ShuffleChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/shuffle-checklist-questions/shuffle-checklist-questions.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SharedModule } from '../../shared/shared.module';
     AddChecklistQuestionComponent,
     EditChecklistQuestionComponent,
     DetailsChecklistQuestionComponent,
+    ShuffleChecklistQuestionsComponent,
 
   ],
   imports: [
@@ -75,7 +77,8 @@ import { SharedModule } from '../../shared/shared.module';
     NgxSpinnerModule,
     QRCodeModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ],
 
 

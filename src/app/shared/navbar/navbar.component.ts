@@ -97,9 +97,11 @@ export class NavbarComponent implements OnInit {
   getOrganizationNameMangingBySuperAdmin() {
     this.orgNameFromLocStorage = JSON.parse(localStorage.getItem('currentUser'));
     if (this.orgNameFromLocStorage.data.role == 0) {
-      return JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+      let orgNameForSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+      return (orgNameForSuperAdmin.length > 20) ? (orgNameForSuperAdmin.substring(0, 20) + '..') : orgNameForSuperAdmin;
     } else if (this.orgNameFromLocStorage.data.role == 1) {
-      return JSON.parse(localStorage.getItem('currentUser')).data.organizationName;
+      let orgNameForAdmin = JSON.parse(localStorage.getItem('currentUser')).data.organizationName;
+      return (orgNameForAdmin.length > 20) ? (orgNameForAdmin.substring(0, 20) + '..') : orgNameForAdmin;
     }
 
   }

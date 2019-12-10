@@ -1,0 +1,69 @@
+<div class="padding_box">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
+    <div fxFlex.xs="100" fxLayoutAlign="center center">
+      <p class="page-title">Re-Order Question List</p>
+    </div>
+    <div fxFlex.xs="100" class="example-button-row btn_style bg_white_grey">
+      <button fxFlex.xs="100" mat-button (click)="saveAndBackToList()" class="bg_white_grey btn_style">
+        <mat-icon>keyboard_backspace</mat-icon>Save and Back
+      </button>
+    </div>
+  </div>
+  <div>
+    <div class="guideline">
+      <div class="guideline-title">
+        Guideline
+      </div>
+      <div class="guideline-text">
+        <ul>
+          <li>Click on <mat-icon>open_with</mat-icon> to drag the question and drop the question to
+            the desired seqence no.</li>
+          <li>You can repeate the same for another question if you want to shuffle multiple questions</li>
+          <li>Make sure you are pressing "Save and Back" button at top once after complete rearrangement otherwise
+            sequense will not be updated</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
+  </div>
+  <ng-template #recordFound>
+    <mat-table class="table-material" #table [dataSource]="dataSource" cdkDropList [cdkDropListData]="dataSource"
+      (cdkDropListDropped)="dropTable($event)">
+      <ng-container matColumnDef="actions">
+        <mat-header-cell fxFlex="5" fxLayoutAlign="start center" *matHeaderCellDef i18n></mat-header-cell>
+        <mat-cell fxFlex="5" (click)="$event.stopPropagation()" fxHide.xs fxLayoutAlign="end center"
+          fxLayoutAlign.xs="start center" *matCellDef="let element">
+          <mat-icon matTooltip="click and drag" class="ic-drag" cdkDragHandle>open_with
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="questionDescription">
+        <mat-header-cell fxFlex="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matHeaderCellDef>
+          <strong>Question
+            Description</strong></mat-header-cell>
+        <mat-cell fxFlex="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matCellDef="let element">
+          {{ element.questionDescription }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="questionType">
+        <mat-header-cell fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef><strong>Question
+            Type</strong>
+        </mat-header-cell>
+        <mat-cell fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+          {{ element.questionType }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="questionOptions">
+        <mat-header-cell fxHide.xs fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matHeaderCellDef>
+          <strong>Question Options</strong></mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matCellDef="let element">
+          {{getQuestionOption(element.questionOptions) }}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="example-element-row" (click)="navigateToQuestionDetails(element.questionId)"
+        *matRowDef="let element; columns: displayedColumns;" cdkDrag [cdkDragData]="element"></mat-row>
+    </mat-table>
+  </ng-template>
+</div>

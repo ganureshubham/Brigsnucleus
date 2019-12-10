@@ -9,6 +9,7 @@ import { ChecklistQuestionListComponent } from './assetmate-view/checklist/view-
 import { AddChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/add-checklist-question/add-checklist-question.component';
 import { EditChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/edit-checklist-question/edit-checklist-question.component';
 import { DetailsChecklistQuestionComponent } from './assetmate-view/checklist/view-checklist-questions/details-checklist-question/details-checklist-question.component';
+import { ShuffleChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/shuffle-checklist-questions/shuffle-checklist-questions.component';
 
 export const AssetmateRoutes: Routes = [
   {
@@ -57,6 +58,10 @@ export const AssetmateRoutes: Routes = [
       {
         path: "",
         component: ChecklistQuestionListComponent,
+      },
+      {
+        path: "shuffle-questions",
+        component: ShuffleChecklistQuestionsComponent,
       },
       {
         path: "add-question/:questionId",

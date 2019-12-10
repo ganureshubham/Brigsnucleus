@@ -1,0 +1,12 @@
+.ic-drag{
+    cursor: pointer;
+    color: #a1a1a1;
+}
+
+.ic-drag:active{
+    cursor: grabbing;
+}
+
+.table-material{
+    border:1px solid #eee;
+}
