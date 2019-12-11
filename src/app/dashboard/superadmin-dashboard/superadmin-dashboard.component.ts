@@ -1,13 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../public service/notification.service';
 import { Chart } from 'chart.js';
+import { MatSnackBar } from '@angular/material';
+import { SpinnerService } from '../../public service/spinner.service';
+
+export interface Year {
+  Id: number,
+  data: string
+
+}
 
 @Component({
   selector: 'app-superadmin-dashboard',
   templateUrl: './superadmin-dashboard.component.html',
   styleUrls: ['./superadmin-dashboard.component.css']
 })
+
+
+
+
 export class SuperadminDashboardComponent implements OnInit {
+
+
 
   superAdminDashboardCounts: any = {};
   isChartReadyToRender: boolean = false;
@@ -19,15 +33,39 @@ export class SuperadminDashboardComponent implements OnInit {
   ctx: any;
   canvas1: any;
   ctx1: any;
+  defaultyear: any;
+  monthlyGraphObj: any = {};
+  topOrgAssetObj: any = {};
+  MonthlyGraphTitle: any;
+  selectedyear: any;
+  TopOrgAssetTitle: any;
+
+
   constructor(
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private snackBar: MatSnackBar,
+    private spinnerService: SpinnerService,
   ) { }
 
   ngOnInit() {
     this.getSupeAdminDashboardCounts();
-    this.setMonthlyOrgGraphData();
-    this.setTopOrgGraphData();
+    this.defaultyear = this.years[4].Id;
+    this.selectedYear(this.defaultyear);
+    this.getMonthlyOrdGraphData(this.selectedyear);
+    this.getTopOrgGraphData();
+
   }
+
+  years: Year[] = [
+    { Id: 0, data: new Date().getFullYear() - 4 + '' },
+    { Id: 1, data: new Date().getFullYear() - 3 + '' },
+    { Id: 2, data: new Date().getFullYear() - 2 + '' },
+    { Id: 3, data: new Date().getFullYear() - 1 + '' },
+    { Id: 4, data: new Date().getFullYear() + '' }
+  ];
+
+
+  /********************************************* Dashboard Counts***************************************************/
 
   getSupeAdminDashboardCounts() {
     this.notificationService.getSuperAdminDashboardDetails().subscribe(resp => {
@@ -37,16 +75,76 @@ export class SuperadminDashboardComponent implements OnInit {
     })
   }
 
+  /********************************************* Monthly Org Data from Api***************************************************/
+
+  getMonthlyOrdGraphData(year: any) {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.notificationService.getMonthlyOrgGraphData(year).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status == true) {
+        this.monthlyGraphObj = res;
+        this.MonthlyGraphTitle = res.graphTitle;
+      } else {
+        this.monthlyGraphObj.xAxisData = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "];
+        this.monthlyGraphObj.yAxisData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.monthlyGraphObj.xAxisLable = 'Months';
+        this.monthlyGraphObj.yAxisLable = 'Number of Organizations';
+        this.MonthlyGraphTitle = 'Month wise organizations added';
+      }
+      this.setMonthlyOrgGraphData();
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+
+      })
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  /********************************************* Top Assets level Org Data from Api***************************************************/
+
+  getTopOrgGraphData() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.notificationService.getTopOrgGraphData().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status == true) {
+        this.topOrgAssetObj = res;
+        this.TopOrgAssetTitle = res.graphTitle;
+      } else {
+        this.topOrgAssetObj.xAxisData = [" ", " ", " ", " ", " "];
+        this.topOrgAssetObj.yAxisData = [0, 0, 0, 0, 0];
+        this.topOrgAssetObj.xAxisLable = "Organizations";
+        this.topOrgAssetObj.yAxisLable = "Number of Assets";
+        this.TopOrgAssetTitle = "TOP ASSETS ORGANIZATIONS";
+      }
+      this.setTopOrgGraphData();
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
+
+  /********************************************* Select Year***************************************************/
+
+  selectedYear(value) {
+    this.selectedyear = this.years[value].data;
+    this.getMonthlyOrdGraphData(this.selectedyear);
+  }
+
   /********************************************* Monthly Org By Current Year***************************************************/
 
   setMonthlyOrgGraphData() {
     this.data = {
       type: 'bar',
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: this.monthlyGraphObj.xAxisData,
         datasets: [{
           label: 'Organizations',
-          data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+          data: this.monthlyGraphObj.yAxisData,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -86,13 +184,13 @@ export class SuperadminDashboardComponent implements OnInit {
           xAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'Months'
+              labelString: this.monthlyGraphObj.xAxisLable
             },
           }],
           yAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'No. Of Organization'
+              labelString: this.monthlyGraphObj.yAxisLable
             },
             ticks: {
               beginAtZero: true
@@ -117,10 +215,10 @@ export class SuperadminDashboardComponent implements OnInit {
     this.data1 = {
       type: 'bar',
       data: {
-        labels: ["Org1", "Org2", "Org3", "Org4", "Org5"],
+        labels: this.topOrgAssetObj.xAxisData,
         datasets: [{
           label: 'Assets',
-          data: [12, 19, 3, 5, 2],
+          data: this.topOrgAssetObj.yAxisData,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -153,13 +251,13 @@ export class SuperadminDashboardComponent implements OnInit {
           xAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'Organizations'
+              labelString: this.topOrgAssetObj.xAxisLable
             }
           }],
           yAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'No. Of Assets'
+              labelString: this.topOrgAssetObj.yAxisLable
             },
             ticks: {
               beginAtZero: true
@@ -176,6 +274,8 @@ export class SuperadminDashboardComponent implements OnInit {
       this.isChartReadyToRender = true;
     }, 100)
   }
+
+
 
 
 

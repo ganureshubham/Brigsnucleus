@@ -40,21 +40,30 @@
       </div>
     </div>
   </mat-card>
-
   <div class="graph-m-t" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
-          <p class="graph-font">Month wise organizations added (Year 2019)</p>
+          <p class="graph-font">{{MonthlyGraphTitle}}-Year ({{selectedyear}})</p>
           <canvas id="mycanvas" width="40" height="20"></canvas>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end end">
+          <mat-form-field fxFlex.xs="100">
+            <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
+              placeholder="Select Year">
+              <mat-option *ngFor="let yr of years" [value]="yr.Id">
+                {{yr.data}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </mat-card>
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data1">
-          <p class="graph-font">Top Assets Organizations</p>
+          <p class="graph-font">{{TopOrgAssetTitle}}</p>
           <canvas id="topOrg" width="40" height="20"></canvas>
         </div>
       </mat-card>
