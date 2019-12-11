@@ -20,7 +20,7 @@ export interface ChecklistQuestion {
 
 interface FinalQuestionToUpdateSeq {
   questionId: number,
-  sequenceNumber: number
+  sequenceNo: number
 }
 
 @Component({
@@ -56,7 +56,6 @@ export class ShuffleChecklistQuestionsComponent implements OnInit {
 
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllChecklistQuestions(checklistId).subscribe((resp: any) => {
-      this.spinnerService.setSpinnerVisibility(false);
       if (resp.question) {
         if (resp.question.length == 0) {
           this.isNoRecordFound = true;
@@ -65,7 +64,9 @@ export class ShuffleChecklistQuestionsComponent implements OnInit {
         }
         this.checklistQuestions = [].concat(resp.question);
         this.dataSource = resp.question;
+        this.spinnerService.setSpinnerVisibility(false);
       } else {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(resp.message);
       }
     },
@@ -97,20 +98,34 @@ export class ShuffleChecklistQuestionsComponent implements OnInit {
 
   saveAndBackToList() {
 
-    // this.spinnerService.setSpinnerVisibility(true);
+    this.spinnerService.setSpinnerVisibility(true);
 
-    let finalChecklistQuestions: FinalQuestionToUpdateSeq[] = [];
+    let sequenceNumber: FinalQuestionToUpdateSeq[] = [];
     for (let i = 0; i < this.checklistQuestions.length; i++) {
-      finalChecklistQuestions.push({
+      sequenceNumber.push({
         'questionId': this.dataSource[i].questionId,
-        'sequenceNumber': this.checklistQuestions[i].sequenceNumber
+        'sequenceNo': this.checklistQuestions[i].sequenceNumber
       })
     }
 
-    // console.log(finalChecklistQuestions);
-    // this.assetmateService.updateCheckListQuestionSequence().subscribe(resp => { }, err => { });
+    let updateSequesnceNos = {
+      sequenceNumber: sequenceNumber
+    }
 
-    this.location.back();
+    this.assetmateService.updateCheckListQuestionSequence(updateSequesnceNos).subscribe(
+      resp => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(resp.message);
+        if (resp.status) {
+          this.location.back();
+        }
+      },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    );
+
   }
 
 }

@@ -1,3 +1,15 @@
-<p>
-  reports-home works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center center" class="reports-container">
+  <div fxFlex=90 fxLayout="column">
+    <mat-card class="header-card">
+      <span class="page-title">Reports</span>
+    </mat-card>
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <mat-card fxFlex=20 class="header-card">
+        <app-reports-navigation></app-reports-navigation>
+      </mat-card>
+      <mat-card fxFlex=78 class="header-card">
+        <app-reports-details></app-reports-details>
+      </mat-card>
+    </div>
+  </div>
+</div>

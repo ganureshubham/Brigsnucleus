@@ -1,0 +1,12 @@
+<div *ngFor="let report of reports" fxLayout="row">
+  <a class="report-nav-item" href="" [routerLink]="report.route" fxLayout="row" fxFlex=100 fxLayoutGap="20px"
+    routerLinkActive="active-report-nav-item">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon mat-list-icon>styles</mat-icon>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <span class="report-nav-item-title">{{report.title}}</span>
+      <span class="report-nav-item-subtitle">{{report.type}}</span>
+    </div>
+  </a>
+</div>
