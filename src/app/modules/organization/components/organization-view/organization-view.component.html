@@ -1,10 +1,10 @@
 <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-evenly start"
   class="innerpage assets_view padding_container flex_container margin_auto">
   <mat-card fxFlex="100" fxFlex.lt-md="95" class="width_80 right_side_box">
-    <div class="innerpage_title">
+    <div fxLayout.xs="column" fxLayoutAlign.xs="center center" class="innerpage_title">
       <div class="header_title flex_container">
         <div class="width_75">
-          <p class="title_header mat-subheading-2 tal">Organizations</p>
+          <p class="title_header mat-subheading-2">Organizations</p>
         </div>
       </div>
       <div>
@@ -25,9 +25,9 @@
                     <mat-icon>add</mat-icon>Add New Organization
                   </button>
                 </div>
-                <div fxFlex.xs="100">
-                  <form fxFlex.xs="100" class="example-form filter_search">
-                    <mat-form-field class="example-full-width">
+                <div>
+                  <form class="filter_search">
+                    <mat-form-field fxFlex.xs="100">
                       <input matInput placeholder="Search" (keyup)="searchOrganization($event.target.value)">
                     </mat-form-field>
                   </form>
@@ -39,14 +39,16 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="dataSource">
                   <ng-container matColumnDef="OrganizationName">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Organization Name
+                    <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Organization Name
                     </mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.organizationName }}
+                    <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let element">{{ element.organizationName }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="OrganizationCode">
-                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Organization Code</mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let element">{{ element.organizationCode }}
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Organization Code
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+                      {{ element.organizationCode }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="CreatedOn">
@@ -55,28 +57,30 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="OrganizationDescription">
-                    <mat-header-cell fxFlex="30" fxLayoutAlign="center center" *matHeaderCellDef>Organization
+                    <mat-header-cell fxHide.xs fxFlex="30" fxLayoutAlign="center center" *matHeaderCellDef>Organization
                       Description
                     </mat-header-cell>
-                    <mat-cell fxFlex="30" fxLayoutAlign="center center" *matCellDef="let element">
+                    <mat-cell fxHide.xs fxFlex="30" fxLayoutAlign="center center" *matCellDef="let element">
                       {{ element.description.substring(0, 40) }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="TotalAdmins">
-                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Admins</mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let element">{{ element.totalAdmins }}
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Admins</mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+                      {{ element.totalAdmins }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="TotalAssets">
                     <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Assets
                     </mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let element">{{ element.totalAssets }}
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+                      {{ element.totalAssets }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="TotalUsers">
                     <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Users
                     </mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let element">{{ element.totalUsers }}
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">{{ element.totalUsers }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">

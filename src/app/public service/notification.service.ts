@@ -18,14 +18,45 @@ export class NotificationService {
 
 
 
+  /********************************** Super-Admin Dashboard*****************************************************************/
+
+
+  getSuperAdminDashboardDetails(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/superAdminCount`);
+  }
+
+  getMonthlyOrgGraphData(year: any): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/monthlyOrganizationCreationCounts/${year}`);
+
+  }
+
+  getTopOrgGraphData(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/topOrganizationsAssetsCounts`);
+
+  }
 
   getDashboardDetails(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + `dashboard/home`);
   }
 
-  getSuperAdminDashboardDetails(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + `dashboard/superAdminCount`);
+
+
+  /********************************** Admin Dashboard*****************************************************************/
+
+  getMonthlyAssetAdded(year: any): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/monthlyAssetCreationCounts/${year}`);
   }
+
+  monthlyComplaintsAssigned(year: any): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/monthlyComplaintsAssignedCounts/${year}`);
+
+  }
+
+  categoryWiseAssets(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/categoryWiseAssetsCounts`);
+  }
+
+
 
 
 
