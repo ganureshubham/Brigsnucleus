@@ -16,7 +16,7 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
 
   displayedColumns: string[] = ['assetTitle', 'companyAssetNo', 'assetCode', 'categoryName', 'modelNumber'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  criticalConditionAssets: any = [];
+  pendingMaintainanceAssets: any = [];
   isNoRecordFound: boolean = true;
 
   constructor(
@@ -26,22 +26,22 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllCriticalConditionAssets();
+    this.getAllPendingMaintainanceAssets();
   }
 
-  getAllCriticalConditionAssets() {
+  getAllPendingMaintainanceAssets() {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getAllCriticalConditionAssets().subscribe(
+    this.reportsService.getAllPendingMaintainanceAssets().subscribe(
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
-        if (resp && resp.data) {
-          if (resp.data.length == 0) {
+        if (resp && resp.totalMaintenceRemainingAssets) {
+          if (resp.totalMaintenceRemainingAssets.length == 0) {
             this.isNoRecordFound = true;
           } else {
             this.isNoRecordFound = false;
           }
-          this.criticalConditionAssets = resp.data;
-          this.dataSource = resp.data;
+          this.pendingMaintainanceAssets = resp.totalMaintenceRemainingAssets;
+          this.dataSource = resp.totalMaintenceRemainingAssets;
         } else {
           this.showSnackBar(resp.message);
         }
@@ -55,17 +55,17 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
 
   exportTopComplaints() {
 
-    if (this.criticalConditionAssets.length > 0) {
+    if (this.pendingMaintainanceAssets.length > 0) {
       this.spinnerService.setSpinnerVisibility(true);
       let formattedData: any[] = [];
-      formattedData = this.criticalConditionAssets.map(obj => ({
+      formattedData = this.pendingMaintainanceAssets.map(obj => ({
         "Asset Title": obj.assetTitle,
-        "Asset Code": obj.assetCode,
         "Company Asset No": obj.companyAssetNo,
+        "Asset Code": obj.assetCode,
         "Category Name": obj.categoryName,
         "Model Number": obj.modelNumber
       }));
-      let fileName = 'Critical condition assets';
+      let fileName = 'Pending maintainance assets';
       this.exportAsExcelFile(formattedData, fileName);
     } else {
       this.showSnackBar('No data to export..!!');
@@ -75,7 +75,7 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
 
   exportAsExcelFile(json: any[], excelFileName: string): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Critical Cond Assets': worksheet }, SheetNames: ['Critical Cond Assets'] };
+    const workbook: XLSX.WorkBook = { Sheets: { 'Pending maintainance assets': worksheet }, SheetNames: ['Pending maintainance assets'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
