@@ -28,8 +28,10 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="typeOfComplaint">
-        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Type Of Task</mat-header-cell>
-        <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.typeOfComplaint }}</mat-cell>
+        <mat-header-cell fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matHeaderCellDef>Type Of Task
+        </mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matCellDef="let visit">
+          {{ visit.typeOfComplaint }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="typeOfUser">
         <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of User</mat-header-cell>

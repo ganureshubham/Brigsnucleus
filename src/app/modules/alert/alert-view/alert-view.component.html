@@ -37,8 +37,8 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
                   <ng-container matColumnDef="alertName">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Alert Name</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
+                    <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Alert Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.alertName }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="title">
                     <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
