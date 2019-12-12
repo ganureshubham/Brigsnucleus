@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { ReportsHomeComponent } from './components/reports-home/reports-home.component';
 import { PendingComplaintsComponent } from './components/reports-details/pending-complaints/pending-complaints.component';
 import { PendingTasksComponent } from './components/reports-details/pending-tasks/pending-tasks.component';
-import { ComplainingAssetsComponent } from './components/reports-details/complaining-assets/complaining-assets.component';
+import { CriticalConditionAssetsComponent } from './components/reports-details/critical-condition-assets/critical-condition-assets.component';
+import { PendingMaintainanceAssetsComponent } from './components/reports-details/pending-maintainance-assets/pending-maintainance-assets.component';
 
 export const ReportsRoutingModule: Routes = [
   {
@@ -23,8 +24,12 @@ export const ReportsRoutingModule: Routes = [
         component: PendingTasksComponent
       },
       {
-        path: "complaining-assets",
-        component: ComplainingAssetsComponent
+        path: "pending-maintainance-assets",
+        component: PendingMaintainanceAssetsComponent
+      },
+      {
+        path: "critical-assets",
+        component: CriticalConditionAssetsComponent
       }
     ]
   }

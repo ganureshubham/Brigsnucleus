@@ -66,7 +66,7 @@ export class PendingComplaintsComponent implements OnInit {
         this.spinnerService.setSpinnerVisibility(true);
         let formattedComplaintData: any[] = [];
         formattedComplaintData = this.complaintData.map(obj => ({
-          "Title": obj.title,
+          "Complaint Title": obj.title,
           "Type Of Complaint": obj.typeOfComplaint,
           "Asset Title": obj.assetTitle,
           "Asset Code": obj.assetCode,

@@ -65,16 +65,14 @@ export class PendingTasksComponent implements OnInit {
         this.spinnerService.setSpinnerVisibility(true);
         let formattedData: any[] = [];
         formattedData = this.totalTasks.map(obj => ({
-          "Title": obj.title,
-          "Type Of Complaint": obj.typeOfComplaint,
-          "Asset Title": obj.assetTitle,
-          "Asset Code": obj.assetCode,
-          "Complaint Status": obj.complaintStatus,
+          "Task Title": obj.title,
+          "Type": obj.typeOfComplaint,
+          "Task Status": obj.complaintStatus,
           "Type Of User": obj.typeOfUser,
-          "Created On": obj.createdDate,
           "Raised By": obj.raisedByName,
+          "Created On": obj.createdDate
         }));
-        let fileName = this.topCount == 0 ? 'All Pending Complaints' : 'Top ' + this.topCount + ' Pending Complaints';
+        let fileName = this.topCount == 0 ? 'All Pending Tasks' : 'Top ' + this.topCount + ' Pending Tasks';
         this.exportAsExcelFile(formattedData, fileName);
       } else {
         this.showSnackBar('No data to export..!!');
@@ -84,7 +82,7 @@ export class PendingTasksComponent implements OnInit {
 
   exportAsExcelFile(json: any[], excelFileName: string): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Pending Complaints': worksheet }, SheetNames: ['Pending Complaints'] };
+    const workbook: XLSX.WorkBook = { Sheets: { 'Pending Tasks': worksheet }, SheetNames: ['Pending Tasks'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
