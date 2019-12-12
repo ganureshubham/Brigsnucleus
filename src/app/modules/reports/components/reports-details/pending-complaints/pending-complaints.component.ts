@@ -63,53 +63,24 @@ export class PendingComplaintsComponent implements OnInit {
       this.showSnackBar('Please choose top pending complaints count..!!');
     } else {
       if (this.complaintData.length > 0) {
-
         this.spinnerService.setSpinnerVisibility(true);
-
         let formattedComplaintData: any[] = [];
-        formattedComplaintData = Object.assign([], this.complaintData);
-        for (var i = 0; i < formattedComplaintData.length; i++) {
-
-          delete formattedComplaintData[i].complaintId;
-          delete formattedComplaintData[i].complaintImage;
-
-          formattedComplaintData[i]["Title"] = formattedComplaintData[i].title;
-          delete formattedComplaintData[i].title;
-
-          formattedComplaintData[i]["Type Of Complaint"] = formattedComplaintData[i].typeOfComplaint;
-          delete formattedComplaintData[i].typeOfComplaint;
-
-          formattedComplaintData[i]["Asset Title"] = formattedComplaintData[i].assetTitle;
-          delete formattedComplaintData[i].assetTitle;
-
-          formattedComplaintData[i]["Asset Code"] = formattedComplaintData[i].assetCode;
-          delete formattedComplaintData[i].assetCode;
-
-          formattedComplaintData[i]["Complaint Status"] = formattedComplaintData[i].complaintStatus;
-          delete formattedComplaintData[i].complaintStatus;
-
-          formattedComplaintData[i]["Type Of User"] = formattedComplaintData[i].typeOfUser;
-          delete formattedComplaintData[i].typeOfUser;
-
-          formattedComplaintData[i]["Created On"] = formattedComplaintData[i].createdDate;
-          delete formattedComplaintData[i].createdDate;
-
-          formattedComplaintData[i]["Raised By"] = formattedComplaintData[i].raisedByName;
-          delete formattedComplaintData[i].raisedByName;
-
-        }
-
+        formattedComplaintData = this.complaintData.map(obj => ({
+          "Title": obj.title,
+          "Type Of Complaint": obj.typeOfComplaint,
+          "Asset Title": obj.assetTitle,
+          "Asset Code": obj.assetCode,
+          "Complaint Status": obj.complaintStatus,
+          "Type Of User": obj.typeOfUser,
+          "Created On": obj.createdDate,
+          "Raised By": obj.raisedByName,
+        }));
         let fileName = this.topComplaintsCount == 0 ? 'All Pending Complaints' : 'Top ' + this.topComplaintsCount + ' Pending Complaints';
         this.exportAsExcelFile(formattedComplaintData, fileName);
-
       } else {
         this.showSnackBar('No data to export..!!');
       }
     }
-  }
-
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
   }
 
   exportAsExcelFile(json: any[], excelFileName: string): void {
@@ -123,6 +94,10 @@ export class PendingComplaintsComponent implements OnInit {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
     FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
     this.spinnerService.setSpinnerVisibility(false);
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 
 }

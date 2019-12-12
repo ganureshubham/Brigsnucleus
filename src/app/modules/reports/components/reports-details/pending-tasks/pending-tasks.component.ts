@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ReportsService } from '../../../services/reports.service';
 import { SpinnerService } from '../../../../../public service/spinner.service';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-pending-tasks',
@@ -12,6 +16,7 @@ export class PendingTasksComponent implements OnInit {
 
   topCount: number = -1;
   isNoRecordFound: boolean = true;
+  totalTasks: any;
   total: any;
   tableDataSource: MatTableDataSource<any> = new MatTableDataSource();
   displayedColumns: string[] = ['title', 'typeOfComplaint', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdDate'];
@@ -38,6 +43,7 @@ export class PendingTasksComponent implements OnInit {
             this.isNoRecordFound = false;
           }
           this.tableDataSource = res.TasksList;
+          this.totalTasks = res.TasksList;
           this.spinnerService.setSpinnerVisibility(false);
         } else {
           this.spinnerService.setSpinnerVisibility(false);
@@ -55,9 +61,38 @@ export class PendingTasksComponent implements OnInit {
     if (this.topCount == -1) {
       this.showSnackBar('Please choose top pending complaints count..!!')
     } else {
-      console.log('complaintTableDataSource');
-      console.log(this.tableDataSource);
+      if (this.totalTasks.length > 0) {
+        this.spinnerService.setSpinnerVisibility(true);
+        let formattedData: any[] = [];
+        formattedData = this.totalTasks.map(obj => ({
+          "Title": obj.title,
+          "Type Of Complaint": obj.typeOfComplaint,
+          "Asset Title": obj.assetTitle,
+          "Asset Code": obj.assetCode,
+          "Complaint Status": obj.complaintStatus,
+          "Type Of User": obj.typeOfUser,
+          "Created On": obj.createdDate,
+          "Raised By": obj.raisedByName,
+        }));
+        let fileName = this.topCount == 0 ? 'All Pending Complaints' : 'Top ' + this.topCount + ' Pending Complaints';
+        this.exportAsExcelFile(formattedData, fileName);
+      } else {
+        this.showSnackBar('No data to export..!!');
+      }
     }
+  }
+
+  exportAsExcelFile(json: any[], excelFileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Pending Complaints': worksheet }, SheetNames: ['Pending Complaints'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
+    this.spinnerService.setSpinnerVisibility(false);
   }
 
   showSnackBar(message: string) {
