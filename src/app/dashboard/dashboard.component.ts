@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit {
   CategoryAssetTitle: any;
 
 
+
   constructor(
     private router: Router,
     private notificationService: NotificationService,
@@ -66,10 +67,8 @@ export class DashboardComponent implements OnInit {
     this.selectedYearAssets(this.assetsdefaultyear);
     this.selectedYearComplaint(this.complaintdefaultyear);
     this.getStatus();
-    this.setCategoryWiseAssetsGraphData();
     this.setCategoryWisePendingMaintainanceGraphData();
     this.getMonthlyAssetAdded(this.assetselectedyear);
-    this.setComplaintsRaisedGraphData();
     this.monthlyComplaintsAssigned(this.complaintselectedyear);
     this.categoryWiseAssets();
   }
@@ -137,39 +136,39 @@ export class DashboardComponent implements OnInit {
           label: 'Assets Added',
           data: this.monthlyAssetgraphObj.yAxisData,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(204, 204, 255, 0.2)',
-            'rgba(204,204,153,0.2)',
-            'rgba(102,102,153,0.2)',
-            'rgba(204,102,51,0.2)',
-            'rgba(102,153,255,0.2)',
-            'rgba(255,102,204,0.2)'
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
+            'rgba(107, 102, 133, 0.31)',
           ],
           borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(204, 204, 255, 1)',
-            'rgba(204,204,153,1)',
-            'rgba(102,102,153,1)',
-            'rgba(204,102,51,1)',
-            'rgba(102,153,255,1)',
-            'rgba(255,102,204,1)'
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
+            'rgba(107, 102, 133, 1)',
           ],
           borderWidth: 1
         }]
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         scales: {
           xAxes: [{
@@ -246,39 +245,39 @@ export class DashboardComponent implements OnInit {
           label: 'Complaints Assigned',
           data: this.monthlyComplaintsgraphObj.yAxisData,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(204, 204, 255, 0.2)',
-            'rgba(204,204,153,0.2)',
-            'rgba(102,102,153,0.2)',
-            'rgba(204,102,51,0.2)',
-            'rgba(102,153,255,0.2)',
-            'rgba(255,102,204,0.2)'
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
           ],
           borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(204, 204, 255, 1)',
-            'rgba(204,204,153,1)',
-            'rgba(102,102,153,1)',
-            'rgba(204,102,51,1)',
-            'rgba(102,153,255,1)',
-            'rgba(255,102,204,1)'
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
+            'rgba(114, 41, 174, 1)',
           ],
           borderWidth: 1
         }]
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         scales: {
           xAxes: [{
@@ -317,11 +316,16 @@ export class DashboardComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status == true) {
         this.categwiseassetgraphObj = res;
+        this.categwiseassetgraphObj.color = [];
+        for (let category of this.categwiseassetgraphObj.categoryName) {
+          this.categwiseassetgraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+        }
         this.CategoryAssetTitle = res.Title;
       } else {
         this.categwiseassetgraphObj.categoryName = [""];
         this.categwiseassetgraphObj.assetCount = [0];
         this.CategoryAssetTitle = "Category Wise Assets";
+        this.categwiseassetgraphObj.color = ["#e5e5e5"];
       }
       this.setCategoryWiseAssetsGraphData();
     },
@@ -344,26 +348,14 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           label: 'Assets',
           data: this.categwiseassetgraphObj.assetCount,
-          backgroundColor: [
-            '#339966',
-            '#FFCC66',
-            '#993399',
-            '#333366',
-            '#FF9966'
-          ],
-          borderColor: [
-            '#339966',
-            '#FFCC66',
-            '#993399',
-            '#333366',
-            '#FF9966'
-          ],
+          backgroundColor: this.categwiseassetgraphObj.color,
+          borderColor: this.categwiseassetgraphObj.color,
           borderWidth: 1
         }]
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         scales: {
           // xAxes: [{
@@ -423,7 +415,7 @@ export class DashboardComponent implements OnInit {
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         scales: {
         }

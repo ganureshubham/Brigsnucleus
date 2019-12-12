@@ -75,14 +75,14 @@
   </mat-card>
   <div class="graph-m-t" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
-    <div fxFlex.xs="100" fxFlex="50">
+    <div fxFlex.xs="50" fxFlex="50">
       <mat-card>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
           <p class="graph-font">{{MonthlyAssetTitle}}-Year ({{assetselectedyear}})</p>
           <canvas id="mycanvas" width="40" height="20"></canvas>
         </div>
         <div fxLayout="row" fxLayoutAlign="end end">
-          <mat-form-field fxFlex.xs="100">
+          <mat-form-field fxFlex.xs="50">
             <mat-select [(value)]="assetsdefaultyear" (selectionChange)="selectedYearAssets($event.value)" name="year"
               id="year" placeholder="Select Year">
               <mat-option *ngFor="let yr of years" [value]="yr.Id">
@@ -100,7 +100,7 @@
           <canvas id="topOrg" width="40" height="20"></canvas>
         </div>
         <div fxLayout="row" fxLayoutAlign="end end">
-          <mat-form-field fxFlex.xs="100">
+          <mat-form-field fxFlex.xs="50">
             <mat-select [(value)]="complaintdefaultyear" (selectionChange)="selectedYearComplaint($event.value)"
               name="year" id="year" placeholder="Select Year">
               <mat-option *ngFor="let yr of years" [value]="yr.Id">

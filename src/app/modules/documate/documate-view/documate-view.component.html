@@ -39,8 +39,8 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="paidDataSource">
                   <ng-container matColumnDef="title">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Title</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+                    <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="documentType">
                     <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Document Type</mat-header-cell>
