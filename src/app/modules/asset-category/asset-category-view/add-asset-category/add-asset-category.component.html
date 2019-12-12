@@ -16,10 +16,13 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field fxFlex="100">
-          <input matInput name="title" id="title" [(ngModel)]="AssetCategoryData.title" #AssetCatTitle="ngModel"
-            type="text" required placeholder="Asset Category Title">
+          <input matInput name="title" id="title" minlength="2" [(ngModel)]="AssetCategoryData.title"
+            #AssetCatTitle="ngModel" type="text" required placeholder="Asset Category Title">
           <mat-error *ngIf="assetCategoryForm.submitted && AssetCatTitle.invalid">
             <mat-error *ngIf="AssetCatTitle.errors.required">Asset Category Title is required</mat-error>
+          </mat-error>
+          <mat-error *ngIf="AssetCatTitle.errors?.minlength">
+            Title length Must be atleast 2!
           </mat-error>
         </mat-form-field>
       </div>

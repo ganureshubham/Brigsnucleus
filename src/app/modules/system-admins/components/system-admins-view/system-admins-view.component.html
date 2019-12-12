@@ -1,7 +1,7 @@
 <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-evenly start"
   class="innerpage assets_view padding_container flex_container margin_auto">
   <mat-card fxFlex="100" fxFlex.lt-md="95" class="width_80 right_side_box">
-    <div class="innerpage_title">
+    <div fxLayout.xs="column" fxLayoutAlign.xs="center center" class="innerpage_title">
       <div class="header_title flex_container">
         <div class="width_75">
           <p class="title_header mat-subheading-2 tal">Admins</p>
@@ -39,8 +39,8 @@
               <ng-template #recordFound>
                 <mat-table [dataSource]="dataSource">
                   <ng-container matColumnDef="AdminName">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Admin Name</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.adminName }}
+                    <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Admin Name</mat-header-cell>
+                    <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let element">{{ element.adminName }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="OrganizationName">
@@ -50,13 +50,16 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="MobileNumber">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Mobile Number</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.mobileNumber }}
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Mobile Number
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let element">
+                      {{ element.mobileNumber }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="EmailId">
-                    <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Email Id</mat-header-cell>
-                    <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.emailId }}
+                    <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Email Id
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let element">{{ element.emailId }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Actions">
