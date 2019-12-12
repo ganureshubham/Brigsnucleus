@@ -90,6 +90,11 @@ export const AppRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: "reports",
+        loadChildren: "./modules/reports/reports.module#ReportsModule",
+        canActivate: [AuthGuard]
+      },
+      {
         path: "taskmate",
         loadChildren: "./modules/taskmate/taskmate.module#TaskmateModule",
         canActivate: [AuthGuard]

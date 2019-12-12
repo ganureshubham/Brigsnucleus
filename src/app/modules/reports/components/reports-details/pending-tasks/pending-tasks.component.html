@@ -1,0 +1,82 @@
+<div fxLayout="column">
+
+  <div>
+    <div class="guideline">
+      <div class="guideline-title">
+        Guideline
+      </div>
+      <div class="guideline-text">
+        <ul>
+          <li>Choose count from drowp down</li>
+          <li>Click on "Export As CSV" button to export and download the data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="reports-specs-row">
+    <mat-form-field fxFlex="30">
+      <mat-label>Choose count</mat-label>
+      <mat-select (selectionChange)="onTopCountChange($event.value)">
+        <mat-option value="5">Top 5 pending tasks</mat-option>
+        <mat-option value="10">Top 10 pending tasks</mat-option>
+        <mat-option value="15">Top 15 pending tasks</mat-option>
+        <mat-option value="20">Top 20 pending tasks</mat-option>
+        <mat-option value="0">All pending tasks</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
+    </div>
+  </div>
+
+  <div>
+    <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+      <p *ngIf="topCount != -1">No Record Found</p>
+    </div>
+    <ng-template #recordFound>
+      <mat-table [dataSource]="tableDataSource">
+        <ng-container matColumnDef="title">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="start center" *matHeaderCellDef>Title
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.title }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="typeOfComplaint">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Task
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
+            {{ visit.typeOfComplaint }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="complaintStatus">
+          <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Task Status
+          </mat-header-cell>
+          <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+            <span class="complainStatus">{{ visit.complaintStatus }}</span>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="typeOfUser">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="raisedByName">
+          <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By</mat-header-cell>
+          <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="createdDate">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created Date
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let visit; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-template>
+  </div>
+
+</div>

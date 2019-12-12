@@ -182,6 +182,10 @@ export class AssetmateService {
     return this.httpClient.get(ConfigurationService.baseUrl + `questions/viewParticularQuestionWithOptions/${checklistQuestionId}`);
   }
 
+  updateCheckListQuestionSequence(sequenceNumber) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `questions/updateSequenceQuestion`, sequenceNumber);
+  }
+
   /*********************************************************** Get All Checklists ********************************/
 
   getAllChecklists(categoryId: number, pageNo: number): Observable<any> {
