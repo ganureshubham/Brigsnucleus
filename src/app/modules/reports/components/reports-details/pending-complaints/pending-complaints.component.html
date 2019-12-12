@@ -14,8 +14,8 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="reports-specs-row">
-    <mat-form-field fxFlex="30">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="reports-specs-row">
+    <mat-form-field fxFlex="30" fxFlex.xs="100">
       <mat-label>Choose count</mat-label>
       <mat-select (selectionChange)="onTopPendingComplaintsCountChange($event.value)">
         <mat-option value="5">Top 5 pending complaints</mat-option>
@@ -25,8 +25,8 @@
         <mat-option value="0">All pending complaints</mat-option>
       </mat-select>
     </mat-form-field>
-    <div>
-      <button mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
+    <div fxFlex.xs="100">
+      <button fxFlex.xs="100" mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
     </div>
   </div>
 
@@ -37,9 +37,9 @@
     <ng-template #recordFound>
       <mat-table [dataSource]="complaintTableDataSource">
         <ng-container matColumnDef="title">
-          <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>Title
+          <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}
+          <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="typeOfComplaint">
@@ -50,8 +50,8 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetTitle">
-          <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetTitle }}
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetTitle }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetCode">
@@ -61,9 +61,9 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="complaintStatus">
-          <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
           </mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
             <span class="complainStatus">{{ visit.complaintStatus }}</span>
           </mat-cell>
         </ng-container>
@@ -74,8 +74,8 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="raisedByName">
-          <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="createdOn">

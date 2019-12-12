@@ -1,8 +1,9 @@
 <div fxLayout="column" fxLayoutGap="20px">
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="reports-specs-row">
-    <span class="page-title">Pending Maintainance Assets</span>
-    <div>
-      <button mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
+  <div fxLayout="row" fxLayoutAlign.gt-xs="space-between center" fxLayout.xs="column" fxLayoutGap.xs="20px"
+    class="reports-specs-row">
+    <span fxFlex.xs="100" class="page-title">Pending Maintainance Assets</span>
+    <div fxFlex.xs="100">
+      <button fxFlex.xs="100" mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
     </div>
   </div>
   <div>

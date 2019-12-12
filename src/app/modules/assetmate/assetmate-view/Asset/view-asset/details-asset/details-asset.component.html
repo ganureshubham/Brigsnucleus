@@ -1,17 +1,20 @@
 <div fxLayout="row" class="margin_auto" fxLayoutAlign="space-evenly start">
     <mat-card fxFlex="95" fxFlex.lt-md="95">
         <div class="innerpage_title">
-            <div class="header_title flex_container">
-                <div>
-                    <button mat-button (click)="backToList()"
-                        class="back btn_style round_squer bg_pink_navy text_white">
-                        <mat-icon>keyboard_backspace</mat-icon>
-                    </button>
+            <div class="header_title" fxLayout="row" fxLayoutAlign.gt-xs="space-between center" fxLayout.xs="column"
+                fxLayoutGap.xs="20px">
+                <div fxLayout="row">
+                    <div>
+                        <button mat-button (click)="backToList()"
+                            class="back btn_style round_squer bg_pink_navy text_white">
+                            <mat-icon>keyboard_backspace</mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p>
+                    </div>
                 </div>
-                <div class="width_75">
-                    <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p>
-                </div>
-                <div class="dfe add_action" style="width:19.5%">
+                <div fxFlex.xs="100" class="dfe add_action">
                     <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
                         <mat-icon>print</mat-icon>Print QRCode
                     </button>
