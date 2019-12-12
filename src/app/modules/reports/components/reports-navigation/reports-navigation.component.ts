@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 export interface Report {
   title: string;
-  type: string;
   route: string;
+  icon: string;
 }
 
 @Component({
@@ -15,19 +15,24 @@ export class ReportsNavigationComponent implements OnInit {
 
   reports: Report[] = [
     {
-      title: 'Complaints',
-      type: 'Top pending complaints report',
-      route: '/reports/pending-complaints'
+      title: 'Pending Complaints',
+      route: '/reports/pending-complaints',
+      icon: 'menu_book'
     },
     {
-      title: 'Tasks',
-      type: 'Top pending tasks report',
-      route: '/reports/pending-tasks'
+      title: 'Pending Tasks',
+      route: '/reports/pending-tasks',
+      icon: 'work'
     },
     {
-      title: 'Assets',
-      type: 'Top complaining assets report',
-      route: '/reports/complaining-assets'
+      title: 'Pending Maintainance Assets',
+      route: '/reports/pending-maintainance-assets',
+      icon: 'assignment'
+    },
+    {
+      title: 'Critical Cond. Assets',
+      route: '/reports/critical-assets',
+      icon: 'assignment'
     }
   ];
 

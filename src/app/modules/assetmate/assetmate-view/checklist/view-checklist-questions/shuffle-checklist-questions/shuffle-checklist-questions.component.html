@@ -1,4 +1,4 @@
-<div class="padding_box">
+<div class="padding_box" fxLayout="column" fxLayoutGap="10px">
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
     <div fxFlex.xs="100" fxLayoutAlign="center center">
       <p class="page-title">Re-Order Question List</p>
@@ -32,26 +32,30 @@
     <mat-table class="table-material" #table [dataSource]="dataSource" cdkDropList [cdkDropListData]="dataSource"
       (cdkDropListDropped)="dropTable($event)">
       <ng-container matColumnDef="actions">
-        <mat-header-cell fxFlex="5" fxLayoutAlign="start center" *matHeaderCellDef i18n></mat-header-cell>
-        <mat-cell fxFlex="5" (click)="$event.stopPropagation()" fxHide.xs fxLayoutAlign="end center"
-          fxLayoutAlign.xs="start center" *matCellDef="let element">
+        <mat-header-cell fxFlex.gt-sm="5" fxFlex.sm="15" fxLayoutAlign="start center" *matHeaderCellDef i18n>
+        </mat-header-cell>
+        <mat-cell fxFlex.gt-sm="5" fxFlex.sm="15" (click)="$event.stopPropagation()" fxLayoutAlign="end center"
+          fxLayoutAlign.lt-lg="start center" *matCellDef="let element">
           <mat-icon matTooltip="click and drag" class="ic-drag" cdkDragHandle>open_with
           </mat-icon>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="questionDescription">
-        <mat-header-cell fxFlex="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matHeaderCellDef>
+        <mat-header-cell fxFlex.gt-xs="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center"
+          *matHeaderCellDef>
           <strong>Question
             Description</strong></mat-header-cell>
-        <mat-cell fxFlex="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center" *matCellDef="let element">
+        <mat-cell fxFlex.gt-xs="40" fxLayoutAlign="center center" fxLayoutAlign.xs="start center"
+          *matCellDef="let element">
           {{ element.questionDescription }}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="questionType">
-        <mat-header-cell fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef><strong>Question
+        <mat-header-cell fxHide.xs fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>
+          <strong>Question
             Type</strong>
         </mat-header-cell>
-        <mat-cell fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+        <mat-cell fxHide.xs fxFlex="15" fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
           {{ element.questionType }}
         </mat-cell>
       </ng-container>

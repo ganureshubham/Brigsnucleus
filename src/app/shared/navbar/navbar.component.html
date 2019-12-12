@@ -146,71 +146,99 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <!-- [style.marginTop.px]="mobileQuery.matches ? 56 : 0" -->
   <mat-sidenav-container class="example-sidenav-container">
     <mat-sidenav class="example-sidenav" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item routerLink="/profile" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">person</mat-icon><span i18n>&nbsp; My Profile</span>
-        </a>
-        <a mat-list-item routerLink="/dashboard" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">bar_chart</mat-icon><span i18n>&nbsp; Dashboard</span>
-        </a>
-        <a mat-list-item routerLink="/assetmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">assignment</mat-icon><span i18n>&nbsp; Assetmate</span>
-        </a>
-        <a mat-list-item routerLink="/documate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">list_alt</mat-icon><span i18n>&nbsp; Documate</span>
-        </a>
-        <a mat-list-item routerLink="/taskmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">work</mat-icon><span i18n>&nbsp;Taskmate</span>
-        </a>
-        <a mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">notification_important</mat-icon><span i18n>&nbsp; Alerts</span>
-        </a>
-        <a mat-list-item routerLink="/complaints" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-          <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
-        </a>
-        <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true">
-            <mat-expansion-panel-header>
-              <div>
-                <a mat-list-item>
-                  <mat-icon color="primary">settings_applications</mat-icon>&nbsp;&nbsp;Settings
-                </a>
-              </div>
-            </mat-expansion-panel-header>
-            <a mat-menu-item routerLink="/user-role" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>User Role</span>
-            </a>
-            <a mat-menu-item routerLink="/supplier" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>Supplier</span>
-            </a>
-            <a mat-menu-item routerLink="/manufacturer" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>Manufacturer</span>
-            </a>
-            <a mat-menu-item routerLink="/user/user-list" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>User</span>
-            </a>
-            <a mat-menu-item routerLink="/department" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>Department</span>
-            </a>
-            <a mat-menu-item routerLink="/asset-category" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>Asset-Category</span>
-            </a>
-            <a mat-menu-item routerLink="/location-type" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-              <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-              <span i18n>Asset Installation Location</span>
-            </a>
-          </mat-expansion-panel>
-        </mat-accordion>
+
+        <!-- SuperAdmin Dashboard Routes -->
+        <div *ngIf="isCurrentUserSuperAdmin()">
+          <a mat-list-item routerLink="/dashboard/superadmin" routerLinkActive="is-active-super-route" fxLayout="row"
+            fxLayoutAlign="start center" fxLayoutGap="10px" (click)="snav.toggle()">
+            <mat-icon color="primary">assessment</mat-icon>&nbsp;&nbsp;<span i18n>Sysytem
+              Dashboard</span>
+          </a>
+          <a mat-list-item routerLink="/superadmin/organization" routerLinkActive="is-active-super-route" fxLayout="row"
+            fxLayoutAlign="start center" (click)="snav.toggle()">
+            <mat-icon color="primary">apartment</mat-icon>&nbsp;&nbsp;<span i18n>Organization</span>
+          </a>
+          <a mat-list-item routerLink="/superadmin/sys-admins" routerLinkActive="is-active-super-route" fxLayout="row"
+            fxLayoutAlign="start center" (click)="snav.toggle()">
+            <mat-icon color="primary">supervised_user_circle</mat-icon>&nbsp;&nbsp;<span i18n>Admins</span>
+          </a>
+          <a mat-list-item (click)="chooseOrganizationAndNavigate()" routerLinkActive="is-active-super-route"
+            fxLayout="row" fxLayoutAlign="start center" (click)="snav.toggle()">
+            <mat-icon color="primary">developer_board</mat-icon>&nbsp;&nbsp;<span i18n>Manage
+              Organizations</span>
+          </a>
+        </div>
+
+        <!-- Admin Dashboard Routes -->
+        <div *ngIf="!isSuperadminNavigating">
+          <a *ngIf="!isCurrentUserSuperAdmin()" mat-list-item routerLink="/profile" routerLinkActive="is-active-mobile"
+            (click)="snav.toggle()">
+            <mat-icon color="primary">person</mat-icon><span i18n>&nbsp; My Profile</span>
+          </a>
+          <a mat-list-item routerLink="/dashboard" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">bar_chart</mat-icon><span i18n>&nbsp; Dashboard</span>
+          </a>
+          <a mat-list-item routerLink="/assetmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">assignment</mat-icon><span i18n>&nbsp; Assetmate</span>
+          </a>
+          <a mat-list-item routerLink="/documate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">list_alt</mat-icon><span i18n>&nbsp; Documate</span>
+          </a>
+          <a mat-list-item routerLink="/taskmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">work</mat-icon><span i18n>&nbsp;Taskmate</span>
+          </a>
+          <a mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">notification_important</mat-icon><span i18n>&nbsp; Alerts</span>
+          </a>
+          <a mat-list-item routerLink="/complaints" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+            <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
+          </a>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true">
+              <mat-expansion-panel-header>
+                <div>
+                  <a mat-list-item>
+                    <mat-icon color="primary">settings_applications</mat-icon>&nbsp;&nbsp;Settings
+                  </a>
+                </div>
+              </mat-expansion-panel-header>
+              <a mat-menu-item routerLink="/user-role" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>User Role</span>
+              </a>
+              <a mat-menu-item routerLink="/supplier" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Supplier</span>
+              </a>
+              <a mat-menu-item routerLink="/manufacturer" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Manufacturer</span>
+              </a>
+              <a mat-menu-item routerLink="/user/user-list" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>User</span>
+              </a>
+              <a mat-menu-item routerLink="/department" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Department</span>
+              </a>
+              <a mat-menu-item routerLink="/asset-category" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Asset-Category</span>
+              </a>
+              <a mat-menu-item routerLink="/location-type" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Asset Installation Location</span>
+              </a>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <!-- Logout -->
         <a mat-list-item (click)="snav.toggle(); logout()">
           <mat-icon color="primary">input</mat-icon><span i18n>&nbsp; Logout</span>
         </a>

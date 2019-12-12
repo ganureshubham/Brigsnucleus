@@ -17,4 +17,12 @@ export class ReportsService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `taskmate/pendingTasksList/${topTasksCount}`);
   }
 
+  getAllCriticalConditionAssets() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/criticalConditionAssetsList`);
+  }
+
+  getAllPendingMaintainanceAssets() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssets`);
+  }
+
 }

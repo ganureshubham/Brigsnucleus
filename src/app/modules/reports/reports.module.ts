@@ -9,10 +9,19 @@ import { ReportsNavigationComponent } from './components/reports-navigation/repo
 import { ReportsDetailsComponent } from './components/reports-details/reports-details.component';
 import { PendingComplaintsComponent } from './components/reports-details/pending-complaints/pending-complaints.component';
 import { PendingTasksComponent } from './components/reports-details/pending-tasks/pending-tasks.component';
-import { ComplainingAssetsComponent } from './components/reports-details/complaining-assets/complaining-assets.component';
+import { CriticalConditionAssetsComponent } from './components/reports-details/critical-condition-assets/critical-condition-assets.component';
+import { PendingMaintainanceAssetsComponent } from './components/reports-details/pending-maintainance-assets/pending-maintainance-assets.component';
 
 @NgModule({
-  declarations: [ReportsHomeComponent, ReportsNavigationComponent, ReportsDetailsComponent, PendingComplaintsComponent, PendingTasksComponent, ComplainingAssetsComponent],
+  declarations: [
+    ReportsHomeComponent,
+    ReportsNavigationComponent,
+    ReportsDetailsComponent,
+    PendingComplaintsComponent,
+    PendingTasksComponent,
+    CriticalConditionAssetsComponent,
+    PendingMaintainanceAssetsComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(ReportsRoutingModule),
