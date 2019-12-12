@@ -85,7 +85,7 @@ export class SuperadminDashboardComponent implements OnInit {
         this.monthlyGraphObj = res;
         this.MonthlyGraphTitle = res.graphTitle;
       } else {
-        this.monthlyGraphObj.xAxisData = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "];
+        this.monthlyGraphObj.xAxisData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.monthlyGraphObj.yAxisData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.monthlyGraphObj.xAxisLable = 'Months';
         this.monthlyGraphObj.yAxisLable = 'Number of Organizations';
@@ -146,32 +146,32 @@ export class SuperadminDashboardComponent implements OnInit {
           label: 'Organizations',
           data: this.monthlyGraphObj.yAxisData,
           backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
+            'rgba(114, 41, 174, 0.27)',
           ],
           borderColor: [
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
+            'rgba(114, 41, 174,1)',
           ],
           borderWidth: 1
         }]
