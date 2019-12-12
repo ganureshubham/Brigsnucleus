@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit {
         this.monthlyAssetgraphObj = res;
         this.MonthlyAssetTitle = res.graphTitle;
       } else {
-        this.monthlyAssetgraphObj.xAxisData = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "];
+        this.monthlyAssetgraphObj.xAxisData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.monthlyAssetgraphObj.yAxisData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.monthlyAssetgraphObj.xAxisLable = "Months";
         this.monthlyAssetgraphObj.yAxisLable = "Number of Assets";
@@ -209,7 +209,7 @@ export class DashboardComponent implements OnInit {
         this.monthlyComplaintsgraphObj = res;
         this.MonthlyComplaintsTitle = res.graphTitle;
       } else {
-        this.monthlyComplaintsgraphObj.xAxisData = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "];
+        this.monthlyComplaintsgraphObj.xAxisData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.monthlyComplaintsgraphObj.yAxisData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.monthlyComplaintsgraphObj.xAxisLable = "Months";
         this.monthlyComplaintsgraphObj.yAxisLable = "Number of Complaints Assigned";
@@ -322,7 +322,7 @@ export class DashboardComponent implements OnInit {
         }
         this.CategoryAssetTitle = res.Title;
       } else {
-        this.categwiseassetgraphObj.categoryName = [""];
+        this.categwiseassetgraphObj.categoryName = ["Category"];
         this.categwiseassetgraphObj.assetCount = [0];
         this.CategoryAssetTitle = "Category Wise Assets";
         this.categwiseassetgraphObj.color = ["#e5e5e5"];
