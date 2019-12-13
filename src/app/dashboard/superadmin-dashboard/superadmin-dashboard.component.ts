@@ -201,7 +201,7 @@ export class SuperadminDashboardComponent implements OnInit {
     };
 
     setTimeout(() => {
-      this.canvas = document.getElementById("mycanvas");
+      this.canvas = document.getElementById("monthlyorg");
       this.ctx = this.canvas.getContext("2d");
       this.mycanvas = new Chart(this.ctx, this.data);
       this.isChartReadyToRender = true;
