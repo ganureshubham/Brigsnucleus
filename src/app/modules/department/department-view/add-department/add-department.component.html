@@ -26,32 +26,12 @@
     </div>
     <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end end" fxLayoutGap="10px">
       <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
-      <button type="submit" fxFlex.xs="100" *ngIf="!isEdited" [mat-dialog-close]="savebtn" [color]="'success'"
-        [disabled]="!deptForm.valid" (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save
+      <button type="submit" fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="addDept(deptForm.value)" mat-raised-button i18n color="primary">Save
         Department</button>
-      <button type="submit" *ngIf="isEdited" [mat-dialog-close]="savebtn" [color]="'success'"
-        [disabled]="!deptForm.valid" (click)="editDept(deptForm.value)" mat-raised-button i18n color="primary">Update
+      <button type="submit" *ngIf="isEdited" [color]="'success'" [disabled]="!deptForm.valid"
+        (click)="editDept(deptForm.value)" mat-raised-button i18n color="primary">Update
         Department</button>
     </div>
   </form>
 </div>
-
-
-
-
-
-<!-- 
-<div fxLayout="column">
-  <div>
-    title
-  </div>
-  <div fxLayout="column">
-    content
-    <span>formfield1</span>
-    <span>formfield2</span>
-  </div>
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
-    <button>cancel</button>
-    <button>update</button>
-  </div>
-</div> -->

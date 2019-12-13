@@ -196,11 +196,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular User  *******************************************************************/
 
-  // editUser(visit) {
-  //   this.dataService.changeData(visit);
-  //   this.router.navigate(['/user/add-user']);
-  // }
-
   editUser(visit) {
     this.dialogData = {
       type: 'Edit',
