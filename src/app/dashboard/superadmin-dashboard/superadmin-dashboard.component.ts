@@ -178,7 +178,7 @@ export class SuperadminDashboardComponent implements OnInit {
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         scales: {
           xAxes: [{
@@ -238,7 +238,7 @@ export class SuperadminDashboardComponent implements OnInit {
       },
       options: {
         legend: {
-          display: false
+          display: true
         },
         // tooltips: {
         //   callbacks: {
