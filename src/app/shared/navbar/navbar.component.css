@@ -143,3 +143,15 @@
   .org-title-key{
     font-size: 13px;
   }
+
+  @media only screen and (max-width: 1300px) {
+    .item-toolbar {
+      font-size: 13px;
+    }
+    .mat-button span {
+      font-size: 13px;
+    }
+    .org-title-value{
+      font-size: 13px;
+    }
+  }
