@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   monthlyAssetgraphObj: any = {};
   monthlyComplaintsgraphObj: any = {};
   categwiseassetgraphObj: any = {};
+  categwisemaintainancegraphObj: any = {};
   MonthlyAssetTitle: any;
   assetsdefaultyear: any;
   assetselectedyear: any;
@@ -47,6 +48,7 @@ export class DashboardComponent implements OnInit {
   complaintdefaultyear: any;
   MonthlyComplaintsTitle: any;
   CategoryAssetTitle: any;
+  CategoryMaintainanceTitle: any;
 
 
 
@@ -71,6 +73,7 @@ export class DashboardComponent implements OnInit {
     this.getMonthlyAssetAdded(this.assetselectedyear);
     this.monthlyComplaintsAssigned(this.complaintselectedyear);
     this.categoryWiseAssets();
+    this.categoryWiseMaintainance();
   }
 
   years: Year[] = [
@@ -176,11 +179,17 @@ export class DashboardComponent implements OnInit {
               display: true,
               labelString: this.monthlyAssetgraphObj.xAxisLable
             },
+            gridLines: {
+              drawOnChartArea: true
+            }
           }],
           yAxes: [{
             scaleLabel: {
               display: true,
               labelString: this.monthlyAssetgraphObj.yAxisLable
+            },
+            gridLines: {
+              drawOnChartArea: true
             },
             ticks: {
               beginAtZero: true
@@ -284,12 +293,18 @@ export class DashboardComponent implements OnInit {
             scaleLabel: {
               display: true,
               labelString: this.monthlyComplaintsgraphObj.xAxisLable
+            },
+            gridLines: {
+              drawOnChartArea: true
             }
           }],
           yAxes: [{
             scaleLabel: {
               display: true,
               labelString: this.monthlyComplaintsgraphObj.yAxisLable
+            },
+            gridLines: {
+              drawOnChartArea: true
             },
             ticks: {
               beginAtZero: true
@@ -385,6 +400,33 @@ export class DashboardComponent implements OnInit {
     }, 100)
   }
 
+  /********************************************* Category Wise Pending Maintainance Graph Api **********************************/
+
+  categoryWiseMaintainance() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.notificationService.categoryWiseMaintainance().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status == true) {
+        this.categwisemaintainancegraphObj = res;
+        this.categwisemaintainancegraphObj.color = [];
+        for (let category of this.categwisemaintainancegraphObj.categoryName) {
+          this.categwisemaintainancegraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+        }
+        this.CategoryMaintainanceTitle = res.Title;
+      } else {
+        this.categwisemaintainancegraphObj.categoryName = ["Category"];
+        this.categwisemaintainancegraphObj.assetCount = [0];
+        this.CategoryMaintainanceTitle = "Category Wise Pending Maintenance Assets Count";
+        this.categwisemaintainancegraphObj.color = ["#fc0398"];
+      }
+      this.setCategoryWisePendingMaintainanceGraphData();
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
+
 
   /********************************************* Category Wise Pending Maintainance Graph***************************************************/
 
@@ -392,24 +434,12 @@ export class DashboardComponent implements OnInit {
     this.data3 = {
       type: 'doughnut',
       data: {
-        labels: ["Electronics", "Fire Brigade", "Machine", "Furniture", "Furniture1"],
+        labels: this.categwisemaintainancegraphObj.categoryName,
         datasets: [{
           label: 'Assets',
-          data: [15, 6, 3, 5, 2],
-          backgroundColor: [
-            '#FFCC66',
-            '#FF6384',
-            '#993399',
-            '#FF9966',
-            '#333366',
-          ],
-          borderColor: [
-            '#FFCC66',
-            '#FF6384',
-            '#993399',
-            '#FF9966',
-            '#333366',
-          ],
+          data: this.categwisemaintainancegraphObj.assetCount,
+          backgroundColor: this.categwisemaintainancegraphObj.color,
+          borderColor: this.categwisemaintainancegraphObj.color,
           borderWidth: 1
         }]
       },

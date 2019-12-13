@@ -67,8 +67,8 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="assetTitle">
-                    <mat-header-cell *matHeaderCellDef>Asset Title</mat-header-cell>
-                    <mat-cell *matCellDef="let visit">{{ visit.assetTitle }}
+                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
+                    <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetTitle }}
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="assetCode">
@@ -78,9 +78,9 @@
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="complaintStatus">
-                    <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
                     </mat-header-cell>
-                    <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
                       <span class="complainStatus">{{ visit.complaintStatus }}</span>
                     </mat-cell>
                   </ng-container>
