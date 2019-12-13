@@ -56,6 +56,11 @@ export class NotificationService {
     return this.httpClient.get<any>(this.baseUrl + `dashboard/categoryWiseAssetsCounts`);
   }
 
+  categoryWiseMaintainance(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/categoryPendingMaintenceAssetsCounts`);
+
+  }
+
 
 
 

@@ -77,10 +77,6 @@
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
     <div fxFlex.xs="50" fxFlex="50">
       <mat-card>
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
-          <p class="graph-font">{{MonthlyAssetTitle}}-Year ({{assetselectedyear}})</p>
-          <canvas id="mycanvas" width="40" height="20"></canvas>
-        </div>
         <div fxLayout="row" fxLayoutAlign="end end">
           <mat-form-field fxFlex.xs="50">
             <mat-select [(value)]="assetsdefaultyear" (selectionChange)="selectedYearAssets($event.value)" name="year"
@@ -91,14 +87,14 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
+          <canvas id="mycanvas" width="40" height="20"></canvas>
+          <p class="graph-font">{{MonthlyAssetTitle}}-Year ({{assetselectedyear}})</p>
+        </div>
       </mat-card>
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data1">
-          <p class="graph-font">{{MonthlyComplaintsTitle}}-Year ({{complaintselectedyear}})</p>
-          <canvas id="topOrg" width="40" height="20"></canvas>
-        </div>
         <div fxLayout="row" fxLayoutAlign="end end">
           <mat-form-field fxFlex.xs="50">
             <mat-select [(value)]="complaintdefaultyear" (selectionChange)="selectedYearComplaint($event.value)"
@@ -109,6 +105,11 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data1">
+          <canvas id="topOrg" width="40" height="20"></canvas>
+          <p class="graph-font">{{MonthlyComplaintsTitle}}-Year ({{complaintselectedyear}})</p>
+        </div>
+
       </mat-card>
     </div>
   </div>
@@ -117,16 +118,16 @@
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data2">
-          <p class="graph-font">{{CategoryAssetTitle}}</p>
           <canvas id="CatAsset" width="40" height="20"></canvas>
+          <p class="graph-font">{{CategoryAssetTitle}}</p>
         </div>
       </mat-card>
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data3">
-          <p class="graph-font">Pending Maintainance</p>
           <canvas id="Pendingmaintainance" width="40" height="20"></canvas>
+          <p class="graph-font">{{CategoryMaintainanceTitle}}</p>
         </div>
       </mat-card>
     </div>
