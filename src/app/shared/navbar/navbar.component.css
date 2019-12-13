@@ -144,7 +144,7 @@
     font-size: 13px;
   }
 
-  @media only screen and (max-width: 1300px) {
+  @media only screen and (max-width: 1440px) {
     .item-toolbar {
       font-size: 13px;
     }

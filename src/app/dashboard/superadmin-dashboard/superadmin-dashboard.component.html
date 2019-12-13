@@ -12,8 +12,8 @@
           </ul>
         </div>
         <div>
-          <div class="cl"></div><br> <button mat-button color="primary" routerLink="/superadmin/organization"
-            class="fr">More Info
+          <div class="cl"></div><button mat-button color="primary" routerLink="/superadmin/organization" class="fr">More
+            Info
             <mat-icon>keyboard_arrow_right
             </mat-icon></button>
         </div>
@@ -31,8 +31,7 @@
           </ul>
         </div>
         <div>
-          <div class="cl"></div><br><button mat-button routerLink="/superadmin/sys-admins" color="primary"
-            class="fr">More
+          <div class="cl"></div><button mat-button routerLink="/superadmin/sys-admins" color="primary" class="fr">More
             Info
             <mat-icon>keyboard_arrow_right
             </mat-icon></button>
@@ -44,37 +43,41 @@
     fxLayoutAlign="space-around start" fxLayoutGap="30px">
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <div fxLayout="row" fxLayoutAlign="end end">
-          <mat-form-field fxFlex.xs="100">
-            <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
-              placeholder="Select Year">
-              <mat-option *ngFor="let yr of years" [value]="yr.Id">
-                {{yr.data}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
+        <div fxLayout="column" *ngIf="data">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <p class="graph-font">{{MonthlyGraphTitle}}-Year ({{selectedyear}})</p>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end end">
+            <mat-form-field fxFlex.xs="100">
+              <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
+                placeholder="Select Year">
+                <mat-option *ngFor="let yr of years" [value]="yr.Id">
+                  {{yr.data}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
           <canvas id="monthlyorg" width="40" height="20"></canvas>
-          <p class="graph-font">{{MonthlyGraphTitle}}-Year ({{selectedyear}})</p>
         </div>
       </mat-card>
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <div style="visibility: hidden;" fxLayout="row" fxLayoutAlign="end end">
-          <mat-form-field fxFlex.xs="100">
-            <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
-              placeholder="Select Year">
-              <mat-option *ngFor="let yr of years" [value]="yr.Id">
-                {{yr.data}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data1">
+        <div fxLayout="column" *ngIf="data1">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <p class="graph-font">{{TopOrgAssetTitle}}</p>
+          </div>
+          <div style="visibility: hidden;" fxLayout="row" fxLayoutAlign="end end">
+            <mat-form-field fxFlex.xs="100">
+              <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
+                placeholder="Select Year">
+                <mat-option *ngFor="let yr of years" [value]="yr.Id">
+                  {{yr.data}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
           <canvas id="topOrg" width="40" height="20"></canvas>
-          <p class="graph-font">{{TopOrgAssetTitle}}</p>
         </div>
       </mat-card>
     </div>
