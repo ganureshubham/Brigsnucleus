@@ -200,7 +200,7 @@ export class DashboardComponent implements OnInit {
     };
 
     setTimeout(() => {
-      this.canvas = document.getElementById("mycanvas");
+      this.canvas = document.getElementById("monthlyasset");
       this.ctx = this.canvas.getContext("2d");
       this.mycanvas = new Chart(this.ctx, this.data);
       this.isChartReadyToRender = true;
@@ -315,7 +315,7 @@ export class DashboardComponent implements OnInit {
     };
 
     setTimeout(() => {
-      this.canvas1 = document.getElementById("topOrg");
+      this.canvas1 = document.getElementById("monthlycomplaints");
       this.ctx1 = this.canvas1.getContext("2d");
       this.mycanvas1 = new Chart(this.ctx1, this.data1);
       this.isChartReadyToRender = true;
