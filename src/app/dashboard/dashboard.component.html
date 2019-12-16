@@ -97,7 +97,6 @@
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-
         <div fxLayout="column" *ngIf="data1">
           <div fxLayout="row" fxLayoutAlign="center center">
             <p class="graph-font">{{MonthlyComplaintsTitle}}-Year ({{complaintselectedyear}})</p>
@@ -114,7 +113,6 @@
           </div>
           <canvas id="monthlycomplaints" width="40" height="20"></canvas>
         </div>
-
       </mat-card>
     </div>
   </div>
@@ -133,6 +131,17 @@
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data3">
           <p class="graph-font">{{CategoryMaintainanceTitle}}</p>
           <canvas id="Pendingmaintainance" width="40" height="20"></canvas>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="graph-m-t" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
+    fxLayoutAlign="space-around center" fxLayoutGap="30px">
+    <div fxFlex.xs="100" fxFlex="50">
+      <mat-card>
+        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data4">
+          <p class="graph-font">{{InstallLocAssetTitle}}</p>
+          <canvas id="installationlocation" width="40" height="20"></canvas>
         </div>
       </mat-card>
     </div>
