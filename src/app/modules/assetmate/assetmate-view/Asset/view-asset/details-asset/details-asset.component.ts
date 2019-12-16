@@ -9,6 +9,7 @@ import { DataSharingService } from '../../../../../../public service/data-sharin
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import { AppImgDialogComponent } from '../../../../../../shared/app-img-dialog/app-img-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-details-asset',
@@ -35,6 +36,7 @@ export class DetailsAssetComponent implements OnInit {
 		private snackBar: MatSnackBar,
 		private dialog: MatDialog,
 		public dataService: DataSharingService,
+		private location: Location,
 	) { }
 
 	ngOnInit() {
@@ -95,7 +97,8 @@ export class DetailsAssetComponent implements OnInit {
 	}
 
 	backToList() {
-		this.router.navigate([`/assetmate/assetmate-details/${this.categoryId}`]);
+		// this.router.navigate([`/assetmate/assetmate-details/${this.categoryId}`]);
+		this.location.back();
 	}
 
 	listAsset() {
@@ -116,6 +119,10 @@ export class DetailsAssetComponent implements OnInit {
 
 	printQRcode() {
 
+		let imageLeftMargin = 5;
+		let textLeftMargin = 60;
+		let allCompTopMargin = 5;
+
 		this.assetForQRcode = this.assetData;
 		this.assetCode1 = this.assetData.assetCode;
 
@@ -125,37 +132,37 @@ export class DetailsAssetComponent implements OnInit {
 			let img64: string = html.substr(0, html.length - 2).split('base64,')[1];
 			var dispimg64 = 'data:image/png;base64,' + img64;
 
-			var doc = new jsPDF('l', 'mm', [390, 150]);
+			var doc = new jsPDF('l', 'mm', [470, 170]);
 
 			//QRCODE img
-			doc.addImage(dispimg64, '*', 2, 2, 50, 50);
+			doc.addImage(dispimg64, '*', imageLeftMargin, allCompTopMargin, 50, 50);
 
 			//TITLE
 			doc.setFontSize(12);
 			doc.setFontType("normal");
-			doc.text(60, 8, 'Asset Title');
+			doc.text(textLeftMargin, 8, 'Asset Title');
 
 			doc.setFontSize(16);
 			doc.setFontType("bold");
-			doc.text(60, 14, this.assetForQRcode.assetTitle);
+			doc.text(textLeftMargin, 14, this.assetForQRcode.assetTitle.length >= 25 ? (this.assetForQRcode.assetTitle.substring(0, 25) + ' ...') : this.assetForQRcode.assetTitle);
 
 			//ASSETCODE
 			doc.setFontSize(12);
 			doc.setFontType("normal");
-			doc.text(60, 25, 'AssetCode');
+			doc.text(textLeftMargin, 25, 'AssetCode');
 
 			doc.setFontSize(16);
 			doc.setFontType("bold");
-			doc.text(60, 31, this.assetForQRcode.assetCode);
+			doc.text(textLeftMargin, 31, this.assetForQRcode.assetCode);
 
 			//MODELNO
 			doc.setFontSize(12);
 			doc.setFontType("normal");
-			doc.text(60, 41, 'Model No.');
+			doc.text(textLeftMargin, 41, 'Model No.');
 
 			doc.setFontSize(16);
 			doc.setFontType("bold");
-			doc.text(60, 47, this.assetForQRcode.modelNumber);
+			doc.text(textLeftMargin, 47, this.assetForQRcode.modelNumber);
 
 			window.open(doc.output('bloburl'), '_blank');
 		}, 50);

@@ -6,6 +6,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-critical-condition-assets',
@@ -23,6 +24,7 @@ export class CriticalConditionAssetsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private reportsService: ReportsService,
     private spinnerService: SpinnerService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -88,6 +90,10 @@ export class CriticalConditionAssetsComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  viewAsset = (asset) => {
+    this.router.navigate(['/assetmate/assetmate-details/' + asset.categoryId + '/asset-details/' + asset.assetId]);
   }
 
 }

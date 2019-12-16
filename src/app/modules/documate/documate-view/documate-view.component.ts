@@ -256,12 +256,12 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
       doc.setFontSize(16);
       doc.setFontType("bold");
-      doc.text(60, 14, this.documentForQRcode.title);
+      doc.text(60, 14, this.documentForQRcode.title.length >= 25 ? (this.documentForQRcode.title.substring(0, 25) + ' ...') : this.documentForQRcode.title);
 
       //DOCUMENTCODE
       doc.setFontSize(12);
       doc.setFontType("normal");
-      doc.text(60, 25, 'DocumentCode');
+      doc.text(60, 25, 'Document Code');
 
       doc.setFontSize(16);
       doc.setFontType("bold");

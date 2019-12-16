@@ -37,9 +37,9 @@
     <ng-template #recordFound>
       <mat-table [dataSource]="complaintTableDataSource">
         <ng-container matColumnDef="title">
-          <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title
+          <mat-header-cell fxFlex=15 fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title
           </mat-header-cell>
-          <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}
+          <mat-cell fxFlex=15 fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="typeOfComplaint">
@@ -85,7 +85,8 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="complaintsColumns"></mat-header-row>
-        <mat-row *matRowDef="let visit; columns: complaintsColumns;"></mat-row>
+        <mat-row class="example-element-row" *matRowDef="let visit; columns: complaintsColumns;"
+          (click)="viewComplaint(visit.complaintId)"></mat-row>
       </mat-table>
     </ng-template>
   </div>

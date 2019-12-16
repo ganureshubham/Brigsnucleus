@@ -256,6 +256,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   printQRcode(asset) {
 
+    let imageLeftMargin = 5;
+    let textLeftMargin = 60;
+    let allCompTopMargin = 5;
+
     this.assetForQRcode = asset;
     this.assetCode1 = asset.assetCode;
     // console.log(this.assetCode1);
@@ -269,37 +273,37 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
       var dispimg64 = 'data:image/png;base64,' + img64;
       // console.log(dispimg64);
 
-      var doc = new jsPDF('l', 'mm', [390, 150]);
+      var doc = new jsPDF('l', 'mm', [470, 170]);
 
       //QRCODE img
-      doc.addImage(dispimg64, '*', 2, 2, 50, 50);
+      doc.addImage(dispimg64, '*', imageLeftMargin, allCompTopMargin, 50, 50);
 
       //TITLE
       doc.setFontSize(12);
       doc.setFontType("normal");
-      doc.text(60, 8, 'Asset Title');
+      doc.text(textLeftMargin, 8, 'Asset Title');
 
       doc.setFontSize(16);
       doc.setFontType("bold");
-      doc.text(60, 14, this.assetForQRcode.assetTitle);
+      doc.text(textLeftMargin, 14, this.assetForQRcode.assetTitle.length >= 25 ? (this.assetForQRcode.assetTitle.substring(0, 25) + ' ...') : this.assetForQRcode.assetTitle);
 
       //ASSETCODE
       doc.setFontSize(12);
       doc.setFontType("normal");
-      doc.text(60, 25, 'AssetCode');
+      doc.text(textLeftMargin, 25, 'AssetCode');
 
       doc.setFontSize(16);
       doc.setFontType("bold");
-      doc.text(60, 31, this.assetForQRcode.assetCode);
+      doc.text(textLeftMargin, 31, this.assetForQRcode.assetCode);
 
       //MODELNO
       doc.setFontSize(12);
       doc.setFontType("normal");
-      doc.text(60, 41, 'Model No.');
+      doc.text(textLeftMargin, 41, 'Model No.');
 
       doc.setFontSize(16);
       doc.setFontType("bold");
-      doc.text(60, 47, this.assetForQRcode.modelNumber);
+      doc.text(textLeftMargin, 47, this.assetForQRcode.modelNumber);
 
       window.open(doc.output('bloburl'), '_blank');
     }, 50);
@@ -342,7 +346,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
               doc.setFontSize(16);
               doc.setFontType("bold");
-              doc.text(textLeftMargin, 14, this.allAssetForQRcode[i].assetTitle);
+              doc.text(textLeftMargin, 14, this.allAssetForQRcode[i].assetTitle.length >= 25 ? (this.allAssetForQRcode[i].assetTitle.substring(0, 25) + ' ...') : this.allAssetForQRcode[i].assetTitle);
 
               doc.setFontSize(12);
               doc.setFontType("normal");

@@ -3,11 +3,11 @@ import { NotificationService } from '../../public service/notification.service';
 import { Chart } from 'chart.js';
 import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../../public service/spinner.service';
+import jsPDF from 'jspdf';
 
 export interface Year {
   Id: number,
   data: string
-
 }
 
 @Component({
@@ -16,12 +16,7 @@ export interface Year {
   styleUrls: ['./superadmin-dashboard.component.css']
 })
 
-
-
-
 export class SuperadminDashboardComponent implements OnInit {
-
-
 
   superAdminDashboardCounts: any = {};
   isChartReadyToRender: boolean = false;
@@ -39,7 +34,6 @@ export class SuperadminDashboardComponent implements OnInit {
   MonthlyGraphTitle: any;
   selectedyear: any;
   TopOrgAssetTitle: any;
-
 
   constructor(
     private notificationService: NotificationService,
@@ -241,7 +235,7 @@ export class SuperadminDashboardComponent implements OnInit {
       },
       options: {
         legend: {
-          display: true
+          display: false
         },
         // tooltips: {
         //   callbacks: {
@@ -281,16 +275,21 @@ export class SuperadminDashboardComponent implements OnInit {
     }, 100)
   }
 
-  printChart() {
-    let canvas = <HTMLCanvasElement>document.getElementById("monthlyorg");
-    console.log(canvas);
+  printGraph(elementId: string, title: string) {
 
-    setTimeout(() => {
-      let win = window.open();
-      win.document.write("<br><img src='" + canvas.toDataURL() + "'/>");
-      win.print();
-      win.location.reload();
-    }, 100)
+    let newCanvas = <HTMLCanvasElement>document.getElementById(elementId);;
+    let newCanvasImg = newCanvas.toDataURL();
+
+    let doc = new jsPDF('landscape');
+    let pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+
+    doc.addImage(newCanvasImg, 'JPEG', 30, 30);
+    doc.setFontSize(15);
+    doc.text(title, pageWidth / 2, pageHeight - 10, 'center');
+
+    window.open(doc.output('bloburl'), '_blank');
+
   }
 
 }

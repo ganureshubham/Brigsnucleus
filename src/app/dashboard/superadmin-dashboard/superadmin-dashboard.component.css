@@ -51,3 +51,10 @@
   font-weight: 500;
   text-transform: uppercase;
 }
+
+.fab-btn-dashboard{
+  position: absolute; 
+  top:15px; 
+  right:15px; 
+  background-color: white;
+}

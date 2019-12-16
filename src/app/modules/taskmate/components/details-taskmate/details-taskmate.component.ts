@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { TaskmateService } from '../../service/taskmate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-details-taskmate',
@@ -20,7 +21,8 @@ export class DetailsTaskmateComponent implements OnInit {
     private dialog: MatDialog,
     private taskmateService: TaskmateService,
     private routes: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class DetailsTaskmateComponent implements OnInit {
 
 
   backToList() {
-    this.router.navigate(['/taskmate']);
+    this.location.back();
   }
 
   priviewImage(title, imageUrl) {

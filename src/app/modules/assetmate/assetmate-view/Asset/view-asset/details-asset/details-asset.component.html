@@ -84,11 +84,11 @@
                         <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
                             <div fxFlex="33">
                                 <h4 class=" mat-h4 db ">Checking Duration</h4>
-                                <span>{{assetData.checkingDuration}}</span>
+                                <span>{{assetData.checkingDuration + ' ' +assetData.durationTitle}}</span>
                             </div>
                             <div fxFlex="33">
                                 <h4 class=" mat-h4 db ">Asset Warranty</h4>
-                                <span>{{assetData.warrenty}}</span>
+                                <span>{{assetData.warrenty + ' ' +assetData.warrentyPeriod}}</span>
                             </div>
                             <div fxFlex="33">
                                 <h4 class=" mat-h4 db ">Company Asset Number</h4>

@@ -37,7 +37,7 @@
           <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        <mat-row class="example-element-row" *matRowDef="let row; columns: displayedColumns;" (click)="viewAsset(row)">
         </mat-row>
       </mat-table>
     </ng-template>
