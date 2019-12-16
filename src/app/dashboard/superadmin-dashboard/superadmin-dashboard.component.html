@@ -48,6 +48,7 @@
             <p class="graph-font">{{MonthlyGraphTitle}}-Year ({{selectedyear}})</p>
           </div>
           <div fxLayout="row" fxLayoutAlign="end end">
+            <!-- <button (click)="printChart()">Print</button> -->
             <mat-form-field fxFlex.xs="100">
               <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
                 placeholder="Select Year">

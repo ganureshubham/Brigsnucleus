@@ -203,6 +203,9 @@ export class SuperadminDashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas = document.getElementById("monthlyorg");
       this.ctx = this.canvas.getContext("2d");
+      if (this.mycanvas != undefined) {
+        this.mycanvas.destroy();
+      }
       this.mycanvas = new Chart(this.ctx, this.data);
       this.isChartReadyToRender = true;
     }, 100)
@@ -270,14 +273,24 @@ export class SuperadminDashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas1 = document.getElementById("topOrg");
       this.ctx1 = this.canvas1.getContext("2d");
+      if (this.mycanvas1 != undefined) {
+        this.mycanvas1.destroy();
+      }
       this.mycanvas1 = new Chart(this.ctx1, this.data1);
       this.isChartReadyToRender = true;
     }, 100)
   }
 
+  printChart() {
+    let canvas = <HTMLCanvasElement>document.getElementById("monthlyorg");
+    console.log(canvas);
 
-
-
-
+    setTimeout(() => {
+      let win = window.open();
+      win.document.write("<br><img src='" + canvas.toDataURL() + "'/>");
+      win.print();
+      win.location.reload();
+    }, 100)
+  }
 
 }
