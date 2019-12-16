@@ -6,6 +6,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pending-complaints',
@@ -25,6 +26,7 @@ export class PendingComplaintsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private reportsService: ReportsService,
     private spinnerService: SpinnerService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -98,6 +100,10 @@ export class PendingComplaintsComponent implements OnInit {
 
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
+  }
+
+  viewComplaint(complaintId: number) {
+    this.router.navigate(['complaints/details-complaints/' + complaintId]);
   }
 
 }

@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ComplaintsService } from '../../service/complaints.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-details-complaints',
@@ -21,6 +22,7 @@ export class DetailsComplaintsComponent implements OnInit {
     private complaintsService: ComplaintsService,
     private routes: ActivatedRoute,
     private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class DetailsComplaintsComponent implements OnInit {
 
 
   backToList() {
-    this.router.navigate(['/complaints']);
+    this.location.back();
   }
 
   priviewImage(title, imageUrl) {
