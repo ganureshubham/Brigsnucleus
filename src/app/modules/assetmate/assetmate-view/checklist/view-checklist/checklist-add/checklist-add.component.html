@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field fxFlex.xs="100">
         <input matInput name="title" id="title" minlength="2" [(ngModel)]="checklistData.title" #title="ngModel"
-          placeholder="Checklist Title" required>
+          placeholder="Audit Title" required>
         <mat-error *ngIf="checklistform.submitted && title.invalid">
           <mat-error *ngIf="title.errors.required">Checklist title is required</mat-error>
         </mat-error>
@@ -45,11 +45,11 @@
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button fxFlex.xs="100" type="submit" *ngIf="!isEdited" [disabled]="!checklistform.valid"
           (click)="addChecklist(checklistform.value)" mat-raised-button class="bg_primary text_white btn">Save
-          Checklist</button>
+          Audit</button>
         <button fxFlex.xs="100" *ngIf="isEdited" [disabled]="!checklistform.valid" [color]="'success'" mat-raised-button
           i18n color="primary" type="submit" [disabled]="!assetform.valid"
           (click)="editChecklist(checklistform.value)">Update
-          Checklist</button>
+          Audit</button>
       </div>
     </form>
   </div>

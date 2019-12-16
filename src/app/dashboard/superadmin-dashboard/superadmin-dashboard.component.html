@@ -71,11 +71,12 @@
           <div fxLayout="row" fxLayoutAlign="center center">
             <p class="graph-font">{{TopOrgAssetTitle}}</p>
           </div>
+          <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+            (click)="printGraph('topOrg', TopOrgAssetTitle)">
+            <mat-icon color="primary">print</mat-icon>
+          </button>
           <div style="visibility: hidden;" fxLayout="row" fxLayoutAlign="end end">
-            <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
-              (click)="printGraph('topOrg')">
-              <mat-icon color="primary">print</mat-icon>
-            </button>
+
             <mat-form-field fxFlex.xs="100">
               <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
                 placeholder="Select Year">

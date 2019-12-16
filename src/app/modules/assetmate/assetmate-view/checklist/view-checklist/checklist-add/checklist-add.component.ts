@@ -17,7 +17,7 @@ export class ChecklistAddComponent implements OnInit {
   categoryList: any;
   checklistData: any = {};
   showFirst: boolean = false;
-  formTitle: string = "Add Checklist";
+  formTitle: string = "Add Audit";
   category: any;
   isEdited: boolean = false;
   categoryID: any;
@@ -44,7 +44,7 @@ export class ChecklistAddComponent implements OnInit {
     } else if (this.data.type == 'Edit') {
       this.checklistData = this.data.checklistdata;
       this.isEdited = true;
-      this.formTitle = `Edit Checklist`;
+      this.formTitle = `Edit Audit`;
       this.checklistData.categoryId = this.categoryID;
     }
     this.getCategoryList();
