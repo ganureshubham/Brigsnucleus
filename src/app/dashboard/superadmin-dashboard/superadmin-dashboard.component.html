@@ -48,10 +48,20 @@
             <p class="graph-font">{{MonthlyGraphTitle}}-Year ({{selectedyear}})</p>
           </div>
           <div fxLayout="row" fxLayoutAlign="end end">
-            <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+            <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
               (click)="printGraph('monthlyorg', MonthlyGraphTitle +' - Year'+' ('+selectedyear+')')">
               <mat-icon color="primary">print</mat-icon>
+            </button> -->
+            <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item
+                (click)="printGraph('monthlyorg', MonthlyGraphTitle +' - Year'+' ('+selectedyear+')')">
+                <mat-icon>print</mat-icon>
+                <span>Print</span>
+              </button>
+            </mat-menu>
             <mat-form-field fxFlex.xs="100">
               <mat-select [(value)]="defaultyear" (selectionChange)="selectedYear($event.value)" name="year" id="year"
                 placeholder="Select Year">
@@ -71,10 +81,19 @@
           <div fxLayout="row" fxLayoutAlign="center center">
             <p class="graph-font">{{TopOrgAssetTitle}}</p>
           </div>
-          <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+          <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
             (click)="printGraph('topOrg', TopOrgAssetTitle)">
             <mat-icon color="primary">print</mat-icon>
+          </button> -->
+          <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu1">
+            <mat-icon>more_vert</mat-icon>
           </button>
+          <mat-menu #menu1="matMenu">
+            <button mat-menu-item (click)="printGraph('topOrg', TopOrgAssetTitle)">
+              <mat-icon>print</mat-icon>
+              <span>Print</span>
+            </button>
+          </mat-menu>
           <div style="visibility: hidden;" fxLayout="row" fxLayoutAlign="end end">
 
             <mat-form-field fxFlex.xs="100">

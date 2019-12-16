@@ -82,10 +82,20 @@
             <p class="graph-font">{{MonthlyAssetTitle}}-Year ({{assetselectedyear}})</p>
           </div>
           <div fxLayout="row" fxLayoutAlign="end end">
-            <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+            <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
               (click)="printGraph('monthlyasset', MonthlyAssetTitle +' - Year'+' ('+assetselectedyear+')')">
               <mat-icon color="primary">print</mat-icon>
+            </button> -->
+            <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item
+                (click)="printGraph('monthlyasset', MonthlyAssetTitle +' - Year'+' ('+assetselectedyear+')')">
+                <mat-icon>print</mat-icon>
+                <span>Print</span>
+              </button>
+            </mat-menu>
             <mat-form-field fxFlex.xs="50">
               <mat-select [(value)]="assetsdefaultyear" (selectionChange)="selectedYearAssets($event.value)" name="year"
                 id="year" placeholder="Select Year">
@@ -106,10 +116,20 @@
             <p class="graph-font">{{MonthlyComplaintsTitle}}-Year ({{complaintselectedyear}})</p>
           </div>
           <div fxLayout="row" fxLayoutAlign="end end">
-            <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+            <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
               (click)="printGraph('monthlycomplaints', MonthlyComplaintsTitle +' - Year'+' ('+complaintselectedyear+')')">
               <mat-icon color="primary">print</mat-icon>
+            </button> -->
+            <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu1">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #menu1="matMenu">
+              <button mat-menu-item
+                (click)="printGraph('monthlycomplaints', MonthlyComplaintsTitle +' - Year'+' ('+complaintselectedyear+')')">
+                <mat-icon>print</mat-icon>
+                <span>Print</span>
+              </button>
+            </mat-menu>
             <mat-form-field fxFlex.xs="50">
               <mat-select [(value)]="complaintdefaultyear" (selectionChange)="selectedYearComplaint($event.value)"
                 name="year" id="year" placeholder="Select Year">
@@ -128,10 +148,19 @@
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+        <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
           (click)="printGraph('CatAsset', CategoryAssetTitle)">
           <mat-icon color="primary">print</mat-icon>
+        </button> -->
+        <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu2">
+          <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu2="matMenu">
+          <button mat-menu-item (click)="printGraph('CatAsset', CategoryAssetTitle)">
+            <mat-icon>print</mat-icon>
+            <span>Print</span>
+          </button>
+        </mat-menu>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data2">
           <p class="graph-font">{{CategoryAssetTitle}}</p>
           <canvas id="CatAsset" width="40" height="20"></canvas>
@@ -140,10 +169,19 @@
     </div>
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+        <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
           (click)="printGraph('Pendingmaintainance', CategoryMaintainanceTitle)">
           <mat-icon color="primary">print</mat-icon>
+        </button> -->
+        <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu3">
+          <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu3="matMenu">
+          <button mat-menu-item (click)="printGraph('Pendingmaintainance', CategoryMaintainanceTitle)">
+            <mat-icon>print</mat-icon>
+            <span>Print</span>
+          </button>
+        </mat-menu>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data3">
           <p class="graph-font">{{CategoryMaintainanceTitle}}</p>
           <canvas id="Pendingmaintainance" width="40" height="20"></canvas>
@@ -155,10 +193,19 @@
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
-        <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
+        <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
           (click)="printGraph('installationlocation', InstallLocAssetTitle)">
           <mat-icon color="primary">print</mat-icon>
+        </button> -->
+        <button class="fab-btn-dashboard" mat-icon-button [matMenuTriggerFor]="menu4">
+          <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu4="matMenu">
+          <button mat-menu-item (click)="printGraph('installationlocation', InstallLocAssetTitle)">
+            <mat-icon>print</mat-icon>
+            <span>Print</span>
+          </button>
+        </mat-menu>
         <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data4">
           <p class="graph-font">{{InstallLocAssetTitle}}</p>
           <canvas id="installationlocation" width="40" height="20"></canvas>
