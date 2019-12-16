@@ -41,7 +41,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   assetCode1: string = '1';
   mobileQuery: MediaQueryList;
-  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
+  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'activateasset', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
@@ -389,6 +389,11 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
         this.showSnackBar("Something went wrong..!!")
       }
     );
+
+  }
+
+  activateAsset() {
+    console.log('event fired!');
 
   }
 

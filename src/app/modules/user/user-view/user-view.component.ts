@@ -53,7 +53,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['userName', 'profileImage', 'departmentTitle', 'mobileNumber', 'emailId', 'Actions'];
+  displayedColumns: string[] = ['userName', 'profileImage', 'departmentTitle', 'mobileNumber', 'emailId', 'activateuser', 'Actions'];
   paidDataSource: MatTableDataSource<User> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator;

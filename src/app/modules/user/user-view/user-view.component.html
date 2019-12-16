@@ -28,13 +28,13 @@
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
             <ng-container matColumnDef="userName">
-              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef i18n>User Name </mat-header-cell>
-              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+              <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef i18n>User Name </mat-header-cell>
+              <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
                 {{visit.firstName+' '+visit.lastName}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="profileImage">
-              <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Profile Image</mat-header-cell>
-              <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">
+              <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Profile Image</mat-header-cell>
+              <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
                 <div
                   (click)="$event.stopPropagation(); priviewImage( visit.firstName+' '+visit.lastName, visit.profileImage)"
                   [ngStyle]="{
@@ -47,17 +47,26 @@
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="departmentTitle">
-              <mat-header-cell fxHide.xs *matHeaderCellDef>Department Title</mat-header-cell>
-              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.departmentTitle }}</mat-cell>
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Department Title
+              </mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.departmentTitle }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="mobileNumber">
-              <mat-header-cell fxHide.xs *matHeaderCellDef>Mobile Number</mat-header-cell>
-              <mat-cell fxHide.xs *matCellDef="let visit">{{ visit.mobileNumber }}</mat-cell>
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Mobile Number</mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.mobileNumber }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="emailId">
-              <mat-header-cell fxHide.xs *matHeaderCellDef>Email Id</mat-header-cell>
-              <mat-cell fxHide.xs *matCellDef="let visit">
-                {{ visit.emailId.length>22?visit.emailId.substring(0,22)+'...':visit.emailId }}</mat-cell>
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Email Id</mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                {{ visit.emailId.length>18?visit.emailId.substring(0,18)+'...':visit.emailId }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="activateuser">
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Activate User</mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                <mat-slide-toggle color="primary"></mat-slide-toggle>
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
               <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
