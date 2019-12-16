@@ -66,3 +66,10 @@
 .dash-text-color {
   color: primary;
 }
+
+.fab-btn-dashboard{
+  position: absolute; 
+  top:15px; 
+  right:15px; 
+  background-color: white;
+}

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { NotificationService } from '../public service/notification.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../public service/spinner.service';
+import jsPDF from 'jspdf';
 
 export interface Year {
   Id: number,
@@ -379,39 +379,38 @@ export class DashboardComponent implements OnInit {
           label: 'Assets',
           data: this.categwiseassetgraphObj.assetCount,
           backgroundColor: [
-            '#CE93D8',
-            '#F48FB1',
-            '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
-            '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
-            '#80CBC4',
-            '#A5D6A7',
-            '#FFCC80',
-            '#BCAAA4',
-            '#EEEEEE',
-            '#B0BEC5',
-            '#EA80FC',
+            '#E1BEE7',
+            '#FFCDD2',
+            '#BBDEFB',
+            '#B2DFDB',
+            '#F0F4C3',
+            '#C8E6C9',
+            '#FFCCBC',
+            '#D7CCC8',
+            '#CFD8DC',
+            '#DCEDC8',
+            '#B2EBF2',
+            '#C5CAE9',
+            '#F8BBD0',
+            '#FFCCBC',
+            '#FFF9C4'
           ],
           borderColor: [
             '#CE93D8',
-            '#F48FB1',
             '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
             '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
             '#80CBC4',
+            '#E6EE9C',
             '#A5D6A7',
-            '#FFCC80',
+            '#FFAB91',
             '#BCAAA4',
-            '#EEEEEE',
             '#B0BEC5',
-            '#EA80FC',
-
+            '#C5E1A5',
+            '#80DEEA',
+            '#9FA8DA',
+            '#F48FB1',
+            '#FFAB91',
+            '#FFF59D'
           ],
           borderWidth: 1
         }]
@@ -492,39 +491,38 @@ export class DashboardComponent implements OnInit {
           label: 'Assets',
           data: this.categwisemaintainancegraphObj.assetCount,
           backgroundColor: [
-            '#FFCC80',
-            '#BCAAA4',
-            '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
-            '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
-            '#80CBC4',
-            '#A5D6A7',
-            '#B0BEC5',
-            '#EA80FC',
-            '#EEEEEE',
-            '#CE93D8',
-            '#F48FB1',
-
+            '#E1BEE7',
+            '#FFCDD2',
+            '#BBDEFB',
+            '#B2DFDB',
+            '#F0F4C3',
+            '#C8E6C9',
+            '#FFCCBC',
+            '#D7CCC8',
+            '#CFD8DC',
+            '#DCEDC8',
+            '#B2EBF2',
+            '#C5CAE9',
+            '#F8BBD0',
+            '#FFCCBC',
+            '#FFF9C4'
           ],
           borderColor: [
-            '#FFCC80',
-            '#BCAAA4',
-            '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
-            '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
-            '#80CBC4',
-            '#A5D6A7',
-            '#B0BEC5',
-            '#EA80FC',
-            '#EEEEEE',
             '#CE93D8',
+            '#EF9A9A',
+            '#90CAF9',
+            '#80CBC4',
+            '#E6EE9C',
+            '#A5D6A7',
+            '#FFAB91',
+            '#BCAAA4',
+            '#B0BEC5',
+            '#C5E1A5',
+            '#80DEEA',
+            '#9FA8DA',
             '#F48FB1',
+            '#FFAB91',
+            '#FFF59D'
           ],
           borderWidth: 1
         }]
@@ -586,39 +584,38 @@ export class DashboardComponent implements OnInit {
           label: 'Assets',
           data: this.installlocwiseassetgraphObj.assetCount,
           backgroundColor: [
+            '#E1BEE7',
+            '#FFCDD2',
             '#BBDEFB',
-            '#BCAAA4',
-            '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
-            '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
-            '#80CBC4',
-            '#A5D6A7',
-            '#B0BEC5',
-            '#EA80FC',
-            '#EEEEEE',
-            '#CE93D8',
-            '#F48FB1',
-
+            '#B2DFDB',
+            '#F0F4C3',
+            '#C8E6C9',
+            '#FFCCBC',
+            '#D7CCC8',
+            '#CFD8DC',
+            '#DCEDC8',
+            '#B2EBF2',
+            '#C5CAE9',
+            '#F8BBD0',
+            '#FFCCBC',
+            '#FFF9C4'
           ],
           borderColor: [
-            '#64B5F6',
-            '#BCAAA4',
-            '#EF9A9A',
-            '#B39DDB',
-            '#9FA8DA',
-            '#90CAF9',
-            '#81D4FA',
-            '#80DEEA',
-            '#80CBC4',
-            '#A5D6A7',
-            '#B0BEC5',
-            '#EA80FC',
-            '#EEEEEE',
             '#CE93D8',
+            '#EF9A9A',
+            '#90CAF9',
+            '#80CBC4',
+            '#E6EE9C',
+            '#A5D6A7',
+            '#FFAB91',
+            '#BCAAA4',
+            '#B0BEC5',
+            '#C5E1A5',
+            '#80DEEA',
+            '#9FA8DA',
             '#F48FB1',
+            '#FFAB91',
+            '#FFF59D'
           ],
           borderWidth: 1
         }]
@@ -641,6 +638,23 @@ export class DashboardComponent implements OnInit {
       this.installationlocation = new Chart(this.ctx4, this.data4);
       this.isChartReadyToRender = true;
     }, 100)
+  }
+
+  printGraph(elementId: string, title: string) {
+
+    let newCanvas = <HTMLCanvasElement>document.getElementById(elementId);;
+    let newCanvasImg = newCanvas.toDataURL();
+
+    let doc = new jsPDF('landscape');
+    let pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+
+    doc.addImage(newCanvasImg, 'JPEG', 30, 30);
+    doc.setFontSize(15);
+    doc.text(title, pageWidth / 2, 20, 'center');
+
+    window.open(doc.output('bloburl'), '_blank');
+
   }
 
 
