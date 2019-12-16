@@ -61,6 +61,10 @@ export class NotificationService {
 
   }
 
+  installationLocWiseAsset(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/installationLocationWiseAssetsCounts`);
+  }
+
 
 
 

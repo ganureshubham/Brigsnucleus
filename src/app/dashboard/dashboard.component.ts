@@ -9,7 +9,6 @@ import { SpinnerService } from '../public service/spinner.service';
 export interface Year {
   Id: number,
   data: string
-
 }
 
 @Component({
@@ -17,30 +16,35 @@ export interface Year {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
   loading: boolean;
   rows: any = {};
   isChartReadyToRender: boolean = false;
-  mycanvas: any;
-  mycanvas1: any;
-  mycanvas2: any;
-  mycanvas3: any;
+  monthlyasset: any;
+  monthlycomplaints: any;
+  CatAsset: any;
+  Pendingmaintainance: any;
   data: any;
   data1: any;
   data2: any;
   data3: any;
+  data4: any;
   canvas: any;
   canvas1: any;
   canvas2: any;
   canvas3: any;
+  canvas4: any;
   ctx: any;
   ctx1: any;
   ctx2: any;
   ctx3: any;
+  ctx4: any;
   monthlyAssetgraphObj: any = {};
   monthlyComplaintsgraphObj: any = {};
   categwiseassetgraphObj: any = {};
   categwisemaintainancegraphObj: any = {};
+  installlocwiseassetgraphObj: any = {};
   MonthlyAssetTitle: any;
   assetsdefaultyear: any;
   assetselectedyear: any;
@@ -49,8 +53,8 @@ export class DashboardComponent implements OnInit {
   MonthlyComplaintsTitle: any;
   CategoryAssetTitle: any;
   CategoryMaintainanceTitle: any;
-
-
+  InstallLocAssetTitle: any;
+  installationlocation: any;
 
   constructor(
     private router: Router,
@@ -74,6 +78,7 @@ export class DashboardComponent implements OnInit {
     this.monthlyComplaintsAssigned(this.complaintselectedyear);
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
+    this.installationLocWiseAsset();
   }
 
   years: Year[] = [
@@ -192,7 +197,8 @@ export class DashboardComponent implements OnInit {
               drawOnChartArea: true
             },
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              // stepSize: 1
             }
           }]
         }
@@ -202,7 +208,10 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas = document.getElementById("monthlyasset");
       this.ctx = this.canvas.getContext("2d");
-      this.mycanvas = new Chart(this.ctx, this.data);
+      if (this.monthlyasset != undefined) {
+        this.monthlyasset.destroy();
+      }
+      this.monthlyasset = new Chart(this.ctx, this.data);
       this.isChartReadyToRender = true;
     }, 100)
 
@@ -307,7 +316,8 @@ export class DashboardComponent implements OnInit {
               drawOnChartArea: true
             },
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              //stepSize: 1
             }
           }]
         }
@@ -317,7 +327,10 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas1 = document.getElementById("monthlycomplaints");
       this.ctx1 = this.canvas1.getContext("2d");
-      this.mycanvas1 = new Chart(this.ctx1, this.data1);
+      if (this.monthlycomplaints != undefined) {
+        this.monthlycomplaints.destroy();
+      }
+      this.monthlycomplaints = new Chart(this.ctx1, this.data1);
       this.isChartReadyToRender = true;
     }, 100)
   }
@@ -332,8 +345,10 @@ export class DashboardComponent implements OnInit {
       if (res.status == true) {
         this.categwiseassetgraphObj = res;
         this.categwiseassetgraphObj.color = [];
-        for (let category of this.categwiseassetgraphObj.categoryName) {
-          this.categwiseassetgraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+        if (this.categwiseassetgraphObj.categoryName.length > 15) {
+          for (let i = 0; i < (this.categwiseassetgraphObj.categoryName.length - 15); i++) {
+            this.categwiseassetgraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+          }
         }
         this.CategoryAssetTitle = res.Title;
       } else {
@@ -363,8 +378,41 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           label: 'Assets',
           data: this.categwiseassetgraphObj.assetCount,
-          backgroundColor: this.categwiseassetgraphObj.color,
-          borderColor: this.categwiseassetgraphObj.color,
+          backgroundColor: [
+            '#CE93D8',
+            '#F48FB1',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#FFCC80',
+            '#BCAAA4',
+            '#EEEEEE',
+            '#B0BEC5',
+            '#EA80FC',
+          ],
+          borderColor: [
+            '#CE93D8',
+            '#F48FB1',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#FFCC80',
+            '#BCAAA4',
+            '#EEEEEE',
+            '#B0BEC5',
+            '#EA80FC',
+
+          ],
           borderWidth: 1
         }]
       },
@@ -395,7 +443,10 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas2 = document.getElementById("CatAsset");
       this.ctx2 = this.canvas2.getContext("2d");
-      this.mycanvas2 = new Chart(this.ctx2, this.data2);
+      if (this.CatAsset != undefined) {
+        this.CatAsset.destroy();
+      }
+      this.CatAsset = new Chart(this.ctx2, this.data2);
       this.isChartReadyToRender = true;
     }, 100)
   }
@@ -409,15 +460,17 @@ export class DashboardComponent implements OnInit {
       if (res.status == true) {
         this.categwisemaintainancegraphObj = res;
         this.categwisemaintainancegraphObj.color = [];
-        for (let category of this.categwisemaintainancegraphObj.categoryName) {
-          this.categwisemaintainancegraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+        if (this.categwisemaintainancegraphObj.categoryName.length > 15) {
+          for (let i = 0; i < (this.categwisemaintainancegraphObj.categoryName.length - 15); i++) {
+            this.categwisemaintainancegraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+          }
         }
         this.CategoryMaintainanceTitle = res.Title;
       } else {
         this.categwisemaintainancegraphObj.categoryName = ["Category"];
         this.categwisemaintainancegraphObj.assetCount = [0];
         this.CategoryMaintainanceTitle = "Category Wise Pending Maintenance Assets Count";
-        this.categwisemaintainancegraphObj.color = ["#fc0398"];
+        this.categwisemaintainancegraphObj.color = ["#443c31"];
       }
       this.setCategoryWisePendingMaintainanceGraphData();
     },
@@ -438,8 +491,41 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           label: 'Assets',
           data: this.categwisemaintainancegraphObj.assetCount,
-          backgroundColor: this.categwisemaintainancegraphObj.color,
-          borderColor: this.categwisemaintainancegraphObj.color,
+          backgroundColor: [
+            '#FFCC80',
+            '#BCAAA4',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#B0BEC5',
+            '#EA80FC',
+            '#EEEEEE',
+            '#CE93D8',
+            '#F48FB1',
+
+          ],
+          borderColor: [
+            '#FFCC80',
+            '#BCAAA4',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#B0BEC5',
+            '#EA80FC',
+            '#EEEEEE',
+            '#CE93D8',
+            '#F48FB1',
+          ],
           borderWidth: 1
         }]
       },
@@ -455,14 +541,107 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.canvas3 = document.getElementById("Pendingmaintainance");
       this.ctx3 = this.canvas3.getContext("2d");
-      this.mycanvas3 = new Chart(this.ctx3, this.data3);
+      if (this.Pendingmaintainance != undefined) {
+        this.Pendingmaintainance.destroy();
+      }
+      this.Pendingmaintainance = new Chart(this.ctx3, this.data3);
       this.isChartReadyToRender = true;
     }, 100)
   }
 
+  /********************************************* Installation Loc Wise Asset Graph Api **********************************/
+
+  installationLocWiseAsset() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.notificationService.installationLocWiseAsset().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status == true) {
+        this.installlocwiseassetgraphObj = res;
+        this.installlocwiseassetgraphObj.color = [];
+        if (this.installlocwiseassetgraphObj.installationLocationName.length > 15) {
+          for (let i = 0; i < (this.installlocwiseassetgraphObj.installationLocationName.length - 15); i++) {
+            this.installlocwiseassetgraphObj.color.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+          }
+        }
+        this.InstallLocAssetTitle = res.Title;
+      } else {
+        this.installlocwiseassetgraphObj.installationLocationName = ["Installation Location"];
+        this.installlocwiseassetgraphObj.assetCount = [0];
+        this.InstallLocAssetTitle = "Installation location wise assets";
+        this.installlocwiseassetgraphObj.color = ['#BCAAA4'];
+      }
+      this.setInstallationLocWiseAssetGraphData();
+    })
+  }
 
 
+  /********************************************* Installation Loc Wise Asset Graph ***************************************************/
 
+  setInstallationLocWiseAssetGraphData() {
+    this.data4 = {
+      type: 'doughnut',
+      data: {
+        labels: this.installlocwiseassetgraphObj.installationLocationName,
+        datasets: [{
+          label: 'Assets',
+          data: this.installlocwiseassetgraphObj.assetCount,
+          backgroundColor: [
+            '#BBDEFB',
+            '#BCAAA4',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#B0BEC5',
+            '#EA80FC',
+            '#EEEEEE',
+            '#CE93D8',
+            '#F48FB1',
+
+          ],
+          borderColor: [
+            '#64B5F6',
+            '#BCAAA4',
+            '#EF9A9A',
+            '#B39DDB',
+            '#9FA8DA',
+            '#90CAF9',
+            '#81D4FA',
+            '#80DEEA',
+            '#80CBC4',
+            '#A5D6A7',
+            '#B0BEC5',
+            '#EA80FC',
+            '#EEEEEE',
+            '#CE93D8',
+            '#F48FB1',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        legend: {
+          display: true
+        },
+        scales: {
+        }
+      }
+    };
+
+    setTimeout(() => {
+      this.canvas4 = document.getElementById("installationlocation");
+      this.ctx4 = this.canvas4.getContext("2d");
+      if (this.installationlocation != undefined) {
+        this.installationlocation.destroy();
+      }
+      this.installationlocation = new Chart(this.ctx4, this.data4);
+      this.isChartReadyToRender = true;
+    }, 100)
+  }
 
 
 }
