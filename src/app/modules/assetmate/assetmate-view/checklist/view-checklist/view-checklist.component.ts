@@ -146,8 +146,8 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
     this.deleteChecklistWithId = checklistId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
-      title: 'DELETE ASSET',
-      message: `Are your sure you want to delete checklist "${checklistTitle}" ?`,
+      title: 'DELETE AUDIT',
+      message: `Are your sure you want to delete audit "${checklistTitle}" ?`,
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }

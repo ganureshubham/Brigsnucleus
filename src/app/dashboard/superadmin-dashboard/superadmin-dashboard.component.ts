@@ -286,7 +286,7 @@ export class SuperadminDashboardComponent implements OnInit {
 
     doc.addImage(newCanvasImg, 'JPEG', 30, 30);
     doc.setFontSize(15);
-    doc.text(title, pageWidth / 2, pageHeight - 10, 'center');
+    doc.text(title, pageWidth / 2, 20, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
 
