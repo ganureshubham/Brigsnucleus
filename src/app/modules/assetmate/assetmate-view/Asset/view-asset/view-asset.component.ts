@@ -14,6 +14,7 @@ import jsPDF from 'jspdf';
 import { AssetAddComponent } from '../../Asset/view-asset/asset-add/asset-add.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AppImgDialogComponent } from '../../../../../shared/app-img-dialog/app-img-dialog.component';
+import { TransferAssetComponent } from './transfer-asset/transfer-asset.component';
 
 @Component({
   selector: 'app-view-asset',
@@ -410,6 +411,19 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
+  }
+
+  transferAssetLocation(asset) {
+    this.dialog.open(TransferAssetComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '25vw',
+      disableClose: true,
+      data: {
+        assetId: asset.assetId,
+        assetTitle: asset.assetTitle,
+        assetLocationType: asset.locationType,
+        asssetLocation: asset.installedLocation
+      }
+    })
   }
 
 }

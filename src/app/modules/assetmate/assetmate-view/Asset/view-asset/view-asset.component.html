@@ -85,6 +85,10 @@
                   <mat-icon matListIcon>edit</mat-icon>
                   <span i18n>Edit Asset</span>
                 </a>
+                <a mat-menu-item (click)="transferAssetLocation(visit)">
+                  <mat-icon matListIcon>room</mat-icon>
+                  <span i18n>Transfer Location</span>
+                </a>
                 <a mat-menu-item (click)="printQRcode(visit)">
                   <mat-icon matListIcon>print</mat-icon>
                   <span i18n>Print QRcode</span>

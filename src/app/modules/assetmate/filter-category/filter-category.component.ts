@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { AssetmateService } from '../service/assetmate.service';
+import { SpinnerService } from 'src/app/public service/spinner.service';
+import { MatSnackBar } from '@angular/material';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 interface CategoryNode {
 	categoryId: number;
@@ -32,6 +35,13 @@ export class FilterCategoryComponent implements OnInit {
 	final_TREE_DATA: CategoryNode[] = [];
 	isTreeDataReady: boolean = false;
 
+	arrAssetInstallationLocation: any = [];
+	arrAssetManufacturer: any = [];
+	arrAssetSupplier: any = [];
+	arrAssetDepartment: any = [];
+
+	filterFormGroup: FormGroup;
+
 	private transformer = (node: CategoryNode, level: number) => {
 		return {
 			expandable: !!node.childData && node.childData.length > 0,
@@ -52,13 +62,100 @@ export class FilterCategoryComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private assetmateService: AssetmateService
+		private assetmateService: AssetmateService,
+		private spinnerService: SpinnerService,
+		private snackBar: MatSnackBar,
+		private formBuilder: FormBuilder,
 	) {
 	}
 
 	ngOnInit() {
 		this.categoryID = this.route.snapshot.params['categoryId'];
 		this.loadAllCategories();
+		this.getfilterDropDownValues();
+		this.setFormControls();
+	}
+
+	setFormControls() {
+		this.filterFormGroup = this.formBuilder.group({
+			locationType: [''],
+			manufacturer: [''],
+			supplier: [''],
+			department: ['']
+		});
+	}
+
+	getfilterDropDownValues() {
+		this.getAllAssetInstallationLocationTypes();
+	}
+
+	getAllAssetInstallationLocationTypes() {
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.getLocationList().subscribe(res => {
+			this.getManufacturerList()
+			if (res.installationLocationType) {
+				this.arrAssetInstallationLocation = res.installationLocationType;
+			} else {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar(res.message);
+			}
+		},
+			error => {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			})
+	}
+
+	getManufacturerList() {
+		this.assetmateService.getManufList().subscribe(res => {
+			this.getsupplierList()
+			if (res.manufacturerList) {
+				this.arrAssetManufacturer = res.manufacturerList;
+			} else {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar(res.message);
+			}
+		},
+			error => {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			}
+		);
+
+	}
+
+	getsupplierList() {
+		this.assetmateService.getsuppList().subscribe(res => {
+			this.getDepartmentList();
+			if (res.supplierList) {
+				this.arrAssetSupplier = res.supplierList;
+			} else {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar(res.message);
+			}
+		},
+			error => {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			}
+		);
+	}
+
+	getDepartmentList() {
+		this.assetmateService.getDeptList().subscribe(res => {
+			if (res.department) {
+				this.arrAssetDepartment = res.department;
+				this.spinnerService.setSpinnerVisibility(false);
+			} else {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar(res.message);
+			}
+		},
+			error => {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			}
+		);
 	}
 
 	hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -95,6 +192,10 @@ export class FilterCategoryComponent implements OnInit {
 			this.dataSource.data = this.TREE_DATA.filter(d => d.title.toLocaleLowerCase().indexOf(searchedText.toLocaleLowerCase()) > -1);
 		}
 
+	}
+
+	showSnackBar(message: string) {
+		this.snackBar.open(message, '', { duration: 2000 });
 	}
 
 }

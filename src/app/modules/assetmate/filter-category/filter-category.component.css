@@ -1,3 +1,7 @@
 .mat-tree-node{
     cursor: pointer;
 }
+
+.vertical-padding-5{
+    padding: 15px 5px;
+}
