@@ -278,15 +278,15 @@ export class SuperadminDashboardComponent implements OnInit {
   printGraph(elementId: string, title: string) {
 
     let newCanvas = <HTMLCanvasElement>document.getElementById(elementId);;
-    let newCanvasImg = newCanvas.toDataURL();
+    let newCanvasImg = newCanvas.toDataURL('jpeg', 1.0);
 
-    let doc = new jsPDF('landscape');
+    let doc = new jsPDF('l', 'mm', [520, 300]);
     let pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
 
-    doc.addImage(newCanvasImg, 'JPEG', 30, 30);
-    doc.setFontSize(15);
-    doc.text(title, pageWidth / 2, 20, 'center');
+    doc.addImage(newCanvasImg, 'JPEG', 10, 15, pageWidth - 20, pageHeight - 20);
+    doc.setFontSize(13);
+    doc.text(title, pageWidth / 2, 10, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
 

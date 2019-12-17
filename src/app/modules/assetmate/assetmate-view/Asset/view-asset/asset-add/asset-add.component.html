@@ -31,7 +31,7 @@
             </mat-form-field>
           </div>
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
-            <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
+            <mat-form-field *ngIf="!isEdited" fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select name="installationLocationTypeIdFK" id="installationLocationTypeIdFK" #LocationType="ngModel"
                 [(ngModel)]="assetData.installationLocationTypeIdFK" placeholder="Select Installation Location Type"
                 required>
@@ -43,7 +43,7 @@
                 <mat-error *ngIf="LocationType.errors.required">Installation Location Type is required</mat-error>
               </mat-error>
             </mat-form-field>
-            <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
+            <mat-form-field *ngIf="!isEdited" fxFlex.gt-xs="32" fxFlex.xs="100">
               <input name="installedLocation" id="installedLocation" [(ngModel)]="assetData.installedLocation"
                 #InstallLoc="ngModel" matInput type="text" required placeholder="Installation Location">
               <mat-error *ngIf="assetform.submitted && InstallLoc.invalid">

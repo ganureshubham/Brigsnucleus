@@ -57,6 +57,8 @@ export class AssetmateDetailsComponent implements OnInit {
     this.assetmateService.getTabSelection('checklistTab').subscribe(res => {
       if (res == 1 && (this.selectedTab.value == 0)) {
         this.selectedTab = new FormControl(1);
+      } else if (res == 0) {
+        this.selectedTab = new FormControl(0);
       }
     });
   }
