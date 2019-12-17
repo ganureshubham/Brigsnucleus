@@ -65,6 +65,13 @@
           <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Model Number</mat-header-cell>
           <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
         </ng-container>
+        <ng-container matColumnDef="activateasset">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Activate Asset</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" (click)="$event.stopPropagation()" *matCellDef="let visit">
+            <mat-slide-toggle color="primary" [checked]="visit.isActive" (change)="activateAsset(visit.assetId,$event)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="Actions">
           <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
           <mat-cell (click)="$event.stopPropagation()" fxLayoutAlign="end center" *matCellDef="let visit">

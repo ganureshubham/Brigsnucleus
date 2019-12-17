@@ -41,7 +41,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   assetCode1: string = '1';
   mobileQuery: MediaQueryList;
-  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'Actions'];
+  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'activateasset', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
@@ -392,10 +392,31 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   }
 
+  activateAsset(assetId: number, value: any) {
+    let body = {
+      isActive: value.checked ? 1 : 0
+    }
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.assetActive(assetId, body).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.getAllAssets(this.categoryID, this.pageNumber);
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
+
 }
 
 export interface Asset {
   assetId: number;
+  isActive: string;
   assetCodeImage: string;
   assetCode: number;
   assetImage: string;
