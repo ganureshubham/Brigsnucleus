@@ -380,14 +380,14 @@ export class DashboardComponent implements OnInit {
           data: this.categwiseassetgraphObj.assetCount,
           backgroundColor: [
             '#E1BEE7',
-            '#FFCDD2',
-            '#BBDEFB',
             '#B2DFDB',
+            '#BBDEFB',
+            '#CFD8DC',
+            '#FFCDD2',
             '#F0F4C3',
             '#C8E6C9',
             '#FFCCBC',
             '#D7CCC8',
-            '#CFD8DC',
             '#DCEDC8',
             '#B2EBF2',
             '#C5CAE9',
@@ -397,14 +397,14 @@ export class DashboardComponent implements OnInit {
           ],
           borderColor: [
             '#CE93D8',
-            '#EF9A9A',
-            '#90CAF9',
             '#80CBC4',
+            '#90CAF9',
+            '#B0BEC5',
+            '#EF9A9A',
             '#E6EE9C',
             '#A5D6A7',
             '#FFAB91',
             '#BCAAA4',
-            '#B0BEC5',
             '#C5E1A5',
             '#80DEEA',
             '#9FA8DA',
@@ -491,6 +491,8 @@ export class DashboardComponent implements OnInit {
           label: 'Assets',
           data: this.categwisemaintainancegraphObj.assetCount,
           backgroundColor: [
+            '#F8BBD0',
+            '#C5CAE9',
             '#E1BEE7',
             '#FFCDD2',
             '#BBDEFB',
@@ -502,12 +504,12 @@ export class DashboardComponent implements OnInit {
             '#CFD8DC',
             '#DCEDC8',
             '#B2EBF2',
-            '#C5CAE9',
-            '#F8BBD0',
             '#FFCCBC',
             '#FFF9C4'
           ],
           borderColor: [
+            '#F48FB1',
+            '#9FA8DA',
             '#CE93D8',
             '#EF9A9A',
             '#90CAF9',
@@ -519,8 +521,6 @@ export class DashboardComponent implements OnInit {
             '#B0BEC5',
             '#C5E1A5',
             '#80DEEA',
-            '#9FA8DA',
-            '#F48FB1',
             '#FFAB91',
             '#FFF59D'
           ],
@@ -584,38 +584,38 @@ export class DashboardComponent implements OnInit {
           label: 'Assets',
           data: this.installlocwiseassetgraphObj.assetCount,
           backgroundColor: [
-            '#E1BEE7',
-            '#FFCDD2',
-            '#BBDEFB',
-            '#B2DFDB',
-            '#F0F4C3',
             '#C8E6C9',
-            '#FFCCBC',
-            '#D7CCC8',
             '#CFD8DC',
             '#DCEDC8',
             '#B2EBF2',
             '#C5CAE9',
             '#F8BBD0',
             '#FFCCBC',
-            '#FFF9C4'
+            '#FFF9C4',
+            '#F0F4C3',
+            '#FFCCBC',
+            '#D7CCC8',
+            '#E1BEE7',
+            '#FFCDD2',
+            '#BBDEFB',
+            '#B2DFDB'
           ],
           borderColor: [
-            '#CE93D8',
-            '#EF9A9A',
-            '#90CAF9',
-            '#80CBC4',
-            '#E6EE9C',
             '#A5D6A7',
-            '#FFAB91',
-            '#BCAAA4',
             '#B0BEC5',
             '#C5E1A5',
             '#80DEEA',
             '#9FA8DA',
             '#F48FB1',
             '#FFAB91',
-            '#FFF59D'
+            '#FFF59D',
+            '#E6EE9C',
+            '#FFAB91',
+            '#BCAAA4',
+            '#CE93D8',
+            '#EF9A9A',
+            '#90CAF9',
+            '#80CBC4'
           ],
           borderWidth: 1
         }]
@@ -643,18 +643,17 @@ export class DashboardComponent implements OnInit {
   printGraph(elementId: string, title: string) {
 
     let newCanvas = <HTMLCanvasElement>document.getElementById(elementId);;
-    let newCanvasImg = newCanvas.toDataURL();
+    let newCanvasImg = newCanvas.toDataURL('jpeg', 1.0);
 
-    let doc = new jsPDF('landscape');
+    let doc = new jsPDF('l', 'mm', [520, 300]);
     let pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
 
-    doc.addImage(newCanvasImg, 'JPEG', 30, 30);
-    doc.setFontSize(15);
-    doc.text(title, pageWidth / 2, 20, 'center');
+    doc.addImage(newCanvasImg, 'JPEG', 10, 15, pageWidth - 20, pageHeight - 20);
+    doc.setFontSize(13);
+    doc.text(title, pageWidth / 2, 10, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
-
   }
 
 

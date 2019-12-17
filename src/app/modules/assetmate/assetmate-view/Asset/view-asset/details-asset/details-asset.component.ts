@@ -98,6 +98,7 @@ export class DetailsAssetComponent implements OnInit {
 
 	backToList() {
 		// this.router.navigate([`/assetmate/assetmate-details/${this.categoryId}`]);
+		this.assetmateService.setTabSelection('checklistTab', 0);
 		this.location.back();
 	}
 
