@@ -19,11 +19,13 @@ export class UserService {
   /******************************************************* Search User*******************************************************************/
   searchUser(departmentId: number, keyword: any): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/userSearch?departmentId=${departmentId}&keyword=${keyword}`);
-
   }
 
+  /*********************************************************** Activate/De-activate user *******************************************************************/
 
-
+  activateUser(userId: number, body: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `users/setUserIsActiveStatus/${userId}`, body);
+  }
 
   /*********************************************************** Get All Departments ************************************************/
   getAllDepts(): Observable<any> {
@@ -45,7 +47,6 @@ export class UserService {
 
   editUser(userId: number, editedUserData: any): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `users/updateUser/` + userId, editedUserData);
-
   }
 
   /*********************************************************** Delete Selected User *******************************************************************/
