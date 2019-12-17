@@ -41,6 +41,7 @@ export class FilterCategoryComponent implements OnInit {
 	arrAssetDepartment: any = [];
 
 	filterFormGroup: FormGroup;
+	filterBadge = 0;
 
 	private transformer = (node: CategoryNode, level: number) => {
 		return {
@@ -78,10 +79,10 @@ export class FilterCategoryComponent implements OnInit {
 
 	setFormControls() {
 		this.filterFormGroup = this.formBuilder.group({
-			locationType: [''],
-			manufacturer: [''],
-			supplier: [''],
-			department: ['']
+			locationType: [0],
+			manufacturer: [0],
+			supplier: [0],
+			department: [0]
 		});
 	}
 
@@ -95,6 +96,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getManufacturerList()
 			if (res.installationLocationType) {
 				this.arrAssetInstallationLocation = res.installationLocationType;
+				this.arrAssetInstallationLocation.push(
+					{
+						installationLocationTypeIdFK: 0,
+						title: "All"
+					}
+				);
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -111,6 +118,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getsupplierList()
 			if (res.manufacturerList) {
 				this.arrAssetManufacturer = res.manufacturerList;
+				this.arrAssetManufacturer.push(
+					{
+						manufacturerId: 0,
+						title: "All"
+					}
+				);
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -129,6 +142,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getDepartmentList();
 			if (res.supplierList) {
 				this.arrAssetSupplier = res.supplierList;
+				this.arrAssetSupplier.push(
+					{
+						supplierId: 0,
+						supplierName: "All"
+					}
+				);
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -145,6 +164,12 @@ export class FilterCategoryComponent implements OnInit {
 		this.assetmateService.getDeptList().subscribe(res => {
 			if (res.department) {
 				this.arrAssetDepartment = res.department;
+				this.arrAssetDepartment.push(
+					{
+						departmentId: 0,
+						departmentTitle: "All"
+					}
+				);
 				this.spinnerService.setSpinnerVisibility(false);
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
@@ -190,6 +215,25 @@ export class FilterCategoryComponent implements OnInit {
 			this.dataSource.data = this.TREE_DATA;
 		} else {
 			this.dataSource.data = this.TREE_DATA.filter(d => d.title.toLocaleLowerCase().indexOf(searchedText.toLocaleLowerCase()) > -1);
+		}
+
+	}
+
+	filterUpdated() {
+
+		this.filterBadge = 0;
+
+		if (this.filterFormGroup.get('locationType').value > 0) {
+			this.filterBadge++;
+		}
+		if (this.filterFormGroup.get('manufacturer').value > 0) {
+			this.filterBadge++;
+		}
+		if (this.filterFormGroup.get('supplier').value > 0) {
+			this.filterBadge++;
+		}
+		if (this.filterFormGroup.get('department').value > 0) {
+			this.filterBadge++;
 		}
 
 	}

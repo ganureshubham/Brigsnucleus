@@ -51,7 +51,8 @@ import {
   MatTooltipModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatTreeModule
+  MatTreeModule,
+  MatBadgeModule
 } from '@angular/material';
 import { config, from } from 'rxjs';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -94,6 +95,7 @@ import { ManageOrganizationComponent } from './shared/manage-organization/manage
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatBadgeModule
   ],
   declarations: [ConfirmDialogComponent],
   imports: []

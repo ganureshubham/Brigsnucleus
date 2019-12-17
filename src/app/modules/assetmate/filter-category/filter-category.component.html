@@ -2,41 +2,52 @@
 
   <mat-accordion>
     <mat-expansion-panel>
-      <mat-expansion-panel-header style="padding-left:0px;">
-        <span class="page-title" style="padding-left:18px">Filter</span>
+
+      <mat-expansion-panel-header style="padding:10px 22px 10px 18px;">
+        <p>
+          <span class="page-title" [matBadgeHidden]="filterBadge == 0" [matBadge]="filterBadge"
+            matBadgeOverlap="false">Filter</span>
+        </p>
       </mat-expansion-panel-header>
-      <div fxLayout="column" fxLayoutGap="10px" class="vertical-padding-5">
 
-        <form [formGroup]="filterFormGroup">
+      <form [formGroup]="filterFormGroup">
+        <div fxLayout="column" fxLayoutGap="10px" class="vertical-padding-5">
+          <mat-form-field>
+            <mat-select placeholder="Choose Location Type" required formControlName="locationType"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let location of arrAssetInstallationLocation"
+                [value]="location.installationLocationTypeIdFK">
+                {{location.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Manufacturer" required formControlName="manufacturer"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let manufacturer of arrAssetManufacturer" [value]="manufacturer.manufacturerId">
+                {{manufacturer.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Supplier" required formControlName="supplier"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let supplier of arrAssetSupplier" [value]="supplier.supplierId">
+                {{supplier.supplierName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Department" required formControlName="department"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let department of arrAssetDepartment" [value]="department.departmentId">
+                {{department.departmentTitle}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
 
-          <mat-select placeholder="Choose Location Type" required formControlName="locationType">
-            <mat-option *ngFor="let location of arrAssetInstallationLocation"
-              [value]="location.installationLocationTypeIdFK">
-              {{location.title}}
-            </mat-option>
-          </mat-select>
-
-          <mat-select placeholder="Choose Manufacturer" required formControlName="manufacturer">
-            <mat-option *ngFor="let manufacturer of arrAssetManufacturer" [value]="manufacturer.manufacturerIdFK">
-              {{manufacturer.title}}
-            </mat-option>
-          </mat-select>
-
-          <mat-select placeholder="Choose Supplier" required formControlName="supplier">
-            <mat-option *ngFor="let supplier of arrAssetSupplier" [value]="supplier.supplierIdFK">
-              {{supplier.supplierName}}
-            </mat-option>
-          </mat-select>
-
-          <mat-select placeholder="Choose Department" required formControlName="department">
-            <mat-option *ngFor="let department of arrAssetDepartment" [value]="department.departmentIdFK">
-              {{department.departmentTitle}}
-            </mat-option>
-          </mat-select>
-
-        </form>
-
-      </div>
     </mat-expansion-panel>
   </mat-accordion>
 
