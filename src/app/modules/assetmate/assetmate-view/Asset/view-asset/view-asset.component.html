@@ -68,7 +68,8 @@
         <ng-container matColumnDef="activateasset">
           <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Activate Asset</mat-header-cell>
           <mat-cell fxHide.xs fxLayoutAlign="center center" (click)="$event.stopPropagation()" *matCellDef="let visit">
-            <mat-slide-toggle color="primary" (click)="activateAsset()"></mat-slide-toggle>
+            <mat-slide-toggle color="primary" [checked]="visit.isActive" (change)="activateAsset(visit.assetId,$event)">
+            </mat-slide-toggle>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Actions">

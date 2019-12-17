@@ -56,6 +56,12 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetQrCodeDetailsList/${categoryId}`);
   }
 
+  /*********************************************************** Activate/De-activate Asset *******************************************************************/
+
+  assetActive(assetId: number, body: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsActiveStatus/${assetId}`, body);
+  }
+
   /*********************************************************** Get All Documents *************************************/
 
   getAllAssetDocuments(assetId: number, pageNo: number): Observable<any> {
