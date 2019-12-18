@@ -57,12 +57,8 @@ export class AssetmateService {
 
   /*********************************************************** Search Assets *******************************************************************/
 
-  searchAsset(categoryId, keyword) {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/AssetSearch?categoryId=${categoryId}&keyword=${keyword}`);
-  }
-
-  filterAsset(body) {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/filterAllAssets?categoryId=${body.categoryId}&manufacturerIdFK=${body.manufacturerIdFK}&supplierIdFK=${body.supplierIdFK}&departmentIdFK=${body.departmentIdFK}&installationLocationTypeIdFK=${body.installationLocationTypeIdFK}`);
+  searchAsset(body, keyword) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/filterAllAssetsSearch?categoryId=${body.categoryId}&keyword=${body.keyword}&manufacturerIdFK=${body.manufacturerIdFK}&supplierIdFK=${body.supplierIdFK}&departmentIdFK=${body.departmentIdFK}&installationLocationTypeIdFK=${body.installationLocationTypeIdFK}`);
   }
 
   /*********************************************************** Get All Assets List ***********************************************************/

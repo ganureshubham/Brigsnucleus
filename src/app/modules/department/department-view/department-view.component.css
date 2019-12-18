@@ -18,3 +18,7 @@
 .mat-tree-node {
   cursor: pointer;
 }
+
+.portal-widget{
+  padding: 10px;
+}
