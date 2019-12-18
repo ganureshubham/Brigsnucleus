@@ -37,6 +37,7 @@ import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dia
 import { SharedModule } from '../../shared/shared.module';
 import { ShuffleChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/shuffle-checklist-questions/shuffle-checklist-questions.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TransferAssetComponent } from './assetmate-view/Asset/view-asset/transfer-asset/transfer-asset.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EditChecklistQuestionComponent,
     DetailsChecklistQuestionComponent,
     ShuffleChecklistQuestionsComponent,
+    TransferAssetComponent,
 
   ],
   imports: [
@@ -91,9 +93,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AddAssignUserComponent,
     AddCategoryDocumentComponent,
     ChecklistAddComponent,
-    AppImgDialogComponent
-
-
+    AppImgDialogComponent,
+    TransferAssetComponent
   ]
 
 })

@@ -14,10 +14,26 @@
                         <p class="title_header mat-subheading-2 tal">{{assetData.assetTitle}}</p>
                     </div>
                 </div>
-                <div fxFlex.xs="100" class="dfe add_action">
-                    <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
-                        <mat-icon>print</mat-icon>Print QRCode
-                    </button>
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign.gt-xs="center center">
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign.xs="space-between center"
+                        class="slideer-sw-container">
+                        <span>Activate</span>
+                        <mat-slide-toggle color="primary" [checked]="assetData.isActive"
+                            (change)="activateAsset($event)">
+                        </mat-slide-toggle>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign.xs="space-between center"
+                        class="slideer-sw-container">
+                        <span>Retire</span>
+                        <mat-slide-toggle color="primary" [checked]="assetData.isRetired"
+                            (change)="retireAsset($event)">
+                        </mat-slide-toggle>
+                    </div>
+                    <div fxFlex.xs="100" class="dfe add_action">
+                        <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
+                            <mat-icon>print</mat-icon>Print QRCode
+                        </button>
+                    </div>
                 </div>
             </div>
             <div>

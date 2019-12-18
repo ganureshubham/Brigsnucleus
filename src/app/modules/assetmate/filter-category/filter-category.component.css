@@ -1,3 +1,14 @@
 .mat-tree-node{
     cursor: pointer;
 }
+
+.vertical-padding-5{
+    padding: 15px 5px;
+}
+
+.local-page-title{
+    font-size: 20px;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 500;
+}

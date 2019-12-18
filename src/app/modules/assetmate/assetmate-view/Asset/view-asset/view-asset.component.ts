@@ -14,6 +14,7 @@ import jsPDF from 'jspdf';
 import { AssetAddComponent } from '../../Asset/view-asset/asset-add/asset-add.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AppImgDialogComponent } from '../../../../../shared/app-img-dialog/app-img-dialog.component';
+import { TransferAssetComponent } from './transfer-asset/transfer-asset.component';
 
 @Component({
   selector: 'app-view-asset',
@@ -41,7 +42,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   assetCode1: string = '1';
   mobileQuery: MediaQueryList;
-  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'activateasset', 'Actions'];
+  displayedColumns: string[] = ['assetTitle', 'assetImage', 'assetCodeImage', 'companyAssetNo', 'assetCode', 'modelNumber', 'activateasset', 'retireAsset', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
@@ -52,6 +53,11 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   animal: any;
   deleteAssetWithId: number;
+
+  manufacturerIdFK = 0;
+  supplierIdFK = 0;
+  departmentIdFK = 0;
+  installationLocationTypeIdFK = 0;
 
   constructor(private http: HttpClient,
     media: MediaMatcher,
@@ -78,16 +84,61 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.categoryID = this.route.snapshot.params['categoryId'];
-    this.getAllAssets(this.categoryID, this.pageNumber);
+    this.subscribeToGetFilterData();
+    this.manufacturerIdFK = 0;
+    this.supplierIdFK = 0;
+    this.departmentIdFK = 0;
+    this.installationLocationTypeIdFK = 0;
+    this.getAllAssets(
+      this.categoryID,
+      this.manufacturerIdFK,
+      this.supplierIdFK,
+      this.departmentIdFK,
+      this.installationLocationTypeIdFK,
+      this.pageNumber
+    );
+  }
+
+  subscribeToGetFilterData() {
+    this.assetmateService.getFilterCriteria().subscribe(
+      resp => {
+        this.installationLocationTypeIdFK = resp.locationType;
+        this.manufacturerIdFK = resp.manufacturer;
+        this.supplierIdFK = resp.supplier;
+        this.departmentIdFK = resp.department;
+        this.getAllAssets(
+          this.categoryID,
+          this.manufacturerIdFK,
+          this.supplierIdFK,
+          this.departmentIdFK,
+          this.installationLocationTypeIdFK,
+          this.pageNumber
+        );
+      }
+    );
   }
 
   ngOnDestroy(): void { }
 
   /*********************************************************** Get All Assets *******************************************************************/
 
-  getAllAssets(categoryId: number, pageNo: any) {
+  getAllAssets(
+    categoryId: number,
+    manufacturerIdFK: number,
+    supplierIdFK: number,
+    departmentIdFK: number,
+    installationLocationTypeIdFK: number,
+    pageNo: number
+  ) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.assetmateService.getAllAssets(categoryId, pageNo).subscribe(res => {
+    this.assetmateService.getAllAssets(
+      categoryId,
+      manufacturerIdFK,
+      supplierIdFK,
+      departmentIdFK,
+      installationLocationTypeIdFK,
+      pageNo
+    ).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.asset) {
         if (res.currentPage == 0 && res.totalCount == 0) {
@@ -119,9 +170,15 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   pageChange(pageNo: any) {
     this.loading = true;
     this.page = pageNo.pageIndex;
-    this.getAllAssets(this.categoryID, this.page);
+    this.getAllAssets(
+      this.categoryID,
+      this.manufacturerIdFK,
+      this.supplierIdFK,
+      this.departmentIdFK,
+      this.installationLocationTypeIdFK,
+      this.page
+    );
   }
-
 
   /*********************************************************** Search Category *******************************************************************/
 
@@ -144,7 +201,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     } else {
       if (this.nonzero == true) {
         this.nonzero = false;
-        this.getAllAssets(this.categoryID, this.pageNumber);
+        this.getAllAssets(
+          this.categoryID,
+          this.manufacturerIdFK,
+          this.supplierIdFK,
+          this.departmentIdFK,
+          this.installationLocationTypeIdFK,
+          this.page
+        );
       }
     }
   }
@@ -159,7 +223,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.getAllAssets(this.categoryID, this.pageNumber);
+        this.getAllAssets(
+          this.categoryID,
+          this.manufacturerIdFK,
+          this.supplierIdFK,
+          this.departmentIdFK,
+          this.installationLocationTypeIdFK,
+          this.page
+        );
       }
     });
   }
@@ -208,7 +279,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
             this.assetmateService.setBadgeUpdateAction('assetList', true);
-            this.getAllAssets(this.categoryID, this.page);
+            this.getAllAssets(
+              this.categoryID,
+              this.manufacturerIdFK,
+              this.supplierIdFK,
+              this.departmentIdFK,
+              this.installationLocationTypeIdFK,
+              this.page
+            );
 
           }, error => {
             this.showSnackBar("Something went wrong..!!");
@@ -228,7 +306,14 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.getAllAssets(this.categoryID, this.pageNumber);
+        this.getAllAssets(
+          this.categoryID,
+          this.manufacturerIdFK,
+          this.supplierIdFK,
+          this.departmentIdFK,
+          this.installationLocationTypeIdFK,
+          this.page
+        );
       }
     });
 
@@ -392,24 +477,76 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   }
 
-  activateAsset(assetId: number, value: any) {
+  activateAsset(assetId: number, value: any, index) {
+
+    this.dataSource[index].isActive = value.checked;
+    this.parentdata[index].isActive = value.checked;
+
     let body = {
       isActive: value.checked ? 1 : 0
     }
+
     this.spinnerService.setSpinnerVisibility(true);
+
     this.assetmateService.assetActive(assetId, body).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.status) {
-        this.showSnackBar(res.message);
-        this.getAllAssets(this.categoryID, this.pageNumber);
-      } else {
-        this.showSnackBar(res.message);
+      this.showSnackBar(res.message);
+      if (!res.status) {
+        this.dataSource[index].isActive = !value.checked;
+        this.parentdata[index].isActive = !value.checked;
       }
     },
       error => {
+        this.dataSource[index].isActive = !value.checked;
+        this.parentdata[index].isActive = !value.checked;
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
+  }
+
+  retireAsset(asset: any, value: any, index) {
+
+    this.dataSource[index].isRetired = value.checked;
+    this.parentdata[index].isRetired = value.checked;
+
+    let body = {
+      isRetired: value.checked ? 1 : 0
+    }
+
+    this.spinnerService.setSpinnerVisibility(true);
+
+    this.assetmateService.assetRetire(asset.assetId, body).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
+
+      if (!res.status) {
+        this.dataSource[index].isRetired = !value.checked;
+        this.parentdata[index].isRetired = !value.checked;
+      }
+
+    },
+      error => {
+
+        this.dataSource[index].isRetired = !value.checked;
+        this.parentdata[index].isRetired = !value.checked;
+
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+
+      })
+  }
+
+  transferAssetLocation(asset) {
+    this.dialog.open(TransferAssetComponent, {
+      width: this.mobileQuery.matches ? '90vw' : '25vw',
+      disableClose: true,
+      data: {
+        assetId: asset.assetId,
+        assetTitle: asset.assetTitle,
+        assetLocationType: asset.locationType,
+        asssetLocation: asset.installedLocation
+      }
+    })
   }
 
 }

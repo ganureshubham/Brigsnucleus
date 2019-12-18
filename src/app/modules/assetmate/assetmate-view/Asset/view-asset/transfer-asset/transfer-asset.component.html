@@ -1,0 +1,39 @@
+<div class="page-title">Transfer Asset Location</div>
+<div mat-dialog-content>
+  <div class="asset-info-container" fxLayout="column" fxLayoutGap="10px">
+
+    <div>
+      <h4 class="title">Asset Title</h4>
+      <p class="sub-title">{{assetPrimaryDetails.assetTitle}}</p>
+    </div>
+
+    <div>
+      <h4 class="title">Currrent Location</h4>
+      <p class="sub-title">{{assetPrimaryDetails.assetLocationType + ' - ' +assetPrimaryDetails.asssetLocation}}</p>
+    </div>
+
+    <form [formGroup]="insallationLationFormGroup" fxLayout="column" class="padding-vertical-5">
+      <h4 class="title-transfer">Transfer To Location:</h4>
+      <mat-form-field>
+        <mat-select placeholder="Choose Installation Location Type" required formControlName="locationType">
+          <mat-option *ngFor="let location of arrAssetInstallationLocation"
+            [value]="location.installationLocationTypeIdFK">
+            {{location.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error>Installation Location Type is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput type="text" required placeholder="Installation Location"
+          formControlName="installationLocation" rows="3"></textarea>
+        <mat-error>Please enter only Characters</mat-error>
+      </mat-form-field>
+    </form>
+
+  </div>
+</div>
+<div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxLayoutGap="10px">
+  <button fxFlex.xs=100 mat-stroked-button (click)="closeDialog()">Cancel</button>
+  <button fxFlex.xs=100 mat-raised-button color="primary" (click)="transferAssetLocation()" cdkFocusInitial
+    [disabled]="!insallationLationFormGroup.valid">Transfer Location</button>
+</div>

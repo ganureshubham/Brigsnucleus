@@ -76,6 +76,10 @@ export class AssetmateDetailsComponent implements OnInit {
     return this.selectedTab.value;
   }
 
+  filterChanged(event) {
+
+  }
+
 }
 
 
