@@ -1,62 +1,64 @@
-<mat-card class="width_90 margin_auto innerpage_title">
-  <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap.xs="12px">
-    <div fxLayoutAlign.xs="space-around center">
-      <p class="title_header mat-subheading-2 dfs">All Asset Categories</p>
+<div class="portal-widget">
+  <mat-card class="width_90 margin_auto innerpage_title">
+    <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap.xs="12px">
+      <div fxLayoutAlign.xs="space-around center">
+        <p class="title_header mat-subheading-2 dfs">All Asset Categories</p>
+      </div>
+      <div>
+        <button fxFlex.xs="100" mat-button (click)="addNewAssetCategory()" class="bg_white_grey btn_style adddept">
+          <mat-icon>add</mat-icon>Add Asset Category
+        </button>
+      </div>
     </div>
-    <div>
-      <button fxFlex.xs="100" mat-button (click)="addNewAssetCategory()" class="bg_white_grey btn_style adddept">
-        <mat-icon>add</mat-icon>Add Asset Category
-      </button>
-    </div>
-  </div>
-</mat-card>
-<mat-card class="department-tree-container">
-  <!-- class="width_90 margin_auto department" -->
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-      <mat-list role="list" class="border_bottom">
-        <mat-list-item role="listitem">
-          <button mat-icon-button disabled></button>
-          {{node.name}}
-        </mat-list-item>
-        <mat-list-item role="listitem" class="flex_end">
-          <button matTooltip="Add Asset Category" mat-icon-button (click)="addAssetCategory(node)">
-            <mat-icon class="mat-icon">add</mat-icon>
-          </button>
-          <button matTooltip="Edit Asset Category " mat-icon-button (click)="editAssetCategory(node)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button matTooltip="Delete Asset Category" mat-icon-button
-            (click)="deleteAssetCategory(node.categoryId,node.name)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
-    </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-      <mat-list role="list" class="border_bottom">
-        <mat-list-item role="listitem">
-          <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-            </mat-icon>
-          </button>
-          {{node.name}}
-        </mat-list-item>
-        <mat-list-item role="listitem" class="flex_end">
-          <button matTooltip="Add Asset Category" mat-icon-button (click)="addAssetCategory(node)">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button matTooltip="Edit Asset Category" mat-icon-button (click)="editAssetCategory(node)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button matTooltip="Delete Asset Category" mat-icon-button
-            (click)="deleteAssetCategory(node.categoryId,node.name)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
-    </mat-tree-node>
-  </mat-tree>
-  <div class="noDataFound" *ngIf="isNoRecord()">No records found</div>
-</mat-card>
+  </mat-card>
+  <mat-card class="department-tree-container">
+    <!-- class="width_90 margin_auto department" -->
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <mat-list role="list" class="border_bottom">
+          <mat-list-item role="listitem">
+            <button mat-icon-button disabled></button>
+            {{node.name}}
+          </mat-list-item>
+          <mat-list-item role="listitem" class="flex_end">
+            <button matTooltip="Add Asset Category" mat-icon-button (click)="addAssetCategory(node)">
+              <mat-icon class="mat-icon">add</mat-icon>
+            </button>
+            <button matTooltip="Edit Asset Category " mat-icon-button (click)="editAssetCategory(node)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matTooltip="Delete Asset Category" mat-icon-button
+              (click)="deleteAssetCategory(node.categoryId,node.name)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <mat-list role="list" class="border_bottom">
+          <mat-list-item role="listitem">
+            <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            {{node.name}}
+          </mat-list-item>
+          <mat-list-item role="listitem" class="flex_end">
+            <button matTooltip="Add Asset Category" mat-icon-button (click)="addAssetCategory(node)">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button matTooltip="Edit Asset Category" mat-icon-button (click)="editAssetCategory(node)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matTooltip="Delete Asset Category" mat-icon-button
+              (click)="deleteAssetCategory(node.categoryId,node.name)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-tree-node>
+    </mat-tree>
+    <div class="noDataFound" *ngIf="isNoRecord()">No records found</div>
+  </mat-card>
+</div>

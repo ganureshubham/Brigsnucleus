@@ -36,7 +36,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   parentdata: any;
   result: string = '';
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   assetForQRcode: any = {};
   allAssetForQRcode: any = [];
   nonzero: boolean = false;
@@ -185,7 +185,17 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   searchAsset(keyword) {
     if (keyword.length > 0) {
       this.nonzero = true;
-      this.assetmateService.searchAsset(this.categoryID, keyword).subscribe(res => {
+
+      let body: any = {
+        categoryId: this.categoryID,
+        keyword: keyword,
+        manufacturerIdFK: this.manufacturerIdFK,
+        supplierIdFK: this.supplierIdFK,
+        departmentIdFK: this.departmentIdFK,
+        installationLocationTypeIdFK: this.installationLocationTypeIdFK
+      };
+
+      this.assetmateService.searchAsset(body, keyword).subscribe(res => {
         if (res && res.data) {
           this.dataSource = res.data;
           this.isNoRecordFound = false;
