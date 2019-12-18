@@ -151,12 +151,6 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div fxLayout="row">
-            <mat-form-field fxFlex="100">
-              <textarea name="description" id="description" [(ngModel)]="assetData.description" matInput #desc="ngModel"
-                placeholder="Description"></textarea>
-            </mat-form-field>
-          </div>
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
             <div class="md-form" fxFlex.gt-xs="48">
               <label>User Guide Book</label>
@@ -196,6 +190,12 @@
                 <div class="error hide text-error">{{imageerror}}</div>
               </div>
             </div>
+          </div>
+          <div fxLayout="row">
+            <mat-form-field fxFlex="100">
+              <textarea name="description" id="description" [(ngModel)]="assetData.description" matInput #desc="ngModel"
+                placeholder="Description"></textarea>
+            </mat-form-field>
           </div>
         </div>
       </div>

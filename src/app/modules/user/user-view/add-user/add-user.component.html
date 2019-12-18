@@ -69,6 +69,7 @@
               <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
             </mat-error>
             <mat-error *ngIf="pass.errors?.minlength">Password must be atleast 6 Characters long! </mat-error>
+            <mat-hint>Password length must be minimum 6 characters</mat-hint>
           </mat-form-field>
           <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
             <mat-select name="userRoleIdFK" id="userRoleIdFK" [(ngModel)]="userData.userRoleIdFK"

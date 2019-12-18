@@ -26,9 +26,6 @@ export class ChecklistQuestionListComponent implements OnInit {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
 
-
-
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -46,7 +43,6 @@ export class ChecklistQuestionListComponent implements OnInit {
   }
 
   getChecklistTitle(checklistId: number) {
-
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getChecklistPrimaryInfoByChecklistId(checklistId).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
@@ -59,15 +55,13 @@ export class ChecklistQuestionListComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       }
     )
-
   }
 
   getChecklistQuestions(checklistId: number, pageNo: number) {
-
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getChecklistQuestions(checklistId, pageNo).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
-      // console.log(resp)
+      console.log(resp)
       if (resp.question) {
         if (resp.currentPage == 0 && resp.totalCount == 0) {
           this.isNoRecordFound = true;
@@ -87,19 +81,18 @@ export class ChecklistQuestionListComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       }
     )
-
   }
 
-
   getQuestionOption(questionOptions) {
-    // console.log(questionOptions);
     let allquestionOptions = "";
-    for (let questionOption of questionOptions) {
-      allquestionOptions += questionOption.optionTitle + ', ';
-
+    for (let i = 0; i < questionOptions.length; i++) {
+      if (i < questionOptions.length - 1) {
+        allquestionOptions += questionOptions[i].optionTitle + ', ';
+      } else {
+        allquestionOptions += questionOptions[i].optionTitle + ' ';
+      }
     }
-    return allquestionOptions;
-
+    return allquestionOptions
   }
 
   addNewChecklistQuestion() {
@@ -113,7 +106,6 @@ export class ChecklistQuestionListComponent implements OnInit {
 
   deleteChecklistQuestion(questionId, questionDescription) {
     this.deleteQuestionWithId = questionId;
-
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE CHECKLIST QUESTION',
@@ -121,30 +113,22 @@ export class ChecklistQuestionListComponent implements OnInit {
       positiveBtnLable: "Yes",
       negativeBtnLable: "Cancel"
     }
-
     this.dialogService.setDialogVisibility(appDialogData);
-
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
       this.dialogService.getUserDialogAction().subscribe(userAction => {
         if (userAction == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (userAction == 1) {
-
           this.dialogService.setUserDialogAction(0);
-
           //User has approved delete operation 
           this.spinnerService.setSpinnerVisibility(true);
           this.assetmateService.deleteCheckListQuestion(this.deleteQuestionWithId).subscribe((res: any) => {
-
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
-
             //------------------Update Badge-----------------------
             this.assetmateService.setBadgeUpdateAction('questionList', true);
-
             this.getChecklistQuestions(this.checklistId, this.pageNumber);
-
           }, error => {
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar("Something went wrong..!!");

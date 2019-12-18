@@ -47,16 +47,14 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   deptId: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   nonzero: boolean = false;
   dialogData: userDialogData;
-
-
 
   displayedColumns: string[] = ['userName', 'profileImage', 'departmentTitle', 'mobileNumber', 'emailId', 'activateuser', 'Actions'];
   paidDataSource: MatTableDataSource<User> = new MatTableDataSource();
 
-  //@ViewChild('paidPaginator') paidPaginator: MatPaginator;
+  //@ViewChild('paidPaginator') paidPaginator: MatPaginator; 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   previousSubscription: Subscription;
@@ -64,7 +62,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   message: any = {};
   DepartmentObj: string = '';
   userId: number;
-
 
   constructor(private http: HttpClient,
     private userService: UserService,
@@ -104,8 +101,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
-
   isNoRecord() {
     return this.totalCount == 0;
   }
@@ -142,8 +137,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
-
   /***********************************************************Search Users *******************************************************************/
 
   searchUser(keyword) {
@@ -170,9 +163,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
       }
     }
   }
-
-
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -221,11 +211,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
         this.getAllUsers(this.message.departmentId, this.pageNumber);
       }
     })
-
-
   }
-
-
 
   /*********************************************************** Delete Particular User *******************************************************************/
 
@@ -281,15 +267,37 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
       data: this.dialogData,
       width: '500px',
       disableClose: true
-
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllUsers(this.message.departmentId, this.pageNumber);
       }
     })
+  }
 
+  /*********************************************************** Activate/Deactivate User *******************************************************************/
+
+  activateUser(userId: number, value: any, index: any) {
+    this.paidDataSource[index].isActive = value.checked;
+    let body = {
+      isActive: value.checked ? 1 : 0
+    }
+    this.spinnerService.setSpinnerVisibility(true);
+    this.userService.activateUser(userId, body).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        this.paidDataSource[index].isActive = value.checked;
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.paidDataSource[index].isActive = !value.checked;
+      }
+      this.showSnackBar(res.message);
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+        this.paidDataSource[index].isActive = !value.checked;
+      })
   }
 
 }
@@ -298,6 +306,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 export interface User {
   userId: number,
   firstName: string,
+  isActive: string,
   lastName: string,
   profileImage: string,
   userRoleIdFK: number,

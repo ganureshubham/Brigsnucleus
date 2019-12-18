@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-role',
@@ -18,6 +19,9 @@ export class AddRoleComponent implements OnInit {
   roleData: any = {};
   uploadingLoader: boolean = false;
   cancelbtn = 0;
+  featureList: any;
+  features: any = [];
+  selectAll: boolean = true;
 
   constructor(private router: Router,
     private roleService: RoleService,
@@ -40,16 +44,57 @@ export class AddRoleComponent implements OnInit {
       this.isEdited = true;
       this.formTitle = `Edit User Role`;
     }
+    this.getFeatureList();
   }
 
-  /*********************************************************** Add New Asset *******************************************************************/
-  addRole(value) {
+  chkAllChange(event: any) {
+    this.selectAll = !this.selectAll;
+    if (this.selectAll) {
+      this.featureList.map((value) => {
+        value.isChecked = true;
+      })
+    } else {
+      this.featureList.map((value) => {
+        value.isChecked = false;
+      })
+    }
+  }
+
+  valueChange(index: any, value: any) {
+    this.featureList[index].isChecked = value.checked;
+    for (let feature of this.featureList) {
+      if (!feature.isChecked) {
+        this.selectAll = false;
+        break;
+      } else {
+        this.selectAll = true;
+      }
+    }
+  }
+
+  /*********************************************************** Add New Role *******************************************************************/
+  addRole(formData) {
+    let body = {
+      title: formData.title,
+      features: []
+    };
+    for (let feature of this.featureList) {
+      if (feature.isChecked) {
+        body.features.push({
+          featureIdFK: feature.featureId
+        })
+      }
+    }
     this.spinnerService.setSpinnerVisibility(true);
-    this.roleService.addRole(value).subscribe(res => {
-      this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      //this.router.navigate(['/user-role']);
+    this.roleService.addRole(body).subscribe(res => {
+      if (res.status) {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -67,10 +112,14 @@ export class AddRoleComponent implements OnInit {
     value.userRoleId = this.roleData.userRoleId;
     this.spinnerService.setSpinnerVisibility(true);
     this.roleService.editRole(this.roleData.userRoleId, value).subscribe(res => {
-      this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      // this.router.navigate(['/user-role']);
+      if (res.status) {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -78,13 +127,32 @@ export class AddRoleComponent implements OnInit {
       })
   }
 
-
-
   /*********************************************************** Back to role list *******************************************************************/
 
   backToList() {
     this.router.navigate(['/user-role']);
   }
 
+  /*********************************************************** Get All Feature Lists *******************************************************************/
+
+  getFeatureList() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.roleService.getFeatureList().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        this.featureList = res.features;
+        for (let feature of this.featureList) {
+          feature.isChecked = true;
+        }
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
 
 }

@@ -18,21 +18,24 @@ export class RoleService {
   /*********************************************************** Add Roles *******************************************************************/
   addRole(roleData: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `userroles/addUserRole`, roleData);
-
   }
 
   /*********************************************************** Edit Particular Role *******************************************************************/
 
   editRole(userRoleId: number, editedRoleData: any): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `userroles/UpdateUserRole/` + userRoleId, editedRoleData);
-
   }
 
   /*********************************************************** Delete Particular Role *******************************************************************/
 
   deleteRole(userRoleId: number): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `userroles/deleteUserRole/` + userRoleId, {});
+  }
 
+  /*********************************************************** Feature List   *******************************************************************/
+
+  getFeatureList(): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `userroles/listOfFeatures`);
   }
 
 } 

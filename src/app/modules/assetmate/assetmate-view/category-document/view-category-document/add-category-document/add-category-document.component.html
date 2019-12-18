@@ -3,7 +3,6 @@
     <p class="page-title">{{formTitle}}</p>
   </div>
   <form #documentform="ngForm" fxLayout="column" fxLayoutGap="10px" novalidate>
-
     <div fxLayout="column" style="overflow-y: auto;">
       <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
         <mat-select disabled name="documentTypeIdFK" id="documentTypeIdFK" #DocumentType="ngModel"
@@ -34,15 +33,6 @@
         </mat-error>
         <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
       </mat-form-field>
-
-      <mat-form-field fxFlex="100">
-        <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
-          placeholder="Description" required></textarea>
-        <mat-error *ngIf="documentform.submitted && desc.invalid">
-          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
-        </mat-error>
-      </mat-form-field>
-
       <div class="md-form" fxFlex="50" fxFlex.xs="100">
         <label>Document File</label>
         <div class="file-field" fxLayout.xs="column">
@@ -60,8 +50,14 @@
         </div>
         <div class="error hide text-error">{{documenterror}}</div>
       </div>
+      <mat-form-field fxFlex="100">
+        <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
+          placeholder="Description" required></textarea>
+        <mat-error *ngIf="documentform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
     </div>
-
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
       <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
       <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
@@ -71,5 +67,4 @@
         [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
     </div>
   </form>
-
 </div>
