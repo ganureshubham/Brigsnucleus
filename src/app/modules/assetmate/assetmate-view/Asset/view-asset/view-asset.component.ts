@@ -42,7 +42,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   assetCode1: string = '1';
   mobileQuery: MediaQueryList;
-  displayedColumns: string[] = ['assetCodeImage', 'companyAssetNo', 'assetCode', 'assetImage', 'assetTitle', 'categoryName', 'modelNumber', 'activateasset', 'Actions'];
+  displayedColumns: string[] = ['assetTitle', 'assetImage', 'assetCodeImage', 'companyAssetNo', 'assetCode', 'modelNumber', 'activateasset', 'retireAsset', 'Actions'];
   // 'assetId',
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
@@ -393,21 +393,61 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   }
 
-  activateAsset(assetId: number, value: any) {
+  activateAsset(assetId: number, value: any, index) {
     let body = {
       isActive: value.checked ? 1 : 0
     }
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.assetActive(assetId, body).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
       if (res.status) {
-        this.showSnackBar(res.message);
-        this.getAllAssets(this.categoryID, this.pageNumber);
+        this.dataSource[index].isActive = value.checked;
+        this.parentdata[index].isActive = value.checked;
       } else {
-        this.showSnackBar(res.message);
+        this.dataSource[index].isActive = !value.checked;
+        this.parentdata[index].isActive = !value.checked;
       }
     },
       error => {
+        this.dataSource[index].isActive = !value.checked;
+        this.parentdata[index].isActive = !value.checked;
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
+  }
+
+  retireAsset(assetId: number, value: any, index) {
+
+    console.log('Initial ', index);
+    console.log(value.checked);
+    console.log(this.dataSource);
+
+    let body = {
+      isRetired: value.checked ? 1 : 0
+    }
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.assetRetire(assetId, body).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      this.showSnackBar(res.message);
+
+      if (res.status) {
+        this.dataSource[index].isRetired = value.checked;
+        this.parentdata[index].isRetired = value.checked;
+      } else {
+        this.dataSource[index].isRetired = !value.checked;
+        this.parentdata[index].isRetired = !value.checked;
+      }
+
+    },
+      error => {
+        this.dataSource[index].isRetired = !value.checked+"";
+        this.parentdata[index].isRetired = !value.checked+"";
+
+        console.log('Final-----');
+        console.log(this.dataSource);
+
+
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })

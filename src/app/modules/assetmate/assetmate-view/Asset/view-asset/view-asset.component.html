@@ -21,60 +21,82 @@
     <ng-template #recordFound>
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="assetCodeImage">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n>Asset Code Image
+          <mat-header-cell fxHide.xs fxFlex.gt-xs=10 fxLayoutAlign="center center" *matHeaderCellDef i18n>QRCode
           </mat-header-cell>
-          <mat-cell (click)="$event.stopPropagation()" fxHide.xs fxLayoutAlign="center center"
+          <mat-cell (click)="$event.stopPropagation()" fxHide.xs fxFlex.gt-xs=10 fxLayoutAlign="center center"
             class="imgwrapper rounded img-responsive" *matCellDef="let visit">
             <qrcode (click)="openDialog(visit.assetCode)" [qrdata]="visit.assetCode" [size]="60" [level]="'M'">
             </qrcode>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetCode">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n>Asset Code
+          <mat-header-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matHeaderCellDef i18n>Asset Code
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
+          <mat-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matCellDef="let visit">{{visit.assetCode}}
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="companyAssetNo">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n>Company Asset Number
+          <mat-header-cell fxFlex.gt-xs=15 fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n>Company Asset
+            #
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxFlex.gt-xs=15 fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
             {{visit.companyAssetNo != 'undefined' ? visit.companyAssetNo : 'NA'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetImage">
-          <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Image</mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-header-cell fxFlex.gt-xs=10 fxLayoutAlign="center center" *matHeaderCellDef>Image</mat-header-cell>
+          <mat-cell fxFlex.gt-xs=10 fxLayoutAlign="center center" *matCellDef="let visit">
             <div (click)="$event.stopPropagation(); priviewImage( visit.assetTitle, visit.assetImage)" [ngStyle]="{ 
                 'background-image': 'url(' + visit.assetImage + ')', 
                 'background-size': 'contain',
                 'background-position': 'center center',  
                 'background-repeat': 'no-repeat', 
                 'width':'80px', 
-                'height':'80px'}"></div>
+                'height':'80px',
+                'margin': '5px'
+              }"></div>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetTitle">
-          <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
-          <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
+          <mat-header-cell fxFlex.gt-xs=16 fxLayoutAlign="start center" *matHeaderCellDef>Asset Title</mat-header-cell>
+          <mat-cell fxFlex.gt-xs=16 fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.assetTitle }}
+          </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="categoryName">
+        <!-- <ng-container matColumnDef="categoryName">
           <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Asset Category</mat-header-cell>
           <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.categoryName }}
           </mat-cell>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="modelNumber">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Model Number</mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
+          <mat-header-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matHeaderCellDef>Model Number
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matCellDef="let visit">
+            {{ visit.modelNumber }}
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="activateasset">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Activate Asset</mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" (click)="$event.stopPropagation()" *matCellDef="let visit">
-            <mat-slide-toggle color="primary" [checked]="visit.isActive" (change)="activateAsset(visit.assetId,$event)">
+          <mat-header-cell fxHide.xs fxFlex.gt-xs=6 fxLayoutAlign="center center" *matHeaderCellDef>Activate
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxFlex.gt-xs=6 fxLayoutAlign="center center" (click)="$event.stopPropagation()"
+            *matCellDef="let visit; let i = index;">
+            <mat-slide-toggle color="primary" [checked]="visit.isActive"
+              (change)="activateAsset(visit.assetId, $event, i)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="retireAsset">
+          <mat-header-cell fxHide.xs fxFlex.gt-xs=6 fxLayoutAlign="center center" *matHeaderCellDef>Retire
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxFlex.gt-xs=6 fxLayoutAlign="center center" (click)="$event.stopPropagation()"
+            *matCellDef="let visit; let i = index;">
+            <mat-slide-toggle color="primary" [checked]="visit.isRetired"
+              (change)="retireAsset(visit.assetId, $event, i)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Actions">
-          <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
-          <mat-cell (click)="$event.stopPropagation()" fxLayoutAlign="end center" *matCellDef="let visit">
+          <mat-header-cell fxFlex.gt-xs=7 fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
+          <mat-cell fxFlex.gt-xs=7 (click)="$event.stopPropagation()" fxLayoutAlign="end center"
+            *matCellDef="let visit">
             <div>
               <mat-menu #dailyPerformanceMenu="matMenu">
                 <a mat-menu-item (click)="viewAsset(visit.assetId)">
@@ -87,7 +109,7 @@
                 </a>
                 <a mat-menu-item (click)="transferAssetLocation(visit)">
                   <mat-icon matListIcon>room</mat-icon>
-                  <span i18n>Transfer Location</span>
+                  <span i18n>Transfer Asset</span>
                 </a>
                 <a mat-menu-item (click)="printQRcode(visit)">
                   <mat-icon matListIcon>print</mat-icon>

@@ -62,6 +62,10 @@ export class AssetmateService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsActiveStatus/${assetId}`, body);
   }
 
+  assetRetire(assetId: number, body: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsRetiredStatus/`, body);
+  }
+
   /*********************************************************** Get All Documents *************************************/
 
   getAllAssetDocuments(assetId: number, pageNo: number): Observable<any> {
@@ -90,6 +94,10 @@ export class AssetmateService {
   editAsset(assetId: number, editedAssetData: any): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/upadateAsset/` + assetId, editedAssetData);
 
+  }
+
+  transferAsset(assetId, body) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/assetTransferLocation/` + assetId, body);
   }
 
   /*********************************************************** Get Installation Location List *******************************************************************/

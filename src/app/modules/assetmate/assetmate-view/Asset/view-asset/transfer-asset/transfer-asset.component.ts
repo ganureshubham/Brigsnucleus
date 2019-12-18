@@ -66,7 +66,27 @@ export class TransferAssetComponent implements OnInit {
   }
 
   transferAssetLocation() {
-    this.dialogRef.close();
+
+    let body = {
+      installationLocationTypeIdFK: this.insallationLationFormGroup.get('locationType').value,
+      installedLocation: this.insallationLationFormGroup.get('installationLocation').value
+    };
+
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.transferAsset(this.data.assetId, body).subscribe(
+      resp => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(resp.message)
+        if (resp.status) {
+          this.dialogRef.close();
+        }
+      },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!")
+      }
+    );
+
   }
 
   showSnackBar(message: string) {

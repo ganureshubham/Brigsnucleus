@@ -118,6 +118,56 @@ export class DetailsAssetComponent implements OnInit {
 		saveAs(file, Ext);
 	}
 
+	activateAsset(value: any) {
+		let body = {
+			isActive: value.checked ? 1 : 0
+		}
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.assetActive(this.assetData.assetId, body).subscribe(res => {
+			this.spinnerService.setSpinnerVisibility(false);
+			this.showSnackBar(res.message);
+			if (res.status) {
+				this.assetData.isActive = value.checked;
+				this.assetData.isActive = value.checked;
+			} else {
+				this.assetData.isActive = !value.checked;
+				this.assetData.isActive = !value.checked;
+			}
+		},
+			error => {
+				this.assetData.isActive = !value.checked;
+				this.assetData.isActive = !value.checked;
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			})
+	}
+
+	retireAsset(value: any) {
+		let body = {
+			isRetired: value.checked ? 1 : 0
+		}
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.assetRetire(this.assetData.assetId, body).subscribe(res => {
+			this.spinnerService.setSpinnerVisibility(false);
+			this.showSnackBar(res.message);
+
+			if (res.status) {
+				this.assetData.isRetired = value.checked;
+				this.assetData.isRetired = value.checked;
+			} else {
+				this.assetData.isRetired = !value.checked;
+				this.assetData.isRetired = !value.checked;
+			}
+
+		},
+			error => {
+				this.assetData.isRetired = !value.checked;
+				this.assetData.isRetired = !value.checked;
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			})
+	}
+
 	printQRcode() {
 
 		let imageLeftMargin = 5;
