@@ -21,6 +21,13 @@ interface ExampleFlatNode {
 	level: number;
 }
 
+interface Filter {
+	installationLocationTypeIdFK: number;
+	manufacturerIdFK: number;
+	supplierIdFK: number;
+	departmentIdFK: number;
+}
+
 /****************************************End filter****************************************/
 @Component({
 	selector: 'app-filter-category',
@@ -235,6 +242,15 @@ export class FilterCategoryComponent implements OnInit {
 		if (this.filterFormGroup.get('department').value > 0) {
 			this.filterBadge++;
 		}
+
+		let filterData: Filter = {
+			installationLocationTypeIdFK: this.filterFormGroup.get('locationType').value,
+			manufacturerIdFK: this.filterFormGroup.get('manufacturer').value,
+			supplierIdFK: this.filterFormGroup.get('supplier').value,
+			departmentIdFK: this.filterFormGroup.get('department').value
+		}
+
+		this.assetmateService.setFilterCriteria(filterData);
 
 	}
 

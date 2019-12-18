@@ -119,6 +119,8 @@ export class DetailsAssetComponent implements OnInit {
 	}
 
 	activateAsset(value: any) {
+
+		this.assetData.isActive = value.checked;
 		let body = {
 			isActive: value.checked ? 1 : 0
 		}
@@ -126,16 +128,11 @@ export class DetailsAssetComponent implements OnInit {
 		this.assetmateService.assetActive(this.assetData.assetId, body).subscribe(res => {
 			this.spinnerService.setSpinnerVisibility(false);
 			this.showSnackBar(res.message);
-			if (res.status) {
-				this.assetData.isActive = value.checked;
-				this.assetData.isActive = value.checked;
-			} else {
-				this.assetData.isActive = !value.checked;
+			if (!res.status) {
 				this.assetData.isActive = !value.checked;
 			}
 		},
 			error => {
-				this.assetData.isActive = !value.checked;
 				this.assetData.isActive = !value.checked;
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar("Something went wrong..!!");
@@ -143,6 +140,7 @@ export class DetailsAssetComponent implements OnInit {
 	}
 
 	retireAsset(value: any) {
+		this.assetData.isRetired = value.checked;
 		let body = {
 			isRetired: value.checked ? 1 : 0
 		}
@@ -151,17 +149,12 @@ export class DetailsAssetComponent implements OnInit {
 			this.spinnerService.setSpinnerVisibility(false);
 			this.showSnackBar(res.message);
 
-			if (res.status) {
-				this.assetData.isRetired = value.checked;
-				this.assetData.isRetired = value.checked;
-			} else {
-				this.assetData.isRetired = !value.checked;
+			if (!res.status) {
 				this.assetData.isRetired = !value.checked;
 			}
 
 		},
 			error => {
-				this.assetData.isRetired = !value.checked;
 				this.assetData.isRetired = !value.checked;
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar("Something went wrong..!!");

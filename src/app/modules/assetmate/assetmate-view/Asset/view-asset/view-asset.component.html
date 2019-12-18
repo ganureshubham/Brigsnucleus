@@ -88,8 +88,7 @@
           </mat-header-cell>
           <mat-cell fxHide.xs fxFlex.gt-xs=6 fxLayoutAlign="center center" (click)="$event.stopPropagation()"
             *matCellDef="let visit; let i = index;">
-            <mat-slide-toggle color="primary" [checked]="visit.isRetired"
-              (change)="retireAsset(visit.assetId, $event, i)">
+            <mat-slide-toggle color="primary" [checked]="visit.isRetired" (change)="retireAsset(visit, $event, i)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
