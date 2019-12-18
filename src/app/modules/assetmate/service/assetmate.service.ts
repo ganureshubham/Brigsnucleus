@@ -14,6 +14,21 @@ export class AssetmateService {
   private badgeUpdateActionQuestionList = new BehaviorSubject<boolean>(false);
   private tabSelectionDetails = new BehaviorSubject<number>(0);
 
+  private filterCriteria = new BehaviorSubject<{
+    locationType: number,
+    manufacturer: number,
+    supplier: number,
+    department: number
+  }>(
+    {
+      locationType: 0,
+      manufacturer: 0,
+      supplier: 0,
+      department: 0
+    }
+  );
+
+
   constructor(private httpClient: HttpClient) { }
 
   /**********************************************  Assetmate Home Category  Starts ********************************************************************/
@@ -46,11 +61,37 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/AssetSearch?categoryId=${categoryId}&keyword=${keyword}`);
   }
 
-  /*********************************************************** Get All Assets List *******************************************************************/
-
-  getAllAssets(categoryId: number, pageNo: number): Observable<any> {
-    return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${pageNo}`);
+  filterAsset(body) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/filterAllAssets?categoryId=${body.categoryId}&manufacturerIdFK=${body.manufacturerIdFK}&supplierIdFK=${body.supplierIdFK}&departmentIdFK=${body.departmentIdFK}&installationLocationTypeIdFK=${body.installationLocationTypeIdFK}`);
   }
+
+  /*********************************************************** Get All Assets List ***********************************************************/
+
+  // getAllAssets(categoryId: number, pageNo: number): Observable<any> {
+  //   return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${pageNo}`);
+  // }
+
+  getAllAssets(
+    categoryId: number,
+    manufacturerIdFK: number,
+    supplierIdFK: number,
+    departmentIdFK: number,
+    installationLocationTypeIdFK: number,
+    pageNo: number
+  ): Observable<any> {
+    return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${manufacturerIdFK}/${supplierIdFK}/${departmentIdFK}/${installationLocationTypeIdFK}/${pageNo}`);
+  }
+
+  // getAllAssets(
+  //   categoryId: number,
+  //   manufacturerIdFK: number,
+  //   supplierIdFK: number,
+  //   departmentIdFK: number,
+  //   installationLocationTypeIdFK: number,
+  //   pageNo: number
+  // ): Observable<any> {
+  //   return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${pageNo}`);
+  // }
 
   getAllAssetsByCategoryId(categoryId: number) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetQrCodeDetailsList/${categoryId}`);
@@ -62,10 +103,12 @@ export class AssetmateService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsActiveStatus/${assetId}`, body);
   }
 
+
   /*********************************************************** Retire/Un-retire Particular Asset *******************************************************************/
 
   assetRetire(assetId: number, body: any): Observable<any> {
-    return this.httpClient.put<any>(ConfigurationService.baseUrl + `setAssetIsRetiredStatus/${assetId}`, body);
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsRetiredStatus/${assetId}`, body);
+
   }
 
   /*********************************************************** Get All Documents *************************************/
@@ -96,6 +139,10 @@ export class AssetmateService {
   editAsset(assetId: number, editedAssetData: any): Observable<any> {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/upadateAsset/` + assetId, editedAssetData);
 
+  }
+
+  transferAsset(assetId, body) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/assetTransferLocation/` + assetId, body);
   }
 
   /*********************************************************** Get Installation Location List *******************************************************************/
@@ -428,6 +475,24 @@ export class AssetmateService {
     if (component == 'checklistTab') {
       this.tabSelectionDetails.next(action);
     }
+  }
+
+  setFilterCriteria(filterData) {
+    this.filterCriteria.next({
+      locationType: filterData.installationLocationTypeIdFK,
+      manufacturer: filterData.manufacturerIdFK,
+      supplier: filterData.supplierIdFK,
+      department: filterData.departmentIdFK
+    });
+  }
+
+  getFilterCriteria(): Observable<{
+    locationType: number,
+    manufacturer: number,
+    supplier: number,
+    department: number
+  }> {
+    return this.filterCriteria.asObservable();
   }
 
 }

@@ -1,29 +1,86 @@
-<mat-card class="filter" fxLayout="column">
-  <h4 class="title_header mat-subheading-2 ">Categories</h4>
-  <form class="example-form filter_search">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Search" (input)="onSearchCategoryTxtChange($event.target.value)">
-    </mat-form-field>
-  </form>
-  <div class="mar-29" *ngIf="isTreeDataReady">
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleCategoryTreeNodeClick(node)"
-        class="mat-tree-node">
-        <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button disabled></button>
-        {{node.name}}
-      </mat-tree-node>
-      <!-- This is the tree node template for expandable nodes -->
-      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
-        (click)="handleCategoryTreeNodeClick(node)" class="mat-tree-node">
-        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button>
-        {{node.name}}
-      </mat-tree-node>
-    </mat-tree>
-  </div>
-</mat-card>
+<div fxLayout="column" fxLayoutGap="15px">
+
+  <mat-accordion>
+    <mat-expansion-panel>
+
+      <mat-expansion-panel-header style="padding:10px 22px 10px 18px;">
+        <p>
+          <span class="local-page-title" [matBadgeHidden]="filterBadge == 0" [matBadge]="filterBadge"
+            matBadgeOverlap="false">Filters</span>
+        </p>
+      </mat-expansion-panel-header>
+
+      <form [formGroup]="filterFormGroup">
+        <div fxLayout="column" fxLayoutGap="10px" class="vertical-padding-5">
+          <mat-form-field>
+            <mat-select placeholder="Choose Location Type" required formControlName="locationType"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let location of arrAssetInstallationLocation"
+                [value]="location.installationLocationTypeIdFK">
+                {{location.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Manufacturer" required formControlName="manufacturer"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let manufacturer of arrAssetManufacturer" [value]="manufacturer.manufacturerId">
+                {{manufacturer.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Supplier" required formControlName="supplier"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let supplier of arrAssetSupplier" [value]="supplier.supplierId">
+                {{supplier.supplierName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Choose Department" required formControlName="department"
+              (selectionChange)="filterUpdated()">
+              <mat-option *ngFor="let department of arrAssetDepartment" [value]="department.departmentId">
+                {{department.departmentTitle}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card class="filter" fxLayout="column">
+    <h4 class="title_header mat-subheading-2">Categories</h4>
+    <div fxLayout="row">
+      <form class="example-form filter_search" fxLayout="row" fxFlex=100>
+        <mat-form-field class="example-full-width" fxFlex=100>
+          <input matInput placeholder="Search" (input)="onSearchCategoryTxtChange($event.target.value)">
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="mar-29" *ngIf="isTreeDataReady">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleCategoryTreeNodeClick(node)"
+          class="mat-tree-node">
+          <!-- use a disabled button to provide padding for tree leaf -->
+          <button mat-icon-button disabled></button>
+          {{node.name}}
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+          (click)="handleCategoryTreeNodeClick(node)" class="mat-tree-node">
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.name}}
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+  </mat-card>
+
+</div>

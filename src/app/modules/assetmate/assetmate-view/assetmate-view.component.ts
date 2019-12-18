@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material';
 export class AssetmateViewComponent implements OnInit {
   category: any = [];
   mSearchCategory: any = [];
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   nonzero: boolean = false;
 
 

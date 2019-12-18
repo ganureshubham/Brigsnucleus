@@ -38,3 +38,9 @@ img{
     width: 0% !important;
     overflow: hidden;
   }
+
+  .slideer-sw-container{
+    border: 1px solid #eee;
+    padding: 10px 20px;
+    border-radius: 4px;
+  }

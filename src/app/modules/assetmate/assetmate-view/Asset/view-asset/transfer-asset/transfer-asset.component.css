@@ -1,0 +1,29 @@
+.asset-info-container{
+    padding: 40px 0px;
+}
+
+.title{
+    font-size: 18px;
+    padding: 0px;
+    margin: 0px;
+    font-weight: 400;
+    color: #000;
+}
+
+.sub-title{
+    margin-top: 5px;
+    color: #777777;
+}
+
+.padding-vertical-5{
+    padding : 15px 0px;
+}
+
+.title-transfer{
+    font-size: 22px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: #000;
+}

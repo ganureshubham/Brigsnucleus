@@ -118,6 +118,49 @@ export class DetailsAssetComponent implements OnInit {
 		saveAs(file, Ext);
 	}
 
+	activateAsset(value: any) {
+
+		this.assetData.isActive = value.checked;
+		let body = {
+			isActive: value.checked ? 1 : 0
+		}
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.assetActive(this.assetData.assetId, body).subscribe(res => {
+			this.spinnerService.setSpinnerVisibility(false);
+			this.showSnackBar(res.message);
+			if (!res.status) {
+				this.assetData.isActive = !value.checked;
+			}
+		},
+			error => {
+				this.assetData.isActive = !value.checked;
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			})
+	}
+
+	retireAsset(value: any) {
+		this.assetData.isRetired = value.checked;
+		let body = {
+			isRetired: value.checked ? 1 : 0
+		}
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.assetRetire(this.assetData.assetId, body).subscribe(res => {
+			this.spinnerService.setSpinnerVisibility(false);
+			this.showSnackBar(res.message);
+
+			if (!res.status) {
+				this.assetData.isRetired = !value.checked;
+			}
+
+		},
+			error => {
+				this.assetData.isRetired = !value.checked;
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar("Something went wrong..!!");
+			})
+	}
+
 	printQRcode() {
 
 		let imageLeftMargin = 5;
