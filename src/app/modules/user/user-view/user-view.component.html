@@ -65,9 +65,9 @@
             <ng-container matColumnDef="activateuser">
               <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Activate/De-activate
               </mat-header-cell>
-              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit;let i=index">
                 <mat-slide-toggle color="primary" [checked]="visit.isActive"
-                  (change)="activateUser(visit.userId,$event)"></mat-slide-toggle>
+                  (change)="activateUser(visit.userId,$event,i)"></mat-slide-toggle>
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">

@@ -31,7 +31,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   roleData: any = {};
   userRoleId: number;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   dialogData: roleDialogData;
 
@@ -174,6 +174,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   editRole(visit: any) {
+    console.log('edit', visit);
+
     this.dialogData = {
       type: 'Edit',
       userRoleId: visit.userRoleId,

@@ -72,7 +72,7 @@ export class AddRoleComponent implements OnInit {
     }
   }
 
-  /*********************************************************** Add New Asset *******************************************************************/
+  /*********************************************************** Add New Role *******************************************************************/
   addRole(formData) {
     let body = {
       title: formData.title,
@@ -141,8 +141,8 @@ export class AddRoleComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
         this.featureList = res.features;
-        for (let i = 0; i < this.featureList.length; i++) {
-          this.featureList[i].isChecked = true;
+        for (let feature of this.featureList) {
+          feature.isChecked = true;
         }
       } else {
         this.spinnerService.setSpinnerVisibility(false);
@@ -154,6 +154,5 @@ export class AddRoleComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       })
   }
-
 
 }

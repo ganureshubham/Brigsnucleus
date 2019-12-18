@@ -31,7 +31,6 @@
             </mat-error>
           </mat-form-field>
           <!-- </div> -->
-
           <div fxLayout="row">
             <mat-form-field fxFlex="100">
               <input matInput name="title" id="title" minlength="3" [(ngModel)]="documentData.title" #DocTitle="ngModel"
@@ -42,17 +41,6 @@
               <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
             </mat-form-field>
           </div>
-
-          <div fxLayout="row">
-            <mat-form-field fxFlex="100">
-              <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput
-                #desc="ngModel" placeholder="Description" required></textarea>
-              <mat-error *ngIf="documentform.submitted && desc.invalid">
-                <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
           <div fxLayout="row">
             <div class="md-form" fxFlex="100">
               <label>Document File</label>
@@ -73,6 +61,15 @@
               <div class="error hide text-error">{{documenterror}}</div>
             </div>
           </div>
+          <div fxLayout="row">
+            <mat-form-field fxFlex="100">
+              <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput
+                #desc="ngModel" placeholder="Description" required></textarea>
+              <mat-error *ngIf="documentform.submitted && desc.invalid">
+                <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
       <div fxFlex="10" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
@@ -85,5 +82,4 @@
       </div>
     </div>
   </form>
-
 </div>

@@ -22,15 +22,6 @@
         <mat-error *ngIf="title.errors?.minlength">Please enter atleast 2 Characters</mat-error>
       </mat-form-field>
       <mat-form-field fxFlex.xs="100">
-        <input name="checkingDuration" pattern="[0-9 ]*" id="checkingDuration"
-          [(ngModel)]="checklistData.checkingDuration" matInput #CheckDur="ngModel" type="number" required
-          placeholder="Checking Duration">
-        <mat-error *ngIf="checklistData.submitted && CheckDur.invalid">
-          <mat-error *ngIf="CheckDur.errors.required">Checking Duration is required</mat-error>
-        </mat-error>
-        <mat-error *ngIf="CheckDur.errors?.pattern">Please enter only Numbers</mat-error>
-      </mat-form-field>
-      <mat-form-field fxFlex.xs="100">
         <mat-select name="durationTypeIdFK" id="durationTypeIdFK" [(ngModel)]="checklistData.durationTypeIdFK"
           #DurType="ngModel" placeholder="Select Checking Duration Type" required>
           <mat-option *ngFor="let duration of durationList" [value]="duration.durationTypeId">
@@ -40,6 +31,15 @@
         <mat-error *ngIf="checklistform.submitted && DurType.invalid">
           <mat-error *ngIf="DurType.errors.required">Duration Type is required</mat-error>
         </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex.xs="100">
+        <input name="checkingDuration" pattern="[1-9 ]*" id="checkingDuration"
+          [(ngModel)]="checklistData.checkingDuration" matInput #CheckDur="ngModel" type="number" required
+          placeholder="Checking Duration">
+        <mat-error *ngIf="checklistData.submitted && CheckDur.invalid">
+          <mat-error *ngIf="CheckDur.errors.required">Checking Duration is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="CheckDur.errors?.pattern">Please enter only Numbers</mat-error>
       </mat-form-field>
       <div fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>

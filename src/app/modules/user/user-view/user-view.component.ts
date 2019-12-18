@@ -47,7 +47,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   deptId: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   nonzero: boolean = false;
   dialogData: userDialogData;
 
@@ -277,7 +277,8 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Activate/Deactivate User *******************************************************************/
 
-  activateUser(userId: number, value: any) {
+  activateUser(userId: number, value: any, index: any) {
+    this.paidDataSource[index].isActive = value.checked;
     let body = {
       isActive: value.checked ? 1 : 0
     }
@@ -285,15 +286,17 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.userService.activateUser(userId, body).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
-        this.showSnackBar(res.message);
-        this.getAllUsers(this.message.departmentId, this.pageNumber);
+        this.paidDataSource[index].isActive = value.checked;
       } else {
-        this.showSnackBar(res.message);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.paidDataSource[index].isActive = !value.checked;
       }
+      this.showSnackBar(res.message);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
+        this.paidDataSource[index].isActive = !value.checked;
       })
   }
 
