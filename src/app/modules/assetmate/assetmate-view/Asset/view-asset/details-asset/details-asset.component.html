@@ -15,9 +15,9 @@
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign.gt-xs="center center">
-                    <div *ngIf="assetData.isVerified != 'true'" fxLayout="row" fxLayoutGap="10px"
+                    <div fxFlex.xs="100" *ngIf="assetData.isVerified != 'true'" fxLayout="row" fxLayoutGap="10px"
                         fxLayoutAlign.xs="space-between center">
-                        <button mat-stroked-button color="primary">
+                        <button fxFlex.xs="100" mat-stroked-button (click)="verifyAsset(assetId)" color="primary">
                             <mat-icon>check</mat-icon>
                             Mark As Verified
                         </button>
@@ -160,8 +160,10 @@
                                     {{userGuideFileName}}
                                 </span>
                                 <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns">
-                                    <button mat-button
-                                        (click)="downloadDocument(assetData.userGuideBook)">Download</button>
+                                    <button mat-button (click)="downloadDocument(assetData.userGuideBook)">
+                                        <mat-icon>save</mat-icon>
+                                        Download
+                                    </button>
                                 </span>
                             </div>
                         </div>

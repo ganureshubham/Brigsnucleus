@@ -241,9 +241,10 @@
               <mat-cell (click)="$event.stopPropagation()" *matCellDef="let visit; let i = index;" flexDirection="row"
                 fxLayoutAlign="end center" fxLayoutGap="20px">
                 <mat-icon matTooltip="mark as verified" class="mat-ic"
-                  (click)="$event.stopPropagation(); verifiedAsset();">
+                  (click)="$event.stopPropagation(); verifiedAsset(visit.assetId);">
                   check</mat-icon>
-                <mat-icon matTooltip="delete" class="mat-ic" (click)="$event.stopPropagation(); deleteAsset();">
+                <mat-icon matTooltip="delete" class="mat-ic"
+                  (click)="$event.stopPropagation(); deleteAsset(visit.assetId,visit.assetTitle);">
                   delete_outline
                 </mat-icon>
               </mat-cell>

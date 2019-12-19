@@ -56,6 +56,30 @@ export class DetailsAssetComponent implements OnInit {
 		});
 	}
 
+	verifyAsset(assetId: number) {
+		let body = {
+			isVerified: 1
+		}
+		this.spinnerService.setSpinnerVisibility(true);
+		this.assetmateService.verifyAsset(assetId, body).subscribe(res => {
+			this.spinnerService.setSpinnerVisibility(false);
+			if (res.status) {
+				this.showSnackBar(res.message);
+				this.location.back();
+			} else {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar(res.message);
+
+			}
+		},
+			error => {
+				this.spinnerService.setSpinnerVisibility(false);
+				this.showSnackBar('Something went wrong..!!');
+			})
+
+
+	}
+
 	viewAsset() {
 
 		this.spinnerService.setSpinnerVisibility(true);
@@ -113,7 +137,6 @@ export class DetailsAssetComponent implements OnInit {
 	}
 
 	downloadDocument(file) {
-		console.log(file);
 		const Ext = file.split('/').pop().split('?')[0]; // splits url into file name
 		saveAs(file, Ext);
 	}

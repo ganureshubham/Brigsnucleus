@@ -103,6 +103,12 @@ export class AssetmateService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/setAssetIsActiveStatus/${assetId}`, body);
   }
 
+  /*********************************************************** verify Asset *******************************************************************/
+
+  verifyAsset(assetId: number, verified: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/updateVerifiedAsset/${assetId}`, verified);
+  }
+
 
   /*********************************************************** Retire/Un-retire Particular Asset *******************************************************************/
 
