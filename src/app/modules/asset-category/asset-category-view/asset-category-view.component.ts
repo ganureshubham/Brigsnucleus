@@ -26,8 +26,6 @@ interface departmentDialogData {
   title: string;
 }
 
-
-
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
@@ -42,8 +40,8 @@ interface ExampleFlatNode {
   templateUrl: './asset-category-view.component.html',
   styleUrls: ['./asset-category-view.component.css']
 })
-export class AssetCategoryViewComponent implements OnInit {
 
+export class AssetCategoryViewComponent implements OnInit {
 
   animal: any;
   categoryId: number;
@@ -53,7 +51,6 @@ export class AssetCategoryViewComponent implements OnInit {
   isTreeDataReady: boolean = false;
   dialogData: departmentDialogData;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-
 
   private transformer = (node: AssetCategoryNode, level: number) => {
     return {
@@ -95,7 +92,6 @@ export class AssetCategoryViewComponent implements OnInit {
     return this.dataSource.data.length == 0;
   }
 
-
   /************************************* All Department Lists****************************************************************/
 
   getAllAssetCategoryLists() {
@@ -122,7 +118,6 @@ export class AssetCategoryViewComponent implements OnInit {
 
   /************************************* Add New Root Asset Category ****************************************************************/
 
-
   addNewAssetCategory(): void {
     this.dialogData = {
       type: 'New Add',
@@ -144,7 +139,6 @@ export class AssetCategoryViewComponent implements OnInit {
   }
 
   /************************************* Add New Asset Category****************************************************************/
-
 
   addAssetCategory(node: any): void {
     this.dialogData = {
@@ -168,7 +162,6 @@ export class AssetCategoryViewComponent implements OnInit {
 
   /************************************* Edit Particular Asset Category****************************************************************/
 
-
   editAssetCategory(node: any) {
     this.dialogData = {
       type: 'Edit',
@@ -190,7 +183,6 @@ export class AssetCategoryViewComponent implements OnInit {
   }
 
   /************************************* Delete Particular Asset Category****************************************************************/
-
 
   deleteAssetCategory(categoryId: number, name: string) {
     this.categoryId = categoryId;
@@ -222,7 +214,5 @@ export class AssetCategoryViewComponent implements OnInit {
       })
     }
   }
-
-
 
 }

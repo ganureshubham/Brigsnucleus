@@ -40,7 +40,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   supplierData: any = {};
   supplierName: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   dialogData: supplierDialogData;
 
 
@@ -102,6 +102,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(res.message);
       }
     },

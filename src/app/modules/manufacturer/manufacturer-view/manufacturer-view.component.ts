@@ -36,7 +36,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   totalCount = 0;
   manufacturerData: any = {};
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
 
 
 

@@ -22,6 +22,7 @@ export class AddRoleComponent implements OnInit {
   featureList: any;
   features: any = [];
   selectAll: boolean = true;
+  featureListForEdit: any;
 
   constructor(private router: Router,
     private roleService: RoleService,
@@ -43,6 +44,10 @@ export class AddRoleComponent implements OnInit {
       this.roleData = this.data;
       this.isEdited = true;
       this.formTitle = `Edit User Role`;
+      this.featureListForEdit = this.data.features;
+      console.log('feature list edit', this.featureListForEdit);
+
+
     }
     this.getFeatureList();
   }
@@ -141,8 +146,18 @@ export class AddRoleComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
         this.featureList = res.features;
-        for (let feature of this.featureList) {
-          feature.isChecked = true;
+        console.log('feature list:', this.featureList);
+        if (this.data.type == 'Edit') {
+          for (let feature of this.featureList) {
+            for (let editfeature of this.featureListForEdit) {
+              feature.isChecked = (feature.featureId == editfeature.featureIdFK ? true : false);
+            }
+          }
+          console.log('feature list after:', this.featureList);
+        } else {
+          for (let feature of this.featureList) {
+            feature.isChecked = true;
+          }
         }
       } else {
         this.spinnerService.setSpinnerVisibility(false);
