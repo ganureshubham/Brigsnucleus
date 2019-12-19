@@ -65,6 +65,14 @@ export class NotificationService {
     return this.httpClient.get<any>(this.baseUrl + `dashboard/installationLocationWiseAssetsCounts`);
   }
 
+  verifyAsset(assetId: number, verified: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/updateVerifiedAsset/${assetId}`, verified);
+  }
+
+  deleteAsset(assetId: number): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/deleteAsset/` + assetId, {});
+
+  }
 
 
 

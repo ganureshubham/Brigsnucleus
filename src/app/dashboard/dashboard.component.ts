@@ -6,6 +6,8 @@ import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material
 import { SpinnerService } from '../public service/spinner.service';
 import jsPDF from 'jspdf';
 import { AssetmateService } from '../modules/assetmate/service/assetmate.service';
+import { DialogService } from '../public service/dialog.service';
+import { AppDialogData } from '../model/appDialogData';
 
 export interface Year {
   Id: number,
@@ -68,6 +70,8 @@ export class DashboardComponent implements OnInit {
   CategoryMaintainanceTitle: any;
   InstallLocAssetTitle: any;
   installationlocation: any;
+  deleteAssetWithId: number;
+  isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   displayedColumns: string[] = ['assetTitle', 'addedBy', 'action'];
 
@@ -85,7 +89,8 @@ export class DashboardComponent implements OnInit {
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
-    private assetmateService: AssetmateService
+    private assetmateService: AssetmateService,
+    private dialogService: DialogService
   ) {
   }
 
@@ -114,8 +119,6 @@ export class DashboardComponent implements OnInit {
     this.assetmateService.getAllPendingVerificationAssets(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
-        console.log(res);
-
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
         } else {
@@ -125,7 +128,7 @@ export class DashboardComponent implements OnInit {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
-        this.showSnackBar(res.message)
+        this.showSnackBar(res.message);
       }
     },
       error => {
@@ -720,12 +723,62 @@ export class DashboardComponent implements OnInit {
     window.open(doc.output('bloburl'), '_blank');
   }
 
-  verifiedAsset() {
-    console.log('verifiedAsset');
+  verifiedAsset(assetId: number) {
+    let body = {
+      isVerified: 1
+    }
+    this.spinnerService.setSpinnerVisibility(true);
+    this.notificationService.verifyAsset(assetId, body).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.showSnackBar(res.message);
+        this.getAllPendingVerificationAssets(this.pageNumber);
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
   }
 
-  deleteAsset() {
-    console.log('deleteAsset');
+  deleteAsset(assetId: number, assetTitle: string) {
+    this.deleteAssetWithId = assetId;
+    let appDialogData: AppDialogData = {
+      visibilityStatus: true,
+      title: 'DELETE ASSET',
+      message: `Are your sure you want to delete asset "${assetTitle}" ?`,
+      positiveBtnLable: "Yes",
+      negativeBtnLable: "Cancel"
+    }
+    this.dialogService.setDialogVisibility(appDialogData);
+    if (!this.isAlreadySubscribedToDialogUserActionService) {
+      this.isAlreadySubscribedToDialogUserActionService = true;
+      this.dialogService.getUserDialogAction().subscribe(userAction => {
+        if (userAction == 0) {
+          //User has not performed any action on opened app dialog or closed the dialog;
+        } else if (userAction == 1) {
+          this.dialogService.setUserDialogAction(0);
+          //User has approved delete operation 
+          this.spinnerService.setSpinnerVisibility(true);
+          this.notificationService.deleteAsset(this.deleteAssetWithId).subscribe(res => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar(res.message);
+            this.getAllPendingVerificationAssets(this.pageNumber);
+          }, error => {
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!");
+          });
+        }
+      })
+    }
   }
 
 
