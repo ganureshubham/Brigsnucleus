@@ -1,14 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationService } from '../public service/notification.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SpinnerService } from '../public service/spinner.service';
 import jsPDF from 'jspdf';
+import { AssetmateService } from '../modules/assetmate/service/assetmate.service';
 
 export interface Year {
   Id: number,
   data: string
+}
+
+interface Asset {
+  assetId: number;
+  isActive: string;
+  assetCodeImage: string;
+  assetCode: number;
+  assetImage: string;
+  assetTitle: string;
+  categoryName: string;
+  modelNumber: string;
+  companyAssetNo: string;
 }
 
 @Component({
@@ -56,11 +69,23 @@ export class DashboardComponent implements OnInit {
   InstallLocAssetTitle: any;
   installationlocation: any;
 
+  displayedColumns: string[] = ['assetTitle', 'addedBy', 'action'];
+
+  count: number;
+  pageNumber = 0;
+  totalCount = 0;
+  page: number = 0;
+  dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
+  isNoRecordFound: boolean = false;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private assetmateService: AssetmateService
   ) {
   }
 
@@ -79,6 +104,45 @@ export class DashboardComponent implements OnInit {
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
+
+    this.getAllPendingVerificationAssets(this.pageNumber);
+
+  }
+
+  getAllPendingVerificationAssets(pageNo: number) {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.getAllPendingVerificationAssets(pageNo).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        console.log(res);
+
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.dataSource = res.Assets;
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    );
+  }
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getAllPendingVerificationAssets(this.page);
+  }
+
+  navigateToAssetDetails(assetId) {
+    let categoryId = 1;
+    this.router.navigate(['/assetmate/assetmate-details/' + categoryId + '/asset-details/' + assetId]);
   }
 
   years: Year[] = [
@@ -654,6 +718,14 @@ export class DashboardComponent implements OnInit {
     doc.text(title, pageWidth / 2, 10, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
+  }
+
+  verifiedAsset() {
+    console.log('verifiedAsset');
+  }
+
+  deleteAsset() {
+    console.log('deleteAsset');
   }
 
 

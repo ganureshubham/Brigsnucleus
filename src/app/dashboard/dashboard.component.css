@@ -73,3 +73,13 @@
   right:15px; 
   background-color: white;
 }
+
+.mat-ic{
+  color: gray;
+  padding: 8px;
+}
+
+.mat-ic:hover{
+  background-color: #c7c7c744;
+  border-radius:50%;
+}
