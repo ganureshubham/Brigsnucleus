@@ -1,14 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationService } from '../public service/notification.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SpinnerService } from '../public service/spinner.service';
 import jsPDF from 'jspdf';
+import { AssetmateService } from '../modules/assetmate/service/assetmate.service';
 
 export interface Year {
   Id: number,
   data: string
+}
+
+interface Asset {
+  assetId: number;
+  isActive: string;
+  assetCodeImage: string;
+  assetCode: number;
+  assetImage: string;
+  assetTitle: string;
+  categoryName: string;
+  modelNumber: string;
+  companyAssetNo: string;
 }
 
 @Component({
@@ -56,11 +69,22 @@ export class DashboardComponent implements OnInit {
   InstallLocAssetTitle: any;
   installationlocation: any;
 
+  displayedColumns: string[] = ['assetTitle', 'modelNumber', 'activateasset'];
+
+  count: number;
+  pageNumber = 0;
+  totalCount = 0;
+  dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
+  isNoRecordFound: boolean = false;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private assetmateService: AssetmateService
   ) {
   }
 
@@ -79,6 +103,60 @@ export class DashboardComponent implements OnInit {
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
+
+    this.getAllAssets(
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+    );
+
+  }
+
+  getAllAssets(
+    categoryId: number,
+    manufacturerIdFK: number,
+    supplierIdFK: number,
+    departmentIdFK: number,
+    installationLocationTypeIdFK: number,
+    pageNo: number
+  ) {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.assetmateService.getAllAssets(
+      categoryId,
+      manufacturerIdFK,
+      supplierIdFK,
+      departmentIdFK,
+      installationLocationTypeIdFK,
+      pageNo
+    ).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.asset) {
+        if (res.currentPage == 0 && res.totalCount == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        this.dataSource = res.asset;
+
+        this.pageNumber = res.currentPage;
+        this.totalCount = res.totalCount;
+      } else {
+        this.showSnackBar(res.message)
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      }
+    );
+  }
+
+  navigateToAssetDetails(assetId) {
+    let categoryId = 1;
+    this.router.navigate(['/assetmate/assetmate-details/' + categoryId + '/asset-details/' + assetId]);
   }
 
   years: Year[] = [

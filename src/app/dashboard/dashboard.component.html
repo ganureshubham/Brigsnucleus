@@ -190,7 +190,7 @@
     </div>
   </div>
   <div class="graph-m-t" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
-    fxLayoutAlign="space-around center" fxLayoutGap="30px">
+    fxLayoutAlign="space-between start" fxLayoutGap="30px">
     <div fxFlex.xs="100" fxFlex="50">
       <mat-card>
         <!-- <button class="fab-btn-dashboard" matTooltip="print graph" mat-mini-fab color="primary"
@@ -210,6 +210,51 @@
           <p class="graph-font">{{InstallLocAssetTitle}}</p>
           <canvas id="installationlocation" width="40" height="20"></canvas>
         </div>
+      </mat-card>
+    </div>
+    <div fxFlex.xs="100" fxFlex="50">
+      <mat-card>
+        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="data4">
+          <p class="graph-font">VERIFICATION PENDING - ASSETS</p>
+        </div>
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+          <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+          <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="assetTitle">
+              <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Asset Title
+              </mat-header-cell>
+              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.assetTitle }}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="modelNumber">
+              <mat-header-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matHeaderCellDef>Added By
+              </mat-header-cell>
+              <mat-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matCellDef="let visit">
+                {{ visit.modelNumber }}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="activateasset">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Verify
+              </mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()"
+                *matCellDef="let visit; let i = index;">
+                <mat-slide-toggle color="primary" [checked]="visit.isActive"
+                  (change)="activateAsset(visit.assetId, $event, i)">
+                </mat-slide-toggle>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="example-element-row" (click)="navigateToAssetDetails(row.assetId)"
+              *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <div>
+            <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+            </mat-paginator>
+          </div>
+        </ng-template>
       </mat-card>
     </div>
   </div>
