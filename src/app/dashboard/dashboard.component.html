@@ -225,24 +225,27 @@
             <ng-container matColumnDef="assetTitle">
               <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Asset Title
               </mat-header-cell>
-              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.assetTitle }}
+              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">
+                {{visit.assetTitle}}
               </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="modelNumber">
-              <mat-header-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matHeaderCellDef>Added By
+            <ng-container matColumnDef="addedBy">
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Added By
               </mat-header-cell>
-              <mat-cell fxHide.xs fxFlex.gt-xs=15 fxLayoutAlign="center center" *matCellDef="let visit">
-                {{ visit.modelNumber }}
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                {{visit.addedBy}}
               </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="activateasset">
-              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Verify
-              </mat-header-cell>
-              <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()"
-                *matCellDef="let visit; let i = index;">
-                <mat-slide-toggle color="primary" [checked]="visit.isActive"
-                  (change)="activateAsset(visit.assetId, $event, i)">
-                </mat-slide-toggle>
+            <ng-container matColumnDef="action">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef></mat-header-cell>
+              <mat-cell (click)="$event.stopPropagation()" *matCellDef="let visit; let i = index;" flexDirection="row"
+                fxLayoutAlign="end center" fxLayoutGap="20px">
+                <mat-icon matTooltip="mark as verified" class="mat-ic"
+                  (click)="$event.stopPropagation(); verifiedAsset();">
+                  check</mat-icon>
+                <mat-icon matTooltip="delete" class="mat-ic" (click)="$event.stopPropagation(); deleteAsset();">
+                  delete_outline
+                </mat-icon>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -251,7 +254,7 @@
             </mat-row>
           </mat-table>
           <div>
-            <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+            <mat-paginator [length]='totalCount' [pageSize]="5" [pageIndex]='pageNumber' (page)="pageChange($event)">
             </mat-paginator>
           </div>
         </ng-template>

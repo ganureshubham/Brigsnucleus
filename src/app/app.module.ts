@@ -122,7 +122,7 @@ export class MaterialModule { }
     QRCodeModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(AppRoutes, { useHash: true }),
+    RouterModule.forRoot(AppRoutes, { useHash: true, scrollPositionRestoration: 'enabled' }),
     NavbarModule,
     MaterialFileInputModule,
     ToastrModule.forRoot({

@@ -93,6 +93,10 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetQrCodeDetailsList/${categoryId}`);
   }
 
+  getAllPendingVerificationAssets(pageNo) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/listOfPendingVerifiedAssets/${pageNo}`);
+  }
+
   /*********************************************************** Activate/De-activate Particular Asset *******************************************************************/
 
   assetActive(assetId: number, body: any): Observable<any> {

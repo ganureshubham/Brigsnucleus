@@ -69,11 +69,12 @@ export class DashboardComponent implements OnInit {
   InstallLocAssetTitle: any;
   installationlocation: any;
 
-  displayedColumns: string[] = ['assetTitle', 'modelNumber', 'activateasset'];
+  displayedColumns: string[] = ['assetTitle', 'addedBy', 'action'];
 
   count: number;
   pageNumber = 0;
   totalCount = 0;
+  page: number = 0;
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
   isNoRecordFound: boolean = false;
 
@@ -104,43 +105,23 @@ export class DashboardComponent implements OnInit {
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
 
-    this.getAllAssets(
-      2,
-      0,
-      0,
-      0,
-      0,
-      0
-    );
+    this.getAllPendingVerificationAssets(this.pageNumber);
 
   }
 
-  getAllAssets(
-    categoryId: number,
-    manufacturerIdFK: number,
-    supplierIdFK: number,
-    departmentIdFK: number,
-    installationLocationTypeIdFK: number,
-    pageNo: number
-  ) {
+  getAllPendingVerificationAssets(pageNo: number) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.assetmateService.getAllAssets(
-      categoryId,
-      manufacturerIdFK,
-      supplierIdFK,
-      departmentIdFK,
-      installationLocationTypeIdFK,
-      pageNo
-    ).subscribe(res => {
+    this.assetmateService.getAllPendingVerificationAssets(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.asset) {
+      if (res.status) {
+        console.log(res);
+
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
         } else {
           this.isNoRecordFound = false;
         }
-        this.dataSource = res.asset;
-
+        this.dataSource = res.Assets;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
@@ -152,6 +133,11 @@ export class DashboardComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       }
     );
+  }
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getAllPendingVerificationAssets(this.page);
   }
 
   navigateToAssetDetails(assetId) {
@@ -732,6 +718,14 @@ export class DashboardComponent implements OnInit {
     doc.text(title, pageWidth / 2, 10, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
+  }
+
+  verifiedAsset() {
+    console.log('verifiedAsset');
+  }
+
+  deleteAsset() {
+    console.log('deleteAsset');
   }
 
 
