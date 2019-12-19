@@ -25,13 +25,6 @@
         </mat-error>
         <mat-error *ngIf="DocTitle.errors?.minlength">Please enter atleast 3 Characters</mat-error>
       </mat-form-field>
-      <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
-          placeholder="Description" required></textarea>
-        <mat-error *ngIf="documentform.submitted && desc.invalid">
-          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
-        </mat-error>
-      </mat-form-field>
       <div fxLayout.xs="column" fxFlex.gt-xs="100" fxFlex.xs="100" class="md-form">
         <label>Document File</label>
         <div fxLayout.xs="column" class="file-field">
@@ -49,6 +42,13 @@
         </div>
         <div class="error hide text-error">{{documenterror}}</div>
       </div>
+      <mat-form-field fxFlex="100" fxFlex.xs="100">
+        <textarea name="description" id="description" [(ngModel)]="documentData.description" matInput #desc="ngModel"
+          placeholder="Description" required></textarea>
+        <mat-error *ngIf="documentform.submitted && desc.invalid">
+          <mat-error *ngIf="desc.errors.required"> Description is Required</mat-error>
+        </mat-error>
+      </mat-form-field>
       <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxLayoutGap="10px" class="savebtn">
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
