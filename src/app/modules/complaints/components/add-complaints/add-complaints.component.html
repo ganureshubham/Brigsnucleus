@@ -34,6 +34,24 @@
           <mat-error *ngIf="UsersName.errors.required">Users Name is required</mat-error>
         </mat-error>
       </mat-form-field>
+      <div fxLayout="column" fxFlex="100" class="md-form" fxFlex.gt-xs="48">
+        <label>Complaint Image</label>
+        <div class="file-field" fxLayout.xs="column">
+          <div class="btn btn-primary btn-sm float-left">
+            <span>Choose file</span>
+            <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" name="complaintImage" [(ngModel)]="complaintImage" type="text" required
+              placeholder="Upload Complaint image">
+            <button mat-button *ngIf="complaintImage" matSuffix mat-icon-button aria-label="Clear"
+              (click)="complaintImage=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div class="error hide text-error">{{complainterror}}</div>
+        </div>
+      </div>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
         <textarea name="message" id="message" [(ngModel)]="complaintData.message" matInput #desc="ngModel"
           placeholder="Message" required></textarea>
@@ -42,24 +60,6 @@
         </mat-error>
       </mat-form-field>
     </form>
-    <div fxLayout="column" fxFlex="100" class="md-form" fxFlex.gt-xs="48">
-      <label>Complaint Image</label>
-      <div class="file-field" fxLayout.xs="column">
-        <div class="btn btn-primary btn-sm float-left">
-          <span>Choose file</span>
-          <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
-        </div>
-        <div class="file-path-wrapper">
-          <input class="file-path validate" name="complaintImage" [(ngModel)]="complaintImage" type="text" required
-            placeholder="Upload Complaint image">
-          <button mat-button *ngIf="complaintImage" matSuffix mat-icon-button aria-label="Clear"
-            (click)="complaintImage=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-        <div class="error hide text-error">{{complainterror}}</div>
-      </div>
-    </div>
   </div>
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxFlex="100" fxLayoutGap="10px">
     <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>

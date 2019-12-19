@@ -61,7 +61,6 @@ export class ChecklistQuestionListComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getChecklistQuestions(checklistId, pageNo).subscribe((resp: any) => {
       this.spinnerService.setSpinnerVisibility(false);
-      console.log(resp)
       if (resp.question) {
         if (resp.currentPage == 0 && resp.totalCount == 0) {
           this.isNoRecordFound = true;
