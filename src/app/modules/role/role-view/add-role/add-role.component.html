@@ -1,38 +1,55 @@
-<div fxLayout="column" fxFlex="100" class="form">
+<div fxLayout="column" fxFlex="100">
   <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="fl">
-      <p class="page-title">{{formTitle}}</p>
-    </div>
+    <span class="page-title">{{formTitle}}</span>
   </div>
-  <form fxLayout="column" #roleform="ngForm" novalidate>
-    <div>
-      <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap.gt-xs="30px">
-        <mat-form-field fxFlex.xs="100">
-          <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
-            #roleTitle="ngModel" type="text" required placeholder="Title">
-          <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
-            <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
-          </mat-error>
-          <mat-error *ngIf="roleTitle.errors?.minlength">
-            Title length Must be atleast 3!
-          </mat-error>
-        </mat-form-field>
-        <div fxLayout="column" fxLayoutGap="25px" class="md-form">
-          <div>
-            <mat-checkbox color="primary" [checked]="selectAll" (change)="chkAllChange($event)" type="checkbox"
-              class="select_all">Select all
-            </mat-checkbox>
+  <form fxLayout="column" #roleform="ngForm" novalidate class="form-container">
+    <div fxLayout="column" fxLayoutGap.gt-xs="20px">
+      <mat-form-field fxFlex.xs="100">
+        <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
+          #roleTitle="ngModel" type="text" required placeholder="Title">
+        <mat-error *ngIf="roleform.submitted && roleTitle.invalid">
+          <mat-error *ngIf="roleTitle.errors.required">Role Title is required</mat-error>
+        </mat-error>
+        <mat-error *ngIf="roleTitle.errors?.minlength">
+          Title length Must be atleast 3!
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <div class="authorities">
+          <div class="authorities-title">
+            Authorities
           </div>
-          <div fxLayout="column" fxLayoutGap="10px">
-            <div *ngFor="let unit of featureList; let i=index">
-              <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
-                {{ '(' + unit.featureCode + ')' + ' ' + unit.purpose }}
+          <div class="authorities-text" fxLayout="column" fxLayoutGap="25px">
+            <div *ngIf="!isEdited">
+              <mat-checkbox color="primary" [checked]="selectAll" (change)="chkAllChange($event)" type="checkbox"
+                class="select_all">Select all
               </mat-checkbox>
+            </div>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div *ngFor="let unit of featureList; let i=index">
+                <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
+                  {{unit.purpose + ' (' + unit.featureCode + ')'}}
+                </mat-checkbox>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div>
+        <div class="guideline">
+          <div class="guideline-title">
+            Guideline
+          </div>
+          <div class="guideline-text">
+            <ul>
+              <li>Authorities choosed will be allocated to particular role</li>
+              <li>When this role will be allocated to particular user, then user will have access to these modules</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end end" fxLayoutGap="10px" class="savebtn">
       <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
       <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n

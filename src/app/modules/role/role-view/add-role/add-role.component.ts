@@ -2,11 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoleService } from '../../service/role.service';
 import { DataSharingService } from '../../../../public service/data-sharing.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-role',
@@ -14,6 +11,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./add-role.component.css']
 })
 export class AddRoleComponent implements OnInit {
+
   isEdited: boolean = false;
   formTitle: string = "Add User Role";
   roleData: any = {};
@@ -27,8 +25,6 @@ export class AddRoleComponent implements OnInit {
   constructor(private router: Router,
     private roleService: RoleService,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
@@ -37,17 +33,14 @@ export class AddRoleComponent implements OnInit {
 
   ) { }
 
-
-
   ngOnInit() {
     if (this.data.type == 'Edit') {
       this.roleData = this.data;
       this.isEdited = true;
       this.formTitle = `Edit User Role`;
       this.featureListForEdit = this.data.features;
-      console.log('feature list edit', this.featureListForEdit);
-
-
+    } else {
+      this.isEdited = false;
     }
     this.getFeatureList();
   }
@@ -113,10 +106,20 @@ export class AddRoleComponent implements OnInit {
 
   /*********************************************************** Edit Selected Role *******************************************************************/
 
-  editRole(value) {
-    value.userRoleId = this.roleData.userRoleId;
+  editRole(formData) {
+    let body = {
+      title: formData.title,
+      features: []
+    };
+    for (let feature of this.featureList) {
+      if (feature.isChecked) {
+        body.features.push({
+          featureIdFK: feature.featureId
+        })
+      }
+    }
     this.spinnerService.setSpinnerVisibility(true);
-    this.roleService.editRole(this.roleData.userRoleId, value).subscribe(res => {
+    this.roleService.editRole(this.roleData.userRoleId, body).subscribe(res => {
       if (res.status) {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(res.message);
@@ -146,14 +149,16 @@ export class AddRoleComponent implements OnInit {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
         this.featureList = res.features;
-        console.log('feature list:', this.featureList);
         if (this.data.type == 'Edit') {
           for (let feature of this.featureList) {
+            feature.isChecked = false;
             for (let editfeature of this.featureListForEdit) {
-              feature.isChecked = (feature.featureId == editfeature.featureIdFK ? true : false);
+              if (feature.featureId == editfeature.featureIdFK) {
+                feature.isChecked = true;
+                break;
+              }
             }
           }
-          console.log('feature list after:', this.featureList);
         } else {
           for (let feature of this.featureList) {
             feature.isChecked = true;
