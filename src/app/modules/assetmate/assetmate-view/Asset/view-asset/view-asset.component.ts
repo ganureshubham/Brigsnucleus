@@ -85,10 +85,6 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   ngOnInit() {
     this.categoryID = this.route.snapshot.params['categoryId'];
     this.subscribeToGetFilterData();
-    this.manufacturerIdFK = 0;
-    this.supplierIdFK = 0;
-    this.departmentIdFK = 0;
-    this.installationLocationTypeIdFK = 0;
     this.getAllAssets(
       this.categoryID,
       this.manufacturerIdFK,

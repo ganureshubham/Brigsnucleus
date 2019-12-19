@@ -12,3 +12,12 @@
     text-transform: uppercase;
     font-weight: 500;
 }
+
+.mat_ic_clear_filter{
+    padding: 10px;
+}
+
+.mat_ic_clear_filter:hover{
+    background-color: #c7c7c7a6;
+    border-radius: 50%;
+}

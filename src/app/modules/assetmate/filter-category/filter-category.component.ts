@@ -82,6 +82,37 @@ export class FilterCategoryComponent implements OnInit {
 		this.loadAllCategories();
 		this.getfilterDropDownValues();
 		this.setFormControls();
+		this.subscribeToFilterDataService();
+	}
+
+	subscribeToFilterDataService() {
+		this.assetmateService.getFilterCriteria().subscribe(
+			resp => {
+
+				this.filterBadge = 0;
+
+				if (resp.locationType > 0) {
+					this.filterBadge++;
+				}
+				if (resp.manufacturer > 0) {
+					this.filterBadge++;
+				}
+				if (resp.supplier > 0) {
+					this.filterBadge++;
+				}
+				if (resp.department > 0) {
+					this.filterBadge++;
+				}
+
+				this.filterFormGroup = this.formBuilder.group({
+					locationType: resp.locationType,
+					manufacturer: resp.manufacturer,
+					supplier: resp.supplier,
+					department: resp.department
+				});
+
+			}
+		);
 	}
 
 	setFormControls() {
@@ -250,6 +281,18 @@ export class FilterCategoryComponent implements OnInit {
 			departmentIdFK: this.filterFormGroup.get('department').value
 		}
 
+		this.assetmateService.setFilterCriteria(filterData);
+
+	}
+
+	clearAllFilters() {
+
+		let filterData: Filter = {
+			installationLocationTypeIdFK: 0,
+			manufacturerIdFK: 0,
+			supplierIdFK: 0,
+			departmentIdFK: 0
+		}
 		this.assetmateService.setFilterCriteria(filterData);
 
 	}
