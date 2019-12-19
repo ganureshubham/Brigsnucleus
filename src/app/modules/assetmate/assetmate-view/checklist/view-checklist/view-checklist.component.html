@@ -19,7 +19,7 @@
                 <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="duration">
-                <mat-header-cell fxLayoutAlign="center center" fxHide.xs *matHeaderCellDef>Checking Duration
+                <mat-header-cell fxLayoutAlign="center center" fxHide.xs *matHeaderCellDef>Audit Duration
                 </mat-header-cell>
                 <mat-cell fxLayoutAlign="center center" fxHide.xs *matCellDef="let visit">
                     {{ visit.checkingDuration + ' ' + visit.durationType }}</mat-cell>

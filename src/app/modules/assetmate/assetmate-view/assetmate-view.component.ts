@@ -8,6 +8,13 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 
+interface Filter {
+  installationLocationTypeIdFK: number;
+  manufacturerIdFK: number;
+  supplierIdFK: number;
+  departmentIdFK: number;
+}
+
 @Component({
   selector: 'app-assetmate-view',
   templateUrl: './assetmate-view.component.html',
@@ -46,6 +53,19 @@ export class AssetmateViewComponent implements OnInit {
 
   ngOnInit() {
     this.getRootCategoryList();
+    this.setFilterDataClear();
+  }
+
+  setFilterDataClear() {
+
+    let filterData: Filter = {
+      installationLocationTypeIdFK: 0,
+      manufacturerIdFK: 0,
+      supplierIdFK: 0,
+      departmentIdFK: 0
+    }
+    this.assetmateService.setFilterCriteria(filterData);
+
   }
 
   mediaQueryListener = () => {
