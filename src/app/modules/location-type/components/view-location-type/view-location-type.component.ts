@@ -23,11 +23,8 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   supplierData: any = {};
   supplierName: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-  isNoRecordFound: boolean = true;
+  isNoRecordFound: boolean = false;
   //dialogData: supplierDialogData;
-
-
-
 
   displayedColumns: string[] = ['installationLocationName', 'Actions'];
   paidDataSource: MatTableDataSource<LocationType> = new MatTableDataSource();
@@ -57,18 +54,13 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.paidDataSource.paginator = this.paginator;
   }
 
-
-
   ngOnInit() {
     this.getAllLocationList();
   }
 
-
   ngOnDestroy(): void { }
 
-
   /*********************************************************** Get All Location Type *******************************************************************/
-
 
   getAllLocationList() {
     this.spinnerService.setSpinnerVisibility(true);
@@ -96,11 +88,7 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
-
   /*********************************************************** Add Installation Location *******************************************************************/
-
-
 
   addLocationType() {
     const dialogRef = this.dialog.open(AddLocationTypeComponent, {
@@ -113,12 +101,9 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
         this.getAllLocationList();
       }
     });
-
   }
 
-
   /*********************************************************** Delete Particular Installation Location *******************************************************************/
-
 
   deleteLocationType(installationLocationTypeId: number, installationLocationName: string) {
     this.installationLocationTypeId = installationLocationTypeId;
@@ -153,28 +138,23 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Edit Particular Installation Location  *******************************************************************/
 
-
   editLocationType(visit: any) {
 
     let dialogData = {
       type: 'Edit',
       value: visit
     }
-
     const dialogRef = this.dialog.open(AddLocationTypeComponent, {
       data: dialogData,
       width: '450px',
       disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllLocationList();
       }
     });
-
   }
-
 
 }
 

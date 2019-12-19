@@ -28,8 +28,6 @@ interface departmentDialogData {
   departmentTitle: string;
 }
 
-
-
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
@@ -39,15 +37,12 @@ interface ExampleFlatNode {
   parentId: number;
 }
 
-
-
 @Component({
   selector: 'app-department-view',
   templateUrl: './department-view.component.html',
   styleUrls: ['./department-view.component.css'],
 })
 export class DepartmentViewComponent implements OnInit {
-
 
   animal: any;
   departmentId: number;
@@ -57,7 +52,6 @@ export class DepartmentViewComponent implements OnInit {
   isTreeDataReady: boolean = false;
   dialogData: departmentDialogData;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-
 
   private transformer = (node: DepartmentNode, level: number) => {
     return {

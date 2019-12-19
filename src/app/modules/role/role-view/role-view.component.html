@@ -21,8 +21,14 @@
         <ng-template #recordFound>
           <mat-table [dataSource]="paidDataSource">
             <ng-container matColumnDef="title">
-              <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-              <mat-cell *matCellDef="let visit">{{ visit.title }}</mat-cell>
+              <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Title</mat-header-cell>
+              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="features">
+              <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Features</mat-header-cell>
+              <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+                {{ visit.features.length > 0 ? getFeatureList(visit.features) : '-' }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
               <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>

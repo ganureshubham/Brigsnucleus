@@ -15,6 +15,8 @@ interface roleDialogData {
   userRoleId: number;
   title: string;
   type: string;
+  features: string;
+
 }
 
 @Component({
@@ -38,7 +40,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
 
 
-  displayedColumns: string[] = ['title', 'Actions'];
+  displayedColumns: string[] = ['title', 'features', 'Actions'];
+
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
   @ViewChild('paidPaginator') paginator: MatPaginator;
@@ -75,13 +78,11 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** Get All Roles *******************************************************************/
 
-
-
   getAllRoles(pageNo: any) {
     this.spinnerService.setSpinnerVisibility(true);
     this.roleService.getAllRoles(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.userroles) {
+      if (res.status) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
           this.showSnackBar(res.message);
@@ -92,6 +93,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(res.message);
       }
     },
@@ -122,6 +124,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
       type: 'Add',
       userRoleId: 0,
       title: '',
+      features: ''
     }
     const dialogRef = this.dialog.open(AddRoleComponent, {
       data: this.dialogData,
@@ -169,24 +172,20 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
-
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   editRole(visit: any) {
-    console.log('edit', visit);
-
     this.dialogData = {
       type: 'Edit',
       userRoleId: visit.userRoleId,
-      title: visit.title
+      title: visit.title,
+      features: visit.features
     }
     const dialogRef = this.dialog.open(AddRoleComponent, {
       data: this.dialogData,
       width: '450px',
       disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllRoles(this.pageNumber);
@@ -194,7 +193,21 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-
+  getFeatureList(features: any) {
+    let allfeaturelists = "";
+    if (features != undefined && features != null && features.length > 0) {
+      for (let i = 0; i < features.length; i++) {
+        if (i < features.length - 1) {
+          allfeaturelists += features[i].purpose + ', ';
+        } else {
+          allfeaturelists += features[i].purpose + ' ';
+        }
+      }
+      return allfeaturelists
+    } else {
+      return allfeaturelists;
+    }
+  }
 
 }
 
