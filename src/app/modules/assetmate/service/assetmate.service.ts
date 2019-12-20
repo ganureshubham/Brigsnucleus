@@ -109,6 +109,13 @@ export class AssetmateService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `assets/updateVerifiedAsset/${assetId}`, verified);
   }
 
+  getAssetLocation(assetId, pageNo) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetLocationLatLong/${assetId}/${pageNo}`);
+  }
+
+  getAssetTransferLog(assetId, pageNo) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetTranferLocationList/${assetId}/${pageNo}`);
+  }
 
   /*********************************************************** Retire/Un-retire Particular Asset *******************************************************************/
 

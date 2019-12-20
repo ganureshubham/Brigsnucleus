@@ -1,0 +1,48 @@
+<div>
+
+  <div *ngIf="!isNoRecordFound;" class="map-container">
+    <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(loc)' width="100%" height="470" frameborder="0"
+      style="border:0"></iframe>
+  </div>
+
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
+  </div>
+  <ng-template #recordFound>
+    <h3>Previous Locations</h3>
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="locationAddedDate">
+        <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef i18n>
+          Date & Time
+        </mat-header-cell>
+        <mat-cell fxLayoutAlign="start center" *matCellDef="let location">
+          {{location.locationAddedDate}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="latitude">
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef i18n>
+          Latitude
+        </mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let location">
+          {{location.latitude}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="longitude">
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef i18n>
+          Longitude
+        </mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let location">
+          {{location.longitude}}
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="example-element-row" (click)="showLocation(location)"
+        *matRowDef="let location; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+    <div>
+      <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+      </mat-paginator>
+    </div>
+  </ng-template>
+</div>

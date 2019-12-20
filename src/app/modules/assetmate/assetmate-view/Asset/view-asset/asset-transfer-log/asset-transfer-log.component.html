@@ -1,0 +1,8 @@
+<div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+  <p>No Record Found</p>
+</div>
+<ng-template #recordFound fxLayout="row" class="transfer-log-container">
+  <div *ngFor="let transferLocation of arrTransferLogLocation; let i = index;">
+    <mat-card>{{transferLocation.oldLocation}}</mat-card>
+  </div>
+</ng-template>
