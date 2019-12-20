@@ -52,6 +52,7 @@ export class DepartmentViewComponent implements OnInit {
   isTreeDataReady: boolean = false;
   dialogData: departmentDialogData;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
+  isNoRecordFound: boolean = false;
 
   private transformer = (node: DepartmentNode, level: number) => {
     return {
@@ -92,32 +93,35 @@ export class DepartmentViewComponent implements OnInit {
     return this.dataSource.data.length == 0;
   }
 
-
   /************************************* All Department Lists****************************************************************/
 
   getAllDept() {
     this.spinnerService.setSpinnerVisibility(true);
     this.departmentService.getAllDept().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.department) {
+      if (res.status) {
+        if (res.department.length == 0) {
+          this.isNoRecordFound = true;
+          this.showSnackBar(res.message, 2000);
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.TREE_DATA = res.department;
         this.dataSource.data = this.TREE_DATA;
         this.isTreeDataReady = true;
       } else {
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
-
-
 
   /************************************* Add New Root Department ****************************************************************/
 
@@ -143,7 +147,6 @@ export class DepartmentViewComponent implements OnInit {
 
   /************************************* Add New Department****************************************************************/
 
-
   addDept(node: any): void {
     this.dialogData = {
       type: 'Add',
@@ -166,7 +169,6 @@ export class DepartmentViewComponent implements OnInit {
 
   /************************************* Edit Particular Department****************************************************************/
 
-
   editDept(node: any) {
     this.dialogData = {
       type: 'Edit',
@@ -187,9 +189,7 @@ export class DepartmentViewComponent implements OnInit {
     });
   }
 
-
   /************************************* Delete Particular Department****************************************************************/
-
 
   deleteDept(departmentId: number, name: string) {
     this.departmentId = departmentId;
@@ -212,17 +212,21 @@ export class DepartmentViewComponent implements OnInit {
           this.spinnerService.setSpinnerVisibility(true);
           this.departmentService.deleteDept(this.departmentId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllDept();
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllDept();
+            } else {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })
     }
   }
-
-
 
 }
 

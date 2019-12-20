@@ -1,14 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataSharingService } from '../../../../public service/data-sharing.service';
 import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../service/user.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../../public service/spinner.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-add-user',
@@ -31,10 +27,8 @@ export class AddUserComponent implements OnInit {
   cancelbtn = 0;
   password: any;
 
-
   constructor(private router: Router,
     private userService: UserService,
-    private dataService: DataSharingService,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
@@ -60,6 +54,7 @@ export class AddUserComponent implements OnInit {
   }
 
   /*********************************************************** Add New User *******************************************************************/
+
   addUser(formData: NgForm) {
     let value = formData.value;
     if (formData.valid) {
@@ -68,9 +63,12 @@ export class AddUserComponent implements OnInit {
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
-          this.showSnackBar(res.message);
-          this.dialog.closeAll();
-          // this.router.navigate(['/user/user-list']);
+          if (res.status) {
+            this.showSnackBar(res.message);
+            this.dialog.closeAll();
+          } else {
+            this.showSnackBar("Something went wrong..!!");
+          }
         },
           error => {
             this.spinnerService.setSpinnerVisibility(false);
@@ -110,9 +108,12 @@ export class AddUserComponent implements OnInit {
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.editUser(this.userData.userId, value).subscribe(res => {
           this.spinnerService.setSpinnerVisibility(false);
-          this.showSnackBar(res.message);
-          this.dialog.closeAll();
-          // this.router.navigate(['/user/user-list']);
+          if (res.status) {
+            this.showSnackBar(res.message);
+            this.dialog.closeAll();
+          } else {
+            this.showSnackBar("Something went wrong..!!");
+          }
         },
           error => {
             this.spinnerService.setSpinnerVisibility(false);
@@ -123,6 +124,7 @@ export class AddUserComponent implements OnInit {
   }
 
   /*********************************************************** Add Asset Photo *****************************************************************/
+
   imageChange(files: FileList) {
     var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
@@ -153,7 +155,6 @@ export class AddUserComponent implements OnInit {
 
   /*********************************************************** Get User Role List *******************************************************************/
 
-
   getUserRoleList() {
     this.userService.getUserRoleList().subscribe(res => {
       if (res.userRole) {
@@ -167,10 +168,10 @@ export class AddUserComponent implements OnInit {
   }
 
   /*********************************************************** Back to User Role List *******************************************************************/
+
   backToList() {
     this.router.navigate(['/user/user-list']);
   }
-
 
   add() {
     this.router.navigate(['/user']);

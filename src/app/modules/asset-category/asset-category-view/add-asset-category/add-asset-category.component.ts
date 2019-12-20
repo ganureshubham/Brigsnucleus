@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { AssetCategoryService } from '../../service/asset-category.service';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -10,6 +9,7 @@ import { SpinnerService } from '../../../../public service/spinner.service';
   templateUrl: './add-asset-category.component.html',
   styleUrls: ['./add-asset-category.component.css']
 })
+
 export class AddAssetCategoryComponent implements OnInit {
 
   AssetCategoryData: any = {}
@@ -19,12 +19,7 @@ export class AddAssetCategoryComponent implements OnInit {
   savebtn = 1;
   cancelbtn = 0;
 
-
-
-
-
-
-  constructor(private router: Router,
+  constructor(
     private assetCategoryService: AssetCategoryService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
@@ -52,7 +47,6 @@ export class AddAssetCategoryComponent implements OnInit {
 
   /*********************************************************** Get Asset category List *******************************************************************/
 
-
   getCategoryList() {
     this.assetCategoryService.getCategoryList().subscribe(res => {
       if (res.AssetCategory) {
@@ -70,16 +64,20 @@ export class AddAssetCategoryComponent implements OnInit {
 
   /*********************************************************** Add New Department *******************************************************************/
 
-
   addAssetCategory(value) {
     value.parentId = this.AssetCategoryData.parentId;
     this.spinnerService.setSpinnerVisibility(true);
     this.assetCategoryService.addAssetCategory(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
@@ -91,19 +89,17 @@ export class AddAssetCategoryComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.assetCategoryService.editAssetCategory(this.AssetCategoryData.categoryId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
-
-
-  // backToList(){
-  //   this.router.navigate(['/asset-category']);
-  // }
-
-  // addAsset(){} 
 
 }

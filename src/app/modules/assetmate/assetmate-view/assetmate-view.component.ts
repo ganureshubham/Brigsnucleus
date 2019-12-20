@@ -65,12 +65,16 @@ export class AssetmateViewComponent implements OnInit {
       departmentIdFK: 0
     }
     this.assetmateService.setFilterCriteria(filterData);
-
   }
 
   mediaQueryListener = () => {
     console.log('mediaQueryListener');
   }
+
+  isNoRecord() {
+    return this.category.length == 0;
+  }
+
 
 
   /*********************************************************** Get all Root Category *******************************************************************/
@@ -79,9 +83,10 @@ export class AssetmateViewComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.assetmateService.getAllRootCateg().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.rootCategory) {
-        if (res.currentPage == 0 && res.totalCount == 0) {
+      if (res.status) {
+        if (res.rootCategory.length == 0) {
           this.isNoRecordFound = true;
+          this.showSnackBar(res.message);
         } else {
           this.isNoRecordFound = false;
         }
@@ -100,8 +105,6 @@ export class AssetmateViewComponent implements OnInit {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
-
   categoryDetail(categoryId: any) {
     // let categoryObj=categ;
     // localStorage.setItem('Category-Object',JSON.stringify(categoryObj));
@@ -109,9 +112,7 @@ export class AssetmateViewComponent implements OnInit {
     this.router.navigate(['/assetmate/assetmate-details/' + categoryId]);
   }
 
-
   /*********************************************************** Search Category *******************************************************************/
-
 
   searchCategory(keyword) {
     if (keyword.length > 0) {
@@ -124,7 +125,6 @@ export class AssetmateViewComponent implements OnInit {
           this.category = [];
           this.isNoRecordFound = true;
         }
-
       },
         error => {
           console.log(error.errors.msg);

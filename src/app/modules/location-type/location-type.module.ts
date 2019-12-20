@@ -20,4 +20,4 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   entryComponents: [AddLocationTypeComponent]
 })
-export class LocationTypeModule { } 
+export class LocationTypeModule { }  

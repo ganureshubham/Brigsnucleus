@@ -138,6 +138,10 @@
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Asset Installation Location</span>
           </a>
+          <a mat-menu-item routerLink="/verify-asset">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Verify Pending Assets</span>
+          </a>
         </mat-menu>
       </div>
       <div fxLayout="row">
@@ -233,6 +237,10 @@
               <a mat-menu-item routerLink="/location-type" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Asset Installation Location</span>
+              </a>
+              <a mat-menu-item routerLink="/verify-asset" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Verify Pending Assets</span>
               </a>
             </mat-expansion-panel>
           </mat-accordion>

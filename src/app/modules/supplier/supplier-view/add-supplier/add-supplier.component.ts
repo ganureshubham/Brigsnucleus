@@ -43,15 +43,19 @@ export class AddSupplierComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.supplierService.addSupplier(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      //this.router.navigate(['/supplier']);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
+
   showSnackBar(message: string) {
     this.spinnerService.setSpinnerVisibility(false);
     this.snackBar.open(message, '', { duration: 2000 });
@@ -62,9 +66,12 @@ export class AddSupplierComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.supplierService.editSupplier(this.supplierData.supplierId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      // this.router.navigate(['/supplier']);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
