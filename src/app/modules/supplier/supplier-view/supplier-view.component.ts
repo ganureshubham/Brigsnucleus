@@ -1,18 +1,14 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
-
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { SupplierService } from '../service/supplier.service';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
 import { AddSupplierComponent } from './add-supplier/add-supplier.component';
-
 
 interface supplierDialogData {
   type: string;
@@ -22,7 +18,6 @@ interface supplierDialogData {
   businessName: string;
   mobileNumber: number;
   emailId: string;
-
 }
 
 @Component({
@@ -30,6 +25,7 @@ interface supplierDialogData {
   templateUrl: './supplier-view.component.html',
   styleUrls: ['./supplier-view.component.css']
 })
+
 export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   loading: boolean;
@@ -42,9 +38,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = false;
   dialogData: supplierDialogData;
-
-
-
+  Router: any;
+  supplierId: number;
 
   displayedColumns: string[] = ['supplierName', 'businessName', 'mobileNumber', 'emailId', 'Actions'];
   paidDataSource: MatTableDataSource<Supplier> = new MatTableDataSource();
@@ -53,8 +48,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  Router: any;
-  supplierId: number;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -74,12 +67,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.paidDataSource.paginator = this.paginator;
   }
 
-
-
   ngOnInit() {
     this.getAllSuppliers(this.pageNumber);
   }
-
 
   ngOnDestroy(): void { }
 
@@ -91,10 +81,10 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.spinnerService.setSpinnerVisibility(true);
     this.supplierService.getAllSuppliers(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.supplier) {
+      if (res.status) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
-          this.showSnackBar(res.message);
+          this.showSnackBar(res.message, 2000);
         } else {
           this.isNoRecordFound = false;
         }
@@ -102,21 +92,18 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
-        this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
-
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -126,14 +113,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.getAllSuppliers(this.page);
   }
 
-
   /*********************************************************** Add Supplier *******************************************************************/
-
-  // addSupplier() {
-  //   let selectedSupplier = null;
-  //   this.dataService.changeData(selectedSupplier);
-  //   this.router.navigate(['/supplier/add-supplier'])
-  // }
 
   addSupplier() {
     this.dialogData = {
@@ -155,12 +135,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
         this.getAllSuppliers(this.pageNumber);
       }
     });
-
   }
 
-
   /*********************************************************** Delete Particular Supplier *******************************************************************/
-
 
   deleteSupplier(supplierId: number, firstName: string) {
     this.supplierId = supplierId;
@@ -183,10 +160,15 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
           this.spinnerService.setSpinnerVisibility(true);
           this.supplierService.deleteSupplier(this.supplierId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllSuppliers(this.page);
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllSuppliers(this.page);
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })
@@ -194,7 +176,6 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   }
 
   /*********************************************************** Edit Particular Supplier  *******************************************************************/
-
 
   editSupplier(visit: any) {
     this.dialogData = {
@@ -218,9 +199,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
         this.getAllSuppliers(this.pageNumber);
       }
     });
-
   }
-
 
 }
 

@@ -42,15 +42,19 @@ export class AddLocationTypeComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.locationTypeService.addInstallationLoc(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      //this.router.navigate(['/supplier']);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
+
   showSnackBar(message: string) {
     this.spinnerService.setSpinnerVisibility(false);
     this.snackBar.open(message, '', { duration: 2000 });
@@ -62,11 +66,15 @@ export class AddLocationTypeComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.locationTypeService.editInstallationLoc(this.installationLocationTypeId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
-      //this.router.navigate(['/supplier']);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar("Something went wrong..!!");
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
 

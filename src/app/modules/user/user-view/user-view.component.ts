@@ -14,7 +14,6 @@ import { AppDialogData } from '../../../model/appDialogData';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AppImgDialogComponent } from '../../../shared/app-img-dialog/app-img-dialog.component';
 
-
 interface userDialogData {
   type: string;
   userId: number;
@@ -27,7 +26,6 @@ interface userDialogData {
   mobileNumber: number;
   emailId: string;
   password: string;
-
 }
 
 @Component({
@@ -101,10 +99,6 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  isNoRecord() {
-    return this.totalCount == 0;
-  }
-
   ngOnDestroy(): void { }
 
   /*********************************************************** Get All Users *******************************************************************/
@@ -113,10 +107,10 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.spinnerService.setSpinnerVisibility(true);
     this.userService.getAllUsers(departmentId, pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.users) {
+      if (res.status) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
-          this.showSnackBar(res.message);
+          this.showSnackBar(res.message, 2000);
         } else {
           this.isNoRecordFound = false;
         }
@@ -124,17 +118,17 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
 
   /***********************************************************Search Users *******************************************************************/
@@ -236,10 +230,15 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
           this.spinnerService.setSpinnerVisibility(true);
           this.userService.deleteUser(userId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllUsers(this.message.departmentId, this.page);
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllUsers(this.message.departmentId, this.page);
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })
@@ -291,17 +290,16 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
         this.spinnerService.setSpinnerVisibility(false);
         this.paidDataSource[index].isActive = !value.checked;
       }
-      this.showSnackBar(res.message);
+      this.showSnackBar(res.message, 2000);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
         this.paidDataSource[index].isActive = !value.checked;
       })
   }
 
 }
-
 
 export interface User {
   userId: number,

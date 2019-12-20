@@ -1,0 +1,63 @@
+<div class="innerbody table">
+  <div fxLayout="column">
+    <div class="portal-widget">
+      <mat-card fxFlex.xs="90" fxFlex="50">
+        <div fxLayout.xs="column" class="table_header">
+          <div fxLayoutAlign.xs="space-around center" class="fl">
+            <p class="tabel_heading mat-subheading-2">Verification pending - Assets</p>
+          </div>
+          <div fxFlex.xs="100" class="fr">
+            <!-- <div fxFlex.xs="100" class="btn_style">
+              <button fxFlex.xs="100" mat-button (click)="addLocationType()" class="bg_white_grey">
+                <mat-icon>add</mat-icon>Add Installation Location Type
+              </button>
+            </div> -->
+          </div>
+        </div>
+        <div class="cl"></div>
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+          <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+          <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="assetTitle">
+              <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Asset Title
+              </mat-header-cell>
+              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">
+                {{visit.assetTitle}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="addedBy">
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Added By
+              </mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                {{visit.addedBy}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef></mat-header-cell>
+              <mat-cell (click)="$event.stopPropagation()" *matCellDef="let visit; let i = index;" flexDirection="row"
+                fxLayoutAlign="end center" fxLayoutGap="20px">
+                <mat-icon matTooltip="mark as verified" class="mat-ic"
+                  (click)="$event.stopPropagation(); verifiedAsset(visit.assetId);">
+                  check</mat-icon>
+                <mat-icon matTooltip="delete" class="mat-ic"
+                  (click)="$event.stopPropagation(); deleteAsset(visit.assetId,visit.assetTitle);">
+                  delete_outline
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="example-element-row" (click)="navigateToAssetDetails(row.assetId)"
+              *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+        </ng-template>
+        <div>
+          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+          </mat-paginator>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

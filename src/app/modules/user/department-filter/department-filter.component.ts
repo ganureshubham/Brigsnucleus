@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { UserService } from '../service/user.service';
-
+import { MatSnackBar } from '@angular/material';
+import { SpinnerService } from '../../../public service/spinner.service';
 
 interface DepartmentNode {
   departmentId: number;
@@ -11,8 +12,6 @@ interface DepartmentNode {
   childData?: DepartmentNode[];
   parentId: number;
 }
-
-
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -28,8 +27,8 @@ interface ExampleFlatNode {
   templateUrl: './department-filter.component.html',
   styleUrls: ['./department-filter.component.css']
 })
-export class DepartmentFilterComponent implements OnInit {
 
+export class DepartmentFilterComponent implements OnInit {
 
   animal: any;
   departmentId: number;
@@ -38,7 +37,7 @@ export class DepartmentFilterComponent implements OnInit {
   final_TREE_DATA: DepartmentNode[];
   isTreeDataReady: boolean = false;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
-
+  isNoRecordFound: boolean = false;
 
   private transformer = (node: DepartmentNode, level: number) => {
     return {
@@ -65,6 +64,8 @@ export class DepartmentFilterComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
+    private snackBar: MatSnackBar,
+    private spinnerService: SpinnerService,
   ) {
   }
 
@@ -75,25 +76,36 @@ export class DepartmentFilterComponent implements OnInit {
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-
-
-
-
   /***************************************** Get ALl Departments************************************************************************/
 
   getAllDepts() {
+    this.spinnerService.setSpinnerVisibility(true);
     this.userService.getAllDepts().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
       if (res.department) {
+        if (res.department.length == 0) {
+          this.isNoRecordFound = true;
+          this.showSnackBar(res.message, 2000);
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.TREE_DATA = res.department;
         this.final_TREE_DATA = [...this.TREE_DATA];
         this.dataSource.data = this.TREE_DATA;
         this.isTreeDataReady = true;
         this.messageEvent.emit(res.department[0]);
+      } else {
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
-        console.log(error);
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
+  }
+
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
 
   handleCategoryTreeNodeClick(node) {

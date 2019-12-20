@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -24,7 +24,6 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   supplierName: any;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = false;
-  //dialogData: supplierDialogData;
 
   displayedColumns: string[] = ['installationLocationName', 'Actions'];
   paidDataSource: MatTableDataSource<LocationType> = new MatTableDataSource();
@@ -38,7 +37,6 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   installationLocationTypeId: number;
 
   constructor(
-    private router: Router,
     private locationTypeService: LocationTypeService,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
@@ -66,26 +64,26 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.spinnerService.setSpinnerVisibility(true);
     this.locationTypeService.getAllLocationList().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.installationLocationList) {
+      if (res.status) {
         if (res.installationLocationList.length == 0) {
           this.isNoRecordFound = true;
-          this.showSnackBar(res.message);
+          this.showSnackBar(res.message, 2000);
         } else {
           this.isNoRecordFound = false;
         }
         this.paidDataSource = res.installationLocationList;
       } else {
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
 
   /*********************************************************** Add Installation Location *******************************************************************/
@@ -126,10 +124,15 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
           this.spinnerService.setSpinnerVisibility(true);
           this.locationTypeService.deleteInstallationLoc(this.installationLocationTypeId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllLocationList();
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllLocationList();
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })

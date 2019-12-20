@@ -13,52 +13,56 @@
     </mat-card>
     <mat-card class="department-tree-container">
         <!-- class="width_90 margin_auto department" -->
-        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-                <mat-list role="list" class="border_bottom">
-                    <mat-list-item role="listitem">
-                        <button mat-icon-button disabled></button>
-                        {{node.name}}
-                    </mat-list-item>
-                    <mat-list-item role="listitem" class="flex_end">
-                        <button matTooltip="Add Department" mat-icon-button (click)="addDept(node)">
-                            <mat-icon class="mat-icon">add</mat-icon>
-                        </button>
-                        <button matTooltip="Edit Department" mat-icon-button (click)="editDept(node)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button matTooltip="Delete Department" mat-icon-button
-                            (click)="deleteDept(node.departmentId,node.name)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-list-item>
-                </mat-list>
-            </mat-tree-node>
-            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-                <mat-list role="list" class="border_bottom">
-                    <mat-list-item role="listitem">
-                        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
-                            <mat-icon class="mat-icon-rtl-mirror">
-                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                            </mat-icon>
-                        </button>
-                        {{node.name}}
-                    </mat-list-item>
-                    <mat-list-item role="listitem" class="flex_end">
-                        <button matTooltip="Add Department" mat-icon-button (click)="addDept(node)">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                        <button matTooltip="Edit Department" mat-icon-button (click)="editDept(node)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button matTooltip="Delete Department" mat-icon-button
-                            (click)="deleteDept(node.departmentId,node.name)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-list-item>
-                </mat-list>
-            </mat-tree-node>
-        </mat-tree>
-        <div class="noDataFound" *ngIf="isNoRecord()">No records found</div>
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+            <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <mat-list role="list" class="border_bottom">
+                        <mat-list-item role="listitem">
+                            <button mat-icon-button disabled></button>
+                            {{node.name}}
+                        </mat-list-item>
+                        <mat-list-item role="listitem" class="flex_end">
+                            <button matTooltip="Add Department" mat-icon-button (click)="addDept(node)">
+                                <mat-icon class="mat-icon">add</mat-icon>
+                            </button>
+                            <button matTooltip="Edit Department" mat-icon-button (click)="editDept(node)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button matTooltip="Delete Department" mat-icon-button
+                                (click)="deleteDept(node.departmentId,node.name)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-tree-node>
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <mat-list role="list" class="border_bottom">
+                        <mat-list-item role="listitem">
+                            <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+                                <mat-icon class="mat-icon-rtl-mirror">
+                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                </mat-icon>
+                            </button>
+                            {{node.name}}
+                        </mat-list-item>
+                        <mat-list-item role="listitem" class="flex_end">
+                            <button matTooltip="Add Department" mat-icon-button (click)="addDept(node)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <button matTooltip="Edit Department" mat-icon-button (click)="editDept(node)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button matTooltip="Delete Department" mat-icon-button
+                                (click)="deleteDept(node.departmentId,node.name)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-tree-node>
+            </mat-tree>
+        </ng-template>
     </mat-card>
 </div>

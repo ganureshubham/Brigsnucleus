@@ -1,14 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
-
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
 import { ManufacturerService } from '../service/manufacturer.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
@@ -18,15 +12,14 @@ interface manufacturerDialogData {
   type: string;
   manufacturerId: number;
   title: string;
-
 }
-
 
 @Component({
   selector: 'app-manufacturer-view',
   templateUrl: './manufacturer-view.component.html',
   styleUrls: ['./manufacturer-view.component.css']
 })
+
 export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
 
   loading: boolean;
@@ -37,9 +30,6 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   manufacturerData: any = {};
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = false;
-
-
-
 
   displayedColumns: string[] = ['title', 'Actions'];
   paidDataSource: MatTableDataSource<Manufacturer> = new MatTableDataSource();
@@ -52,8 +42,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   manufacturerId: number;
   dialogData: manufacturerDialogData;
 
-  constructor(private http: HttpClient,
-    private router: Router,
+  constructor(
     private manufacturerService: ManufacturerService,
     public dataService: DataSharingService,
     private dialogService: DialogService,
@@ -74,20 +63,18 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     this.getAllmanufacturers(this.pageNumber);
   }
 
-
   ngOnDestroy(): void { }
 
-
-  /*********************************************************** Get All Roles *******************************************************************/
+  /*********************************************************** Get All Manufacturers *******************************************************************/
 
   getAllmanufacturers(pageNo: number) {
     this.spinnerService.setSpinnerVisibility(true);
     this.manufacturerService.getAllmanufacturers(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.manufacturer) {
+      if (res.status) {
         if (res.currentPage == 0 && res.totalCount == 0) {
           this.isNoRecordFound = true;
-          this.showSnackBar(res.message);
+          this.showSnackBar(res.message, 2000);
         } else {
           this.isNoRecordFound = false;
         }
@@ -95,21 +82,18 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
       } else {
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
-
-
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -119,42 +103,29 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
     this.getAllmanufacturers(this.page);
   }
 
-  /*********************************************************** Page Change *******************************************************************/
-
-
-  // addManufacturer() {
-  //   let selectedManufacturer = null;
-  //   this.dataService.changeData(selectedManufacturer);
-  //   this.router.navigate(['/manufacturer/add-manufacturer']);
-  // }
+  /*********************************************************** Add Manufacturer *******************************************************************/
 
   addManufacturer() {
     this.dialogData = {
       type: 'Add',
       manufacturerId: 0,
       title: '',
-
     }
+
     const dialogRef = this.dialog.open(AddManufacturerComponent, {
       data: this.dialogData,
       width: '450px',
       disableClose: true
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.getAllmanufacturers(this.pageNumber);
       }
-
     })
   }
 
-
-  /*********************************************************** Delete Particular Role *******************************************************************/
-
-
-
+  /*********************************************************** Delete Particular Manufacturer *******************************************************************/
 
   deleteManufacturer(manufacturerId: number, title: string) {
     this.manufacturerId = manufacturerId;
@@ -177,17 +148,22 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
           this.spinnerService.setSpinnerVisibility(true);
           this.manufacturerService.deletemanufacturer(this.manufacturerId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllmanufacturers(this.page);
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllmanufacturers(this.page);
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })
     }
   }
 
-  /*********************************************************** Edit Particular Asset  *******************************************************************/
+  /*********************************************************** Edit Particular Manufacturer  *******************************************************************/
 
   editManufacturer(visit: any) {
     this.dialogData = {
@@ -205,12 +181,8 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
       if (result !== 0) {
         this.getAllmanufacturers(this.pageNumber);
       }
-
     })
-
   }
-
-
 
 }
 
