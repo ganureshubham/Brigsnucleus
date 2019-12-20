@@ -30,15 +30,20 @@ export class AuthInterceptor implements HttpInterceptor {
 		private snackBar: MatSnackBar
 	) { }
 
-
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-		let token = localStorage.getItem('currentUser');
+		let currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
-		if (token != "undefined" && token !== null) {
+		if (currentUser != undefined && currentUser != null && currentUser.data.token != undefined && currentUser.data.token != null) {
 			request = request.clone({
 				setHeaders: {
-					Authorization: JSON.parse(localStorage.getItem('currentUser')).data.token
+					Authorization: currentUser.data.token
+				}
+			});
+		} else {
+			request = request.clone({
+				setHeaders: {
+					Authorization: ''
 				}
 			});
 		}
