@@ -48,7 +48,7 @@ export class AddManufacturerComponent implements OnInit {
         this.showSnackBar(res.message);
         this.dialog.closeAll();
       } else {
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {
@@ -71,7 +71,7 @@ export class AddManufacturerComponent implements OnInit {
         this.showSnackBar(res.message);
         this.dialog.closeAll();
       } else {
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {

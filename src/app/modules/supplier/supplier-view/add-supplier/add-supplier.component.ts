@@ -47,7 +47,7 @@ export class AddSupplierComponent implements OnInit {
         this.showSnackBar(res.message);
         this.dialog.closeAll();
       } else {
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {
@@ -70,7 +70,7 @@ export class AddSupplierComponent implements OnInit {
         this.showSnackBar(res.message);
         this.dialog.closeAll();
       } else {
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {
