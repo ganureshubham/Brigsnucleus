@@ -174,7 +174,7 @@ export class OrganizationViewComponent implements OnInit {
       this.isAlreadySubscribedToDialogUserActionService = true;
       this.dialogService.getUserDialogAction().subscribe(userAction => {
         if (userAction == 0) {
-          //User has not performed any action on opened app dialog or closed the dialog;
+          //User has not performed any action on opened app dialog or closed the dialog; 
         } else if (userAction == 1) {
 
           this.dialogService.setUserDialogAction(0);

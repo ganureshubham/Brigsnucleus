@@ -99,6 +99,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/taskmate/taskmate.module#TaskmateModule",
         canActivate: [AuthGuard]
       },
+      {
+        path: "verify-asset",
+        loadChildren: "./modules/verify-asset/verify-asset.module#VerifyAssetModule",
+        canActivate: [AuthGuard]
+      },
 
     ]
   },

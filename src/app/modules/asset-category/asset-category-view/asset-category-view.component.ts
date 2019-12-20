@@ -1,10 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AssetCategoryService } from '../service/asset-category.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { DialogService } from '../../../public service/dialog.service';
@@ -50,6 +47,7 @@ export class AssetCategoryViewComponent implements OnInit {
   final_TREE_DATA: AssetCategoryNode[];
   isTreeDataReady: boolean = false;
   dialogData: departmentDialogData;
+  isNoRecordFound: boolean = false;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
   private transformer = (node: AssetCategoryNode, level: number) => {
@@ -71,8 +69,6 @@ export class AssetCategoryViewComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private assetCategoryService: AssetCategoryService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -98,22 +94,28 @@ export class AssetCategoryViewComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.assetCategoryService.getAllAssetCategoryLists().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      if (res.assetCategory) {
+      if (res.status) {
+        if (res.assetCategory.length == 0) {
+          this.isNoRecordFound = true;
+          this.showSnackBar(res.message, 2000);
+        } else {
+          this.isNoRecordFound = false;
+        }
         this.TREE_DATA = res.assetCategory;
         this.dataSource.data = this.TREE_DATA;
         this.isTreeDataReady = true;
       } else {
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       })
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
 
   /************************************* Add New Root Asset Category ****************************************************************/
@@ -205,10 +207,15 @@ export class AssetCategoryViewComponent implements OnInit {
           this.spinnerService.setSpinnerVisibility(true);
           this.assetCategoryService.deleteAssetCategory(this.categoryId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllAssetCategoryLists();
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllAssetCategoryLists();
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
-            this.showSnackBar("Something went wrong..!!");
+            this.spinnerService.setSpinnerVisibility(false);
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })

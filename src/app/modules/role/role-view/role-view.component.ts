@@ -10,13 +10,11 @@ import { AppDialogData } from '../../../model/appDialogData';
 import { DialogService } from '../../../public service/dialog.service';
 import { AddRoleComponent } from './add-role/add-role.component';
 
-
 interface roleDialogData {
   userRoleId: number;
   title: string;
   type: string;
   features: string;
-
 }
 
 @Component({
@@ -24,6 +22,7 @@ interface roleDialogData {
   templateUrl: './role-view.component.html',
   styleUrls: ['./role-view.component.css']
 })
+
 export class RoleViewComponent implements AfterViewInit, OnDestroy {
 
   loading: boolean;
@@ -37,9 +36,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   dialogData: roleDialogData;
 
-
-
-
   displayedColumns: string[] = ['title', 'features', 'Actions'];
 
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
@@ -50,8 +46,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
 
-  constructor(private http: HttpClient,
-    private router: Router,
+  constructor(
     private roleService: RoleService,
     public dataService: DataSharingService,
     private spinnerService: SpinnerService,
@@ -72,9 +67,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     this.getAllRoles(this.pageNumber);
   }
 
-
   ngOnDestroy(): void { }
-
 
   /*********************************************************** Get All Roles *******************************************************************/
 
@@ -83,9 +76,9 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     this.roleService.getAllRoles(pageNo).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
-        if (res.currentPage == 0 && res.totalCount == 0) {
+        if ((res.currentPage == 0 && res.totalCount == 0)) {
           this.isNoRecordFound = true;
-          this.showSnackBar(res.message);
+          this.showSnackBar(res.message, 2000);
         } else {
           this.isNoRecordFound = false;
         }
@@ -94,20 +87,19 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
         this.totalCount = res.totalCount;
       } else {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar(res.message);
+        this.showSnackBar(res.message, 2000);
       }
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar("Something went wrong..!!", 2000);
       }
     )
   }
 
-  showSnackBar(message: string) {
-    this.snackBar.open(message, '', { duration: 2000 });
+  showSnackBar(message: string, duration: any) {
+    this.snackBar.open(message, '', { duration: duration });
   }
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -161,11 +153,15 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
           this.spinnerService.setSpinnerVisibility(true);
           this.roleService.deleteRole(this.userRoleId).subscribe(res => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllRoles(this.page);
+            if (res.status) {
+              this.showSnackBar(res.message, 4000);
+              this.getAllRoles(this.page);
+            } else {
+              this.showSnackBar(res.message, 4000);
+            }
           }, error => {
             this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!");
+            this.showSnackBar("Something went wrong..!!", 2000);
           });
         }
       })

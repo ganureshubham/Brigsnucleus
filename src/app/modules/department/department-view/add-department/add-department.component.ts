@@ -54,8 +54,6 @@ export class AddDepartmentComponent implements OnInit {
     this.getDeptList();
   }
 
-
-
   closeDialog(): void {
     this.dialog.closeAll();
   }
@@ -82,10 +80,15 @@ export class AddDepartmentComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.departmentService.addDept(value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar(res.message);
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
@@ -101,14 +104,17 @@ export class AddDepartmentComponent implements OnInit {
     this.spinnerService.setSpinnerVisibility(true);
     this.departmentService.editDept(this.deptData.departmentId, value).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
-      this.showSnackBar(res.message);
-      this.dialog.closeAll();
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar(res.message);
+      }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
-
-
 
 }

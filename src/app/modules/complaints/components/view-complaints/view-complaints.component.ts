@@ -15,8 +15,8 @@ import { AppImgDialogComponent } from 'src/app/shared/app-img-dialog/app-img-dia
   templateUrl: './view-complaints.component.html',
   styleUrls: ['./view-complaints.component.css']
 })
-export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
+export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   public page: number = 0;
   count: number;
@@ -30,7 +30,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   totalComplaints: any;
   complaintId: number;
 
-
   displayedColumns: string[] = ['complaintImage', 'typeOfComplaint', 'title', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdOn', 'Actions'];
   paidDataSource: MatTableDataSource<Complaint> = new MatTableDataSource();
 
@@ -38,8 +37,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-
-
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -63,7 +60,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
     this.getAllComplaints(this.pageNumber);
   }
 
-
   /*********************************************************** Add New Complaint *******************************************************************/
 
   addComplaint() {
@@ -77,9 +73,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
         this.getAllComplaints(this.pageNumber);
       }
     });
-
   }
-
 
   /*********************************************************** Get all Complaints *******************************************************************/
 
@@ -112,7 +106,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
   /*********************************************************** Page Change *******************************************************************/
 
   pageChange(pageNo: any) {
@@ -122,16 +115,11 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
 
   /*********************************************************** View Particular Complaint  *******************************************************************/
 
-
-
   viewComplaint(complaintId: number) {
     this.router.navigate(['complaints/details-complaints/' + complaintId]);
   }
 
-
-
   /*********************************************************** Delete Particular Complaint *******************************************************************/
-
 
   deleteComplaint(complaintId: number, title: string) {
     this.complaintId = complaintId;
@@ -153,7 +141,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
           //User has approved delete operation
           this.spinnerService.setSpinnerVisibility(true);
           this.complaintsService.deleteComplaint(this.complaintId).subscribe(res => {
-
             this.spinnerService.setSpinnerVisibility(false);
             this.showSnackBar(res.message);
             this.getAllComplaints(this.page);
@@ -164,9 +151,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
       })
     }
   }
-
-
-
 
   /*********************************************************** Search Documate *******************************************************************/
 
@@ -194,6 +178,7 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
       }
     }
   }
+
   ngOnDestroy(): void { }
 
   isCurrentUserSuperAdmin() {
@@ -212,7 +197,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-
   getComplaintImagePath(imageUrl) {
     if (imageUrl != null && imageUrl.length > 0) {
       return imageUrl;
@@ -221,9 +205,6 @@ export class ViewComplaintsComponent implements AfterViewInit, OnDestroy {
   }
 
 }
-
-
-
 
 export interface Complaint {
   complaintId: number,
