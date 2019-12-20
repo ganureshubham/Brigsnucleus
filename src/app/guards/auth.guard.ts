@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
   isUserAlreadyLoggedIn(): boolean {
 
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser != null && currentUser.auth) {
+    if (currentUser != undefined && currentUser != null && currentUser.auth != undefined && currentUser.auth != null && currentUser.auth) {
       return true;
     }
     this.router.navigate(['/login']);

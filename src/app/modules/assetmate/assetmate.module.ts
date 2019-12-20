@@ -38,6 +38,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { ShuffleChecklistQuestionsComponent } from './assetmate-view/checklist/view-checklist-questions/shuffle-checklist-questions/shuffle-checklist-questions.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TransferAssetComponent } from './assetmate-view/Asset/view-asset/transfer-asset/transfer-asset.component';
+import { AssetLocationComponent } from './assetmate-view/Asset/view-asset/asset-location/asset-location.component';
+import { AssetTransferLogComponent } from './assetmate-view/Asset/view-asset/asset-transfer-log/asset-transfer-log.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { TransferAssetComponent } from './assetmate-view/Asset/view-asset/transf
     DetailsChecklistQuestionComponent,
     ShuffleChecklistQuestionsComponent,
     TransferAssetComponent,
+    AssetLocationComponent,
+    AssetTransferLogComponent,
 
   ],
   imports: [

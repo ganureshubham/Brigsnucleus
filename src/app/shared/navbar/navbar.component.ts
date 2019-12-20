@@ -96,14 +96,25 @@ export class NavbarComponent implements OnInit {
 
   getOrganizationNameMangingBySuperAdmin() {
     this.orgNameFromLocStorage = JSON.parse(localStorage.getItem('currentUser'));
-    if (this.orgNameFromLocStorage.data.role == 0) {
-      let orgNameForSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
-      return (orgNameForSuperAdmin.length > 20) ? (orgNameForSuperAdmin.substring(0, 20) + '..') : orgNameForSuperAdmin;
-    } else if (this.orgNameFromLocStorage.data.role == 1) {
-      let orgNameForAdmin = JSON.parse(localStorage.getItem('currentUser')).data.organizationName;
-      return (orgNameForAdmin.length > 20) ? (orgNameForAdmin.substring(0, 20) + '..') : orgNameForAdmin;
+    if (this.orgNameFromLocStorage && this.orgNameFromLocStorage.data) {
+      if (this.orgNameFromLocStorage.data.role == 0) {
+        if (JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin) {
+          let orgNameForSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).data.OrgNameForSuperAdmin;
+          return (orgNameForSuperAdmin.length > 20) ? (orgNameForSuperAdmin.substring(0, 20) + '..') : orgNameForSuperAdmin;
+        } else {
+          return '';
+        }
+      } else if (this.orgNameFromLocStorage.data.role == 1) {
+        if (JSON.parse(localStorage.getItem('currentUser')).data.organizationName) {
+          let orgNameForAdmin = JSON.parse(localStorage.getItem('currentUser')).data.organizationName;
+          return (orgNameForAdmin.length > 20) ? (orgNameForAdmin.substring(0, 20) + '..') : orgNameForAdmin;
+        } else {
+          return '';
+        }
+      }
+    } else {
+      return '';
     }
-
   }
 
   chooseOrganizationAndNavigate() {

@@ -1,0 +1,47 @@
+.transfer-log-container{
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    padding: 40px 40px 20px 40px ;
+}
+
+.location-item{
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width:40%;
+}
+
+.padding-top-15{
+    padding: 30px 0 0 0;
+}
+
+.guideline-text-item{
+    margin: 3px 0;
+    color:#b9b9b9;
+    font-size: 13px;
+}
+
+.guideline-text-subitem{
+    margin-top: 10px;
+    font-size: 10px;
+    display: flex;
+    flex-direction: row;
+    color:#9e9e9e;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.guideline-text-key-item{
+    margin-top: 1px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color:#464646;
+}
+
+.ic-location{
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    color:#ccc;
+}
