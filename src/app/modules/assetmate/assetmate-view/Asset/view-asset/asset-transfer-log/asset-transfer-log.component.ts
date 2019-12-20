@@ -42,8 +42,7 @@ export class AssetTransferLogComponent implements OnInit {
           } else {
             this.isNoRecordFound = false;
           }
-          this.arrTransferLogLocation = resp.locations;
-          console.log(this.arrTransferLogLocation);
+          this.arrTransferLogLocation = this.arrTransferLogLocation.concat(resp.locations);
           this.pageNumber = resp.currentPage;
           this.totalCount = resp.totalCount;
           this.spinnerService.setSpinnerVisibility(false);
@@ -56,6 +55,11 @@ export class AssetTransferLogComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       }
     );
+  }
+
+  loadMoreTransferLog() {
+    this.pageNumber++;
+    this.getAssetTransferLog(this.assetId, this.pageNumber);
   }
 
   showSnackBar(message: string) {

@@ -1,8 +1,37 @@
-<div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
-  <p>No Record Found</p>
-</div>
-<ng-template #recordFound fxLayout="row" class="transfer-log-container">
-  <div *ngFor="let transferLocation of arrTransferLogLocation; let i = index;">
-    <mat-card>{{transferLocation.oldLocation}}</mat-card>
+<div fxLayout="column">
+  <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+    <p>No Record Found</p>
   </div>
-</ng-template>
+  <ng-template #recordFound>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxLayout="column" fxFlex="60" class="transfer-log-container">
+        <div *ngFor="let transferLocation of arrTransferLogLocation; let i = index;">
+          <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="20px">
+            <mat-icon class="ic-location">room</mat-icon>
+            <div class="location-item">
+              <div class="guideline-text-item">Location Type</div>
+              <div class="guideline-text-key-item">{{transferLocation.newLocationtype}}</div>
+              <div class="guideline-text-item">Location</div>
+              <div class="guideline-text-key-item">{{transferLocation.newLocation}}</div>
+              <div class="guideline-text-subitem">{{transferLocation.locationTransferredDate}}</div>
+            </div>
+          </div>
+          <!-- <div *ngIf="i%2 != 0" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="20px"
+            style="margin-left: 100px;">
+            <mat-icon class="ic-location">room</mat-icon>
+            <div class="location-item">
+              <div class="guideline-text-item">Location Type</div>
+              <div class="guideline-text-key-item">{{transferLocation.newLocationtype}}</div>
+              <div class="guideline-text-item">Location</div>
+              <div class="guideline-text-key-item">{{transferLocation.newLocation}}</div>
+              <div class="guideline-text-subitem">{{transferLocation.locationTransferredDate}}</div>
+            </div>
+          </div> -->
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="padding-top-15">
+          <button mat-stroked-button color="primary" (click)="loadMoreTransferLog()">Load More</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
