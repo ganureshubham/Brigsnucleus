@@ -91,7 +91,7 @@ export class AddRoleComponent implements OnInit {
         this.dialog.closeAll();
       } else {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {
@@ -126,7 +126,7 @@ export class AddRoleComponent implements OnInit {
         this.dialog.closeAll();
       } else {
         this.spinnerService.setSpinnerVisibility(false);
-        this.showSnackBar("Something went wrong..!!");
+        this.showSnackBar(res.message);
       }
     },
       error => {
