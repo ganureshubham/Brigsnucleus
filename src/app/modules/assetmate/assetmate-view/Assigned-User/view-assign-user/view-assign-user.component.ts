@@ -45,7 +45,7 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
   animal: any;
   filepath: any;
   filedata: any = {};
@@ -79,7 +79,9 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Assign Users *******************************************************************/

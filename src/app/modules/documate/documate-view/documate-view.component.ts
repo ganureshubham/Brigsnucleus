@@ -50,7 +50,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   allDocumentForQRcode: any = [];
   documentCode1: string = '1';
   dialogData: documateDialogData;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
 
 
@@ -87,7 +87,9 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Open Document Code Dialog *******************************************************************/

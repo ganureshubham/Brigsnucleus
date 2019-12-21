@@ -33,7 +33,7 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteOrgId: number;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -64,7 +64,9 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   getListOfOrganizations(pageNumber) {

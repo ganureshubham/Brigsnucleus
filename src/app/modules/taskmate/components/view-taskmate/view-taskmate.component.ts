@@ -39,7 +39,7 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -64,7 +64,9 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Add New Taskmate *******************************************************************/
