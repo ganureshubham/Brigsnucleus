@@ -50,7 +50,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
   allDocumentForQRcode: any = [];
   documentCode1: string = '1';
   dialogData: documateDialogData;
-
+  dialogServiceSubscription: Subscription;
 
 
 
@@ -86,6 +86,9 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.getAllDocumates(this.pageNumber);
   }
 
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Open Document Code Dialog *******************************************************************/
 
@@ -189,7 +192,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
@@ -223,7 +226,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
           this.paidDataSource = new MatTableDataSource<any>([]);
           this.isNoRecordFound = true;
         }
-
       },
         error => {
           console.log(error.errors.msg);
@@ -236,9 +238,7 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
   /*********************************************************** Print Particular Qr-Code Document *******************************************************************/
-
 
   printQRcode(documate) {
     this.documentForQRcode = documate;
@@ -272,14 +272,9 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
 
       window.open(doc.output('bloburl'), '_blank');
     }, 50);
-
-
-
   }
 
-
   /*********************************************************** Add  Documate *******************************************************************/
-
 
   addDocumate(): void {
     this.dialogData = {
@@ -303,13 +298,6 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
       }
     });
   }
-
-
-
-  ngOnDestroy(): void { }
-
-
-
 
 }
 export interface Alert {

@@ -52,6 +52,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
+  dialogServiceSubscription: Subscription;
   animal: any;
   filepath: any;
   filedata: any = {};
@@ -83,7 +84,9 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
     this.getAllDocuments(this.categoryID, this.pageNumber);
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Assets *******************************************************************/
 
@@ -162,7 +165,7 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SystemadminsService } from '../../services/systemadmins.service';
 import { SpinnerService } from 'src/app/public service/spinner.service';
 import { MatTableDataSource, MatSnackBar, MatPaginator, MatDialog } from '@angular/material';
@@ -6,13 +6,14 @@ import { SystemAdminsAddEditComponent } from '../system-admins-add-edit/system-a
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AppDialogData } from 'src/app/model/appDialogData';
 import { DialogService } from '../../../../public service/dialog.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-system-admins-view',
   templateUrl: './system-admins-view.component.html',
   styleUrls: ['./system-admins-view.component.css']
 })
-export class SystemAdminsViewComponent implements OnInit {
+export class SystemAdminsViewComponent implements OnInit, OnDestroy {
 
   page: number = 0;
   pageNumber = 0;
@@ -24,6 +25,7 @@ export class SystemAdminsViewComponent implements OnInit {
   isSearchRequestAllowed: boolean = true;
   mobileQuery: MediaQueryList;
   deleteAdminId: number;
+  dialogServiceSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -44,6 +46,10 @@ export class SystemAdminsViewComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   getAllAdmins(pageNo) {
@@ -148,7 +154,7 @@ export class SystemAdminsViewComponent implements OnInit {
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
