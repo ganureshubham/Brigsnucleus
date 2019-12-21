@@ -86,6 +86,8 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     if (this.message && this.message.departmentId) {
       this.DepartmentObj = '(' + this.message.name + ')';
       this.getAllUsers(this.message.departmentId, this.pageNumber);
+    } else {
+      this.isNoRecordFound = true;
     }
   }
 
