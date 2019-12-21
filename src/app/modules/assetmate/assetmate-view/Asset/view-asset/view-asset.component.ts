@@ -73,7 +73,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   ngAfterViewInit(): void {
     // Add paginators to datastore here, because we need the view to
@@ -117,7 +117,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Assets *******************************************************************/

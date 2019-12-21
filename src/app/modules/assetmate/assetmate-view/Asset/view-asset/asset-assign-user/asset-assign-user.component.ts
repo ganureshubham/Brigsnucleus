@@ -50,7 +50,7 @@ export class AssetAssignUserComponent implements OnInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
   animal: any;
   filepath: any;
   filedata: any = {};
@@ -82,7 +82,9 @@ export class AssetAssignUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Assign Users *******************************************************************/

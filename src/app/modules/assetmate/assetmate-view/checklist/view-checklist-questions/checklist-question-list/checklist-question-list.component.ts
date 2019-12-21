@@ -26,7 +26,7 @@ export class ChecklistQuestionListComponent implements OnInit, OnDestroy {
   deleteQuestionWithId: number;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(
     private router: Router,
@@ -45,7 +45,9 @@ export class ChecklistQuestionListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   getChecklistTitle(checklistId: number) {

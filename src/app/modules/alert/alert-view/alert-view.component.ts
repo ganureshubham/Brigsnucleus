@@ -42,7 +42,7 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   alertId: number;
   nonzero: boolean = false;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -203,7 +203,9 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
 

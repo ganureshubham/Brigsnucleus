@@ -55,7 +55,7 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(private http: HttpClient,
     private assetmateService: AssetmateService,
@@ -85,7 +85,9 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Assets *******************************************************************/

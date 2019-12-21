@@ -25,7 +25,7 @@ export class SystemAdminsViewComponent implements OnInit, OnDestroy {
   isSearchRequestAllowed: boolean = true;
   mobileQuery: MediaQueryList;
   deleteAdminId: number;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -49,7 +49,9 @@ export class SystemAdminsViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   getAllAdmins(pageNo) {
