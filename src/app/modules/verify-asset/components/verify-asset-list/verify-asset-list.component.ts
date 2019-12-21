@@ -6,6 +6,7 @@ import { VerifyAssetService } from '../../service/verify-asset.service';
 import { AssetmateService } from '../../../assetmate/service/assetmate.service';
 import { AppDialogData } from '../../../../model/appDialogData';
 import { DialogService } from '../../../../public service/dialog.service';
+import { Subscription } from 'rxjs';
 
 interface Asset {
   assetId: number;
@@ -38,6 +39,8 @@ export class VerifyAssetListComponent implements OnInit {
 
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
+  dialogServiceSubscription: Subscription;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -51,6 +54,10 @@ export class VerifyAssetListComponent implements OnInit {
 
   ngOnInit() {
     this.getAllPendingVerificationAssets(this.pageNumber);
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   navigateToAssetDetails(assetId) {
@@ -137,7 +144,7 @@ export class VerifyAssetListComponent implements OnInit {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
