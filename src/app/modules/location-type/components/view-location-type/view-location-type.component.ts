@@ -35,6 +35,7 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   Router: any;
   supplierId: number;
   installationLocationTypeId: number;
+  dialogServiceSubscription: Subscription;
 
   constructor(
     private locationTypeService: LocationTypeService,
@@ -56,7 +57,9 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.getAllLocationList();
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Location Type *******************************************************************/
 
@@ -116,7 +119,7 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

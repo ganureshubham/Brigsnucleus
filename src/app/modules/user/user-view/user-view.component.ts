@@ -60,6 +60,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   message: any = {};
   DepartmentObj: string = '';
   userId: number;
+  dialogServiceSubscription: Subscription;
 
   constructor(private http: HttpClient,
     private userService: UserService,
@@ -101,7 +102,9 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Users *******************************************************************/
 
@@ -224,7 +227,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

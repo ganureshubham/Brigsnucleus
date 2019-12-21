@@ -8,6 +8,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { SpinnerService } from '../../../public service/spinner.service';
 import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
+import { Subscription } from 'rxjs';
 
 interface DepartmentNode {
   departmentId: number;
@@ -50,6 +51,8 @@ export class DepartmentViewComponent implements OnInit {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = false;
 
+  dialogServiceSubscription: Subscription;
+
   private transformer = (node: DepartmentNode, level: number) => {
     return {
       expandable: !!node.childData && node.childData.length > 0,
@@ -81,6 +84,10 @@ export class DepartmentViewComponent implements OnInit {
 
   ngOnInit() {
     this.getAllDept();
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -200,7 +207,7 @@ export class DepartmentViewComponent implements OnInit {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

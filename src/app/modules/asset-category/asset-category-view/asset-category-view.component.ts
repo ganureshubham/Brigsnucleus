@@ -7,6 +7,7 @@ import { SpinnerService } from '../../../public service/spinner.service';
 import { DialogService } from '../../../public service/dialog.service';
 import { AddAssetCategoryComponent } from './add-asset-category/add-asset-category.component';
 import { AppDialogData } from '../../../model/appDialogData';
+import { Subscription } from 'rxjs';
 
 interface AssetCategoryNode {
   categoryId: number;
@@ -50,6 +51,8 @@ export class AssetCategoryViewComponent implements OnInit {
   isNoRecordFound: boolean = false;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
+  dialogServiceSubscription: Subscription;
+
   private transformer = (node: AssetCategoryNode, level: number) => {
     return {
       expandable: !!node.childData && node.childData.length > 0,
@@ -80,6 +83,10 @@ export class AssetCategoryViewComponent implements OnInit {
   ngOnInit() {
     //this.categoryID = this.route.snapshot.params['categoryId'];
     this.getAllAssetCategoryLists();
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -199,7 +206,7 @@ export class AssetCategoryViewComponent implements OnInit {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

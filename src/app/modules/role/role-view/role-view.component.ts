@@ -46,6 +46,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
 
+  dialogServiceSubscription: Subscription;
+
   constructor(
     private roleService: RoleService,
     public dataService: DataSharingService,
@@ -67,7 +69,9 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     this.getAllRoles(this.pageNumber);
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Roles *******************************************************************/
 
@@ -147,7 +151,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        console.log('Action:::::  ' + resp.result + ' - ' + resp.action);
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
@@ -155,6 +160,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
             this.dialogService.setUserDialogAction(0);
             //User has approved delete operation
             this.spinnerService.setSpinnerVisibility(true);
+            console.log("Deletet Service :: ", this.userRoleId);
             this.roleService.deleteRole(this.userRoleId).subscribe(res => {
               this.spinnerService.setSpinnerVisibility(false);
               if (res.status) {

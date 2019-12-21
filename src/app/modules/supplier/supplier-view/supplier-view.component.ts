@@ -49,6 +49,8 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
 
+  dialogServiceSubscription: Subscription;
+
   constructor(private http: HttpClient,
     private router: Router,
     private supplierService: SupplierService,
@@ -71,8 +73,9 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.getAllSuppliers(this.pageNumber);
   }
 
-  ngOnDestroy(): void { }
-
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Suppliers *******************************************************************/
 
@@ -152,7 +155,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
