@@ -13,6 +13,7 @@ export interface DialogData {
   message: string;
   positiveBtnLable: string;
   negativeBtnLable: string;
+  action: string;
 }
 
 @Component({
@@ -82,7 +83,8 @@ export class AppComponent implements OnInit {
         title: appDialogData.title,
         message: appDialogData.message,
         positiveBtnLable: appDialogData.positiveBtnLable,
-        negativeBtnLable: appDialogData.negativeBtnLable
+        negativeBtnLable: appDialogData.negativeBtnLable,
+        action: appDialogData.action
       }
     });
 
@@ -111,8 +113,12 @@ export class AppDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
 
-  onCloseClick(): void {
-    this.dialogRef.close();
+  onCloseClick(action): void {
+    if (action == 'Negative') {
+      this.dialogRef.close({ result: 0, action: this.data.action });
+    } else if (action == 'Positive') {
+      this.dialogRef.close({ result: 1, action: this.data.action });
+    }
   }
 
 }

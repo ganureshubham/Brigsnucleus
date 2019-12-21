@@ -134,30 +134,33 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE MANUFACTURER',
       message: ` Are your sure you want to delete manufacturer "${title}"`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: 'manufacturer'
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation
-          this.spinnerService.setSpinnerVisibility(true);
-          this.manufacturerService.deletemanufacturer(this.manufacturerId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            if (res.status) {
-              this.showSnackBar(res.message, 4000);
-              this.getAllmanufacturers(this.page);
-            } else {
-              this.showSnackBar(res.message, 4000);
-            }
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!", 2000);
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == 'manufacturer') {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation
+            this.spinnerService.setSpinnerVisibility(true);
+            this.manufacturerService.deletemanufacturer(this.manufacturerId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              if (res.status) {
+                this.showSnackBar(res.message, 4000);
+                this.getAllmanufacturers(this.page);
+              } else {
+                this.showSnackBar(res.message, 4000);
+              }
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!", 2000);
+            });
+          }
         }
       })
     }
