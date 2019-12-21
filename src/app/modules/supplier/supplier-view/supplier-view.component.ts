@@ -49,7 +49,7 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(private http: HttpClient,
     private router: Router,
@@ -74,9 +74,10 @@ export class SupplierViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
-
   /*********************************************************** Get All Suppliers *******************************************************************/
 
 

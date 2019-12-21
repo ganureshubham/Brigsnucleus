@@ -41,7 +41,7 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   Router: any;
   manufacturerId: number;
   dialogData: manufacturerDialogData;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(
     private manufacturerService: ManufacturerService,
@@ -65,7 +65,9 @@ export class ManufacturerViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
   /*********************************************************** Get All Manufacturers *******************************************************************/
 

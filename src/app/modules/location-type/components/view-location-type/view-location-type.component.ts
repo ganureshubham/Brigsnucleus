@@ -35,7 +35,7 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   Router: any;
   supplierId: number;
   installationLocationTypeId: number;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(
     private locationTypeService: LocationTypeService,
@@ -58,7 +58,9 @@ export class ViewLocationTypeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Location Type *******************************************************************/
