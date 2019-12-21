@@ -39,7 +39,7 @@ export class VerifyAssetListComponent implements OnInit {
 
   dataSource: MatTableDataSource<Asset> = new MatTableDataSource();
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -57,7 +57,9 @@ export class VerifyAssetListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   navigateToAssetDetails(assetId) {

@@ -51,7 +51,7 @@ export class AssetCategoryViewComponent implements OnInit {
   isNoRecordFound: boolean = false;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   private transformer = (node: AssetCategoryNode, level: number) => {
     return {
@@ -86,7 +86,9 @@ export class AssetCategoryViewComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

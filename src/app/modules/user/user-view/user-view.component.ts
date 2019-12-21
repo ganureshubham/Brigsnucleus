@@ -60,7 +60,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   message: any = {};
   DepartmentObj: string = '';
   userId: number;
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(private http: HttpClient,
     private userService: UserService,
@@ -103,7 +103,9 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Users *******************************************************************/

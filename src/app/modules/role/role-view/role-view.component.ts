@@ -46,7 +46,7 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   upcomingSubscription: Subscription;
   Router: any;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   constructor(
     private roleService: RoleService,
@@ -70,7 +70,9 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   /*********************************************************** Get All Roles *******************************************************************/

@@ -51,7 +51,7 @@ export class DepartmentViewComponent implements OnInit {
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = false;
 
-  dialogServiceSubscription: Subscription;
+  dialogServiceSubscription: Subscription = null;
 
   private transformer = (node: DepartmentNode, level: number) => {
     return {
@@ -87,7 +87,9 @@ export class DepartmentViewComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.dialogServiceSubscription.unsubscribe();
+    if (this.dialogServiceSubscription) {
+      this.dialogServiceSubscription.unsubscribe();
+    }
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
