@@ -143,25 +143,28 @@ export class ViewTaskmateComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE TASKMATE',
       message: ` Are your sure you want to delete taskmate "${title}"`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "taskmate"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.action == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation
-          this.spinnerService.setSpinnerVisibility(true);
-          this.taskmateService.deleteTaskmate(this.complaintId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllTaskmate(this.page);
-          }, error => {
-            this.showSnackBar("Something went wrong..!!");
-          });
+        } else if (resp.action == 1) {
+          if (resp.result == 'taskmate') {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation
+            this.spinnerService.setSpinnerVisibility(true);
+            this.taskmateService.deleteTaskmate(this.complaintId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.getAllTaskmate(this.page);
+            }, error => {
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
         }
       })
     }

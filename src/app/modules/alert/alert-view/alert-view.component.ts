@@ -133,25 +133,28 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE ALERT',
       message: ` Are your sure you want to delete alert "${title}"`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "alert"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation
-          this.spinnerService.setSpinnerVisibility(true);
-          this.alertService.deleteAlert(this.alertId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAlertList(this.page);
-          }, error => {
-            this.showSnackBar("Something went wrong..!!");
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == 'alert') {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation
+            this.spinnerService.setSpinnerVisibility(true);
+            this.alertService.deleteAlert(this.alertId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.getAlertList(this.page);
+            }, error => {
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
         }
       })
     }
