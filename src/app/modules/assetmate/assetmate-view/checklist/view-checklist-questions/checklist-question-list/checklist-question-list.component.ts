@@ -110,29 +110,33 @@ export class ChecklistQuestionListComponent implements OnInit {
       title: 'DELETE CHECKLIST QUESTION',
       message: `Are your sure you want to delete question "${questionDescription}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "checklist-question"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteCheckListQuestion(this.deleteQuestionWithId).subscribe((res: any) => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            //------------------Update Badge-----------------------
-            this.assetmateService.setBadgeUpdateAction('questionList', true);
-            this.getChecklistQuestions(this.checklistId, this.pageNumber);
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!");
-            // console.log(error);
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == "checklist-question") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteCheckListQuestion(this.deleteQuestionWithId).subscribe((res: any) => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              //------------------Update Badge-----------------------
+              this.assetmateService.setBadgeUpdateAction('questionList', true);
+              this.getChecklistQuestions(this.checklistId, this.pageNumber);
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!");
+              // console.log(error);
+            });
+          }
+
         }
       })
     }

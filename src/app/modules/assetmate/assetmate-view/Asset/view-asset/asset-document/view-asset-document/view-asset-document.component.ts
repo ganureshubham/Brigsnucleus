@@ -152,33 +152,31 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE ASSET DOCUMENT',
       message: `Are your sure you want to delete asset document "${documentTite}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "document"
     }
 
     this.dialogService.setDialogVisibility(appDialogData);
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-
-          this.dialogService.setUserDialogAction(0);
-
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteDocument(this.deleteDocWithId).subscribe(res => {
-
-            this.spinnerService.setSpinnerVisibility(false);
-            this.assetmateService.setBadgeUpdateAction('assetDetails', true);
-            this.showSnackBar(res.message);
-
-            this.getAllAssetDocuments(this.assetID, this.page);
-
-          }, error => {
-            this.showSnackBar("Something went wrong..!!");
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == "document") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteDocument(this.deleteDocWithId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.assetmateService.setBadgeUpdateAction('assetDetails', true);
+              this.showSnackBar(res.message);
+              this.getAllAssetDocuments(this.assetID, this.page);
+            }, error => {
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
         }
       })
     }

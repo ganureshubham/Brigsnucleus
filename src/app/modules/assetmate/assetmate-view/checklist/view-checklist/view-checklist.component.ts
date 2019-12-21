@@ -149,28 +149,32 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
       title: 'DELETE AUDIT',
       message: `Are your sure you want to delete audit "${checklistTitle}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "checklist"
     }
 
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteChecklist(this.deleteChecklistWithId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
-            this.getAllChecklists(this.categoryID, this.page);
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!");
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == "checklist") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteChecklist(this.deleteChecklistWithId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.assetmateService.setBadgeUpdateAction('assetList', true);
+              this.getAllChecklists(this.categoryID, this.page);
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
+
         }
       })
     }

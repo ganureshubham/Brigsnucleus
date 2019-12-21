@@ -166,28 +166,32 @@ export class ViewAssignUserComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE CATEGORY ASSIGNED USER',
       message: `Are your sure you want to delete assigned user "${firstName + ' ' + lastName}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "category-assign-user"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteAssignUsers(this.userCatAssignmentId).subscribe(res => {
+        } else if (resp.result == 1) {
+          if (resp.action == "category-assign-user") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteAssignUsers(this.userCatAssignmentId).subscribe(res => {
 
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
-            this.getAllAssignUsers(this.page);
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.assetmateService.setBadgeUpdateAction('assetList', true);
+              this.getAllAssignUsers(this.page);
 
-          }, error => {
-            this.showSnackBar("Something went wrong..!!");
-          });
+            }, error => {
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
+
         }
       })
     }

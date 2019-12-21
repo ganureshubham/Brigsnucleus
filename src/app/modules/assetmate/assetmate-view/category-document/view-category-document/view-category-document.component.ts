@@ -154,32 +154,34 @@ export class ViewCategoryDocumentComponent implements AfterViewInit, OnDestroy {
       title: 'DELETE CATEGORY DOCUMENT',
       message: `Are your sure you want to delete document "${documentTitle}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "category-document"
     }
 
     this.dialogService.setDialogVisibility(appDialogData);
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
+        } else if (resp.result == 1) {
+          if (resp.action == "category-document") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteDocument(this.deletedocWithId).subscribe(res => {
 
-          this.dialogService.setUserDialogAction(0);
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.assetmateService.setBadgeUpdateAction('assetList', true);
+              this.getAllDocuments(this.categoryID, this.page);
 
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteDocument(this.deletedocWithId).subscribe(res => {
+            }, error => {
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
 
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.assetmateService.setBadgeUpdateAction('assetList', true);
-            this.getAllDocuments(this.categoryID, this.page);
-
-          }, error => {
-            this.showSnackBar("Something went wrong..!!");
-          });
         }
       })
     }
