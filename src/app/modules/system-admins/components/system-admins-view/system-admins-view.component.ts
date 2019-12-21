@@ -140,32 +140,36 @@ export class SystemAdminsViewComponent implements OnInit {
       title: 'DELETE ADMIN',
       message: `Are your sure you want to delete admin "${deleteAdminName}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "sys-admins"
     }
 
     this.dialogService.setDialogVisibility(appDialogData);
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
+        } else if (resp.result == 1) {
 
-          this.dialogService.setUserDialogAction(0);
+          if (resp.action == 'sys-admins') {
+            this.dialogService.setUserDialogAction(0);
 
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.systemadminsService.deleteAdmin(this.deleteAdminId).subscribe(res => {
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.systemadminsService.deleteAdmin(this.deleteAdminId).subscribe(res => {
 
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllAdmins(this.page);
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.getAllAdmins(this.page);
 
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!");
-          });
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
+
         }
       })
     }
