@@ -131,26 +131,29 @@ export class VerifyAssetListComponent implements OnInit {
       title: 'DELETE ASSET',
       message: `Are your sure you want to delete asset "${assetTitle}" ?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "verify-asset"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation 
-          this.spinnerService.setSpinnerVisibility(true);
-          this.assetmateService.deleteAsset(this.deleteAssetWithId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar(res.message);
-            this.getAllPendingVerificationAssets(this.pageNumber);
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!");
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == "verify-asset") {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation 
+            this.spinnerService.setSpinnerVisibility(true);
+            this.assetmateService.deleteAsset(this.deleteAssetWithId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar(res.message);
+              this.getAllPendingVerificationAssets(this.pageNumber);
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!");
+            });
+          }
         }
       })
     }

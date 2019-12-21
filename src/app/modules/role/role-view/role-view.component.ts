@@ -133,36 +133,41 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Delete Particular Role *******************************************************************/
 
   deleteRole(userRoleId: number, title: string) {
+    console.log('deleteRole : ', userRoleId);
+
     this.userRoleId = userRoleId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
       title: 'DELETE USER ROLE',
       message: ` Are your sure you want to delete User Role "${title}"`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: "role"
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation
-          this.spinnerService.setSpinnerVisibility(true);
-          this.roleService.deleteRole(this.userRoleId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            if (res.status) {
-              this.showSnackBar(res.message, 4000);
-              this.getAllRoles(this.page);
-            } else {
-              this.showSnackBar(res.message, 4000);
-            }
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!", 2000);
-          });
+        } else if (resp.result == 1) {
+          if (resp.action == 'role') {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation
+            this.spinnerService.setSpinnerVisibility(true);
+            this.roleService.deleteRole(this.userRoleId).subscribe(res => {
+              this.spinnerService.setSpinnerVisibility(false);
+              if (res.status) {
+                this.showSnackBar(res.message, 4000);
+                this.getAllRoles(this.page);
+              } else {
+                this.showSnackBar(res.message, 4000);
+              }
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!", 2000);
+            });
+          }
         }
       })
     }

@@ -9,8 +9,7 @@
         <p>{{data.message}}</p>
     </div>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="end center" fxLayoutGap="10px">
-        <button mat-button [mat-dialog-close]="userActionNegativeBtnClicked">{{data.negativeBtnLable}}</button>
-        <button mat-button [mat-dialog-close]="userActionPositiveBtnClicked"
-            cdkFocusInitial>{{data.positiveBtnLable}}</button>
+        <button mat-button (click)="onCloseClick('Negative')">{{data.negativeBtnLable}}</button>
+        <button mat-button (click)="onCloseClick('Positive')" cdkFocusInitial>{{data.positiveBtnLable}}</button>
     </div>
 </div>

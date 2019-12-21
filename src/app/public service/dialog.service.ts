@@ -14,6 +14,7 @@ export class DialogService {
     message: '',
     positiveBtnLable: '',
     negativeBtnLable: '',
+    action: ''
   });
 
   private userDialogAction = new BehaviorSubject<number>(0);

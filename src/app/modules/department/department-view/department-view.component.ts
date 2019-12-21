@@ -1,14 +1,10 @@
-import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DepartmentService } from '../service/department.service';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { DialogData } from '../../../app.component';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { DialogService } from '../../../public service/dialog.service';
 import { AppDialogData } from '../../../model/appDialogData';
@@ -198,31 +194,34 @@ export class DepartmentViewComponent implements OnInit {
       title: 'DELETE DEPARTMENT',
       message: ` Are your sure you want to delete department "${name}"?`,
       positiveBtnLable: "Yes",
-      negativeBtnLable: "Cancel"
+      negativeBtnLable: "Cancel",
+      action: 'department'
     }
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe(userAction => {
-        if (userAction == 0) {
+      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+        if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
-        } else if (userAction == 1) {
-          this.dialogService.setUserDialogAction(0);
-          //User has approved delete operation
-          this.spinnerService.setSpinnerVisibility(true);
-          this.departmentService.deleteDept(this.departmentId).subscribe(res => {
-            this.spinnerService.setSpinnerVisibility(false);
-            if (res.status) {
-              this.showSnackBar(res.message, 4000);
-              this.getAllDept();
-            } else {
+        } else if (resp.result == 1) {
+          if (resp.action == 'department') {
+            this.dialogService.setUserDialogAction(0);
+            //User has approved delete operation
+            this.spinnerService.setSpinnerVisibility(true);
+            this.departmentService.deleteDept(this.departmentId).subscribe(res => {
               this.spinnerService.setSpinnerVisibility(false);
-              this.showSnackBar(res.message, 4000);
-            }
-          }, error => {
-            this.spinnerService.setSpinnerVisibility(false);
-            this.showSnackBar("Something went wrong..!!", 2000);
-          });
+              if (res.status) {
+                this.showSnackBar(res.message, 4000);
+                this.getAllDept();
+              } else {
+                this.spinnerService.setSpinnerVisibility(false);
+                this.showSnackBar(res.message, 4000);
+              }
+            }, error => {
+              this.spinnerService.setSpinnerVisibility(false);
+              this.showSnackBar("Something went wrong..!!", 2000);
+            });
+          }
         }
       })
     }
