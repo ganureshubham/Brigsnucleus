@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { OrganizationService } from '../../services/organization.service';
 import { SpinnerService } from '../../../../public service/spinner.service';
@@ -8,13 +8,14 @@ import { AppDialogData } from 'src/app/model/appDialogData';
 import { DialogService } from '../../../../public service/dialog.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-organization-view',
   templateUrl: './organization-view.component.html',
   styleUrls: ['./organization-view.component.css']
 })
-export class OrganizationViewComponent implements OnInit {
+export class OrganizationViewComponent implements OnInit, OnDestroy {
 
   page: number = 0;
   arrOrganization: any[] = [];
@@ -32,6 +33,7 @@ export class OrganizationViewComponent implements OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteOrgId: number;
+  dialogServiceSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -59,6 +61,10 @@ export class OrganizationViewComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   getListOfOrganizations(pageNumber) {
@@ -173,7 +179,7 @@ export class OrganizationViewComponent implements OnInit {
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog; 
         } else if (resp.result == 1) {

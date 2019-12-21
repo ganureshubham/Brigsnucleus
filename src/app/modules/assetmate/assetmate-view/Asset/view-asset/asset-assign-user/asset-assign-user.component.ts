@@ -19,7 +19,7 @@ import { AssetAssignNewUsersComponent } from './asset-assign-new-users/asset-ass
   templateUrl: './asset-assign-user.component.html',
   styleUrls: ['./asset-assign-user.component.css']
 })
-export class AssetAssignUserComponent implements OnInit {
+export class AssetAssignUserComponent implements OnInit, OnDestroy {
 
   loading: boolean;
   public page: number = 0;
@@ -50,6 +50,7 @@ export class AssetAssignUserComponent implements OnInit {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
+  dialogServiceSubscription: Subscription;
   animal: any;
   filepath: any;
   filedata: any = {};
@@ -80,7 +81,9 @@ export class AssetAssignUserComponent implements OnInit {
     this.getAllAssignUsers(this.pageNumber);
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Assign Users *******************************************************************/
 
@@ -192,7 +195,7 @@ export class AssetAssignUserComponent implements OnInit {
 
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

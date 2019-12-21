@@ -73,6 +73,8 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
+  dialogServiceSubscription: Subscription;
+
   ngAfterViewInit(): void {
     // Add paginators to datastore here, because we need the view to
     // have created the paginator elements
@@ -114,7 +116,9 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Assets *******************************************************************/
 
@@ -270,7 +274,7 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

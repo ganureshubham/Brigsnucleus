@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { AssetmateService } from '../../../service/assetmate.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from '../../../../../public service/data-sharing.service';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './view-checklist.component.html',
   styleUrls: ['./view-checklist.component.css']
 })
-export class ViewChecklistComponent implements AfterViewInit, OnInit {
+export class ViewChecklistComponent implements AfterViewInit, OnInit, OnDestroy {
   pageNumber = 0;
   totalCount = 0;
   checklistData: any = [];
@@ -40,6 +40,7 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
 
   previousSubscription: Subscription;
   upcomingSubscription: Subscription;
+  dialogServiceSubscription: Subscription;
 
   constructor(
     private assetmateService: AssetmateService,
@@ -65,6 +66,9 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
+  }
 
   /*********************************************************** Get All Checklists *******************************************************************/
 
@@ -156,7 +160,7 @@ export class ViewChecklistComponent implements AfterViewInit, OnInit {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {

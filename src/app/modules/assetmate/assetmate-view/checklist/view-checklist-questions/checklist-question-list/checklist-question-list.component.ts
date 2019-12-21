@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { SpinnerService } from '../../../../../../public service/spinner.service';
@@ -6,13 +6,14 @@ import { AssetmateService } from '../../../../service/assetmate.service';
 import { MatSnackBar } from '@angular/material';
 import { AppDialogData } from 'src/app/model/appDialogData';
 import { DialogService } from '../../../../../../public service/dialog.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checklist-question-list',
   templateUrl: './checklist-question-list.component.html',
   styleUrls: ['./checklist-question-list.component.css']
 })
-export class ChecklistQuestionListComponent implements OnInit {
+export class ChecklistQuestionListComponent implements OnInit, OnDestroy {
 
   checklistId: number;
   categoryId: number;
@@ -25,6 +26,7 @@ export class ChecklistQuestionListComponent implements OnInit {
   deleteQuestionWithId: number;
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   isNoRecordFound: boolean = true;
+  dialogServiceSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -40,6 +42,10 @@ export class ChecklistQuestionListComponent implements OnInit {
     this.categoryId = this.activatedRoute.snapshot.params['categoryId'];
     this.getChecklistTitle(this.checklistId);
     this.getChecklistQuestions(this.checklistId, this.pageNumber);
+  }
+
+  ngOnDestroy() {
+    this.dialogServiceSubscription.unsubscribe();
   }
 
   getChecklistTitle(checklistId: number) {
@@ -116,7 +122,7 @@ export class ChecklistQuestionListComponent implements OnInit {
     this.dialogService.setDialogVisibility(appDialogData);
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
-      this.dialogService.getUserDialogAction().subscribe((resp: any) => {
+      this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
