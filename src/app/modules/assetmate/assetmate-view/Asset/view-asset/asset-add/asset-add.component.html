@@ -52,9 +52,9 @@
               <mat-error *ngIf="InstallLoc.errors?.pattern">Please enter only Characters</mat-error>
             </mat-form-field>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
-              <input matInput name="installationDate" id="installationDate" [(ngModel)]="assetData.installationDate"
-                #InstallDate="ngModel" [matDatepicker]="startDatePicker" (click)="startDatePicker.open()"
-                placeholder="Installation Date" required readonly>
+              <input matInput name="installationDate" [max]="todaydate" id="installationDate"
+                [(ngModel)]="assetData.installationDate" #InstallDate="ngModel" [matDatepicker]="startDatePicker"
+                (click)="startDatePicker.open()" placeholder="Installation Date" required readonly>
               <mat-error *ngIf="assetform.submitted && InstallDate.invalid">
                 <mat-error *ngIf="InstallDate.errors.required">Installation Date is required</mat-error>
               </mat-error>
@@ -132,7 +132,7 @@
             </mat-form-field>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select name="departmentIdFK" id="departmentIdFK" [(ngModel)]="assetData.departmentIdFK"
-                #DeptName="ngModel" placeholder="Select Department Name" required>
+                #DeptName="ngModel" placeholder="Choose Asset Department Name" required>
                 <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
                 </mat-option>
               </mat-select>
@@ -142,7 +142,8 @@
             </mat-form-field>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select [disabled]="!isEdited" name="categoryIdFK" id="categoryIdFK"
-                [(ngModel)]="assetData.categoryIdFK" #CategName="ngModel" placeholder="Select Category name" required>
+                [(ngModel)]="assetData.categoryIdFK" #CategName="ngModel" placeholder="Choose Asset Category name"
+                required>
                 <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.title}}
                 </mat-option>
               </mat-select>

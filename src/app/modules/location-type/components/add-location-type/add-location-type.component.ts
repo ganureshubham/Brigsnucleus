@@ -11,7 +11,7 @@ import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/
 export class AddLocationTypeComponent implements OnInit {
 
   isEdited: boolean = false;
-  formTitle: string = "Add Installation Location";
+  formTitle: string = "Add Installation Location Type";
   cancelbtn = 0;
 
   installationLocationTypeId: number;
