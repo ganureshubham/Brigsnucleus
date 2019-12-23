@@ -33,6 +33,7 @@ export class AssetAddComponent implements OnInit {
   showFirst: boolean = false;
   category: any;
   selectedCategory: any;
+  todaydate: Date = new Date();
   categoryID;
 
   constructor(private router: Router,
@@ -171,7 +172,6 @@ export class AssetAddComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append("file", this.fileToUpload, this.fileToUpload.name);
       this.assetmateService.photoUpload(formData).subscribe(res => {
-        console.log(res);
         callback(res.ImageName)
       })
     }

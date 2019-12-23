@@ -119,8 +119,12 @@
                             </div>
                         </div>
                         <div fxLayout="column">
+                            <h4 class=" mat-h4 db ">Added By</h4>
+                            <span>{{assetData.typeOfUser + ' - ' + assetData.addedByName}}</span>
+                        </div>
+                        <div fxLayout="column">
                             <h4 class=" mat-h4 db ">Description</h4>
-                            <span>{{assetData.description}}</span>
+                            <span>{{assetData.description != "" ? assetData.description : "NA" }}</span>
                         </div>
                         <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="20px" fxLayoutGap.gt-xs="30px">
                             <div fxFlex="18" fxFlex.xs="100" fxFlex.sm="28" fxLayout="column">
@@ -147,7 +151,7 @@
                                 </mat-card>
                             </div>
                         </div>
-                        <div fxLayout="column">
+                        <div *ngIf="assetData.userGuideBook != null" fxLayout="column">
                             <h4 class="mat-h4 db">Asset User Guide</h4>
                             <div class="userguide" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap.xs="15px"
                                 fxLayoutAlign.gt-xs="flex-start center">
@@ -190,7 +194,7 @@
                         <app-asset-transfer-log></app-asset-transfer-log>
                     </div>
                 </mat-tab>
-                <mat-tab label="Location">
+                <mat-tab label="Geo-Location">
                     <div class="tab_content">
                         <app-asset-location></app-asset-location>
                     </div>

@@ -210,7 +210,6 @@ export class ViewAssetDocumentComponent implements AfterViewInit, OnDestroy {
 
 
   downloadDocument(file) {
-    console.log(file);
     // var FileSaver = require('file-saver');
     const Ext = file.split('/').pop().split('?')[0]; // splits url into file name
     var ext = Ext.substr(Ext.lastIndexOf('.') + 1); // gives extension of any file name

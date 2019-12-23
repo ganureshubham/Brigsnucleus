@@ -76,7 +76,7 @@ body {
   background: #fff !important;
 }
 
-.form_card .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+.form_card .mat-focused .mat-form-field-underline .mat-form-field-ripple {
   background-color: #fff !important;
 }
 
@@ -1136,38 +1136,38 @@ body {
   cursor: pointer;
 }
 
-.dialog-toolbar-title{
+.dialog-toolbar-title {
   font-size: 25px;
   text-transform: uppercase;
   font-weight: 500;
 }
 
-.dialog-content-container{
+.dialog-content-container {
   padding: 10px;
 }
 
-.dialog-toolbar{
+.dialog-toolbar {
   padding: 0px 10px;
 }
 
-.dialog-actions{
+.dialog-actions {
   padding: 0px 10px;
 }
 
-.app-img-dialog mat-dialog-container{
-    padding: 0;
-    background: #3a3a3a;
+.app-img-dialog mat-dialog-container {
+  padding: 0;
+  background: #3a3a3a;
 }
 
-.app-img-dialog-backdrop{
+.app-img-dialog-backdrop {
   background-color: #000000c4;
 }
 
-.asset-img-container-card{
+.asset-img-container-card {
   cursor: pointer;
 }
 
-.guideline{
+.guideline {
   border: 1px solid #ccc;
   border-radius: 4px;
   color: #a8a8a8;
@@ -1175,14 +1175,18 @@ body {
   margin: 10px 0px;
 }
 
-.guideline-title{
-  margin-top: -12px ;
+.guideline-title {
+  margin-top: -12px;
   margin-left: 10px;
   padding-left: 10px;
   background-color: #fff;
   width: 75px;
 }
 
-.guideline-text li{
+.guideline-text li {
   margin: 5px 0px;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

@@ -16,11 +16,13 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field fxFlex="100">
-          <input matInput name="departmentTitle" id="departmentTitle" [(ngModel)]="deptData.departmentTitle"
-            #deptTitle="ngModel" type="text" required placeholder="Department Title">
+          <input matInput name="departmentTitle" minlength="3" id="departmentTitle"
+            [(ngModel)]="deptData.departmentTitle" #deptTitle="ngModel" type="text" required
+            placeholder="Department Title">
           <mat-error *ngIf="deptForm.submitted && deptTitle.invalid">
-            <mat-error *ngIf="deptTitle.errors.required">Department Title is required</mat-error>
+            <mat-error *ngIf="deptTitle.errors?.required">Department Title is required</mat-error>
           </mat-error>
+          <mat-error *ngIf="deptTitle.errors?.minlength">Please enter atleast 3 characters</mat-error>
         </mat-form-field>
       </div>
     </div>

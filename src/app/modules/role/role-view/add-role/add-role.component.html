@@ -49,7 +49,6 @@
         </div>
       </div>
     </div>
-
     <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end end" fxLayoutGap="10px" class="savebtn">
       <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
       <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n

@@ -54,7 +54,6 @@ export class AssetAssignNewUsersComponent implements OnInit {
   /*********************************************************** Get Category List *******************************************************************/
   getcategoryList() {
     this.assetmateService.getAssetLists().subscribe(res => {
-      console.log(res)
       if (res.assetList) {
         this.categoryLists = res.assetList;
       }

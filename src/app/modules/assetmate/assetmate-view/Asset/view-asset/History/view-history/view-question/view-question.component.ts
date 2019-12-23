@@ -59,12 +59,8 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   ngOnInit() {
     this.dataService.mSaveData.subscribe(res => {
       if (res != null && res != "null" && res != "null") {
-        console.log('donechecklistid', res);
         this.checklistId = res;
         this.getQuestAnsList(this.checklistId, this.pageNumber);
-
-        // this.AssetId=res;
-        // this.getAssetHistory(this.AssetId,this.pageNumber);
       }
     })
 
