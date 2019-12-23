@@ -20,6 +20,10 @@ export class CriticalConditionAssetsComponent implements OnInit {
   criticalConditionAssets: any = [];
   isNoRecordFound: boolean = true;
 
+  page = 0;
+  pageNumber = 0;
+  totalCount = 0;
+
   constructor(
     private snackBar: MatSnackBar,
     private reportsService: ReportsService,
@@ -28,22 +32,24 @@ export class CriticalConditionAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllCriticalConditionAssets();
+    this.getAllCriticalConditionAssets(this.pageNumber);
   }
 
-  getAllCriticalConditionAssets() {
+  getAllCriticalConditionAssets(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getAllCriticalConditionAssets().subscribe(
+    this.reportsService.getAllCriticalConditionAssets(pageNo).subscribe(
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
-        if (resp && resp.data) {
-          if (resp.data.length == 0) {
+        if (resp && resp.Assets) {
+          if (resp.Assets.length == 0) {
             this.isNoRecordFound = true;
           } else {
             this.isNoRecordFound = false;
           }
-          this.criticalConditionAssets = resp.data;
-          this.dataSource = resp.data;
+          this.criticalConditionAssets = resp.Assets;
+          this.dataSource = resp.Assets;
+          this.pageNumber = resp.currentPage;
+          this.totalCount = resp.totalCount;
         } else {
           this.showSnackBar(resp.message);
         }
@@ -94,6 +100,11 @@ export class CriticalConditionAssetsComponent implements OnInit {
 
   viewAsset = (asset) => {
     this.router.navigate(['/assetmate/assetmate-details/' + asset.categoryId + '/asset-details/' + asset.assetId]);
+  }
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getAllCriticalConditionAssets(this.page);
   }
 
 }

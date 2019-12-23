@@ -17,12 +17,12 @@ export class ReportsService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `taskmate/pendingTasksList/${topTasksCount}`);
   }
 
-  getAllCriticalConditionAssets() {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/criticalConditionAssetsList`);
+  getAllCriticalConditionAssets(pageNo) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/criticalConditionAssetsList/${pageNo}`);
   }
 
-  getAllPendingMaintainanceAssets() {
-    return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssets`);
+  getAllPendingMaintainanceAssets(pageNo) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssets/${pageNo}`);
   }
 
 }
