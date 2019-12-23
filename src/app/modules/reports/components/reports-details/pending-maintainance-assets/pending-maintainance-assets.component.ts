@@ -20,6 +20,10 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
   pendingMaintainanceAssets: any = [];
   isNoRecordFound: boolean = true;
 
+  page = 0;
+  pageNumber = 0;
+  totalCount = 0;
+
   constructor(
     private snackBar: MatSnackBar,
     private reportsService: ReportsService,
@@ -28,12 +32,12 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllPendingMaintainanceAssets();
+    this.getAllPendingMaintainanceAssets(this.pageNumber);
   }
 
-  getAllPendingMaintainanceAssets() {
+  getAllPendingMaintainanceAssets(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getAllPendingMaintainanceAssets().subscribe(
+    this.reportsService.getAllPendingMaintainanceAssets(pageNo).subscribe(
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
         if (resp && resp.totalMaintenceRemainingAssets) {
@@ -44,6 +48,8 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
           }
           this.pendingMaintainanceAssets = resp.totalMaintenceRemainingAssets;
           this.dataSource = resp.totalMaintenceRemainingAssets;
+          this.pageNumber = resp.currentPage;
+          this.totalCount = resp.totalCount;
         } else {
           this.showSnackBar(resp.message);
         }
@@ -94,6 +100,11 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
 
   viewAsset = (asset) => {
     this.router.navigate(['/assetmate/assetmate-details/' + asset.categoryId + '/asset-details/' + asset.assetId]);
+  }
+
+  pageChange(pageNo: any) {
+    this.page = pageNo.pageIndex;
+    this.getAllPendingMaintainanceAssets(this.page);
   }
 
 }
