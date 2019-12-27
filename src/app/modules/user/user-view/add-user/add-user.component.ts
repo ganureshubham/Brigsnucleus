@@ -53,6 +53,10 @@ export class AddUserComponent implements OnInit {
     this.getUserRoleList();
   }
 
+  mobilePattern() {
+    return (/^[6-9]\d{9}$/)
+  }
+
   /*********************************************************** Add New User *******************************************************************/
 
   addUser(formData: NgForm) {
