@@ -22,10 +22,10 @@ interface ExampleFlatNode {
 }
 
 interface Filter {
-	installationLocationTypeIdFK: number;
-	manufacturerIdFK: number;
-	supplierIdFK: number;
-	departmentIdFK: number;
+	installationLocationTypeIdFK: [];
+	manufacturerIdFK: [];
+	supplierIdFK: [];
+	departmentIdFK: [];
 }
 
 /****************************************End filter****************************************/
@@ -89,27 +89,33 @@ export class FilterCategoryComponent implements OnInit {
 		this.assetmateService.getFilterCriteria().subscribe(
 			resp => {
 
+				this.filterFormGroup.get('locationType').setValue(resp.locationType);
+				this.filterFormGroup.get('manufacturer').setValue(resp.manufacturer);
+				this.filterFormGroup.get('supplier').setValue(resp.supplier);
+				this.filterFormGroup.get('department').setValue(resp.department);
+
 				this.filterBadge = 0;
 
-				if (resp.locationType > 0) {
+				if (resp.locationType.length == 0) {
+					this.filterFormGroup.get('locationType').setErrors(null);
+				} else {
 					this.filterBadge++;
 				}
-				if (resp.manufacturer > 0) {
+				if (resp.manufacturer.length == 0) {
+					this.filterFormGroup.get('manufacturer').setErrors(null);
+				} else {
 					this.filterBadge++;
 				}
-				if (resp.supplier > 0) {
+				if (resp.supplier.length == 0) {
+					this.filterFormGroup.get('supplier').setErrors(null);
+				} else {
 					this.filterBadge++;
 				}
-				if (resp.department > 0) {
+				if (resp.department.length == 0) {
+					this.filterFormGroup.get('department').setErrors(null);
+				} else {
 					this.filterBadge++;
 				}
-
-				this.filterFormGroup = this.formBuilder.group({
-					locationType: resp.locationType,
-					manufacturer: resp.manufacturer,
-					supplier: resp.supplier,
-					department: resp.department
-				});
 
 			}
 		);
@@ -117,10 +123,10 @@ export class FilterCategoryComponent implements OnInit {
 
 	setFormControls() {
 		this.filterFormGroup = this.formBuilder.group({
-			locationType: [0],
-			manufacturer: [0],
-			supplier: [0],
-			department: [0]
+			locationType: [''],
+			manufacturer: [''],
+			supplier: [''],
+			department: ['']
 		});
 	}
 
@@ -134,12 +140,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getManufacturerList()
 			if (res.installationLocationType) {
 				this.arrAssetInstallationLocation = res.installationLocationType;
-				this.arrAssetInstallationLocation.push(
+				/* this.arrAssetInstallationLocation.push(
 					{
 						installationLocationTypeIdFK: 0,
 						title: "All"
 					}
-				);
+				); */
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -156,12 +162,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getsupplierList()
 			if (res.manufacturerList) {
 				this.arrAssetManufacturer = res.manufacturerList;
-				this.arrAssetManufacturer.push(
+				/* this.arrAssetManufacturer.push(
 					{
 						manufacturerId: 0,
 						title: "All"
 					}
-				);
+				); */
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -180,12 +186,12 @@ export class FilterCategoryComponent implements OnInit {
 			this.getDepartmentList();
 			if (res.supplierList) {
 				this.arrAssetSupplier = res.supplierList;
-				this.arrAssetSupplier.push(
+				/* this.arrAssetSupplier.push(
 					{
 						supplierId: 0,
 						supplierName: "All"
 					}
-				);
+				); */
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar(res.message);
@@ -202,12 +208,12 @@ export class FilterCategoryComponent implements OnInit {
 		this.assetmateService.getDeptList().subscribe(res => {
 			if (res.department) {
 				this.arrAssetDepartment = res.department;
-				this.arrAssetDepartment.push(
+				/* this.arrAssetDepartment.push(
 					{
 						departmentId: 0,
 						departmentTitle: "All"
 					}
-				);
+				); */
 				this.spinnerService.setSpinnerVisibility(false);
 			} else {
 				this.spinnerService.setSpinnerVisibility(false);
@@ -261,16 +267,27 @@ export class FilterCategoryComponent implements OnInit {
 
 		this.filterBadge = 0;
 
-		if (this.filterFormGroup.get('locationType').value > 0) {
+		if (this.filterFormGroup.get('locationType').value.length == 0) {
+			this.filterFormGroup.get('locationType').setErrors(null);
+		} else {
 			this.filterBadge++;
 		}
-		if (this.filterFormGroup.get('manufacturer').value > 0) {
+
+		if (this.filterFormGroup.get('manufacturer').value.length == 0) {
+			this.filterFormGroup.get('manufacturer').setErrors(null);
+		} else {
 			this.filterBadge++;
 		}
-		if (this.filterFormGroup.get('supplier').value > 0) {
+
+		if (this.filterFormGroup.get('supplier').value.length == 0) {
+			this.filterFormGroup.get('supplier').setErrors(null);
+		} else {
 			this.filterBadge++;
 		}
-		if (this.filterFormGroup.get('department').value > 0) {
+
+		if (this.filterFormGroup.get('department').value.length == 0) {
+			this.filterFormGroup.get('department').setErrors(null);
+		} else {
 			this.filterBadge++;
 		}
 
@@ -278,7 +295,7 @@ export class FilterCategoryComponent implements OnInit {
 			installationLocationTypeIdFK: this.filterFormGroup.get('locationType').value,
 			manufacturerIdFK: this.filterFormGroup.get('manufacturer').value,
 			supplierIdFK: this.filterFormGroup.get('supplier').value,
-			departmentIdFK: this.filterFormGroup.get('department').value
+			departmentIdFK: this.filterFormGroup.get('department').value,
 		}
 
 		this.assetmateService.setFilterCriteria(filterData);
@@ -287,13 +304,26 @@ export class FilterCategoryComponent implements OnInit {
 
 	clearAllFilters() {
 
-		let filterData: Filter = {
-			installationLocationTypeIdFK: 0,
-			manufacturerIdFK: 0,
-			supplierIdFK: 0,
-			departmentIdFK: 0
+		if (
+			this.filterFormGroup.get('locationType').value.length == 0 &&
+			this.filterFormGroup.get('manufacturer').value.length == 0 &&
+			this.filterFormGroup.get('supplier').value.length == 0 &&
+			this.filterFormGroup.get('department').value.length == 0
+		) {
+			this.showSnackBar('No filter criteria to clear..!!');
+		} else {
+			let filterData: Filter = {
+				installationLocationTypeIdFK: [],
+				manufacturerIdFK: [],
+				supplierIdFK: [],
+				departmentIdFK: []
+			}
+			this.filterFormGroup.get('locationType').setErrors(null);
+			this.filterFormGroup.get('manufacturer').setErrors(null);
+			this.filterFormGroup.get('supplier').setErrors(null);
+			this.filterFormGroup.get('department').setErrors(null);
+			this.assetmateService.setFilterCriteria(filterData);
 		}
-		this.assetmateService.setFilterCriteria(filterData);
 
 	}
 
