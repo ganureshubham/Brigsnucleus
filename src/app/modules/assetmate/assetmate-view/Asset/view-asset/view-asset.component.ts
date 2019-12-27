@@ -54,10 +54,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   animal: any;
   deleteAssetWithId: number;
 
-  manufacturerIdFK = 0;
-  supplierIdFK = 0;
-  departmentIdFK = 0;
-  installationLocationTypeIdFK = 0;
+  manufacturerIdFK = '0';
+  supplierIdFK = '0';
+  departmentIdFK = '0';
+  installationLocationTypeIdFK = '0';
 
   constructor(private http: HttpClient,
     media: MediaMatcher,
@@ -100,10 +100,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
   subscribeToGetFilterData() {
     this.assetmateService.getFilterCriteria().subscribe(
       resp => {
-        this.installationLocationTypeIdFK = resp.locationType;
-        this.manufacturerIdFK = resp.manufacturer;
-        this.supplierIdFK = resp.supplier;
-        this.departmentIdFK = resp.department;
+        this.installationLocationTypeIdFK = resp.locationType.length > 0 ? resp.locationType.join() : '0';
+        this.manufacturerIdFK = resp.manufacturer.length > 0 ? resp.manufacturer.join() : '0';
+        this.supplierIdFK = resp.supplier.length > 0 ? resp.supplier.join() : '0';
+        this.departmentIdFK = resp.department.length > 0 ? resp.department.join() : '0';
         this.getAllAssets(
           this.categoryID,
           this.manufacturerIdFK,
@@ -126,10 +126,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
 
   getAllAssets(
     categoryId: number,
-    manufacturerIdFK: number,
-    supplierIdFK: number,
-    departmentIdFK: number,
-    installationLocationTypeIdFK: number,
+    manufacturerIdFK: string,
+    supplierIdFK: string,
+    departmentIdFK: string,
+    installationLocationTypeIdFK: string,
     pageNo: number
   ) {
     this.spinnerService.setSpinnerVisibility(true);

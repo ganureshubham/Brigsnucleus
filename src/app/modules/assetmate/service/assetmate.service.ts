@@ -15,16 +15,16 @@ export class AssetmateService {
   private tabSelectionDetails = new BehaviorSubject<number>(0);
 
   private filterCriteria = new BehaviorSubject<{
-    locationType: number,
-    manufacturer: number,
-    supplier: number,
-    department: number
+    locationType: [],
+    manufacturer: [],
+    supplier: [],
+    department: []
   }>(
     {
-      locationType: 0,
-      manufacturer: 0,
-      supplier: 0,
-      department: 0
+      locationType: [],
+      manufacturer: [],
+      supplier: [],
+      department: []
     }
   );
 
@@ -69,10 +69,10 @@ export class AssetmateService {
 
   getAllAssets(
     categoryId: number,
-    manufacturerIdFK: number,
-    supplierIdFK: number,
-    departmentIdFK: number,
-    installationLocationTypeIdFK: number,
+    manufacturerIdFK: string,
+    supplierIdFK: string,
+    departmentIdFK: string,
+    installationLocationTypeIdFK: string,
     pageNo: number
   ): Observable<any> {
     return this.httpClient.get(ConfigurationService.baseUrl + `assets/AssetList/${categoryId}/${manufacturerIdFK}/${supplierIdFK}/${departmentIdFK}/${installationLocationTypeIdFK}/${pageNo}`);
@@ -500,10 +500,10 @@ export class AssetmateService {
   }
 
   getFilterCriteria(): Observable<{
-    locationType: number,
-    manufacturer: number,
-    supplier: number,
-    department: number
+    locationType: [],
+    manufacturer: [],
+    supplier: [],
+    department: []
   }> {
     return this.filterCriteria.asObservable();
   }

@@ -21,7 +21,7 @@
         <div fxLayout="column" fxLayoutGap="10px" class="vertical-padding-5">
           <mat-form-field>
             <mat-select placeholder="Choose Location Type" required formControlName="locationType"
-              (selectionChange)="filterUpdated()">
+              (selectionChange)="filterUpdated()" multiple>
               <mat-option *ngFor="let location of arrAssetInstallationLocation"
                 [value]="location.installationLocationTypeIdFK">
                 {{location.title}}
@@ -30,7 +30,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Choose Manufacturer" required formControlName="manufacturer"
-              (selectionChange)="filterUpdated()">
+              (selectionChange)="filterUpdated()" multiple>
               <mat-option *ngFor="let manufacturer of arrAssetManufacturer" [value]="manufacturer.manufacturerId">
                 {{manufacturer.title}}
               </mat-option>
@@ -38,7 +38,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Choose Supplier" required formControlName="supplier"
-              (selectionChange)="filterUpdated()">
+              (selectionChange)="filterUpdated()" multiple>
               <mat-option *ngFor="let supplier of arrAssetSupplier" [value]="supplier.supplierId">
                 {{supplier.supplierName}}
               </mat-option>
@@ -46,7 +46,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Choose Department" required formControlName="department"
-              (selectionChange)="filterUpdated()">
+              (selectionChange)="filterUpdated()" multiple>
               <mat-option *ngFor="let department of arrAssetDepartment" [value]="department.departmentId">
                 {{department.departmentTitle}}
               </mat-option>

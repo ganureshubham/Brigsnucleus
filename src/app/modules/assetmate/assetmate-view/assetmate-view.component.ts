@@ -9,10 +9,10 @@ import { SpinnerService } from '../../../public service/spinner.service';
 import { MatSnackBar } from '@angular/material';
 
 interface Filter {
-  installationLocationTypeIdFK: number;
-  manufacturerIdFK: number;
-  supplierIdFK: number;
-  departmentIdFK: number;
+  installationLocationTypeIdFK: [];
+  manufacturerIdFK: [];
+  supplierIdFK: [];
+  departmentIdFK: [];
 }
 
 @Component({
@@ -59,10 +59,10 @@ export class AssetmateViewComponent implements OnInit {
   setFilterDataClear() {
 
     let filterData: Filter = {
-      installationLocationTypeIdFK: 0,
-      manufacturerIdFK: 0,
-      supplierIdFK: 0,
-      departmentIdFK: 0
+      installationLocationTypeIdFK: [],
+      manufacturerIdFK: [],
+      supplierIdFK: [],
+      departmentIdFK: []
     }
     this.assetmateService.setFilterCriteria(filterData);
   }
