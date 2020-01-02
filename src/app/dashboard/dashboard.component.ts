@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../public service/notification.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
-import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../public service/spinner.service';
 import jsPDF from 'jspdf';
-import { AssetmateService } from '../modules/assetmate/service/assetmate.service';
 import { DialogService } from '../public service/dialog.service';
-import { AppDialogData } from '../model/appDialogData';
 
 export interface Year {
   Id: number,
@@ -64,7 +62,6 @@ export class DashboardComponent implements OnInit {
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
-    private dialogService: DialogService
   ) {
   }
 
@@ -83,7 +80,6 @@ export class DashboardComponent implements OnInit {
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
-
   }
 
   years: Year[] = [
@@ -126,13 +122,14 @@ export class DashboardComponent implements OnInit {
         this.monthlyAssetgraphObj.yAxisLable = "Number of Assets";
         this.MonthlyAssetTitle = "Month wise Asset added";
       }
-      this.setMonthlyAssetsGraphData();
+      setTimeout(() => {
+        this.setMonthlyAssetsGraphData();
+      }, 100);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
-
   }
 
   showSnackBar(message: string) {
@@ -239,7 +236,9 @@ export class DashboardComponent implements OnInit {
         this.monthlyComplaintsgraphObj.yAxisLable = "Number of Complaints Assigned";
         this.MonthlyComplaintsTitle = "Month wise Complaints Assigned";
       }
-      this.setComplaintsRaisedGraphData();
+      setTimeout(() => {
+        this.setComplaintsRaisedGraphData();
+      }, 100);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -363,7 +362,9 @@ export class DashboardComponent implements OnInit {
         this.CategoryAssetTitle = "Category Wise Assets";
         this.categwiseassetgraphObj.color = ["#e5e5e5"];
       }
-      this.setCategoryWiseAssetsGraphData();
+      setTimeout(() => {
+        this.setCategoryWiseAssetsGraphData();
+      }, 100);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -475,7 +476,9 @@ export class DashboardComponent implements OnInit {
         this.CategoryMaintainanceTitle = "Category Wise Pending Maintenance Assets Count";
         this.categwisemaintainancegraphObj.color = ["#443c31"];
       }
-      this.setCategoryWisePendingMaintainanceGraphData();
+      setTimeout(() => {
+        this.setCategoryWisePendingMaintainanceGraphData();
+      }, 100);
     },
       error => {
         this.spinnerService.setSpinnerVisibility(false);
@@ -572,8 +575,14 @@ export class DashboardComponent implements OnInit {
         this.InstallLocAssetTitle = "Installation location wise assets";
         this.installlocwiseassetgraphObj.color = ['#BCAAA4'];
       }
-      this.setInstallationLocWiseAssetGraphData();
-    })
+      setTimeout(() => {
+        this.setInstallationLocWiseAssetGraphData();
+      }, 100);
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
   }
 
 

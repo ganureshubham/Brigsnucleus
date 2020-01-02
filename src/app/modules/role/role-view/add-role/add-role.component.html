@@ -3,7 +3,7 @@
     <span class="page-title">{{formTitle}}</span>
   </div>
   <form fxLayout="column" #roleform="ngForm" novalidate class="form-container">
-    <div fxLayout="column" fxLayoutGap.gt-xs="20px">
+    <div fxLayout="column" fxLayoutGap.gt-xs="20px" mat-dialog-content>
       <mat-form-field fxFlex.xs="100">
         <input matInput name="title" id="title" pattern="[a-zA-Z ]*" minlength="3" [(ngModel)]="roleData.title"
           #roleTitle="ngModel" type="text" required placeholder="Title">
@@ -49,15 +49,17 @@
         </div>
       </div>
     </div>
-    <div fxLayout.xs="column" fxLayoutAlign.gt-xs="end end" fxLayoutGap="10px" class="savebtn">
-      <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
-      <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n
-        [disabled]="!roleform.valid" color="primary"
-        [matTooltip]="!roleform.valid ? 'You must complete all the required fields.' : null" type="submit"
-        (click)="addRole(roleform.value)">Save User Role</button>
-      <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
-        mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
-        Role</button>
+    <div mat-dialog-actions>
+      <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100" fxLayoutAlign.gt-xs="end center">
+        <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+        <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n
+          [disabled]="!roleform.valid" color="primary"
+          [matTooltip]="!roleform.valid ? 'You must complete all the required fields.' : null" type="submit"
+          (click)="addRole(roleform.value)">Save User Role</button>
+        <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
+          mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
+          Role</button>
+      </div>
     </div>
   </form>
 </div>
