@@ -2,7 +2,6 @@
   <div class="dialog-toolbar">
     <p class="dialog-toolbar-title">{{isCurrentOperationEdit ? 'Edit Admin Details' : 'Add Admin'}}</p>
   </div>
-
   <div class="dialog-content-container" mat-dialog-content>
     <form [formGroup]="adminForm">
       <div fxLayout="column" fxLayoutGap="15px">
@@ -34,8 +33,9 @@
           <mat-error>Invalid email id</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input [required]="this.data.action != 'edit'" matInput [placeholder]="this.data.action == 'edit' ? 'Change admin password' : 'Create admin password'" (keydown.space)="$event.preventDefault();"
-            [type]="hide ? 'password' : 'text'" formControlName="password">
+          <input [required]="this.data.action != 'edit'" matInput
+            [placeholder]="this.data.action == 'edit' ? 'Change admin password' : 'Create admin password'"
+            (keydown.space)="$event.preventDefault();" [type]="hide ? 'password' : 'text'" formControlName="password">
           <button mat-icon-button matSuffix (click)="hide = !hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
@@ -45,7 +45,6 @@
       </div>
     </form>
   </div>
-
   <div class="dialog-actions" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
     <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
     <button fxFlex.xs="100" *ngIf="!isCurrentOperationEdit" mat-raised-button i18n color="primary" type="submit"
