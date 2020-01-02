@@ -88,10 +88,13 @@ export class DetailsAssetComponent implements OnInit {
 			if (res.asset) {
 				this.assetData = res.asset;
 				this.assetcode = res.asset.assetCode;
-				let arrSplittedUserGuidePath: string[] = res.asset.userGuideBook.split('.');
-				this.userGuideFileExtension = arrSplittedUserGuidePath[arrSplittedUserGuidePath.length - 1];
-				arrSplittedUserGuidePath = res.asset.userGuideBook.split('/');
-				this.userGuideFileName = (arrSplittedUserGuidePath[arrSplittedUserGuidePath.length - 1]).split('.')[0];
+				if (res.asset.userGuideBook !== null) {
+					let arrSplittedUserGuidePath: string[] = res.asset.userGuideBook.split('.');
+					this.userGuideFileExtension = arrSplittedUserGuidePath[arrSplittedUserGuidePath.length - 1];
+					arrSplittedUserGuidePath = res.asset.userGuideBook.split('/');
+					this.userGuideFileName = (arrSplittedUserGuidePath[arrSplittedUserGuidePath.length - 1]).split('.')[0];
+				}
+
 			} else {
 				this.showSnackBar(res.message);
 			}

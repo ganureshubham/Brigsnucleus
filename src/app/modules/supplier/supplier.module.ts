@@ -19,8 +19,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     NgxSpinnerModule,
     FlexLayoutModule
-
-
   ]
 })
 export class SupplierModule { }

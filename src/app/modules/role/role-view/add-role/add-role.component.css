@@ -8,17 +8,17 @@
   border: 1px solid #eee;
 }
 
-.form-sub-container{
+.form-sub-container {
   border: 1px solid #eee;
   width: 100%;
   padding: 20px;
 }
 
-.form-container{
+.form-container {
   padding-top: 30px;
 }
 
-.title{
+.title {
   font-size: 18px;
   padding: 0px;
   margin: 0px;
@@ -26,7 +26,7 @@
   color: #000;
 }
 
-.authorities{
+.authorities {
   border: 1px solid #ccc;
   border-radius: 4px;
   color: #000000;
@@ -34,14 +34,14 @@
   margin: 10px 0px;
 }
 
-.authorities-title{
-  margin-top: -12px ;
+.authorities-title {
+  margin-top: -12px;
   margin-left: 10px;
   padding-left: 10px;
   background-color: #fff;
   width: 85px;
 }
 
-.authorities-text{
+.authorities-text {
   padding: 20px;
 }
