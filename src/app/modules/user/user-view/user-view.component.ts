@@ -3,11 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { DataSharingService } from '../../../public service/data-sharing.service';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from '../../../public service/dialog.service';
 import { SpinnerService } from '../../../public service/spinner.service';
 import { AppDialogData } from '../../../model/appDialogData';
@@ -49,7 +46,7 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   nonzero: boolean = false;
   dialogData: userDialogData;
 
-  displayedColumns: string[] = ['userName', 'profileImage', 'departmentTitle', 'mobileNumber', 'emailId', 'activateuser', 'Actions'];
+  displayedColumns: string[] = ['userName', 'profileImage', 'userRole', 'mobileNumber', 'emailId', 'activateuser', 'Actions'];
   paidDataSource: MatTableDataSource<User> = new MatTableDataSource();
 
   //@ViewChild('paidPaginator') paidPaginator: MatPaginator; 
@@ -97,6 +94,8 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
     if (this.message) {
       if (this.message.name) {
         this.DepartmentObj = '(' + this.message.name + ')';
+      } else if (this.message.departmentTitle) {
+        this.DepartmentObj = '(' + this.message.departmentTitle + ')';
       }
       this.getAllUsers(this.message.departmentId, this.pageNumber);
     }
@@ -319,6 +318,7 @@ export interface User {
   profileImage: string,
   userRoleIdFK: number,
   departmentTitle: string,
+  userRole: string,
   departmentIdFK: number,
   mobileNumber: number,
   emailId: string,
