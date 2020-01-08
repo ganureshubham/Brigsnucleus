@@ -73,7 +73,8 @@ export class PendingTasksComponent implements OnInit {
           "Task Status": obj.complaintStatus,
           "Type Of User": obj.typeOfUser,
           "Raised By": obj.raisedByName,
-          "Created On": obj.createdDate
+          "Created On": obj.createdDate,
+          "Message": obj.message
         }));
         let fileName = this.topCount == 0 ? 'All Pending Tasks' : 'Top ' + this.topCount + ' Pending Tasks';
         this.exportAsExcelFile(formattedData, fileName);
