@@ -100,15 +100,15 @@
               <mat-menu #dailyPerformanceMenu="matMenu">
                 <a mat-menu-item (click)="viewAsset(visit.assetId)">
                   <mat-icon matListIcon>visibility</mat-icon>
-                  <span i18n>View Asset Detail</span>
+                  <span i18n>View Details</span>
                 </a>
                 <a mat-menu-item (click)="editAsset(visit.assetId)">
                   <mat-icon matListIcon>edit</mat-icon>
-                  <span i18n>Edit Asset</span>
+                  <span i18n>Edit</span>
                 </a>
                 <a mat-menu-item (click)="transferAssetLocation(visit)">
                   <mat-icon matListIcon>room</mat-icon>
-                  <span i18n>Transfer Asset</span>
+                  <span i18n>Transfer</span>
                 </a>
                 <a mat-menu-item (click)="printQRcode(visit)">
                   <mat-icon matListIcon>print</mat-icon>
@@ -116,7 +116,7 @@
                 </a>
                 <a mat-menu-item (click)="deleteAsset(visit.assetId, visit.assetTitle)">
                   <mat-icon matListIcon>delete_outline</mat-icon>
-                  <span i18n>Delete Asset</span>
+                  <span i18n>Delete</span>
                 </a>
               </mat-menu>
               <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

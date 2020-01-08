@@ -108,11 +108,11 @@
                         <mat-menu #dailyPerformanceMenu="matMenu">
                           <a mat-menu-item (click)="viewComplaint(visit.complaintId)">
                             <mat-icon matListIcon>visibility</mat-icon>
-                            <span i18n>View Complaint</span>
+                            <span i18n>View Details</span>
                           </a>
                           <a mat-menu-item (click)="deleteComplaint(visit.complaintId,visit.title)">
                             <mat-icon matListIcon>delete_outline</mat-icon>
-                            <span i18n>Delete Complaint</span>
+                            <span i18n>Delete</span>
                           </a>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

@@ -69,11 +69,11 @@
                         <mat-menu #dailyPerformanceMenu="matMenu">
                           <a mat-menu-item (click)="downloadDocument(visit.filepath)" target="blank">
                             <mat-icon matListIcon>get_app</mat-icon>
-                            <span i18n>Download Document</span>
+                            <span i18n>Download</span>
                           </a>
                           <a mat-menu-item (click)="editDocumate(visit)">
                             <mat-icon matListIcon>edit</mat-icon>
-                            <span i18n>Edit Document</span>
+                            <span i18n>Edit</span>
                           </a>
                           <a mat-menu-item (click)="printQRcode(visit)">
                             <mat-icon matListIcon>print</mat-icon>
@@ -81,7 +81,7 @@
                           </a>
                           <a mat-menu-item (click)="deleteDocumate(visit.documentId,visit.title)">
                             <mat-icon matListIcon>delete_outline</mat-icon>
-                            <span i18n>Delete Document</span>
+                            <span i18n>Delete</span>
                           </a>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

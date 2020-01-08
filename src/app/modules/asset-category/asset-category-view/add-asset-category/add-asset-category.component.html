@@ -30,11 +30,11 @@
     <div fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
       <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
       <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-        [disabled]="!assetCategoryForm.valid" type="submit" (click)="addAssetCategory(assetCategoryForm.value)">Save
-        Asset Category</button>
+        [disabled]="!assetCategoryForm.valid" type="submit" (click)="addAssetCategory(assetCategoryForm.value)">Add
+      </button>
       <button *ngIf="isEdited" type="submit" [color]="'success'" [disabled]="!assetCategoryForm.valid"
-        (click)="editAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Update Asset
-        Category</button>
+        (click)="editAssetCategory(assetCategoryForm.value)" mat-raised-button i18n color="primary">Update
+      </button>
     </div>
   </form>
 </div>

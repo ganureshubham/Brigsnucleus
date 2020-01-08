@@ -17,7 +17,7 @@ import { element } from '@angular/core/src/render3';
 export class AddAssignUserComponent implements OnInit {
   showFirst: boolean = false;
   assignUserData: any = {};
-  formTitle: string = "Add Assigned User";
+  formTitle: string = "Assign New Users";
   isEdited: boolean = false;
   categoryLists: any;
   category: any;

@@ -206,9 +206,9 @@
           <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
           <button fxFlex.xs="100" *ngIf="!isEdited" mat-raised-button i18n color="primary"
             [matTooltip]="!assetform.valid ? 'You must complete all the required fields.' : null" type="submit"
-            [disabled]="!assetform.valid" (click)="addAsset(assetform)">Add Asset</button>
+            [disabled]="!assetform.valid" (click)="addAsset(assetform)">Add</button>
           <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-            type="submit" [disabled]="!assetform.valid" (click)="editAsset(assetform)">Update Asset</button>
+            type="submit" [disabled]="!assetform.valid" (click)="editAsset(assetform)">Update</button>
         </div>
       </div>
     </div>

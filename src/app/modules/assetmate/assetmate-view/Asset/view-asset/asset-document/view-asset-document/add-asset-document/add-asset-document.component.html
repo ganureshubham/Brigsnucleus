@@ -51,7 +51,7 @@
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" name="filepath" [(ngModel)]="filepath" type="text" required
-                    placeholder="Browse Document File From System">
+                    placeholder="Browse Document">
                   <button mat-button *ngIf="filepath" matSuffix mat-icon-button aria-label="Clear"
                     (click)="filepath=''">
                     <mat-icon>close</mat-icon>
@@ -76,9 +76,9 @@
         <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
         <button fxFlex.xs="100" *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
-          [disabled]="!documentform.valid" (click)="addDocument(documentform)">Add Document</button>
+          [disabled]="!documentform.valid" (click)="addDocument(documentform)">Add</button>
         <button fxFlex.xs="100" *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary"
-          type="submit" [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update Document</button>
+          type="submit" [disabled]="!documentform.valid" (click)="editDocument(documentform)">Update</button>
       </div>
     </div>
   </form>

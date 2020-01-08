@@ -65,7 +65,7 @@
     <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
     <button [color]="'success'" mat-raised-button i18n color="primary"
       [matTooltip]="!complaintform.valid ? 'You must complete all the required fields.' : null" type="submit"
-      [disabled]="!complaintform.valid" (click)="addComplaint(complaintform.value)">Save Complaint</button>
+      [disabled]="!complaintform.valid" (click)="addComplaint(complaintform.value)">Add</button>
   </div>
 </div>
 

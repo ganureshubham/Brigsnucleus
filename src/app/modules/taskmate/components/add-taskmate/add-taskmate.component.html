@@ -54,6 +54,6 @@
     <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
     <button [color]="'success'" mat-raised-button i18n color="primary"
       [matTooltip]="!taskmateform.valid ? 'You must complete all the required fields.' : null" type="submit"
-      [disabled]="!taskmateform.valid" (click)="addTaskmate(taskmateform.value)">Save Task</button>
+      [disabled]="!taskmateform.valid" (click)="addTaskmate(taskmateform.value)">Add</button>
   </div>
 </div>
