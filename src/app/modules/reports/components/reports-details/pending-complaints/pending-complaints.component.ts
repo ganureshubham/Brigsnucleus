@@ -39,7 +39,6 @@ export class PendingComplaintsComponent implements OnInit {
     this.reportsService.getPendingComplaints(this.topComplaintsCount).subscribe(
       res => {
         if (res.status) {
-
           if (res.complaintList && res.complaintList == 0) {
             this.isNoRecordFound = true;
           } else {
@@ -76,6 +75,7 @@ export class PendingComplaintsComponent implements OnInit {
           "Type Of User": obj.typeOfUser,
           "Created On": obj.createdDate,
           "Raised By": obj.raisedByName,
+          "Message": obj.message
         }));
         let fileName = this.topComplaintsCount == 0 ? 'All Pending Complaints' : 'Top ' + this.topComplaintsCount + ' Pending Complaints';
         this.exportAsExcelFile(formattedComplaintData, fileName);
