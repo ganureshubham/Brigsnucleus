@@ -77,11 +77,11 @@
                   <mat-menu #dailyPerformanceMenu="matMenu">
                     <a mat-menu-item (click)="editUser(visit)">
                       <mat-icon matListIcon>edit</mat-icon>
-                      <span i18n>Edit User</span>
+                      <span i18n>Edit</span>
                     </a>
                     <a mat-menu-item (click)="deleteUser(visit.userId,visit.firstName,visit.lastName)">
                       <mat-icon matListIcon>delete_outline</mat-icon>
-                      <span i18n>Delete User</span>
+                      <span i18n>Delete</span>
                     </a>
                   </mat-menu>
                   <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

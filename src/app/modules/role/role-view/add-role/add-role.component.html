@@ -55,10 +55,9 @@
         <button *ngIf="!isEdited && uploadingLoader == false" [color]="'success'" mat-raised-button i18n
           [disabled]="!roleform.valid" color="primary"
           [matTooltip]="!roleform.valid ? 'You must complete all the required fields.' : null" type="submit"
-          (click)="addRole(roleform.value)">Save User Role</button>
+          (click)="addRole(roleform.value)">Add</button>
         <button *ngIf="isEdited && uploadingLoader == false" [color]="'success'" [disabled]="!roleform.valid"
-          mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update User
-          Role</button>
+          mat-raised-button i18n color="primary" type="submit" (click)="editRole(roleform.value)">Update</button>
       </div>
     </div>
   </form>

@@ -45,15 +45,15 @@
             <mat-menu #dailyPerformanceMenu="matMenu">
               <a mat-menu-item (click)="navigateToQuestionDetails(element.questionId)">
                 <mat-icon matListIcon>visibility</mat-icon>
-                <span i18n>Question Details</span>
+                <span i18n>View Details</span>
               </a>
               <a mat-menu-item (click)="editChecklistQuestion(element.questionId)">
                 <mat-icon matListIcon>edit</mat-icon>
-                <span i18n>Edit Question</span>
+                <span i18n>Edit</span>
               </a>
               <a mat-menu-item (click)="deleteChecklistQuestion(element.questionId, element.questionDescription)">
                 <mat-icon matListIcon>delete_outline</mat-icon>
-                <span i18n>Delete Question</span>
+                <span i18n>Delete</span>
               </a>
             </mat-menu>
             <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

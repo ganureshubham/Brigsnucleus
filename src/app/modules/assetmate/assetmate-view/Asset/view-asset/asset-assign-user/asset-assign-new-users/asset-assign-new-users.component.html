@@ -45,10 +45,7 @@
       <button fxFlex.xs="100" mat-stroked-button i18n color="primary" (click)="onNoClick()">Cancel</button>
       <button fxFlex.xs="100" *ngIf="!isEdited" mat-raised-button i18n color="primary"
         [matTooltip]="!assignuserform.valid ? 'You must complete all the required fields.' : null" type="submit"
-        [disabled]="!assignuserform.valid" (click)="addAssignUser(assignuserform.value)">Save Assign User</button>
-      <button fxFlex.xs="100" *ngIf="isEdited" mat-raised-button i18n color="primary" type="submit"
-        [disabled]="!assignuserform.valid" (click)="editAssignUser(assignuserform.value)">Update Assign
-        User</button>
+        [disabled]="!assignuserform.valid" (click)="addAssignUser(assignuserform.value)">Add</button>
     </div>
 
   </form>

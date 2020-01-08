@@ -80,11 +80,11 @@
                         <mat-menu #dailyPerformanceMenu="matMenu">
                           <a mat-menu-item (click)="viewAlert(visit.alertId)">
                             <mat-icon matListIcon>visibility</mat-icon>
-                            <span i18n>View Alert Detail</span>
+                            <span i18n>View Details</span>
                           </a>
                           <a mat-menu-item (click)="deleteAlert(visit.alertId,visit.title)">
                             <mat-icon matListIcon>delete_outline</mat-icon>
-                            <span i18n>Delete Alert</span>
+                            <span i18n>Delete</span>
                           </a>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

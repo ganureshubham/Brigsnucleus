@@ -53,9 +53,9 @@
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [matTooltip]="!documentform.valid ? 'You must complete all the required fields.' : null" type="submit"
-          [disabled]="!documentform.valid" (click)="addDocument(documentform)">Save Document</button>
+          [disabled]="!documentform.valid" (click)="addDocument(documentform)">Add</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-          [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update Document</button>
+          [disabled]="!documentform.valid" (click)="editDocumate(documentform)">Update</button>
       </div>
     </form>
   </div>

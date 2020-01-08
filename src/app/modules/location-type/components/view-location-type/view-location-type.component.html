@@ -31,12 +31,12 @@
                   <mat-menu #dailyPerformanceMenu="matMenu">
                     <a mat-menu-item (click)="editLocationType(visit)">
                       <mat-icon matListIcon>edit</mat-icon>
-                      <span i18n>Edit Installation Location </span>
+                      <span i18n>Edit </span>
                     </a>
                     <a mat-menu-item
                       (click)="deleteLocationType(visit.installationLocationTypeId,visit.installationLocationName)">
                       <mat-icon matListIcon>delete_outline</mat-icon>
-                      <span i18n>Delete Installation Location </span>
+                      <span i18n>Delete</span>
                     </a>
                   </mat-menu>
                   <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">

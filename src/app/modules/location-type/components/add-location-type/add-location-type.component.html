@@ -32,10 +32,10 @@
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [disabled]="!installlocationform.valid"
           [matTooltip]="!installlocationform.valid ? 'You must complete all the required fields.' : null" type="submit"
-          (click)="addInstallationLocation(installlocationform.value)">Save Installation Location</button>
+          (click)="addInstallationLocation(installlocationform.value)">Add</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
           [disabled]="!installlocationform.valid" (click)="editInstallationLocation(installlocationform.value)">Update
-          Installation Location</button>
+        </button>
       </div>
     </form>
   </div>

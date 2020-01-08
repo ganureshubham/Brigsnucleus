@@ -56,9 +56,9 @@
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [disabled]="!supplierform.valid"
           [matTooltip]="!supplierform.valid ? 'You must complete all the required fields.' : null" type="submit"
-          (click)="addSupplier(supplierform.value)">Save Supplier</button>
+          (click)="addSupplier(supplierform.value)">Add</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
-          [disabled]="!supplierform.valid" (click)="editSupplier(supplierform.value)">Update Supplier</button>
+          [disabled]="!supplierform.valid" (click)="editSupplier(supplierform.value)">Update</button>
       </div>
     </form>
   </div>
