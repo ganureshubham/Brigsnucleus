@@ -122,6 +122,10 @@ export class ViewAssetComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  isCurrentUserAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 1;
+  }
+
   /*********************************************************** Get All Assets *******************************************************************/
 
   getAllAssets(

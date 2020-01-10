@@ -48,8 +48,7 @@ export class NotificationService {
   }
 
   monthlyComplaintsAssigned(year: any): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + `dashboard/monthlyComplaintsAssignedCounts/${year}`);
-
+    return this.httpClient.get<any>(this.baseUrl + `dashboard/monthlyComplaintsPendingCounts/${year}`);
   }
 
   categoryWiseAssets(): Observable<any> {

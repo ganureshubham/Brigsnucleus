@@ -93,6 +93,10 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/assetQrCodeDetailsList/${categoryId}`);
   }
 
+  getChecklistImage(imageId: any) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/getChecklistImage/${imageId}`);
+  }
+
   getAllPendingVerificationAssets(pageNo) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/listOfPendingVerifiedAssets/${pageNo}`);
   }

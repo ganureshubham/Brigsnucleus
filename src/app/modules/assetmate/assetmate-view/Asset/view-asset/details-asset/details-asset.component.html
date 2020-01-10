@@ -37,7 +37,8 @@
                         </mat-slide-toggle>
                     </div>
                     <div fxFlex.xs="100" class="dfe add_action">
-                        <button fxFlex.xs="100" mat-button (click)="printQRcode()" class="bg_white_grey btn_style">
+                        <button *ngIf="!isCurrentUserAdmin()" fxFlex.xs="100" mat-button (click)="printQRcode()"
+                            class="bg_white_grey btn_style">
                             <mat-icon>print</mat-icon>Print QRCode
                         </button>
                     </div>

@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSnackBar, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../../service/assetmate.service';
 import { SpinnerService } from '../../../../../../../../public service/spinner.service';
+import { AppImgDialogComponent } from '../../../../../../../../shared/app-img-dialog/app-img-dialog.component';
 
 @Component({
   selector: 'app-view-question',
@@ -24,8 +23,6 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   roleData: any = {};
   showFirst: boolean = false;
 
-
-
   displayedColumns: string[] = ['question', 'answer', 'isDanger'];
   // 'questionIdFK', 'questionType'
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
@@ -37,15 +34,16 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   Router: any;
   checklistId: any;
   isNoRecordFound: boolean = true;
+  imgurl: any;
+  answers: any;
 
   constructor(private http: HttpClient,
     private router: Router,
     private assetmateService: AssetmateService,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private dialog: MatDialog
   ) {
 
   }
@@ -63,12 +61,20 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
         this.getQuestAnsList(this.checklistId, this.pageNumber);
       }
     })
-
   }
-
 
   ngOnDestroy(): void { }
 
+  /*********************************************************** Preview Particular Question Image  *******************************************************************/
+  priviewImage(title, imageUrl) {
+    this.dialog.open(AppImgDialogComponent, {
+      data: { imageType: 'Checklist Questions', imageTitle: title, imageUrl: imageUrl, },
+      width: '90vw',
+      height: '80vh',
+      panelClass: 'app-img-dialog',
+      backdropClass: 'app-img-dialog-backdrop'
+    });
+  }
 
   /*********************************************************** Get All Roles *******************************************************************/
 
@@ -82,6 +88,15 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
         } else {
           this.isNoRecordFound = false;
         }
+        for (let i = 0; i < res.questionAnswer.length; i++) {
+          let answerlist = res.questionAnswer[i].answer;
+          if (answerlist.includes("IMG")) {
+            this.answers = answerlist;
+          }
+        }
+        this.assetmateService.getChecklistImage(this.answers).subscribe(res => {
+          this.imgurl = res.data.checklistImage;
+        })
         this.paidDataSource = res.questionAnswer;
         this.pageNumber = res.currentPage;
         this.totalCount = res.totalCount;
@@ -96,11 +111,9 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
-
 
   /*********************************************************** Page Change *******************************************************************/
 
@@ -110,15 +123,11 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
     this.getQuestAnsList(this.checklistId, this.page);
   }
 
-
-
-
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   viewQuestion(doneChecklistId: number) {
     this.dataService.changeData(doneChecklistId);
     this.router.navigate(['/assetmate/view-question']);
-
   }
 
   backToList() {

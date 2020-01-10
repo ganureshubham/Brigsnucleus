@@ -6,8 +6,8 @@
     </div>
     <div fxFlex.xs="100" fxLayoutAlign.xs="center center" *ngIf="!showFirst"
       class="example-button-row btn_style bg_white_grey">
-      <button fxFlex.xs="100" mat-button (click)="backToList()">
-        <mat-icon>list</mat-icon> Checklists
+      <button matTooltip="CLick here to go back to list" fxFlex.xs="100" mat-button (click)="backToList()">
+        <mat-icon>list</mat-icon> Back
       </button>
     </div>
   </div>
@@ -22,7 +22,21 @@
       </ng-container>
       <ng-container matColumnDef="answer">
         <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Answers</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.answer }}</mat-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <div *ngIf="visit.answer.includes('IMG') ; else answer"
+            (click)="$event.stopPropagation(); priviewImage( visit.question, imgurl)" [ngStyle]="{ 
+            'background-image': 'url(' + imgurl + ')', 
+            'background-size': 'contain',
+            'background-position': 'center center',   
+            'background-repeat': 'no-repeat', 
+            'width':'80px', 
+            'height':'80px',
+            'margin': '5px'
+          }"></div>
+          <ng-template #answer>
+            {{visit.answer}}
+          </ng-template>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="isDanger">
         <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Is Critical</mat-header-cell>

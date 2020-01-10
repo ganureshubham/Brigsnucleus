@@ -75,7 +75,7 @@
                             <mat-icon matListIcon>edit</mat-icon>
                             <span i18n>Edit</span>
                           </a>
-                          <a mat-menu-item (click)="printQRcode(visit)">
+                          <a *ngIf="!isCurrentUserAdmin()" mat-menu-item (click)="printQRcode(visit)">
                             <mat-icon matListIcon>print</mat-icon>
                             <span i18n>Print QRcode</span>
                           </a>

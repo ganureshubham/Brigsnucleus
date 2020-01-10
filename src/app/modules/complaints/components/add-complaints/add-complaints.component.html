@@ -42,7 +42,7 @@
             <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" name="complaintImage" [(ngModel)]="complaintImage" type="text" required
+            <input class="file-path validate" name="complaintImage" [(ngModel)]="complaintImage" type="text"
               placeholder="Upload Complaint image">
             <button mat-button *ngIf="complaintImage" matSuffix mat-icon-button aria-label="Clear"
               (click)="complaintImage=''">

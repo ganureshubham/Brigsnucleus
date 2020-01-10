@@ -5,7 +5,8 @@
         <button fxFlex.xs="100" mat-button (click)="addAsset()" class="bg_white_grey btn_style">
           <mat-icon>add</mat-icon>Add Asset
         </button>
-        <button fxFlex.xs="100" mat-button (click)="printAllAssetQRcode()" class="bg_white_grey btn_style">
+        <button *ngIf="!isCurrentUserAdmin()" fxFlex.xs="100" mat-button (click)="printAllAssetQRcode()"
+          class="bg_white_grey btn_style">
           <mat-icon>print</mat-icon>Print All Assets QRCode
         </button>
       </div>
@@ -48,8 +49,8 @@
             <div (click)="$event.stopPropagation(); priviewImage( visit.assetTitle, visit.assetImage)" [ngStyle]="{ 
                 'background-image': 'url(' + visit.assetImage + ')', 
                 'background-size': 'contain',
-                'background-position': 'center center',  
-                'background-repeat': 'no-repeat', 
+                'background-position': 'center center',   
+                'background-repeat': 'no-repeat',  
                 'width':'80px', 
                 'height':'80px',
                 'margin': '5px'
@@ -110,7 +111,7 @@
                   <mat-icon matListIcon>room</mat-icon>
                   <span i18n>Transfer</span>
                 </a>
-                <a mat-menu-item (click)="printQRcode(visit)">
+                <a *ngIf="!isCurrentUserAdmin()" mat-menu-item (click)="printQRcode(visit)">
                   <mat-icon matListIcon>print</mat-icon>
                   <span i18n>Print QRcode</span>
                 </a>
