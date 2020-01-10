@@ -92,6 +92,10 @@ export class DocumateViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  isCurrentUserAdmin() {
+    return JSON.parse(localStorage.getItem('currentUser')).data.role == 1;
+  }
+
   /*********************************************************** Open Document Code Dialog *******************************************************************/
 
   openDialog(documentCode): void {

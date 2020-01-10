@@ -265,7 +265,7 @@ export class DashboardComponent implements OnInit {
       data: {
         labels: this.monthlyComplaintsgraphObj.xAxisData,
         datasets: [{
-          label: 'Complaints Assigned',
+          label: 'Complaints Pending',
           data: this.monthlyComplaintsgraphObj.yAxisData,
           backgroundColor: [
             'rgba(114, 41, 174, 0.27)',

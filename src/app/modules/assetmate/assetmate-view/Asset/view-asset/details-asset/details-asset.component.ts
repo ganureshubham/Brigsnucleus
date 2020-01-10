@@ -56,6 +56,10 @@ export class DetailsAssetComponent implements OnInit {
 		});
 	}
 
+	isCurrentUserAdmin() {
+		return JSON.parse(localStorage.getItem('currentUser')).data.role == 1;
+	}
+
 	verifyAsset(assetId: number) {
 		let body = {
 			isVerified: 1

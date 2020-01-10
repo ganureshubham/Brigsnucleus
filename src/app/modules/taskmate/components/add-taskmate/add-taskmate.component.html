@@ -31,7 +31,7 @@
             <input type="file" onclick="this.value=null;" (change)="imageChange($event.target.files)" accept="image/*">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" name="taskmateImage" [(ngModel)]="taskmateImage" type="text" required
+            <input class="file-path validate" name="taskmateImage" [(ngModel)]="taskmateImage" type="text"
               placeholder="Upload Task image">
             <button mat-button *ngIf="taskmateImage" matSuffix mat-icon-button aria-label="Clear"
               (click)="taskmateImage=''">
