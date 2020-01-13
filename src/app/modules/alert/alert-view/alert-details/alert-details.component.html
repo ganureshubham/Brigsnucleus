@@ -16,10 +16,10 @@
           <p><b>{{countData.totalAlertTrack}}</b><span>Total Alert Track</span></p>
         </div>
         <div class="fl total">
-          <p><b>{{countData.isRead}}</b><span>Is Read</span></p>
+          <p><b>{{countData.isRead}}</b><span>Read</span></p>
         </div>
         <div class="fl total">
-          <p><b>{{countData.isDeliver}}</b><span>Is Delivered </span></p>
+          <p><b>{{countData.isDeliver}}</b><span>Delivered </span></p>
         </div>
       </div>
       <div class="cl"></div>
@@ -115,13 +115,13 @@
                       <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.userName }}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isRead">
-                      <mat-header-cell fxHide.xs *matHeaderCellDef>Is Read</mat-header-cell>
+                      <mat-header-cell fxHide.xs *matHeaderCellDef>Read</mat-header-cell>
                       <mat-cell fxHide.xs *matCellDef="let visit">
                         <mat-icon class="isRead" *ngIf="visit.isRead">check_circle</mat-icon>
                       </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isDeliver">
-                      <mat-header-cell fxHide.xs *matHeaderCellDef>Is Delivered</mat-header-cell>
+                      <mat-header-cell fxHide.xs *matHeaderCellDef>Delivered</mat-header-cell>
                       <mat-cell fxHide.xs *matCellDef="let visit">
                         <mat-icon class="isDeliver" *ngIf="visit.isDeliver">check_circle</mat-icon>
                       </mat-cell>

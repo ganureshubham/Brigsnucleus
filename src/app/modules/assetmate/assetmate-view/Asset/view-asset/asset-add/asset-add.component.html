@@ -110,7 +110,7 @@
             </div>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select name="manufacturerIdFK" id="manufacturerIdFK" [(ngModel)]="assetData.manufacturerIdFK"
-                #Manuf="ngModel" placeholder="Select Manufacturer Name" required>
+                #Manuf="ngModel" placeholder="Select Manufacturer" required>
                 <mat-option *ngFor="let manuf of manufList" [value]="manuf.manufacturerId">{{manuf.title}}
                 </mat-option>
               </mat-select>
@@ -122,7 +122,7 @@
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center">
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select name="supplierIdFK" id="supplierIdFK" [(ngModel)]="assetData.supplierIdFK" #Supplier="ngModel"
-                placeholder="Select Supplier name" required>
+                placeholder="Select Supplier" required>
                 <mat-option *ngFor="let suppl of suppList" [value]="suppl.supplierId">{{suppl.supplierName}}
                 </mat-option>
               </mat-select>
@@ -132,7 +132,7 @@
             </mat-form-field>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select name="departmentIdFK" id="departmentIdFK" [(ngModel)]="assetData.departmentIdFK"
-                #DeptName="ngModel" placeholder="Choose Asset Department Name" required>
+                #DeptName="ngModel" placeholder="Choose Asset Department" required>
                 <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
                 </mat-option>
               </mat-select>
@@ -142,8 +142,7 @@
             </mat-form-field>
             <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
               <mat-select [disabled]="!isEdited" name="categoryIdFK" id="categoryIdFK"
-                [(ngModel)]="assetData.categoryIdFK" #CategName="ngModel" placeholder="Choose Asset Category name"
-                required>
+                [(ngModel)]="assetData.categoryIdFK" #CategName="ngModel" placeholder="Choose Asset Category" required>
                 <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.title}}
                 </mat-option>
               </mat-select>
@@ -163,7 +162,7 @@
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" name="userGuideBook" [(ngModel)]="userGuideBook" type="text"
-                    required placeholder="Upload your userguide file">
+                    required placeholder="Upload userguide">
                   <button mat-button *ngIf="userGuideBook" matSuffix mat-icon-button aria-label="Clear"
                     (click)="userGuideBook=''">
                     <mat-icon>close</mat-icon>
@@ -182,7 +181,7 @@
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" name="assetImage" [(ngModel)]="assetImage" type="text" required
-                    placeholder="Upload your asset image file">
+                    placeholder="Upload asset image">
                   <button mat-button *ngIf="assetImage" matSuffix mat-icon-button aria-label="Clear"
                     (click)="assetImage=''">
                     <mat-icon>close</mat-icon>

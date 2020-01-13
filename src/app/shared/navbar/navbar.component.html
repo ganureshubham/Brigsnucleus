@@ -110,10 +110,7 @@
           <mat-icon>settings_applications</mat-icon><span i18n>Settings</span>
         </a>
         <mat-menu #appsMenu="matMenu" yPosition="below" [overlapTrigger]="false">
-          <a mat-menu-item routerLink="/user-role">
-            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-            <span i18n>User Role</span>
-          </a>
+
           <a mat-menu-item routerLink="/supplier">
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Supplier</span>
@@ -126,10 +123,6 @@
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Department</span>
           </a>
-          <a mat-menu-item routerLink="/user/user-list">
-            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
-            <span i18n>User</span>
-          </a>
           <a mat-menu-item routerLink="/asset-category">
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Asset-Category</span>
@@ -137,6 +130,14 @@
           <a mat-menu-item routerLink="/location-type">
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Asset Installation Location</span>
+          </a>
+          <a mat-menu-item routerLink="/user-role">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>User Role</span>
+          </a>
+          <a mat-menu-item routerLink="/user/user-list">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>User</span>
           </a>
           <a mat-menu-item routerLink="/verify-asset">
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
@@ -210,10 +211,7 @@
                   </a>
                 </div>
               </mat-expansion-panel-header>
-              <a mat-menu-item routerLink="/user-role" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-                <span i18n>User Role</span>
-              </a>
+
               <a mat-menu-item routerLink="/supplier" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Supplier</span>
@@ -226,10 +224,6 @@
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Department</span>
               </a>
-              <a mat-menu-item routerLink="/user/user-list" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
-                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
-                <span i18n>User</span>
-              </a>
               <a mat-menu-item routerLink="/asset-category" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Asset-Category</span>
@@ -237,6 +231,14 @@
               <a mat-menu-item routerLink="/location-type" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Asset Installation Location</span>
+              </a>
+              <a mat-menu-item routerLink="/user-role" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>User Role</span>
+              </a>
+              <a mat-menu-item routerLink="/user/user-list" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>User</span>
               </a>
               <a mat-menu-item routerLink="/verify-asset" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
