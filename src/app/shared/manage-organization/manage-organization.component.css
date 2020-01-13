@@ -19,3 +19,17 @@
     font-size:15px;
     color: #9b9b9b;
 }
+
+@media only screen and (max-width: 1440px) {
+    .org-title{
+        font-size:15px;
+        margin-bottom: 5px;
+    }
+    .org-sub-title{
+        font-size:10px;
+    }
+    .organization-item{
+        padding: 15px 10px;
+        margin: 10px;
+    }
+  }
