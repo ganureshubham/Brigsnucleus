@@ -62,8 +62,9 @@ export class PendingTasksComponent implements OnInit {
 
   exportTopComplaints() {
     if (this.topCount == -1) {
-      this.showSnackBar('Please choose top pending complaints count..!!')
-    } else {
+      this.showSnackBar('Please choose top pending task count..!!')
+    }
+    else {
       if (this.totalTasks.length > 0) {
         this.spinnerService.setSpinnerVisibility(true);
         let formattedData: any[] = [];

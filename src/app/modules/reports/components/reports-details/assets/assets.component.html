@@ -14,13 +14,13 @@
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="reports-specs-row">
     <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
-      <mat-select placeholder="Select Category" (selectionChange)="onCategoryChange($event.value)">
+      <mat-select placeholder="Select Category" (selectionChange)="onCategoryChange($event.value,0)">
         <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">{{categ.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <div fxFlex.xs="100">
-      <button fxFlex.xs="100" mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
+      <button fxFlex.xs="100" mat-raised-button color="primary" (click)="exportAssets()">Export As CSV</button>
     </div>
   </div>
 
@@ -82,7 +82,7 @@
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row class="example-element-row" *matRowDef="let visit; columns: displayedColumns;"
-          (click)="viewTaskmate(visit.complaintId)"></mat-row>
+          (click)="viewAsset(visit.assetId)"></mat-row>
       </mat-table>
     </ng-template>
     <div>

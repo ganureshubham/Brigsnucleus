@@ -32,12 +32,12 @@ export class CriticalConditionAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllCriticalConditionAssets(this.pageNumber);
+    this.getCriticalConditionAssets(this.pageNumber);
   }
 
-  getAllCriticalConditionAssets(pageNo) {
+  getCriticalConditionAssets(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getAllCriticalConditionAssets(pageNo).subscribe(
+    this.reportsService.getCriticalConditionAssets(pageNo).subscribe(
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
         if (resp && resp.Assets) {
@@ -46,7 +46,6 @@ export class CriticalConditionAssetsComponent implements OnInit {
           } else {
             this.isNoRecordFound = false;
           }
-          this.criticalConditionAssets = resp.Assets;
           this.dataSource = resp.Assets;
           this.pageNumber = resp.currentPage;
           this.totalCount = resp.totalCount;
@@ -62,22 +61,49 @@ export class CriticalConditionAssetsComponent implements OnInit {
   }
 
   exportTopComplaints() {
+    this.reportsService.getAllCriticalConditionAssets().subscribe(res => {
+      if (res.status) {
+        this.criticalConditionAssets = res.Assets;
+        if (this.criticalConditionAssets.length > 0) {
+          this.spinnerService.setSpinnerVisibility(true);
+          let formattedData: any[] = [];
+          formattedData = this.criticalConditionAssets.map(obj => ({
+            "Asset Title": obj.assetTitle,
+            "Asset Code": obj.assetCode,
+            "Company Asset No": obj.companyAssetNo,
+            "Category Name": obj.categoryName,
+            "Model Number": obj.modelNumber
+          }));
+          let fileName = 'All Critical condition assets';
+          this.exportAsExcelFile(formattedData, fileName);
+        } else {
+          this.showSnackBar('No data to export..!!');
+        }
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong..!!');
+      }
+    )
 
-    if (this.criticalConditionAssets.length > 0) {
-      this.spinnerService.setSpinnerVisibility(true);
-      let formattedData: any[] = [];
-      formattedData = this.criticalConditionAssets.map(obj => ({
-        "Asset Title": obj.assetTitle,
-        "Asset Code": obj.assetCode,
-        "Company Asset No": obj.companyAssetNo,
-        "Category Name": obj.categoryName,
-        "Model Number": obj.modelNumber
-      }));
-      let fileName = 'Critical condition assets';
-      this.exportAsExcelFile(formattedData, fileName);
-    } else {
-      this.showSnackBar('No data to export..!!');
-    }
+    // if (this.criticalConditionAssets.length > 0) {
+    //   this.spinnerService.setSpinnerVisibility(true);
+    //   let formattedData: any[] = [];
+    //   formattedData = this.criticalConditionAssets.map(obj => ({
+    //     "Asset Title": obj.assetTitle,
+    //     "Asset Code": obj.assetCode,
+    //     "Company Asset No": obj.companyAssetNo,
+    //     "Category Name": obj.categoryName,
+    //     "Model Number": obj.modelNumber
+    //   }));
+    //   let fileName = 'Critical condition assets';
+    //   this.exportAsExcelFile(formattedData, fileName);
+    // } else {
+    //   this.showSnackBar('No data to export..!!');
+    // }
 
   }
 
@@ -104,7 +130,7 @@ export class CriticalConditionAssetsComponent implements OnInit {
 
   pageChange(pageNo: any) {
     this.page = pageNo.pageIndex;
-    this.getAllCriticalConditionAssets(this.page);
+    this.getCriticalConditionAssets(this.page);
   }
 
 }

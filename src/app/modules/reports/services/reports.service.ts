@@ -17,12 +17,20 @@ export class ReportsService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `taskmate/pendingTasksList/${topTasksCount}`);
   }
 
-  getAllCriticalConditionAssets(pageNo) {
+  getCriticalConditionAssets(pageNo) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/criticalConditionAssetsList/${pageNo}`);
   }
 
-  getAllPendingMaintainanceAssets(pageNo) {
+  getAllCriticalConditionAssets() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/criticalConditionAssetsListWithoutPagination`);
+  }
+
+  getPendingMaintainanceAssets(pageNo) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssets/${pageNo}`);
+  }
+
+  getAllPendingMaintainanceAssets() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssetsWithoutPagination`);
   }
 
   getAllAssetList(categoryId: number) {
