@@ -165,11 +165,17 @@
                                 <span fxFlex="60" fxFlex.xs="100" fxLayoutAlign="center center">
                                     {{userGuideFileName}}
                                 </span>
-                                <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns">
-                                    <button mat-button (click)="downloadDocument(assetData.userGuideBook)">
+                                <span fxFlex="20" fxLayoutAlign="center center" fxFlex.xs="100" class="btns"
+                                    fxLayoutGap="10px">
+                                    <button mat-button
+                                        (click)="previewDocument(assetData.assetTitle, assetData.userGuideBook)">
+                                        <mat-icon>remove_red_eye</mat-icon>
+                                        View
+                                    </button>
+                                    <!-- <button mat-button (click)="downloadDocument(assetData.userGuideBook)">
                                         <mat-icon>save</mat-icon>
                                         Download
-                                    </button>
+                                    </button> -->
                                 </span>
                             </div>
                             <div *ngIf="assetData.userGuideBook == null">

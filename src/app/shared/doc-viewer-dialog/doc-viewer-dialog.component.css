@@ -1,0 +1,15 @@
+.close-btn{
+    position: fixed; 
+    top:20px; 
+    right: 20px; 
+    color: white;
+}
+
+.document-viewer-title{
+    padding: 10px;
+    font-size: 22px;
+    color: #000;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

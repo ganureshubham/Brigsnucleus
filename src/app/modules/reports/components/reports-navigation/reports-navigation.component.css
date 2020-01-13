@@ -21,3 +21,20 @@
   background-color: #fbf4ff;
   color: #7e2097;
 }
+
+@media only screen and (max-width: 1440px) {
+  .report-nav-item{
+    padding: 10px;
+    margin: 2px;
+  }
+  
+  .report-nav-item-title{
+      font-size: 15px;
+  }
+  .report-nav-item-subtitle{
+      font-size: 10px;
+  }
+  .ic_report{
+    font-size: 16px;
+  }
+}
