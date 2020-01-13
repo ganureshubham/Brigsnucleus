@@ -32,12 +32,12 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllPendingMaintainanceAssets(this.pageNumber);
+    this.getPendingMaintainanceAssets(this.pageNumber);
   }
 
-  getAllPendingMaintainanceAssets(pageNo) {
+  getPendingMaintainanceAssets(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getAllPendingMaintainanceAssets(pageNo).subscribe(
+    this.reportsService.getPendingMaintainanceAssets(pageNo).subscribe(
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
         if (resp && resp.totalMaintenceRemainingAssets) {
@@ -46,7 +46,6 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
           } else {
             this.isNoRecordFound = false;
           }
-          this.pendingMaintainanceAssets = resp.totalMaintenceRemainingAssets;
           this.dataSource = resp.totalMaintenceRemainingAssets;
           this.pageNumber = resp.currentPage;
           this.totalCount = resp.totalCount;
@@ -61,24 +60,34 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
     );
   }
 
-  exportTopComplaints() {
-
-    if (this.pendingMaintainanceAssets.length > 0) {
-      this.spinnerService.setSpinnerVisibility(true);
-      let formattedData: any[] = [];
-      formattedData = this.pendingMaintainanceAssets.map(obj => ({
-        "Asset Title": obj.assetTitle,
-        "Company Asset No": obj.companyAssetNo,
-        "Asset Code": obj.assetCode,
-        "Category Name": obj.categoryName,
-        "Model Number": obj.modelNumber
-      }));
-      let fileName = 'Pending maintainance assets';
-      this.exportAsExcelFile(formattedData, fileName);
-    } else {
-      this.showSnackBar('No data to export..!!');
-    }
-
+  exportpendingmaintainance() {
+    this.reportsService.getAllPendingMaintainanceAssets().subscribe(res => {
+      if (res.status) {
+        this.pendingMaintainanceAssets = res.totalMaintenceRemainingAssets;
+        if (this.pendingMaintainanceAssets.length > 0) {
+          this.spinnerService.setSpinnerVisibility(true);
+          let formattedData: any[] = [];
+          formattedData = this.pendingMaintainanceAssets.map(obj => ({
+            "Asset Title": obj.assetTitle,
+            "Company Asset No": obj.companyAssetNo,
+            "Asset Code": obj.assetCode,
+            "Category Name": obj.categoryName,
+            "Model Number": obj.modelNumber
+          }));
+          let fileName = 'All Pending maintainance assets';
+          this.exportAsExcelFile(formattedData, fileName);
+        } else {
+          this.showSnackBar('No data to export..!!');
+        }
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      err => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar('Something went wrong..!!');
+      }
+    )
   }
 
   exportAsExcelFile(json: any[], excelFileName: string): void {
@@ -104,7 +113,7 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
 
   pageChange(pageNo: any) {
     this.page = pageNo.pageIndex;
-    this.getAllPendingMaintainanceAssets(this.page);
+    this.getPendingMaintainanceAssets(this.page);
   }
 
 }
