@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import { AppImgDialogComponent } from '../../../../../../shared/app-img-dialog/app-img-dialog.component';
 import { Location } from '@angular/common';
+import { DocViewerDialogComponent } from 'src/app/shared/doc-viewer-dialog/doc-viewer-dialog.component';
 
 @Component({
 	selector: 'app-details-asset',
@@ -189,6 +190,16 @@ export class DetailsAssetComponent implements OnInit {
 				this.spinnerService.setSpinnerVisibility(false);
 				this.showSnackBar("Something went wrong..!!");
 			})
+	}
+
+	previewDocument(title, docUrl: string) {
+		this.dialog.open(DocViewerDialogComponent, {
+			data: { docType: 'UserGuide', docTitle: title, docUrl: docUrl, },
+			width: '70vw',
+			height: '90vh',
+			panelClass: 'app-docviewer-dialog',
+			backdropClass: 'app-img-dialog-backdrop'
+		});
 	}
 
 	printQRcode() {

@@ -40,6 +40,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TransferAssetComponent } from './assetmate-view/Asset/view-asset/transfer-asset/transfer-asset.component';
 import { AssetLocationComponent } from './assetmate-view/Asset/view-asset/asset-location/asset-location.component';
 import { AssetTransferLogComponent } from './assetmate-view/Asset/view-asset/asset-transfer-log/asset-transfer-log.component';
+import { DocViewerDialogComponent } from 'src/app/shared/doc-viewer-dialog/doc-viewer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { AssetTransferLogComponent } from './assetmate-view/Asset/view-asset/ass
     AddCategoryDocumentComponent,
     ChecklistAddComponent,
     AppImgDialogComponent,
-    TransferAssetComponent
+    TransferAssetComponent,
+    DocViewerDialogComponent
   ]
 
 })
