@@ -33,6 +33,11 @@ export class ReportsNavigationComponent implements OnInit {
       title: 'Critical Cond. Assets',
       route: '/reports/critical-assets',
       icon: 'assignment'
+    },
+    {
+      title: 'Assets',
+      route: '/reports/assets',
+      icon: 'assignment'
     }
   ];
 

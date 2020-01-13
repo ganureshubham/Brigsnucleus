@@ -25,4 +25,14 @@ export class ReportsService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `dashboard/getMaintenanceNotDoneAssets/${pageNo}`);
   }
 
+  getAllAssetList(categoryId: number) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/CategoryAssetList/${categoryId}`);
+  }
+
+  getAssetList(categoryId: number, pageNo: any) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/CategoryAssetListWithPagination/${categoryId}/${pageNo}`);
+  }
+
+
+
 }

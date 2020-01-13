@@ -4,6 +4,7 @@ import { PendingComplaintsComponent } from './components/reports-details/pending
 import { PendingTasksComponent } from './components/reports-details/pending-tasks/pending-tasks.component';
 import { CriticalConditionAssetsComponent } from './components/reports-details/critical-condition-assets/critical-condition-assets.component';
 import { PendingMaintainanceAssetsComponent } from './components/reports-details/pending-maintainance-assets/pending-maintainance-assets.component';
+import { AssetsComponent } from './components/reports-details/assets/assets.component';
 
 export const ReportsRoutingModule: Routes = [
   {
@@ -30,6 +31,10 @@ export const ReportsRoutingModule: Routes = [
       {
         path: "critical-assets",
         component: CriticalConditionAssetsComponent
+      },
+      {
+        path: "assets",
+        component: AssetsComponent
       }
     ]
   }

@@ -8,7 +8,7 @@
       <ng-template #recordFound>
         <mat-table [dataSource]="paidDataSource">
           <ng-container matColumnDef="checkListTitle">
-            <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>CheckList Title</mat-header-cell>
+            <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Audit Title</mat-header-cell>
             <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.checkListTitle }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="doneBy">

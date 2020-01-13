@@ -11,6 +11,7 @@ import { PendingComplaintsComponent } from './components/reports-details/pending
 import { PendingTasksComponent } from './components/reports-details/pending-tasks/pending-tasks.component';
 import { CriticalConditionAssetsComponent } from './components/reports-details/critical-condition-assets/critical-condition-assets.component';
 import { PendingMaintainanceAssetsComponent } from './components/reports-details/pending-maintainance-assets/pending-maintainance-assets.component';
+import { AssetsComponent } from './components/reports-details/assets/assets.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PendingMaintainanceAssetsComponent } from './components/reports-details
     PendingComplaintsComponent,
     PendingTasksComponent,
     CriticalConditionAssetsComponent,
-    PendingMaintainanceAssetsComponent
+    PendingMaintainanceAssetsComponent,
+    AssetsComponent
   ],
   imports: [
     CommonModule,

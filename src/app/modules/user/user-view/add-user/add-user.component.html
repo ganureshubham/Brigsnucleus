@@ -29,7 +29,7 @@
           </mat-form-field>
           <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
             <mat-select name="departmentIdFK" id="departmentIdFK" [(ngModel)]="userData.departmentIdFK"
-              #DeptName="ngModel" placeholder="Select Department Name" required>
+              #DeptName="ngModel" placeholder="Select Department" required>
               <mat-option *ngFor="let dept of deptList" [value]="dept.departmentId">{{dept.departmentTitle}}
               </mat-option>
             </mat-select>
@@ -71,7 +71,7 @@
           </mat-form-field>
           <mat-form-field fxFlex.gt-xs="32" fxFlex.xs="100">
             <mat-select name="userRoleIdFK" id="userRoleIdFK" [(ngModel)]="userData.userRoleIdFK"
-              #UserRoleName="ngModel" placeholder="Select User Role Name" required>
+              #UserRoleName="ngModel" placeholder="Select User Role" required>
               <mat-option *ngFor="let role of userRoleList" [value]="role.userRoleId">{{role.title}}
               </mat-option>
             </mat-select>

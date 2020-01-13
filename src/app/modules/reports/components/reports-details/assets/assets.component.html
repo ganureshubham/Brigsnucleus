@@ -1,0 +1,95 @@
+<div fxLayout="column">
+
+  <div class="guideline">
+    <div class="guideline-title">
+      Guideline
+    </div>
+    <div class="guideline-text">
+      <ul>
+        <li>Choose category from drowp down</li>
+        <li>Click on "Export As CSV" button to export and download the data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="space-between center" class="reports-specs-row">
+    <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+      <mat-select placeholder="Select Category" (selectionChange)="onCategoryChange($event.value)">
+        <mat-option *ngFor="let categ of categoryList" [value]="categ.categoryId">{{categ.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div fxFlex.xs="100">
+      <button fxFlex.xs="100" mat-raised-button color="primary" (click)="exportTopComplaints()">Export As CSV</button>
+    </div>
+  </div>
+
+  <div>
+    <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+      <p>No Record Found</p>
+    </div>
+    <ng-template #recordFound>
+      <mat-table [dataSource]="tableDataSource">
+        <ng-container matColumnDef="assetTitle">
+          <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Asset Title
+          </mat-header-cell>
+          <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.assetTitle }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="categoryName">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Category Name
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
+            {{ visit.categoryName }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assetCode">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Code
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
+            <span class="complainStatus">{{ visit.assetCode }}</span>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="modelNumber">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Model Number
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.modelNumber }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="companyAssetNo">
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Company Asset #
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.companyAssetNo }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="organizationName">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Organization Name
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.organizationName }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="locationType">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Location Type
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.locationType }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="installedLocation">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Installed Location
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.installedLocation }}
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="example-element-row" *matRowDef="let visit; columns: displayedColumns;"
+          (click)="viewTaskmate(visit.complaintId)"></mat-row>
+      </mat-table>
+    </ng-template>
+    <div>
+      <mat-paginator #myPaginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber'
+        (page)="pageChange($event)">
+      </mat-paginator>
+    </div>
+  </div>
+
+</div>
