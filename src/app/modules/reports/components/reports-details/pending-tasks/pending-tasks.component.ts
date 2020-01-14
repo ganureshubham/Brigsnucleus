@@ -21,7 +21,7 @@ export class PendingTasksComponent implements OnInit {
   totalTasks: any;
   total: any;
   tableDataSource: MatTableDataSource<any> = new MatTableDataSource();
-  displayedColumns: string[] = ['title', 'typeOfComplaint', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdDate'];
+  displayedColumns: string[] = ['title', 'typeOfComplaint', 'complaintStatus', 'typeOfUser', 'message', 'raisedByName', 'createdDate'];
 
   constructor(
     private snackBar: MatSnackBar,

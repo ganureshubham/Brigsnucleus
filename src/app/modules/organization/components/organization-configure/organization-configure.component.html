@@ -1,0 +1,37 @@
+<div fxLayout="column" fxFlex="100">
+  <div>
+    <span class="page-title">{{formtitle}}</span>
+  </div>
+  <form class="form-container">
+    <div fxLayout="column" mat-dialog-content>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Enter User Limit">
+        <mat-error></mat-error>
+      </mat-form-field>
+      <div>
+        <div class="authorities">
+          <div class="authorities-title">
+            Authorities
+          </div>
+          <div class="authorities-text" fxLayout="column" fxLayoutGap="25px">
+            <div *ngIf="!isEdited">
+              <mat-checkbox color="primary" [checked]="selectAll" (change)="chkAllChange($event)" type="checkbox"
+                class="select_all">Select all
+              </mat-checkbox>
+            </div>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div *ngFor="let unit of featureList; let i=index">
+                <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
+                  {{unit.purpose + ' (' + unit.featureCode + ')'}}
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+
+    </div>
+  </form>
+</div>

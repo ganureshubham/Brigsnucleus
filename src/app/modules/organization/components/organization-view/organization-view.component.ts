@@ -9,6 +9,7 @@ import { DialogService } from '../../../../public service/dialog.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { OrganizationConfigureComponent } from '../organization-configure/organization-configure.component';
 
 @Component({
   selector: 'app-organization-view',
@@ -161,6 +162,15 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
         this.getListOfOrganizations(this.pageNumber);
       }
     });
+  }
+
+  configure() {
+    const dialogRef = this.dialog.open(OrganizationConfigureComponent, {
+      width: '450px'
+    })
+    dialogRef.afterClosed().subscribe(result => {
+
+    })
   }
 
   deleteOrganization(organization) {
