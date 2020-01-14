@@ -1,0 +1,30 @@
+.form-container {
+  padding-top: 30px;
+}
+.title {
+  font-size: 18px;
+  padding: 0px;
+  margin: 0px;
+  font-weight: 400;
+  color: #000;
+}
+
+.authorities {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #000000;
+  font-weight: 300;
+  margin: 10px 0px;
+}
+
+.authorities-title {
+  margin-top: -12px;
+  margin-left: 10px;
+  padding-left: 10px;
+  background-color: #fff;
+  width: 85px;
+}
+
+.authorities-text {
+  padding: 20px;
+}

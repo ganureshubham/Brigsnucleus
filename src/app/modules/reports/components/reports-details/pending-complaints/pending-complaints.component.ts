@@ -20,7 +20,7 @@ export class PendingComplaintsComponent implements OnInit {
   totalComplaints: any;
   complaintData: any;
   complaintTableDataSource: MatTableDataSource<any> = new MatTableDataSource();
-  complaintsColumns: string[] = ['title', 'typeOfComplaint', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'raisedByName', 'createdOn'];
+  complaintsColumns: string[] = ['title', 'typeOfComplaint', 'assetTitle', 'assetCode', 'complaintStatus', 'typeOfUser', 'message', 'raisedByName', 'createdOn'];
 
   constructor(
     private snackBar: MatSnackBar,

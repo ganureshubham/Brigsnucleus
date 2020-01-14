@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     this.getStatus();
     this.setCategoryWisePendingMaintainanceGraphData();
     this.getMonthlyAssetAdded(this.assetselectedyear);
-    this.monthlyComplaintsAssigned(this.complaintselectedyear);
+    this.monthlyComplaintsPending(this.complaintselectedyear);
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
@@ -222,9 +222,9 @@ export class DashboardComponent implements OnInit {
 
 
   /********************************************* Monthly Complaints Assigned Data Graph Api ****************************************/
-  monthlyComplaintsAssigned(year: any) {
+  monthlyComplaintsPending(year: any) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.notificationService.monthlyComplaintsAssigned(year).subscribe(res => {
+    this.notificationService.monthlyComplaintsPending(year).subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status == true) {
         this.monthlyComplaintsgraphObj = res;
@@ -233,8 +233,8 @@ export class DashboardComponent implements OnInit {
         this.monthlyComplaintsgraphObj.xAxisData = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         this.monthlyComplaintsgraphObj.yAxisData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.monthlyComplaintsgraphObj.xAxisLable = "Months";
-        this.monthlyComplaintsgraphObj.yAxisLable = "Number of Complaints Assigned";
-        this.MonthlyComplaintsTitle = "Month wise Complaints Assigned";
+        this.monthlyComplaintsgraphObj.yAxisLable = "Number of Complaints Pending";
+        this.MonthlyComplaintsTitle = "Month wise Pending Complaints";
       }
       setTimeout(() => {
         this.setComplaintsRaisedGraphData();
@@ -252,7 +252,7 @@ export class DashboardComponent implements OnInit {
 
   selectedYearComplaint(value) {
     this.complaintselectedyear = this.years[value].data;
-    this.monthlyComplaintsAssigned(this.complaintselectedyear);
+    this.monthlyComplaintsPending(this.complaintselectedyear);
   }
 
 
@@ -265,7 +265,7 @@ export class DashboardComponent implements OnInit {
       data: {
         labels: this.monthlyComplaintsgraphObj.xAxisData,
         datasets: [{
-          label: 'Complaints Pending',
+          label: 'Pending Complaints',
           data: this.monthlyComplaintsgraphObj.yAxisData,
           backgroundColor: [
             'rgba(114, 41, 174, 0.27)',

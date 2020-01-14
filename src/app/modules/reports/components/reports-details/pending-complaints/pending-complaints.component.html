@@ -73,6 +73,13 @@
           <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
           </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="message">
+          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Message
+          </mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+            {{ visit.message.length>18? visit.message.substring(0,18)+'...' : visit.message }}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="raisedByName">
           <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
           <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
