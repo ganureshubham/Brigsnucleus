@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../service/assetmate.service';
 import { SpinnerService } from '../../../../../../../public service/spinner.service';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-view-history',
@@ -122,6 +123,72 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     this.dataService.saveData(doneChecklistId);
     this.showFirst = !this.showFirst;
     //this.router.navigate(['/assetmate/view-question']); 
+
+  }
+
+  saveAuditAsPDF(audit) {
+    //Get All question and answers of audit
+    //Save Audit question answers as pdf
+    this.assetmateService.getQuestAnsList(audit.doneChecklistId, 0).subscribe((resp: any) => {
+      console.log(resp.questionAnswer);
+      //Check for status
+
+      var doc = new jsPDF("p", "mm", "a4");
+      var width = doc.internal.pageSize.getWidth();
+      var height = doc.internal.pageSize.getHeight();
+
+      doc.rect(5, 5, width - 10, height - 10, 'S');
+
+      let currentYAxisPosition = 20;
+      let currentXAxisPosition = 15;
+      let yAxisAlias6 = 6;
+      let yAxisAlias10 = 10;
+      let yAxisAlias12 = 12;
+      let yAxisAlias15 = 15;
+      let srNo = 1;
+      let lines;
+      let srNoXAxisAlias = 14;
+
+      doc.setFontType("bold");
+      doc.setFontSize(14);
+
+      let title = 'AUDIT';
+      let txtWidth = doc.getStringUnitWidth(title) * 14 / doc.internal.scaleFactor;
+      let xOffset = (width - txtWidth) / 2;
+      doc.text(title, xOffset, currentYAxisPosition);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.setFontSize(12);
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Asset Name : ');
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Audit Title : ');
+      currentYAxisPosition += yAxisAlias15;
+
+      doc.setFontType("normal");
+      doc.setFontSize(12);
+
+      for (let questionAnswer of resp.questionAnswer) {
+        doc.text(currentXAxisPosition, currentYAxisPosition, srNo + '. ');
+        lines = doc.splitTextToSize(questionAnswer.question, width - 40)
+        doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
+        currentYAxisPosition += (lines.length + 2) * lines.length;
+
+        if (questionAnswer.answer.substring(0, 3) !== 'IMG') {
+          doc.text(currentXAxisPosition, currentYAxisPosition, 'Ans : ');
+          lines = doc.splitTextToSize(questionAnswer.answer, width - 40)
+          doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
+          currentYAxisPosition += yAxisAlias12;
+        } else {
+          // doc.addImage(imgData, '*', 15, 40, 180, 160);
+        }
+        srNo++;
+      }
+
+      doc.save('Asset-Audit.pdf');
+      console.log(width, height);
+
+    });
 
   }
 
