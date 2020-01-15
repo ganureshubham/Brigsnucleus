@@ -28,6 +28,11 @@
                     <mat-icon matListIcon>visibility</mat-icon>
                     <span i18n>View Questions List</span>
                   </a>
+                  <a mat-menu-item (click)="saveAuditAsPDF(visit)">
+                    <mat-icon matListIcon>
+                      picture_as_pdf</mat-icon>
+                    <span i18n>Download</span>
+                  </a>
                 </mat-menu>
                 <button mat-icon-button [matMenuTriggerFor]="dailyPerformanceMenu">
                   <mat-icon matTooltip="Actions">format_list_bulleted</mat-icon>
@@ -49,3 +54,8 @@
 </div>
 
 <app-view-question *ngIf="showFirst"></app-view-question>
+
+<!-- Image for print photo in pdf for type-photo question in audit -->
+<div style="width: 0px !important; height: 0px !important; overflow: hidden;">
+  <img id="imageid" width="100px" height="100px" src="assets/img/ic_doc.png" crossorigin="Anonymous" />
+</div>

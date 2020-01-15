@@ -13,3 +13,10 @@
     top: 10px;
     left: 10px;
 }
+
+iframe {
+    background-image: url('../../../assets/img/loader.gif');   
+    background-size: 160px 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+   }
