@@ -41,6 +41,8 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
       resp => {
         this.spinnerService.setSpinnerVisibility(false);
         if (resp && resp.totalMaintenceRemainingAssets) {
+          console.log(resp);
+
           if (resp.totalMaintenceRemainingAssets.length == 0) {
             this.isNoRecordFound = true;
           } else {
@@ -108,6 +110,8 @@ export class PendingMaintainanceAssetsComponent implements OnInit {
   }
 
   viewAsset = (asset) => {
+    console.log('view', asset);
+
     this.router.navigate(['/assetmate/assetmate-details/' + asset.categoryId + '/asset-details/' + asset.assetId]);
   }
 

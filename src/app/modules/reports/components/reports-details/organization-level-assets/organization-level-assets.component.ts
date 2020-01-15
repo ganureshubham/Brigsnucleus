@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ReportsService } from '../../../services/reports.service';
 import { SpinnerService } from '../../../../../public service/spinner.service';
+import { Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-critical-condition-assets',
-  templateUrl: './critical-condition-assets.component.html',
-  styleUrls: ['./critical-condition-assets.component.css']
+  selector: 'app-organization-level-assets',
+  templateUrl: './organization-level-assets.component.html',
+  styleUrls: ['./organization-level-assets.component.css']
 })
-export class CriticalConditionAssetsComponent implements OnInit {
+export class OrganizationLevelAssetsComponent implements OnInit {
 
-  displayedColumns: string[] = ['assetTitle', 'companyAssetNo', 'assetCode', 'categoryName', 'modelNumber'];
+  displayedColumns: string[] = ['assetTitle', 'categoryName', 'assetCode', 'modelNumber', 'companyAssetNo', 'organizationName', 'locationType', 'installedLocation'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  criticalConditionAssets: any = [];
   isNoRecordFound: boolean = true;
+  allassets: any;
 
   page = 0;
   pageNumber = 0;
@@ -32,26 +32,25 @@ export class CriticalConditionAssetsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCriticalConditionAssets(this.pageNumber);
+    this.getOrgLevelAssetsPagination(this.pageNumber);
   }
 
-  getCriticalConditionAssets(pageNo) {
+  getOrgLevelAssetsPagination(pageNo) {
     this.spinnerService.setSpinnerVisibility(true);
-    this.reportsService.getCriticalConditionAssets(pageNo).subscribe(
+    this.reportsService.getOrgLevelAssetsPagination(pageNo).subscribe(
       resp => {
-        this.spinnerService.setSpinnerVisibility(false);
-        if (resp && resp.Assets) {
-          console.log(resp);
-
-          if (resp.Assets.length == 0) {
+        if (resp.status) {
+          if (resp.asset.length == 0) {
             this.isNoRecordFound = true;
           } else {
             this.isNoRecordFound = false;
           }
-          this.dataSource = resp.Assets;
+          this.spinnerService.setSpinnerVisibility(false);
+          this.dataSource = resp.asset;
           this.pageNumber = resp.currentPage;
           this.totalCount = resp.totalCount;
         } else {
+          this.spinnerService.setSpinnerVisibility(false);
           this.showSnackBar(resp.message);
         }
       },
@@ -62,26 +61,30 @@ export class CriticalConditionAssetsComponent implements OnInit {
     );
   }
 
-  exportTopComplaints() {
-    this.reportsService.getAllCriticalConditionAssets().subscribe(res => {
+  exportorglevelassets() {
+    this.reportsService.getOrgLevelAssets().subscribe(res => {
       if (res.status) {
-        this.criticalConditionAssets = res.Assets;
-        if (this.criticalConditionAssets.length > 0) {
+        this.allassets = res.asset;
+        if (this.allassets.length > 0) {
           this.spinnerService.setSpinnerVisibility(true);
           let formattedData: any[] = [];
-          formattedData = this.criticalConditionAssets.map(obj => ({
-            "Asset Title": obj.assetTitle,
-            "Asset Code": obj.assetCode,
-            "Company Asset No": obj.companyAssetNo,
-            "Category Name": obj.categoryName,
-            "Model Number": obj.modelNumber
+          formattedData = this.allassets.map(obj => ({
+            'Asset Title': obj.assetTitle,
+            'Category Name': obj.categoryName,
+            'Asset Code': obj.assetCode,
+            'Model Number': obj.modelNumber,
+            'Company AssetNo': obj.companyAssetNo,
+            'Organization Name': obj.organizationName,
+            'Location Type': obj.locationType,
+            'Installed Location': obj.installedLocation,
           }));
-          let fileName = 'All Critical condition assets';
+          let fileName = 'All Assets';
           this.exportAsExcelFile(formattedData, fileName);
         } else {
           this.showSnackBar('No data to export..!!');
         }
       } else {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar(res.message);
       }
     },
@@ -90,28 +93,11 @@ export class CriticalConditionAssetsComponent implements OnInit {
         this.showSnackBar('Something went wrong..!!');
       }
     )
-
-    // if (this.criticalConditionAssets.length > 0) {
-    //   this.spinnerService.setSpinnerVisibility(true);
-    //   let formattedData: any[] = [];
-    //   formattedData = this.criticalConditionAssets.map(obj => ({
-    //     "Asset Title": obj.assetTitle,
-    //     "Asset Code": obj.assetCode,
-    //     "Company Asset No": obj.companyAssetNo,
-    //     "Category Name": obj.categoryName,
-    //     "Model Number": obj.modelNumber
-    //   }));
-    //   let fileName = 'Critical condition assets';
-    //   this.exportAsExcelFile(formattedData, fileName);
-    // } else {
-    //   this.showSnackBar('No data to export..!!');
-    // }
-
   }
 
   exportAsExcelFile(json: any[], excelFileName: string): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Critical Cond Assets': worksheet }, SheetNames: ['Critical Cond Assets'] };
+    const workbook: XLSX.WorkBook = { Sheets: { 'All Assets': worksheet }, SheetNames: ['All Assets'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
@@ -132,7 +118,7 @@ export class CriticalConditionAssetsComponent implements OnInit {
 
   pageChange(pageNo: any) {
     this.page = pageNo.pageIndex;
-    this.getCriticalConditionAssets(this.page);
+    this.getOrgLevelAssetsPagination(this.page);
   }
 
 }

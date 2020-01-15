@@ -21,8 +21,6 @@ export class AddComplaintsComponent implements OnInit {
   complaintImage: string;
   complaintID: any;
 
-
-
   constructor(
     private complaintsService: ComplaintsService,
     private spinnerService: SpinnerService,
@@ -35,9 +33,7 @@ export class AddComplaintsComponent implements OnInit {
   ngOnInit() {
     this.selectAssetTitle();
     this.getuserLists();
-
   }
-
 
   /*********************************************************** Select Asset Title *****************************************************************/
 
@@ -56,8 +52,6 @@ export class AddComplaintsComponent implements OnInit {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
-
   /*********************************************************** Select User List *******************************************************************/
 
   getuserLists() {
@@ -73,6 +67,7 @@ export class AddComplaintsComponent implements OnInit {
   }
 
   /*********************************************************** Add Complaint Photo *****************************************************************/
+
   imageChange(files: FileList) {
     var validImageFormats = ['jpg', 'gif', 'GIF', 'PNG', 'JPEG', 'png', 'jpeg', 'JPG'];
     var extension = files.item(0).name.split('.').pop();
@@ -88,17 +83,14 @@ export class AddComplaintsComponent implements OnInit {
     }
   }
 
-
-
   /*********************************************************** Add Complaint *****************************************************************/
 
-
   addComplaint(value: any) {
-    var users = [];
-    value.users.forEach(element => {
-      users.push({ userIdFK: element })
+    var assignedUsers = [];
+    value.assignedUsers.forEach(element => {
+      assignedUsers.push({ userIdFK: element })
     });
-    value.users = users;
+    value.assignedUsers = assignedUsers;
     this.spinnerService.setSpinnerVisibility(true);
     this.complaintsService.addComplaint(value).subscribe(res => {
       if (res.status == true) {
@@ -119,7 +111,6 @@ export class AddComplaintsComponent implements OnInit {
       })
   }
 
-
   uploadImageToserver = () => {
     if (this.fileToUpload == null) {
       //callback(this.complaintImage)
@@ -131,7 +122,5 @@ export class AddComplaintsComponent implements OnInit {
       })
     }
   }
-
-
 
 }

@@ -18,8 +18,8 @@
   <ng-template #recordFound>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="complaintTitle">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Complaint Title</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
+        <mat-header-cell fxHide.xs fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.complaintTitle }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="fromUser">
         <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>From User</mat-header-cell>
@@ -30,8 +30,8 @@
         <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.toUser }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="transferStatus">
-        <mat-header-cell fxLayoutAlign.xs="end center" *matHeaderCellDef>Transfer Status</mat-header-cell>
-        <mat-cell fxLayoutAlign.xs="end center" class="transferstatus" *matCellDef="let visit">
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Transfer Status</mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" class="transferstatus" *matCellDef="let visit">
           {{ visit.transferStatus }}
         </mat-cell>
       </ng-container>

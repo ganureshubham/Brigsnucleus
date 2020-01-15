@@ -166,7 +166,8 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
 
   configure() {
     const dialogRef = this.dialog.open(OrganizationConfigureComponent, {
-      width: '450px'
+      width: '450px',
+      disableClose: true
     })
     dialogRef.afterClosed().subscribe(result => {
 

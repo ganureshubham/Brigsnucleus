@@ -20,9 +20,13 @@
         <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Question</mat-header-cell>
         <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.question }}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="isDanger">
+        <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Is Critical</mat-header-cell>
+        <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="answer">
-        <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Answers</mat-header-cell>
-        <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+        <mat-header-cell fxHide.xs fxLayoutAlign="end center" *matHeaderCellDef>Answers</mat-header-cell>
+        <mat-cell fxHide.xs fxLayoutAlign="end center" *matCellDef="let visit">
           <div *ngIf="visit.answer.includes('IMG') ; else answer"
             (click)="$event.stopPropagation(); priviewImage( visit.question, imgurl)" [ngStyle]="{ 
             'background-image': 'url(' + imgurl + ')', 
@@ -37,10 +41,6 @@
             {{visit.answer}}
           </ng-template>
         </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="isDanger">
-        <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef>Is Critical</mat-header-cell>
-        <mat-cell fxLayoutAlign="end center" *matCellDef="let visit">{{ visit.isDanger }}</mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

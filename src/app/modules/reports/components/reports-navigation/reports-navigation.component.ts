@@ -27,16 +27,21 @@ export class ReportsNavigationComponent implements OnInit {
     {
       title: 'Pending Maintainance Assets',
       route: '/reports/pending-maintainance-assets',
-      icon: 'assignment'
+      icon: 'description'
     },
     {
       title: 'Critical Cond. Assets',
       route: '/reports/critical-assets',
+      icon: 'assignment_late'
+    },
+    {
+      title: 'Category Wise Assets',
+      route: '/reports/category-wise-assets',
       icon: 'assignment'
     },
     {
-      title: 'Assets',
-      route: '/reports/assets',
+      title: 'All Assets',
+      route: '/reports/all-assets',
       icon: 'assignment'
     }
   ];

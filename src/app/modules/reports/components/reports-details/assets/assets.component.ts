@@ -140,6 +140,7 @@ export class AssetsComponent implements OnInit {
   }
 
   viewAsset(assetId: number) {
+
     this.router.navigate(['assetmate/assetmate-details/' + this.categoryid + '/asset-details/' + assetId]);
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigurationService } from 'src/app/public service/configuration.service';
+import { config } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,14 @@ export class ReportsService {
 
   getAssetList(categoryId: number, pageNo: any) {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/CategoryAssetListWithPagination/${categoryId}/${pageNo}`);
+  }
+
+  getOrgLevelAssetsPagination(pageNo: any) {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/OrganizationWiseAssetList/${pageNo}`);
+  }
+
+  getOrgLevelAssets() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/OrganizationWiseAssetListWithoutPagination`);
   }
 
 
