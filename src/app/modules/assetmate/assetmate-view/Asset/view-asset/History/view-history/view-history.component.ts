@@ -132,7 +132,9 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
     //Get All question and answers of audit
     //Save Audit question answers as pdf
-    this.assetmateService.getQuestAnsList(audit.doneChecklistId, 0).subscribe((resp: any) => {
+    this.assetmateService.getQuestAnsListForPDF(audit.doneChecklistId).subscribe((resp: any) => {
+
+      console.log('Resp[onse', resp);
 
       var doc = new jsPDF("p", "mm", "a4");
       var width = doc.internal.pageSize.getWidth();
@@ -161,10 +163,10 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
       currentYAxisPosition += yAxisAlias10;
 
       doc.setFontSize(12);
-      doc.text(currentXAxisPosition, currentYAxisPosition, 'Asset Name : ');
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Asset Name : ' + resp.questionAnswer[0].assetTitle);
       currentYAxisPosition += yAxisAlias10;
 
-      doc.text(currentXAxisPosition, currentYAxisPosition, 'Audit Title : ');
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Audit Title : ' + resp.questionAnswer[0].auditTitle);
       currentYAxisPosition += yAxisAlias15;
 
       doc.setFontType("normal");
@@ -190,7 +192,7 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
         doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
         currentYAxisPosition += (doc.getTextDimensions(lines).h + 1.5);
 
-        if (questionAnswer.answer.substring(0, 3) !== 'IMG') {
+        if (questionAnswer.checklistImage == null) {
 
           //Add New Page
           if (currentYAxisPosition >= (height - 30)) {
@@ -206,8 +208,8 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
         } else {
 
-          /* let img: any = document.getElementById("imageid");
-          img.src = "http://13.127.22.216:8085/image-1574608182549.png"; */
+          let img: any = document.getElementById("imageid");
+          img.src = questionAnswer.checklistImage;
 
           //Add New Page - For image height mapped to less height (height - 50)
           if (currentYAxisPosition >= (height - 50)) {
@@ -226,7 +228,7 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
       }
 
       this.spinnerService.setSpinnerVisibility(false);
-      doc.save('Asset-Audit.pdf');
+      doc.save('Audit - ' + resp.questionAnswer[0].auditTitle.substring(0, 20) + '__.pdf');
 
     });
 
