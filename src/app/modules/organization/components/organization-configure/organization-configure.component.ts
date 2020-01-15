@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./organization-configure.component.css']
 })
 export class OrganizationConfigureComponent implements OnInit {
-  formtitle: string = 'Configure Organization'
+  formtitle: string = 'Configure Organization';
+  cancelbtn = 0;
 
   constructor() { }
 

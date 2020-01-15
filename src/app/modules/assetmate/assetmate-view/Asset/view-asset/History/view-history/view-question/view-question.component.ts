@@ -23,7 +23,7 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   roleData: any = {};
   showFirst: boolean = false;
 
-  displayedColumns: string[] = ['question', 'answer', 'isDanger'];
+  displayedColumns: string[] = ['question', 'isDanger', 'answer',];
   // 'questionIdFK', 'questionType'
   paidDataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
@@ -37,16 +37,14 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
   imgurl: any;
   answers: any;
 
-  constructor(private http: HttpClient,
+  constructor(
     private router: Router,
     private assetmateService: AssetmateService,
     public dataService: DataSharingService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
     private dialog: MatDialog
-  ) {
-
-  }
+  ) { }
 
   ngAfterViewInit(): void {
     // Add paginators to datastore here, because we need the view to
@@ -95,7 +93,9 @@ export class ViewQuestionComponent implements AfterViewInit, OnDestroy {
           }
         }
         this.assetmateService.getChecklistImage(this.answers).subscribe(res => {
-          this.imgurl = res.data.checklistImage;
+          if (res.status) {
+            this.imgurl = res.data.checklistImage;
+          }
         })
         this.paidDataSource = res.questionAnswer;
         this.pageNumber = res.currentPage;

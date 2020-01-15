@@ -5,6 +5,7 @@ import { PendingTasksComponent } from './components/reports-details/pending-task
 import { CriticalConditionAssetsComponent } from './components/reports-details/critical-condition-assets/critical-condition-assets.component';
 import { PendingMaintainanceAssetsComponent } from './components/reports-details/pending-maintainance-assets/pending-maintainance-assets.component';
 import { AssetsComponent } from './components/reports-details/assets/assets.component';
+import { OrganizationLevelAssetsComponent } from './components/reports-details/organization-level-assets/organization-level-assets.component';
 
 export const ReportsRoutingModule: Routes = [
   {
@@ -33,8 +34,12 @@ export const ReportsRoutingModule: Routes = [
         component: CriticalConditionAssetsComponent
       },
       {
-        path: "assets",
+        path: "category-wise-assets",
         component: AssetsComponent
+      },
+      {
+        path: "all-assets",
+        component: OrganizationLevelAssetsComponent
       }
     ]
   }

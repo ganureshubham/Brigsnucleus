@@ -2,16 +2,16 @@
   <div>
     <span class="page-title">{{formtitle}}</span>
   </div>
-  <form class="form-container">
+  <form #configform="ngForm" class="form-container">
     <div fxLayout="column" mat-dialog-content>
       <mat-form-field>
-        <input matInput type="number" placeholder="Enter User Limit">
-        <mat-error></mat-error>
+        <input matInput type="number" placeholder="Enter User Limit" required>
+        <mat-hint>User limit should be in digits only</mat-hint>
       </mat-form-field>
       <div>
         <div class="authorities">
           <div class="authorities-title">
-            Authorities
+            Features
           </div>
           <div class="authorities-text" fxLayout="column" fxLayoutGap="25px">
             <div *ngIf="!isEdited">
@@ -29,9 +29,29 @@
           </div>
         </div>
       </div>
+      <div>
+        <div class="guideline">
+          <div class="guideline-title">
+            Guideline
+          </div>
+          <div class="guideline-text">
+            <ul>
+              <li>User limit entered will be applied to particular organization,then organization will set limit to user
+                module </li>
+              <li>Authorities choosed will be allocated to particular organization</li>
+              <li>When this modules will be assigned to particular organization, then organization will have access to
+                these modules</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <div>
-
+      <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100" fxLayoutAlign.gt-xs="end center">
+        <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+        <button [color]="'success'" mat-raised-button i18n [disabled]="!configform.valid" color="primary"
+          type="submit">Add</button>
+      </div>
     </div>
   </form>
 </div>

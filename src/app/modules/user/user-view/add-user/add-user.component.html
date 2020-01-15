@@ -60,9 +60,13 @@
               Please type your e-mail address in the format <b> name@example.com </b>!
             </mat-error>
           </mat-form-field>
-          <mat-form-field *ngIf="this.data.type !='Edit'" fxFlex.gt-xs="33" fxFlex.xs="100">
-            <input name="password" (keydown.space)="$event.preventDefault();" id="password" minlength="6"
-              [(ngModel)]="userData.password" #pass="ngModel" matInput type="password" placeholder="{{placeholder}}">
+          <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
+            <input name="password" (keydown.space)="$event.preventDefault();" [type]="hide ? 'password' : 'text'"
+              id="password" minlength="6" [(ngModel)]="userData.password" #pass="ngModel" matInput type="password"
+              placeholder="{{placeholder}}">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error *ngIf="userform.submitted && pass.invalid">
               <mat-error *ngIf="pass.errors.required">Password is required</mat-error>
             </mat-error>

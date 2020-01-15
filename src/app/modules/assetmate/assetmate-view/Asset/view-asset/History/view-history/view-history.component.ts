@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSharingService } from 'src/app/public service/data-sharing.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../service/assetmate.service';
 import { SpinnerService } from '../../../../../../../public service/spinner.service';
 
@@ -37,12 +34,10 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   Router: any;
   AssetId: any;
 
-  constructor(private http: HttpClient,
+  constructor(
     private router: Router,
     private assetmateService: AssetmateService,
     public dataService: DataSharingService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private snackBar: MatSnackBar,
@@ -58,22 +53,13 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.dataService.mSaveData.subscribe(res => {
-    //   if (res != null && res != "null" && res != "null") { 
-    //     this.AssetId=res;
     this.AssetId = this.route.snapshot.params['assetId'];
     this.getAssetHistory(this.AssetId, this.pageNumber);
-    //   }
-    // })
-
   }
-
 
   ngOnDestroy(): void { }
 
-
   /*********************************************************** Get All Roles *******************************************************************/
-
 
   getAssetHistory(assetIdFK: number, pageNo: any) {
     this.spinnerService.setSpinnerVisibility(true);
@@ -103,8 +89,6 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 
-
-
   /*********************************************************** Page Change *******************************************************************/
 
   pageChange(pageNo: any) {
@@ -113,18 +97,13 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     this.getAssetHistory(this.AssetId, this.page);
   }
 
-
-
-
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   viewQuestion(doneChecklistId: number) {
     this.dataService.saveData(doneChecklistId);
     this.showFirst = !this.showFirst;
     //this.router.navigate(['/assetmate/view-question']); 
-
   }
-
 
 }
 

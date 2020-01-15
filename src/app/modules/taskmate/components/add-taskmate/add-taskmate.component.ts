@@ -21,8 +21,6 @@ export class AddTaskmateComponent implements OnInit {
   taskmateImage: string;
   complaintID: any;
 
-
-
   constructor(
     private taskmateService: TaskmateService,
     private spinnerService: SpinnerService,
@@ -35,8 +33,6 @@ export class AddTaskmateComponent implements OnInit {
   ngOnInit() {
     this.getuserLists();
   }
-
-
 
   /*********************************************************** Select User List *******************************************************************/
 
@@ -73,17 +69,14 @@ export class AddTaskmateComponent implements OnInit {
     }
   }
 
-
-
   /*********************************************************** Add Taskmate *****************************************************************/
 
-
   addTaskmate(value: any) {
-    var users = [];
-    value.users.forEach(element => {
-      users.push({ userIdFK: element })
+    var assignedUsers = [];
+    value.assignedUsers.forEach(element => {
+      assignedUsers.push({ userIdFK: element })
     });
-    value.users = users;
+    value.assignedUsers = assignedUsers;
     this.spinnerService.setSpinnerVisibility(true);
     this.taskmateService.addTaskmate(value).subscribe(res => {
       if (res.status == true) {
@@ -115,7 +108,5 @@ export class AddTaskmateComponent implements OnInit {
       })
     }
   }
-
-
 
 }

@@ -24,8 +24,8 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field fxFlex="100" fxFlex.xs="100">
-        <mat-select multiple name="users" id="users" [(ngModel)]="complaintData.users" #UsersName="ngModel"
-          placeholder="Select Users" required>
+        <mat-select multiple name="assignedUsers" id="assignedUsers" [(ngModel)]="complaintData.assignedUsers"
+          #UsersName="ngModel" placeholder="Select Users" required>
           <mat-option *ngFor="let user of userLists" [value]="user.userIdFK">
             {{user.firstName+' '+user.lastName}}
           </mat-option>
