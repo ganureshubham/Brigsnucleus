@@ -18,8 +18,6 @@ export class DocViewerDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('DocViewerDialogComponent');
-
     this.document = 'https://docs.google.com/viewer?url=' + this.dialogData.docUrl + '&embedded=true';
   }
 
@@ -29,6 +27,11 @@ export class DocViewerDialogComponent implements OnInit {
 
   getDialogDocTitle() {
     return this.dialogData.docTitle.length > 25 ? (this.dialogData.docTitle.substring(0, 25) + ' ...') : this.dialogData.docTitle;
+  }
+
+  onLoad() {
+    console.log('OnLoad...!!!');
+    document.getElementById('spinner').style.display = 'none';
   }
 
 }

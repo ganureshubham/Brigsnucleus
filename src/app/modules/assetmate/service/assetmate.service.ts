@@ -461,6 +461,10 @@ export class AssetmateService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/questionAnswer/${doneChecklistIdFK}/${pageNo}`);
   }
 
+  getQuestAnsListForPDF(doneChecklistIdFK: number): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `assets/printAudit/${doneChecklistIdFK}`);
+  }
+
   getBadgeUpdateAction(component: string): Observable<boolean> {
     if (component == 'assetDetails') {
       return this.badgeUpdateActionAssetDetails.asObservable();

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AssetmateService } from '../../../../../service/assetmate.service';
 import { SpinnerService } from '../../../../../../../public service/spinner.service';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-view-history',
@@ -123,6 +124,124 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     this.showFirst = !this.showFirst;
     //this.router.navigate(['/assetmate/view-question']); 
 
+  }
+
+  saveAuditAsPDF(audit) {
+
+    this.spinnerService.setSpinnerVisibility(true);
+
+    //Get All question and answers of audit
+    //Save Audit question answers as pdf
+    this.assetmateService.getQuestAnsListForPDF(audit.doneChecklistId).subscribe((resp: any) => {
+
+      console.log('Resp[onse', resp);
+
+      var doc = new jsPDF("p", "mm", "a4");
+      var width = doc.internal.pageSize.getWidth();
+      var height = doc.internal.pageSize.getHeight();
+
+      doc.rect(5, 5, width - 10, height - 10, 'S');
+
+      let currentYAxisPosition = 20;
+      let currentXAxisPosition = 15;
+      let yAxisAlias10 = 10;
+      let yAxisAlias5 = 5;
+      let yAxisAlias12 = 12;
+      let yAxisAlias15 = 15;
+      let srNo = 1;
+      let lines;
+      let srNoXAxisAlias = 14;
+      let imageDimension = 40;
+
+      doc.setFontType("bold");
+      doc.setFontSize(14);
+
+      let title = 'AUDIT';
+      let txtWidth = doc.getStringUnitWidth(title) * 14 / doc.internal.scaleFactor;
+      let xOffset = (width - txtWidth) / 2;
+      doc.text(title, xOffset, currentYAxisPosition);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.setFontSize(12);
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Asset Name : ' + resp.questionAnswer[0].assetTitle);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Audit Title : ' + resp.questionAnswer[0].auditTitle);
+      currentYAxisPosition += yAxisAlias15;
+
+      doc.setFontType("normal");
+      doc.setFontSize(12);
+
+      //Test print on multiple page and wrapping of text.
+      /* let a = resp.questionAnswer;
+      for (let index = 0; index < 7; index++) {
+        resp.questionAnswer.push(...a);
+      } */
+
+      for (let questionAnswer of resp.questionAnswer) {
+
+        //Add New Page
+        if (currentYAxisPosition >= (height - 30)) {
+          doc.addPage();
+          doc.rect(5, 5, width - 10, height - 10, 'S');
+          currentYAxisPosition = 20;
+        }
+
+        doc.text(currentXAxisPosition, currentYAxisPosition, srNo + '. ');
+        lines = doc.splitTextToSize(questionAnswer.question, width - 40)
+        doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
+        currentYAxisPosition += (doc.getTextDimensions(lines).h + 1.5);
+
+        if (questionAnswer.checklistImage == null) {
+
+          //Add New Page
+          if (currentYAxisPosition >= (height - 30)) {
+            doc.addPage();
+            doc.rect(5, 5, width - 10, height - 10, 'S');
+            currentYAxisPosition = 20;
+          }
+
+          doc.text(currentXAxisPosition, currentYAxisPosition, 'Ans : ');
+          lines = doc.splitTextToSize(questionAnswer.answer, width - 40)
+          doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
+          currentYAxisPosition += ((doc.getTextDimensions(lines).h + 1.5) + yAxisAlias5);
+
+        } else {
+
+          let img: any = document.getElementById("imageid");
+          img.src = questionAnswer.checklistImage;
+
+          //Add New Page - For image height mapped to less height (height - 50)
+          if (currentYAxisPosition >= (height - 50)) {
+            doc.addPage();
+            doc.rect(5, 5, width - 10, height - 10, 'S');
+            currentYAxisPosition = 20;
+          }
+
+          doc.addImage(this.getBase64Image(document.getElementById("imageid")), '*', ((width / 2) - (imageDimension / 2)), currentYAxisPosition, imageDimension, imageDimension);
+          currentYAxisPosition += imageDimension + yAxisAlias15;
+
+        }
+
+        srNo++;
+
+      }
+
+      this.spinnerService.setSpinnerVisibility(false);
+      doc.save('Audit - ' + resp.questionAnswer[0].auditTitle.substring(0, 20) + '__.pdf');
+
+    });
+
+  }
+
+  getBase64Image(img) {
+    let canvas = document.createElement("canvas");
+    canvas.width = 200;
+    canvas.height = 200;
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    let dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
 
 
