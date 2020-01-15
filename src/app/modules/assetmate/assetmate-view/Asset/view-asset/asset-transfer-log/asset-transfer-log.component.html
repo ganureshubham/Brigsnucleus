@@ -9,10 +9,19 @@
           <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="20px">
             <mat-icon class="ic-location">room</mat-icon>
             <div class="location-item">
-              <div class="guideline-text-item">Location Type</div>
+              <!-- <div class="guideline-text-item">Location Type</div>
               <div class="guideline-text-key-item">{{transferLocation.newLocationtype}}</div>
               <div class="guideline-text-item">Location</div>
               <div class="guideline-text-key-item">{{transferLocation.newLocation}}</div>
+              <div class="guideline-text-subitem">{{transferLocation.locationTransferredDate}}</div> -->
+              <div class="guideline-text-item">Current Location</div>
+              <div class="guideline-text-key-item">
+                {{transferLocation.newLocationtype + ' - ' + transferLocation.newLocation}}
+              </div>
+              <div class="guideline-text-item">Previous Location</div>
+              <div class="guideline-text-key-item">
+                {{transferLocation.oldLocationType + ' - ' + transferLocation.oldLocation}}
+              </div>
               <div class="guideline-text-subitem">{{transferLocation.locationTransferredDate}}</div>
             </div>
           </div>

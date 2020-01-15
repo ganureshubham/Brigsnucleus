@@ -127,11 +127,12 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   saveAuditAsPDF(audit) {
+
+    this.spinnerService.setSpinnerVisibility(true);
+
     //Get All question and answers of audit
     //Save Audit question answers as pdf
     this.assetmateService.getQuestAnsList(audit.doneChecklistId, 0).subscribe((resp: any) => {
-      console.log(resp.questionAnswer);
-      //Check for status
 
       var doc = new jsPDF("p", "mm", "a4");
       var width = doc.internal.pageSize.getWidth();
@@ -141,13 +142,14 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
       let currentYAxisPosition = 20;
       let currentXAxisPosition = 15;
-      let yAxisAlias6 = 6;
       let yAxisAlias10 = 10;
+      let yAxisAlias5 = 5;
       let yAxisAlias12 = 12;
       let yAxisAlias15 = 15;
       let srNo = 1;
       let lines;
       let srNoXAxisAlias = 14;
+      let imageDimension = 40;
 
       doc.setFontType("bold");
       doc.setFontSize(14);
@@ -168,28 +170,76 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
       doc.setFontType("normal");
       doc.setFontSize(12);
 
+      //Test print on multiple page and wrapping of text.
+      /* let a = resp.questionAnswer;
+      for (let index = 0; index < 7; index++) {
+        resp.questionAnswer.push(...a);
+      } */
+
       for (let questionAnswer of resp.questionAnswer) {
+
+        //Add New Page
+        if (currentYAxisPosition >= (height - 30)) {
+          doc.addPage();
+          doc.rect(5, 5, width - 10, height - 10, 'S');
+          currentYAxisPosition = 20;
+        }
+
         doc.text(currentXAxisPosition, currentYAxisPosition, srNo + '. ');
         lines = doc.splitTextToSize(questionAnswer.question, width - 40)
         doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
-        currentYAxisPosition += (lines.length + 2) * lines.length;
+        currentYAxisPosition += (doc.getTextDimensions(lines).h + 1.5);
 
         if (questionAnswer.answer.substring(0, 3) !== 'IMG') {
+
+          //Add New Page
+          if (currentYAxisPosition >= (height - 30)) {
+            doc.addPage();
+            doc.rect(5, 5, width - 10, height - 10, 'S');
+            currentYAxisPosition = 20;
+          }
+
           doc.text(currentXAxisPosition, currentYAxisPosition, 'Ans : ');
           lines = doc.splitTextToSize(questionAnswer.answer, width - 40)
           doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
-          currentYAxisPosition += yAxisAlias12;
+          currentYAxisPosition += ((doc.getTextDimensions(lines).h + 1.5) + yAxisAlias5);
+
         } else {
-          // doc.addImage(imgData, '*', 15, 40, 180, 160);
+
+          /* let img: any = document.getElementById("imageid");
+          img.src = "http://13.127.22.216:8085/image-1574608182549.png"; */
+
+          //Add New Page - For image height mapped to less height (height - 50)
+          if (currentYAxisPosition >= (height - 50)) {
+            doc.addPage();
+            doc.rect(5, 5, width - 10, height - 10, 'S');
+            currentYAxisPosition = 20;
+          }
+
+          doc.addImage(this.getBase64Image(document.getElementById("imageid")), '*', ((width / 2) - (imageDimension / 2)), currentYAxisPosition, imageDimension, imageDimension);
+          currentYAxisPosition += imageDimension + yAxisAlias15;
+
         }
+
         srNo++;
+
       }
 
+      this.spinnerService.setSpinnerVisibility(false);
       doc.save('Asset-Audit.pdf');
-      console.log(width, height);
 
     });
 
+  }
+
+  getBase64Image(img) {
+    let canvas = document.createElement("canvas");
+    canvas.width = 200;
+    canvas.height = 200;
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    let dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
 
 
