@@ -26,6 +26,7 @@ export class AddUserComponent implements OnInit {
   hide = true;
   cancelbtn = 0;
   password: any;
+  userResp: any = false;
 
   constructor(private router: Router,
     private userService: UserService,
@@ -66,10 +67,17 @@ export class AddUserComponent implements OnInit {
         value.profileImage = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
+
           this.spinnerService.setSpinnerVisibility(false);
           if (res.status) {
-            this.showSnackBar(res.message);
-            this.dialog.closeAll();
+            if (res.isRecover) {
+              this.userResp = res.isRecover;
+              this.formTitle = 'Recover Email-Id';
+              this.showSnackBar(res.message);
+            } else {
+              this.showSnackBar(res.message);
+              this.dialog.closeAll();
+            }
           } else {
             this.showSnackBar(res.message);
           }
@@ -96,6 +104,29 @@ export class AddUserComponent implements OnInit {
         callback(res.ImageName);
       })
     }
+  }
+
+  /*********************************************************** Recover Email *******************************************************************/
+
+  recoverEmail() {
+    let userEmail = {};
+    userEmail = {
+      emailId: this.userData.emailId
+    }
+    this.spinnerService.setSpinnerVisibility(true);
+    this.userService.recoverUserEmail(userEmail).subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        this.showSnackBar(res.message);
+        this.dialog.closeAll();
+      } else {
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
   }
 
   /*********************************************************** Edit Selected Asset *******************************************************************/
