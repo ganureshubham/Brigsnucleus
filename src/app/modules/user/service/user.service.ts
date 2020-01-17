@@ -61,8 +61,24 @@ export class UserService {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `departments/selectDepartment`);
   }
 
+  /*********************************************************** Select User Role ************************************************************/
+
   getUserRoleList(): Observable<any> {
     return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/selectUserRole`);
   }
+
+  /*********************************************************** User Limit Check ************************************************************/
+
+  checkUserLimit(): Observable<any> {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `users/checkUserLimit`);
+  }
+
+  /*********************************************************** Recover User Email ************************************************************/
+
+  recoverUserEmail(userEmail: any): Observable<any> {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `users/recoverUserEmail/`, userEmail);
+  }
+
+
 
 }

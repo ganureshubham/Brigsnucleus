@@ -4,7 +4,7 @@
   </div>
   <!-- <div fxLayout="row" fxFlex="100"> -->
   <form fxFlex="100" #userform="ngForm" novalidate>
-    <div fxLayout="column" mat-dialog-content>
+    <div *ngIf="!userResp" fxLayout="column" mat-dialog-content>
       <div fxLayoutGap="15px" fxLayout="column">
         <div fxFlex="70" fxLayout="column">
           <mat-form-field fxFlex.gt-xs="33" fxFlex.xs="100">
@@ -105,14 +105,24 @@
         </div>
       </div>
     </div>
+    <div *ngIf="userResp">
+      <mat-hint>Please click recover button to recover your email</mat-hint>
+    </div>
     <div mat-dialog-actions>
-      <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100" fxLayoutAlign.gt-xs="end center">
+      <div *ngIf="!userResp" fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100"
+        fxLayoutAlign.gt-xs="end center">
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
         <button *ngIf="!isEdited" [color]="'success'" mat-raised-button i18n color="primary"
           [matTooltip]="!userform.valid ? 'You must complete all the required fields.' : null" type="submit"
           [disabled]="!userform.valid" (click)="addUser(userform)">Add</button>
         <button *ngIf="isEdited" [color]="'success'" mat-raised-button i18n color="primary" type="submit"
           [disabled]="!userform.valid" (click)="editUser(userform)">Update</button>
+      </div>
+      <div *ngIf="userResp" fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100"
+        fxLayoutAlign.gt-xs="end center">
+        <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
+        <button [color]="'success'" (click)="recoverEmail()" mat-raised-button i18n color="primary"
+          type="submit">Recover</button>
       </div>
     </div>
   </form>

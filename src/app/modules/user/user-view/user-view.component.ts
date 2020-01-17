@@ -257,31 +257,70 @@ export class UserViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Add User *******************************************************************/
 
   addUser() {
-    this.dialogData = {
-      type: 'Add',
-      departmentIdFK: 0,
-      userId: 0,
-      firstName: '',
-      lastName: '',
-      profileImage: '',
-      userRoleIdFK: 0,
-      departmentTitle: '',
-      mobileNumber: 0,
-      emailId: '',
-      password: '',
-    }
-
-    const dialogRef = this.dialog.open(AddUserComponent, {
-      data: this.dialogData,
-      width: '500px',
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== 0) {
-        this.getAllUsers(this.message.departmentId, this.pageNumber);
+    this.spinnerService.setSpinnerVisibility(true);
+    this.userService.checkUserLimit().subscribe(res => {
+      if (res.status && res.isAllowedToAddUser) {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.dialogData = {
+          type: 'Add',
+          departmentIdFK: 0,
+          userId: 0,
+          firstName: '',
+          lastName: '',
+          profileImage: '',
+          userRoleIdFK: 0,
+          departmentTitle: '',
+          mobileNumber: 0,
+          emailId: '',
+          password: '',
+        }
+        const dialogRef = this.dialog.open(AddUserComponent, {
+          data: this.dialogData,
+          width: '500px',
+          disableClose: true
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result !== 0) {
+            this.getAllUsers(this.message.departmentId, this.pageNumber);
+          }
+        })
+      } else {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar(res.message, 5000);
       }
-    })
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!", 2000);
+      })
   }
+
+  // addUser() {
+  //   this.dialogData = {
+  //     type: 'Add',
+  //     departmentIdFK: 0,
+  //     userId: 0,
+  //     firstName: '',
+  //     lastName: '',
+  //     profileImage: '',
+  //     userRoleIdFK: 0,
+  //     departmentTitle: '',
+  //     mobileNumber: 0,
+  //     emailId: '',
+  //     password: '',
+  //   }
+
+  //   const dialogRef = this.dialog.open(AddUserComponent, {
+  //     data: this.dialogData,
+  //     width: '500px',
+  //     disableClose: true
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result !== 0) {
+  //       this.getAllUsers(this.message.departmentId, this.pageNumber);
+  //     }
+  //   })
+  // }
 
   /*********************************************************** Activate/Deactivate User *******************************************************************/
 
