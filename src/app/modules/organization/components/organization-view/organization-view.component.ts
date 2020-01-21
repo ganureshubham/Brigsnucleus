@@ -11,11 +11,18 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrganizationConfigureComponent } from '../organization-configure/organization-configure.component';
 
+interface configDialogData {
+  organizationId: number;
+  numberOfUsers: number;
+  features: string;
+}
+
 @Component({
   selector: 'app-organization-view',
   templateUrl: './organization-view.component.html',
   styleUrls: ['./organization-view.component.css']
 })
+
 export class OrganizationViewComponent implements OnInit, OnDestroy {
 
   page: number = 0;
@@ -30,11 +37,12 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
   isSearchRequestAllowed: boolean = true;
   pageNumber = 0;
   totalCount = 0;
-  displayedColumns: string[] = ['OrganizationName', 'OrganizationCode', 'CreatedOn', 'OrganizationDescription', 'TotalAdmins', 'TotalAssets', 'TotalUsers', 'Actions'];
+  displayedColumns: string[] = ['OrganizationName', 'OrganizationCode', 'CreatedOn', 'OrganizationDescription', 'TotalAdmins', 'TotalAssets', 'TotalUsers', 'totalAllowedUsers', 'features', 'Actions'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   isAlreadySubscribedToDialogUserActionService: boolean = false;
   deleteOrgId: number;
   dialogServiceSubscription: Subscription = null;
+  dialogData: configDialogData
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -46,7 +54,7 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.tabQuery = media.matchMedia('(max-width: 768px)');
@@ -91,6 +99,22 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
         this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar('Something went wrong..!!');
       })
+  }
+
+  getFeatureList(features: any) {
+    let allfeaturelists = "";
+    if (features != undefined && features != null && features.length > 0) {
+      for (let i = 0; i < features.length; i++) {
+        if (i < features.length - 1) {
+          allfeaturelists += features[i].purpose + ', ';
+        } else {
+          allfeaturelists += features[i].purpose + ' ';
+        }
+      }
+      return allfeaturelists
+    } else {
+      return allfeaturelists;
+    }
   }
 
   getColumnCount() {
@@ -164,13 +188,21 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  configure() {
+  configureOrganization(organization) {
+    this.dialogData = {
+      organizationId: organization.organizationId,
+      numberOfUsers: organization.totalAllowedUsers,
+      features: organization.features,
+    }
     const dialogRef = this.dialog.open(OrganizationConfigureComponent, {
+      data: this.dialogData,
       width: '450px',
       disableClose: true
     })
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result !== 0) {
+        this.getListOfOrganizations(this.pageNumber);
+      }
     })
   }
 
@@ -216,7 +248,6 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
         }
       })
     }
-
   }
 
   pageChange(pageNo: any) {

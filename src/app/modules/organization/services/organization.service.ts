@@ -40,4 +40,12 @@ export class OrganizationService {
     return this.httpClient.get(ConfigurationService.baseUrl + `organization/getOrganizationSpecificToken/${organizationId}`);
   }
 
+  getOrgFeatures() {
+    return this.httpClient.get<any>(ConfigurationService.baseUrl + `organization/listOfOrgFeatures`);
+  }
+
+  updateOrgConfig(organizationId: number, body: any) {
+    return this.httpClient.put<any>(ConfigurationService.baseUrl + `organization/upadateOrgconfig/${organizationId}`, body);
+  }
+
 }

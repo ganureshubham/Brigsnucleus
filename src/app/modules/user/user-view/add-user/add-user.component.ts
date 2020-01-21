@@ -67,7 +67,6 @@ export class AddUserComponent implements OnInit {
         value.profileImage = result;
         this.spinnerService.setSpinnerVisibility(true);
         this.userService.addUser(value).subscribe(res => {
-
           this.spinnerService.setSpinnerVisibility(false);
           if (res.status) {
             if (res.isRecover) {

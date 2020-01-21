@@ -79,6 +79,4 @@ export class UserService {
     return this.httpClient.put<any>(ConfigurationService.baseUrl + `users/recoverUserEmail/`, userEmail);
   }
 
-
-
 }

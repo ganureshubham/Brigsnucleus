@@ -139,8 +139,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Delete Particular Role *******************************************************************/
 
   deleteRole(userRoleId: number, title: string) {
-    console.log('deleteRole : ', userRoleId);
-
     this.userRoleId = userRoleId;
     let appDialogData: AppDialogData = {
       visibilityStatus: true,
@@ -154,7 +152,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
     if (!this.isAlreadySubscribedToDialogUserActionService) {
       this.isAlreadySubscribedToDialogUserActionService = true;
       this.dialogServiceSubscription = this.dialogService.getUserDialogAction().subscribe((resp: any) => {
-        console.log('Action:::::  ' + resp.result + ' - ' + resp.action);
         if (resp.result == 0) {
           //User has not performed any action on opened app dialog or closed the dialog;
         } else if (resp.result == 1) {
@@ -162,7 +159,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
             this.dialogService.setUserDialogAction(0);
             //User has approved delete operation
             this.spinnerService.setSpinnerVisibility(true);
-            console.log("Deletet Service :: ", this.userRoleId);
             this.roleService.deleteRole(this.userRoleId).subscribe(res => {
               this.spinnerService.setSpinnerVisibility(false);
               if (res.status) {
@@ -184,6 +180,8 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   editRole(visit: any) {
+    console.log(visit);
+
     this.dialogData = {
       type: 'Edit',
       userRoleId: visit.userRoleId,
