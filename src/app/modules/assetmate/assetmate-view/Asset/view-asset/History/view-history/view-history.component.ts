@@ -115,8 +115,6 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
     //Save Audit question answers as pdf
     this.assetmateService.getQuestAnsListForPDF(audit.doneChecklistId).subscribe((resp: any) => {
 
-      console.log('Resp[onse', resp);
-
       var doc = new jsPDF("p", "mm", "a4");
       var width = doc.internal.pageSize.getWidth();
       var height = doc.internal.pageSize.getHeight();
@@ -189,18 +187,33 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
 
         } else {
 
-          let img: any = document.getElementById("imageid");
-          img.src = questionAnswer.checklistImage;
-
-          //Add New Page - For image height mapped to less height (height - 50)
-          if (currentYAxisPosition >= (height - 50)) {
+          //Add New Page
+          if (currentYAxisPosition >= (height - 30)) {
             doc.addPage();
             doc.rect(5, 5, width - 10, height - 10, 'S');
             currentYAxisPosition = 20;
           }
 
-          doc.addImage(this.getBase64Image(document.getElementById("imageid")), '*', ((width / 2) - (imageDimension / 2)), currentYAxisPosition, imageDimension, imageDimension);
-          currentYAxisPosition += imageDimension + yAxisAlias15;
+          doc.text(currentXAxisPosition, currentYAxisPosition, 'Ans : ');
+          lines = doc.splitTextToSize(questionAnswer.checklistImage, width - 40);
+          doc.setTextColor(0, 101, 255);
+          doc.text(currentXAxisPosition + srNoXAxisAlias, currentYAxisPosition, lines);
+          doc.setTextColor(0, 0, 0);
+          currentYAxisPosition += ((doc.getTextDimensions(lines).h + 1.5) + yAxisAlias5);
+
+
+          // let img: any = document.getElementById("imageid");
+          // img.src = questionAnswer.checklistImage;
+
+          // //Add New Page - For image height mapped to less height (height - 50)
+          // if (currentYAxisPosition >= (height - 50)) {
+          //   doc.addPage();
+          //   doc.rect(5, 5, width - 10, height - 10, 'S');
+          //   currentYAxisPosition = 20;
+          // }
+
+          // doc.addImage(this.getBase64Image(document.getElementById("imageid")), '*', ((width / 2) - (imageDimension / 2)), currentYAxisPosition, imageDimension, imageDimension);
+          // currentYAxisPosition += imageDimension + yAxisAlias15;
 
         }
 

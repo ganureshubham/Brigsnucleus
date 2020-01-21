@@ -28,3 +28,9 @@
 .authorities-text {
   padding: 20px;
 }
+
+.subchild {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

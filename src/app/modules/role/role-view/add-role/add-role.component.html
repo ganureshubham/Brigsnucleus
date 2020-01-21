@@ -28,7 +28,7 @@
             <div fxLayout="column" fxLayoutGap="10px">
               <div *ngFor="let unit of featureList; let i=index">
                 <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
-                  {{unit.purpose + ' (' + unit.featureCode + ')'}}
+                  {{unit.title + ' (' + unit.featureCode + ')'}}
                 </mat-checkbox>
               </div>
             </div>

@@ -70,7 +70,8 @@ export class AddRoleComponent implements OnInit {
     }
   }
 
-  /*********************************************************** Add New Role *******************************************************************/
+  /*********************************************************** Add New Role ************************************************************/
+
   addRole(formData) {
     let body = {
       title: formData.title,
@@ -79,7 +80,7 @@ export class AddRoleComponent implements OnInit {
     for (let feature of this.featureList) {
       if (feature.isChecked) {
         body.features.push({
-          featureIdFK: feature.featureId
+          featureIdFK: feature.featureIdFK
         })
       }
     }
@@ -114,7 +115,7 @@ export class AddRoleComponent implements OnInit {
     for (let feature of this.featureList) {
       if (feature.isChecked) {
         body.features.push({
-          featureIdFK: feature.featureId
+          featureIdFK: feature.featureIdFK
         })
       }
     }
@@ -153,7 +154,7 @@ export class AddRoleComponent implements OnInit {
           for (let feature of this.featureList) {
             feature.isChecked = false;
             for (let editfeature of this.featureListForEdit) {
-              if (feature.featureId == editfeature.featureIdFK) {
+              if (feature.featureIdFK == editfeature.featureIdFK) {
                 feature.isChecked = true;
                 break;
               }

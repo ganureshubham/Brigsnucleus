@@ -83,6 +83,20 @@
                     <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">{{ element.totalUsers }}
                     </mat-cell>
                   </ng-container>
+                  <ng-container matColumnDef="totalAllowedUsers">
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Users Limit
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+                      {{ element.totalAllowedUsers }}
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="features">
+                    <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Features
+                    </mat-header-cell>
+                    <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let element">
+                      {{ element.features.length > 0 ? getFeatureList(element.features) : '-' }}
+                    </mat-cell>
+                  </ng-container>
                   <ng-container matColumnDef="Actions">
                     <mat-header-cell fxLayoutAlign="end center" *matHeaderCellDef i18n>Actions</mat-header-cell>
                     <mat-cell fxLayoutAlign="end center" (click)="$event.stopPropagation()" *matCellDef="let element">
@@ -100,7 +114,7 @@
                             <mat-icon matListIcon>delete_outline</mat-icon>
                             <span i18n>Delete</span>
                           </a>
-                          <a mat-menu-item (click)="configure()">
+                          <a mat-menu-item (click)="configureOrganization(element)">
                             <mat-icon matListIcon>settings_applications</mat-icon>
                             <span i18n>Configure</span>
                           </a>

@@ -59,7 +59,7 @@
         <button mat-button class="bg_white_grey btn_style btn-add-option" (click)="onNewOptionAddClicked()">
           <mat-icon>add</mat-icon>Add New Option
         </button>
-        <div class="stepper-step-container">
+        <div fxLayout="column" fxLayoutGap="15px" class="stepper-step-container">
           <div>
             <mat-form-field>
               <input formControlName="option0" matInput placeholder="Option" required>
@@ -67,8 +67,8 @@
             </mat-form-field>
             <mat-checkbox formControlName="checkbox0">Is Critical</mat-checkbox>
           </div>
-          <div *ngFor="let option of arrOption; let i=index">
-            <mat-form-field class="remove_options">
+          <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let option of arrOption; let i=index">
+            <mat-form-field fxFlex="30" class="remove_options">
               <input formControlName="{{option.optionControl}}" matInput placeholder="Option" required>
               <button mat-icon-button aria-label="Example icon-button with a heart icon" color="warn"
                 (click)="onQuestionOptionDelete(i)">

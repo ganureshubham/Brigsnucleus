@@ -5,7 +5,8 @@
   <form #configform="ngForm" class="form-container">
     <div fxLayout="column" mat-dialog-content>
       <mat-form-field>
-        <input matInput type="number" placeholder="Enter User Limit" required>
+        <input matInput type="number" name="numberOfUsers" [(ngModel)]="configData.numberOfUsers"
+          placeholder="Enter User Limit" required>
         <mat-hint>User limit should be in digits only</mat-hint>
       </mat-form-field>
       <div>
@@ -20,10 +21,15 @@
               </mat-checkbox>
             </div>
             <div fxLayout="column" fxLayoutGap="10px">
-              <div *ngFor="let unit of featureList; let i=index">
+              <div *ngFor="let unit of OrgFeatureList; let i=index">
                 <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
-                  {{unit.purpose + ' (' + unit.featureCode + ')'}}
+                  {{unit.title+ ' (' + unit.featureCode + ')'}}
                 </mat-checkbox>
+                <div *ngFor="let child of unit.child; let i=index" class="subchild">
+                  <mat-checkbox color="primary" [checked]="child.isChecked" (change)="valueChange1(i,$event,child)">
+                    {{child.title+ ' (' + child.featureCode + ')'}}
+                  </mat-checkbox>
+                </div>
               </div>
             </div>
           </div>
@@ -46,11 +52,13 @@
         </div>
       </div>
     </div>
-    <div>
+    <div mat-mat-dialog-actions>
       <div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxFlex="100" fxLayoutAlign.gt-xs="end center">
         <button [mat-dialog-close]="cancelbtn" fxFlex.xs="100" mat-stroked-button i18n color="primary">Cancel</button>
-        <button [color]="'success'" mat-raised-button i18n [disabled]="!configform.valid" color="primary"
-          type="submit">Add</button>
+        <button *ngIf="!isEdited" [color]="'success'" (click)="UpdateOrgConfig(configform.value)" mat-raised-button i18n
+          [disabled]="!configform.valid" color="primary" type="submit">Add</button>
+        <button *ngIf="isEdited" [color]="'success'" (click)="UpdateOrgConfig(configform.value)" mat-raised-button i18n
+          [disabled]="!configform.valid" color="primary" type="submit">Update</button>
       </div>
     </div>
   </form>
