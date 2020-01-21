@@ -92,36 +92,8 @@ export class OrganizationConfigureComponent implements OnInit {
     }
   }
 
-  valueChange1(index: any, value: any, child: any) {
-    console.log('index', index);
-    console.log('value', value);
-    console.log('child', child);
-    console.log('child feature', this.childFeatureList);
-
-    this.childFeatureList[index].isChecked = value.checked;
-    for (let pfeature of this.OrgFeatureList) {
-      for (let resfeature of pfeature.child) {
-        if (resfeature.parentId == pfeature.featureId) {
-          if (!resfeature.isChecked) {
-            this.selectAll = false;
-            break;
-          } else {
-            this.selectAll = true;
-          }
-        }
-      }
-    }
-
-
-    // this.childFeatureList[index].isChecked = value.checked;
-    // for (let childfeature of this.childFeatureList) {
-    //   if (!childfeature.isChecked) {
-    //     this.selectAll = false;
-    //     break;
-    //   } else {
-    //     this.selectAll = true;
-    //   }
-    // }
+  valueChange1(parentIndex, childIndex, value: any) {
+    this.OrgFeatureList[parentIndex].child[childIndex].isChecked = value.checked;
   }
 
 
@@ -207,7 +179,7 @@ export class OrganizationConfigureComponent implements OnInit {
     for (let childfeature of this.childFeatureList) {
       if (childfeature.isChecked) {
         body.features.push({
-          featureIdFk: childfeature.featureId
+          featureIdFK: childfeature.featureId
         })
       }
     }
