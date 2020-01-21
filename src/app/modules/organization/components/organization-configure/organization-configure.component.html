@@ -21,12 +21,13 @@
               </mat-checkbox>
             </div>
             <div fxLayout="column" fxLayoutGap="10px">
-              <div *ngFor="let unit of OrgFeatureList; let i=index">
-                <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
+              <div *ngFor="let unit of OrgFeatureList; let parentIndex=index">
+                <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(parentIndex,$event)">
                   {{unit.title+ ' (' + unit.featureCode + ')'}}
                 </mat-checkbox>
-                <div *ngFor="let child of unit.child; let i=index" class="subchild">
-                  <mat-checkbox color="primary" [checked]="child.isChecked" (change)="valueChange1(i,$event,child)">
+                <div *ngFor="let child of unit.child; let childIndex=index" class="subchild">
+                  <mat-checkbox color="primary" [checked]="child.isChecked"
+                    (change)="valueChange1(parentIndex,childIndex,$event)">
                     {{child.title+ ' (' + child.featureCode + ')'}}
                   </mat-checkbox>
                 </div>
