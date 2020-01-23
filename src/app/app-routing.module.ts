@@ -104,6 +104,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./modules/verify-asset/verify-asset.module#VerifyAssetModule",
         canActivate: [AuthGuard]
       },
+      {
+        path: "cron-logs",
+        loadChildren: "./modules/cron-log/cron-log.module#CronLogModule",
+        canActivate: [AuthGuard]
+      }
 
     ]
   },

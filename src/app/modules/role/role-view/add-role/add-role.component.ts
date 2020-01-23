@@ -17,10 +17,13 @@ export class AddRoleComponent implements OnInit {
   roleData: any = {};
   uploadingLoader: boolean = false;
   cancelbtn = 0;
-  featureList: any;
+  featureList: any[] = [];
   features: any = [];
   selectAll: boolean = true;
   featureListForEdit: any;
+  childList: any;
+  isNoRecordFound: boolean = false;
+  childFeatureList: any[] = [];
 
   constructor(private router: Router,
     private roleService: RoleService,
@@ -50,11 +53,17 @@ export class AddRoleComponent implements OnInit {
     if (this.selectAll) {
       this.featureList.map((value) => {
         value.isChecked = true;
-      })
+      });
+      // this.childFeatureList.map((value1) => {
+      //   value1.isChecked = true;
+      // })
     } else {
       this.featureList.map((value) => {
         value.isChecked = false;
-      })
+      });
+      // this.childFeatureList.map((value1) => {
+      //   value1.isChecked = false;
+      // })
     }
   }
 
@@ -70,6 +79,29 @@ export class AddRoleComponent implements OnInit {
     }
   }
 
+  valueChange1(parentIndex: any, childIndex: any, value: any) {
+    this.featureList[parentIndex].child[childIndex].isChecked = value.checked;
+    for (let childfeature of this.childFeatureList) {
+      if (!childfeature.isChecked) {
+        this.selectAll = false;
+        break;
+      } else {
+        this.selectAll = true;
+      }
+    }
+    for (let pfeature of this.featureList) {
+      for (let cfeature of pfeature.child) {
+        if (cfeature.parentId == pfeature.featureIdFK) {
+          if (!cfeature.isChecked) {
+            pfeature.isChecked = false;
+          } else {
+            pfeature.isChecked = true;
+          }
+        }
+      }
+    }
+  }
+
   /*********************************************************** Add New Role ************************************************************/
 
   addRole(formData) {
@@ -81,6 +113,13 @@ export class AddRoleComponent implements OnInit {
       if (feature.isChecked) {
         body.features.push({
           featureIdFK: feature.featureIdFK
+        })
+      }
+    }
+    for (let childfeature of this.childFeatureList) {
+      if (childfeature.isChecked) {
+        body.features.push({
+          featureIdFK: childfeature.featureIdFK
         })
       }
     }
@@ -119,6 +158,13 @@ export class AddRoleComponent implements OnInit {
         })
       }
     }
+    for (let childfeature of this.childFeatureList) {
+      if (childfeature.isChecked) {
+        body.features.push({
+          featureIdFK: childfeature.featureIdFK
+        })
+      }
+    }
     this.spinnerService.setSpinnerVisibility(true);
     this.roleService.editRole(this.roleData.userRoleId, body).subscribe(res => {
       if (res.status) {
@@ -149,20 +195,61 @@ export class AddRoleComponent implements OnInit {
     this.roleService.getFeatureList().subscribe(res => {
       this.spinnerService.setSpinnerVisibility(false);
       if (res.status) {
-        this.featureList = res.features;
+
+        for (let resfeature of res.features) {
+          if (resfeature.parentId == 0) {
+            this.featureList.push(resfeature);
+          }
+        }
+
+        for (let pfeature of this.featureList) {
+          pfeature.child = [];
+          for (let resfeature of res.features) {
+            if (resfeature.parentId == pfeature.featureIdFK) {
+              pfeature.child.push(resfeature);
+            }
+          }
+        }
+        if (this.featureList.length == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
+        for (let feature of this.featureList) {
+          feature.isChecked = true;
+          for (let childfeature of feature.child) {
+            childfeature.isChecked = true;
+            this.childFeatureList.push(childfeature);
+          }
+        }
         if (this.data.type == 'Edit') {
-          for (let feature of this.featureList) {
-            feature.isChecked = false;
-            for (let editfeature of this.featureListForEdit) {
-              if (feature.featureIdFK == editfeature.featureIdFK) {
-                feature.isChecked = true;
+
+          for (let pfeature of this.featureList) {
+            pfeature.isChecked = false;
+            for (let cfeature of pfeature.child) {
+              cfeature.isChecked = false;
+            }
+          }
+          for (let alreadyConfiguredFeature of this.featureListForEdit) {
+            for (let pfeature of this.featureList) {
+              if (pfeature.featureIdFK == alreadyConfiguredFeature.featureIdFK) {
+                pfeature.isChecked = true;
                 break;
+              }
+              for (let cfeature of pfeature.child) {
+                if (cfeature.featureIdFK == alreadyConfiguredFeature.featureIdFK) {
+                  cfeature.isChecked = true;
+                  break;
+                }
               }
             }
           }
         } else {
           for (let feature of this.featureList) {
             feature.isChecked = true;
+            for (let childfeature of this.childFeatureList) {
+              childfeature.isChecked = true;
+            }
           }
         }
       } else {
@@ -177,3 +264,26 @@ export class AddRoleComponent implements OnInit {
   }
 
 }
+
+
+/*     this.featureList = res.features;
+          if (this.featureList.length == 0) {
+            this.isNoRecordFound = true;
+          } else {
+            this.isNoRecordFound = false;
+          }
+          if (this.data.type == 'Edit') {
+            for (let feature of this.featureList) {
+              feature.isChecked = false;
+              for (let editfeature of this.featureListForEdit) {
+                if (feature.featureIdFK == editfeature.featureIdFK) {
+                  feature.isChecked = true;
+                  break;
+                }
+              }
+            }
+          } else {
+            for (let feature of this.featureList) {
+              feature.isChecked = true;
+            }
+          } */

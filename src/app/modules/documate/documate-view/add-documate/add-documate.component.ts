@@ -45,7 +45,7 @@ export class AddDocumateComponent implements OnInit {
     //     this.formTitle = `Edit Document`;
 
     //   } else {
-    //     this.documentData.documentTypeIdFK = 3;
+    //     this.documentData.documentTypeIdFK = 3; 
     //   }
     // })
     if (this.data.type == 'Add') {
@@ -71,9 +71,6 @@ export class AddDocumateComponent implements OnInit {
         this.showSnackBar("Something went wrong..!!");
       })
   }
-
-
-
 
   /*********************************************************** Add New Documate *******************************************************************/
 

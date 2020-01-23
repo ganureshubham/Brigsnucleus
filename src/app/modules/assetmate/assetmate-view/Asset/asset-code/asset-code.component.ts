@@ -8,15 +8,15 @@ import { DataSharingService } from '../../../../../public service/data-sharing.s
 })
 export class AssetCodeComponent implements OnInit {
 
-  
+
   Assetbarcode: any;
 
-  constructor( public dataService: DataSharingService,) { }
+  constructor(public dataService: DataSharingService, ) { }
 
   ngOnInit() {
-    this.dataService.mSaveData.subscribe(res=>{
-      this.Assetbarcode=res;
+    this.dataService.mSaveData.subscribe(res => {
+      this.Assetbarcode = res;
     })
-   
+
   }
 }

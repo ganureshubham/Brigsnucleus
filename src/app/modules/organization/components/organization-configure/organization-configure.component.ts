@@ -23,12 +23,12 @@ interface childfeature {
   isChecked: boolean
 }
 
-
 @Component({
   selector: 'app-organization-configure',
   templateUrl: './organization-configure.component.html',
   styleUrls: ['./organization-configure.component.css']
 })
+
 export class OrganizationConfigureComponent implements OnInit {
   formtitle: string = 'Add Org Configure';
   cancelbtn = 0;
@@ -39,6 +39,7 @@ export class OrganizationConfigureComponent implements OnInit {
   orgFeatureListForEdit: any;
   organizationId: any;
   childFeatureList: any[] = [];
+  isNoRecordFound: boolean = false;
 
   constructor(
     private spinnerService: SpinnerService,
@@ -51,7 +52,7 @@ export class OrganizationConfigureComponent implements OnInit {
 
   ngOnInit() {
     this.organizationId = this.data.organizationId;
-    if (this.data.numberOfUsers !== 0) {
+    if (this.data.numberOfUsers !== 0 || this.data.features.length !== 0) {
       this.formtitle = 'Edit org Configure';
       this.configData = this.data;
       this.isEdited = true;
@@ -92,10 +93,28 @@ export class OrganizationConfigureComponent implements OnInit {
     }
   }
 
-  valueChange1(parentIndex, childIndex, value: any) {
+  valueChange1(parentIndex: any, childIndex: any, value: any) {
     this.OrgFeatureList[parentIndex].child[childIndex].isChecked = value.checked;
+    for (let childfeature of this.childFeatureList) {
+      if (!childfeature.isChecked) {
+        this.selectAll = false;
+        break;
+      } else {
+        this.selectAll = true;
+      }
+    }
+    for (let pfeature of this.OrgFeatureList) {
+      for (let cfeature of pfeature.child) {
+        if (cfeature.parentId == pfeature.featureId) {
+          if (!cfeature.isChecked) {
+            pfeature.isChecked = false;
+          } else {
+            pfeature.isChecked = true;
+          }
+        }
+      }
+    }
   }
-
 
   /*********************************************************** Get All Feature Lists *******************************************************************/
 
@@ -109,8 +128,6 @@ export class OrganizationConfigureComponent implements OnInit {
             this.OrgFeatureList.push(resfeature);
           }
         }
-        console.log('OrgList', this.OrgFeatureList);
-
         for (let pfeature of this.OrgFeatureList) {
           pfeature.child = [];
           for (let resfeature of res.features) {
@@ -119,7 +136,11 @@ export class OrganizationConfigureComponent implements OnInit {
             }
           }
         }
-
+        if (this.OrgFeatureList.length == 0) {
+          this.isNoRecordFound = true;
+        } else {
+          this.isNoRecordFound = false;
+        }
         for (let feature of this.OrgFeatureList) {
           feature.isChecked = true;
           for (let childfeature of feature.child) {
@@ -127,16 +148,22 @@ export class OrganizationConfigureComponent implements OnInit {
             this.childFeatureList.push(childfeature);
           }
         }
-
-        if (this.data.numberOfUsers !== 0) {
-          for (let feature of this.OrgFeatureList) {
-            feature.isChecked = false;
-            for (let feature1 of this.childFeatureList) {
-              feature1.isChecked = false;
-              for (let editfeature of this.orgFeatureListForEdit) {
-                if (feature.featureId == editfeature.featureIdFK || feature1.featureId == editfeature.featureIdFK) {
-                  feature.isChecked = true;
-                  feature1.isChecked = true;
+        if (this.data.numberOfUsers !== 0 || this.data.features.length !== 0) {
+          for (let pfeature of this.OrgFeatureList) {
+            pfeature.isChecked = false;
+            for (let cfeature of pfeature.child) {
+              cfeature.isChecked = false;
+            }
+          }
+          for (let alreadyConfiguredFeature of this.data.features) {
+            for (let pfeature of this.OrgFeatureList) {
+              if (pfeature.featureId == alreadyConfiguredFeature.featureIdFK) {
+                pfeature.isChecked = true;
+                break;
+              }
+              for (let cfeature of pfeature.child) {
+                if (cfeature.featureId == alreadyConfiguredFeature.featureIdFK) {
+                  cfeature.isChecked = true;
                   break;
                 }
               }

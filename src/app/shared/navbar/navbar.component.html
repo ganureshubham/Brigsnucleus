@@ -88,22 +88,22 @@
         <a mat-button [routerLink]="getDashboardRoute()" routerLinkActive="is-active">
           <mat-icon>bar_chart</mat-icon><span i18n>DASHBOARD</span>
         </a>
-        <a mat-button routerLink="/assetmate" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN4')" mat-button routerLink="/assetmate" routerLinkActive="is-active">
           <mat-icon>assignment</mat-icon><span i18n>Assetmate</span>
         </a>
-        <a mat-button routerLink="/documate" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN5')" mat-button routerLink="/documate" routerLinkActive="is-active">
           <mat-icon>list_alt</mat-icon><span i18n>Documate</span>
         </a>
-        <a mat-button routerLink="/taskmate" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN6')" mat-button routerLink="/taskmate" routerLinkActive="is-active">
           <mat-icon>work</mat-icon><span i18n>Taskmate</span>
         </a>
-        <a mat-button routerLink="/alert" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN9')" mat-button routerLink="/alert" routerLinkActive="is-active">
           <mat-icon>notification_important</mat-icon><span i18n>Alerts</span>
         </a>
-        <a mat-button routerLink="/complaints" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN7')" mat-button routerLink="/complaints" routerLinkActive="is-active">
           <mat-icon>menu_book</mat-icon><span i18n>Complaint</span>
         </a>
-        <a mat-button routerLink="/reports" routerLinkActive="is-active">
+        <a *ngIf="featureCode.includes('BN8')" mat-button routerLink="/reports" routerLinkActive="is-active">
           <mat-icon>style</mat-icon><span i18n>Reports</span>
         </a>
         <a mat-button [matMenuTriggerFor]="appsMenu">
@@ -142,6 +142,10 @@
           <a mat-menu-item routerLink="/verify-asset">
             <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
             <span i18n>Verify Pending Assets</span>
+          </a>
+          <a mat-menu-item routerLink="/cron-logs">
+            <mat-icon matListIcon>subdirectory_arrow_right</mat-icon>
+            <span i18n>Cron Logs</span>
           </a>
         </mat-menu>
       </div>
@@ -187,19 +191,24 @@
           <a mat-list-item routerLink="/dashboard" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">bar_chart</mat-icon><span i18n>&nbsp; Dashboard</span>
           </a>
-          <a mat-list-item routerLink="/assetmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <a *ngIf="featureCode.includes('BN4')" mat-list-item routerLink="/assetmate"
+            routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">assignment</mat-icon><span i18n>&nbsp; Assetmate</span>
           </a>
-          <a mat-list-item routerLink="/documate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <a *ngIf="featureCode.includes('BN5')" mat-list-item routerLink="/documate"
+            routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">list_alt</mat-icon><span i18n>&nbsp; Documate</span>
           </a>
-          <a mat-list-item routerLink="/taskmate" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <a *ngIf="featureCode.includes('BN6')" mat-list-item routerLink="/taskmate"
+            routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">work</mat-icon><span i18n>&nbsp;Taskmate</span>
           </a>
-          <a mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <a *ngIf="featureCode.includes('BN9')" mat-list-item routerLink="/alert" routerLinkActive="is-active-mobile"
+            (click)="snav.toggle()">
             <mat-icon color="primary">notification_important</mat-icon><span i18n>&nbsp; Alerts</span>
           </a>
-          <a mat-list-item routerLink="/complaints" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+          <a *ngIf="featureCode.includes('BN7')" mat-list-item routerLink="/complaints"
+            routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
           </a>
           <mat-accordion>
@@ -243,6 +252,10 @@
               <a mat-menu-item routerLink="/verify-asset" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
                 <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
                 <span i18n>Verify Pending Assets</span>
+              </a>
+              <a mat-menu-item routerLink="/cron-logs" routerLinkActive="is-active-mobile" (click)="snav.toggle()">
+                <mat-icon color="primary" matListIcon>subdirectory_arrow_right</mat-icon>
+                <span i18n>Cron logs</span>
               </a>
             </mat-expansion-panel>
           </mat-accordion>

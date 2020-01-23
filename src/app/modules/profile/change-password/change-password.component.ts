@@ -43,6 +43,7 @@ export class ChangePasswordComponent implements OnInit {
       }
     },
       error => {
+        this.spinnerService.setSpinnerVisibility(false);
         this.showSnackBar("Something went wrong..!!");
       })
   }
@@ -50,10 +51,6 @@ export class ChangePasswordComponent implements OnInit {
   showSnackBar(message: string) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
-
-
-
-
 
   Cancel() {
     this.router.navigate(['/dashboard']);

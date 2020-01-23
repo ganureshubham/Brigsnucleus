@@ -208,8 +208,6 @@ export class AlertViewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-
-
 }
 export interface Alert {
   alertId: number;
