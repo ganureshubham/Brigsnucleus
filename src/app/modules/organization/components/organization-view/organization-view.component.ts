@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrganizationConfigureComponent } from '../organization-configure/organization-configure.component';
+import { NavbarService } from '../../../../public service/navbar.service';
 
 interface configDialogData {
   organizationId: number;
@@ -55,6 +56,7 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
     private router: Router,
+    private navbarService: NavbarService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.tabQuery = media.matchMedia('(max-width: 768px)');
@@ -269,6 +271,7 @@ export class OrganizationViewComponent implements OnInit, OnDestroy {
         currentUser.data.OrgNameForSuperAdmin = resp.organizationName;
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         this.router.navigate(['/dashboard/admin']);
+        this.navbarService.setShouldReloadOrgFeatures(true);
       } else {
         this.showSnackBar("Something went wrong..!!");
       }

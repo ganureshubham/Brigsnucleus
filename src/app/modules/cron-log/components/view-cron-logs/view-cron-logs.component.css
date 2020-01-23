@@ -1,0 +1,13 @@
+.portal-widget {
+  padding: 10px;
+}
+
+.mat-ic {
+  color: gray;
+  padding: 8px;
+}
+
+.mat-ic:hover {
+  background-color: #c7c7c744;
+  border-radius: 50%;
+}

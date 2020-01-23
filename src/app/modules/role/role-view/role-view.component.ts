@@ -180,8 +180,6 @@ export class RoleViewComponent implements AfterViewInit, OnDestroy {
   /*********************************************************** Edit Particular Asset  *******************************************************************/
 
   editRole(visit: any) {
-    console.log(visit);
-
     this.dialogData = {
       type: 'Edit',
       userRoleId: visit.userRoleId,

@@ -1,0 +1,68 @@
+<div class="innerbody table">
+  <div fxLayout="column">
+    <div class="portal-widget">
+      <mat-card fxFlex.xs="90" fxFlex="50">
+        <div fxLayout.xs="column" class="table_header">
+          <div fxLayoutAlign.xs="space-around center" class="fl">
+            <p class="tabel_heading mat-subheading-2">Cron Logs</p>
+          </div>
+          <div fxFlex.xs="100" class="fr">
+            <!-- <div fxFlex.xs="100" class="btn_style">
+              <button fxFlex.xs="100" mat-button (click)="addLocationType()" class="bg_white_grey">
+                <mat-icon>add</mat-icon>Add Installation Location Type
+              </button>
+            </div> -->
+          </div>
+        </div>
+        <div class="cl"></div>
+        <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+          <p>No Record Found</p>
+        </div>
+        <ng-template #recordFound>
+
+          <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="typeOfCron">
+              <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef>Type Of Cron
+              </mat-header-cell>
+              <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">
+                {{visit.typeOfCron}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="executionStart">
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Execution Start
+              </mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                {{visit.executionStart}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="executionEnd">
+              <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Execution End
+              </mat-header-cell>
+              <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+                {{visit.executionEnd}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+              <mat-header-cell fxLayoutAlign="center center" *matHeaderCellDef>Comment
+              </mat-header-cell>
+              <mat-cell fxLayoutAlign="center center" *matCellDef="let visit">
+                {{visit.comment}}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+        </ng-template>
+        <div>
+          <mat-paginator [length]='totalCount' [pageSize]="10" [pageIndex]='pageNumber' (page)="pageChange($event)">
+          </mat-paginator>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

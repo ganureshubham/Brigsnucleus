@@ -19,20 +19,31 @@
           <div class="authorities-title">
             Authorities
           </div>
-          <div class="authorities-text" fxLayout="column" fxLayoutGap="25px">
-            <div *ngIf="!isEdited">
-              <mat-checkbox color="primary" [checked]="selectAll" (change)="chkAllChange($event)" type="checkbox"
-                class="select_all">Select all
-              </mat-checkbox>
-            </div>
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div *ngFor="let unit of featureList; let i=index">
-                <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(i,$event)">
-                  {{unit.title + ' (' + unit.featureCode + ')'}}
+          <div *ngIf="isNoRecordFound; else recordFound" class="no-record-found-container">
+            <p>No Record Found</p>
+          </div>
+          <ng-template #recordFound>
+            <div class="authorities-text" fxLayout="column" fxLayoutGap="25px">
+              <div *ngIf="!isEdited">
+                <mat-checkbox color="primary" [checked]="selectAll" (change)="chkAllChange($event)" type="checkbox"
+                  class="select_all">Select all
                 </mat-checkbox>
               </div>
+              <div fxLayout="column" fxLayoutGap="10px">
+                <div *ngFor="let unit of featureList; let parentIndex=index">
+                  <mat-checkbox color="primary" [checked]="unit.isChecked" (change)="valueChange(parentIndex,$event)">
+                    {{unit.title + ' (' + unit.featureCode + ')'}}
+                  </mat-checkbox>
+                  <div *ngFor="let child of unit.child; let childIndex=index">
+                    <mat-checkbox class="subchild" color="primary" [checked]="child.isChecked"
+                      (change)="valueChange1(parentIndex,childIndex,$event)">
+                      {{child.title+ ' (' + child.featureCode + ')'}}
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </ng-template>
         </div>
       </div>
       <div>
