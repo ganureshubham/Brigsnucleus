@@ -37,58 +37,58 @@
     <ng-template #recordFound>
       <mat-table [dataSource]="complaintTableDataSource">
         <ng-container matColumnDef="title">
-          <mat-header-cell fxFlex=15 fxLayoutAlign="start center" *matHeaderCellDef>Complaint Title
+          <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef>Complaint Title
           </mat-header-cell>
-          <mat-cell fxFlex=15 fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.title }}
+          <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.title }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="typeOfComplaint">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of Complaint
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of Complaint
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
             {{ visit.typeOfComplaint }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetTitle">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetTitle }}
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Title</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.assetTitle }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetCode">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Asset Code
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Asset Code
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.assetCode }}
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.assetCode }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="complaintStatus">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Complaint Status
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Complaint Status
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
             <span class="complainStatus">{{ visit.complaintStatus }}</span>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="typeOfUser">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Type Of User
+          <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
+          <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="message">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Message
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Message
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
             {{ visit.message.length>18? visit.message.substring(0,18)+'...' : visit.message }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="raisedByName">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Raised By</mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.raisedByName }}
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Raised By</mat-header-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.raisedByName }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="createdOn">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created On
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Created On
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.createdDate }}
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="complaintsColumns"></mat-header-row>

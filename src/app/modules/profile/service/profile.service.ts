@@ -16,14 +16,16 @@ export class ProfileService {
     return this.httpClient.get(ConfigurationService.baseUrl + `profile/viewAdminProfile`);
   }
 
-  /**************************************************Change Password***************************************************************************/
+  /**************************************************Change Admin Password***************************************************************************/
 
   changePassword(value: any): Observable<any> {
     return this.httpClient.post<any>(ConfigurationService.baseUrl + `profile/changepassword`, value);
-
   }
 
+  /**************************************************Change Super Admin Password***************************************************************************/
 
-
+  changeSuperAdminPassword(value: any): Observable<any> {
+    return this.httpClient.post<any>(ConfigurationService.baseUrl + `profile/changepasswordbysuperadmin`, value);
+  }
 
 }

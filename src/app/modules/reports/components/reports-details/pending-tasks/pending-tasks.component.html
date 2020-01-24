@@ -55,9 +55,9 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="typeOfUser">
-          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User
+          <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef>Type Of User
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
+          <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.typeOfUser }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="message">
@@ -73,9 +73,9 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="createdDate">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef>Created Date
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef>Created Date
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.createdDate }}
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.createdDate }}
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

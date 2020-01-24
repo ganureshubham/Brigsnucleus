@@ -59,7 +59,7 @@
     padding: 0px 10px 0px 0px;
   }
 
-  .toolbar-row-2 .mat-button:hover {
+  .toolbar-row-2 .mat-button:hover { 
     background: #3f104b;
   }
   

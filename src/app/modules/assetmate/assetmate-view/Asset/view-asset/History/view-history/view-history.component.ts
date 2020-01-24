@@ -146,6 +146,15 @@ export class ViewHistoryComponent implements AfterViewInit, OnDestroy {
       currentYAxisPosition += yAxisAlias10;
 
       doc.text(currentXAxisPosition, currentYAxisPosition, 'Audit Title : ' + resp.questionAnswer[0].auditTitle);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Asset Code : ' + resp.questionAnswer[0].assetCode);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Done On : ' + resp.questionAnswer[0].doneOn);
+      currentYAxisPosition += yAxisAlias10;
+
+      doc.text(currentXAxisPosition, currentYAxisPosition, 'Done By : ' + resp.questionAnswer[0].doneBy);
       currentYAxisPosition += yAxisAlias15;
 
       doc.setFontType("normal");
