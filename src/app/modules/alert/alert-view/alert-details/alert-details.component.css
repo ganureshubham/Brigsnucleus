@@ -13,6 +13,7 @@
 .mat-card-img {
   width: 232px;
   height: 232px;
+  cursor: pointer;
 }
 
 .alert-detail h4 {

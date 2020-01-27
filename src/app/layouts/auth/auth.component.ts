@@ -11,8 +11,6 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('Inside Login Auth component..');
-
   }
 
 }

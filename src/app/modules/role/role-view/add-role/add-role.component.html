@@ -30,7 +30,7 @@
                 </mat-checkbox>
               </div> -->
               <div fxLayout="column" fxLayoutGap="10px">
-                <div *ngFor="let unit of featureList; let parentIndex=index">
+                <div class="role-border" *ngFor="let unit of featureList; let parentIndex=index">
                   <mat-checkbox color="primary" [checked]="unit.isChecked"
                     (change)="onParentChange(parentIndex,$event)">
                     {{unit.title + ' (' + unit.featureCode + ')'}}

@@ -62,6 +62,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.users();
   }
 
+
   subcribedToFeatureService() {
     this.featureCode = [];
     this.orgFeatureList = [];
@@ -71,6 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.featurefromOrganization();
       }
     })
+
   }
 
   isCurrentUserSuperAdmin() {

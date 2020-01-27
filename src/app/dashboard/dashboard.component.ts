@@ -117,12 +117,13 @@ export class DashboardComponent implements OnInit {
         for (let feature of this.orgFeatureList) {
           this.featureCode.push(feature.featureCode)
         }
-        /*   this.featureCode.forEach(element => {
-            console.log('code', element);
-          });
-          if (this.featureCode.includes('BN1')) {
-            console.log('user can add asset');
-          } */
+        /* 
+                this.featureCode.forEach(element => {
+                  console.log('code', element);
+                }); */
+        /*  if (this.featureCode.includes('BN1')) {
+           console.log('user can add asset');
+         } */
       } else {
         //this.featureCode = [];
         this.showSnackBar(res.message);
