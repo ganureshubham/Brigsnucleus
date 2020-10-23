@@ -62,53 +62,44 @@ export class OrganizationConfigureComponent implements OnInit {
 
   }
 
-  chkAllChange(event: any) {
-    this.selectAll = !this.selectAll;
-    if (this.selectAll) {
-      this.OrgFeatureList.map((value) => {
-        value.isChecked = true;
-      });
-      this.childFeatureList.map((value1) => {
-        value1.isChecked = true;
-      })
-    } else {
-      this.OrgFeatureList.map((value) => {
-        value.isChecked = false;
-      });
-      this.childFeatureList.map((value1) => {
-        value1.isChecked = false;
-      })
-    }
-  }
+  // chkAllChange(event: any) {
+  //   this.selectAll = !this.selectAll;
+  //   if (this.selectAll) {
+  //     this.OrgFeatureList.map((value) => {
+  //       value.isChecked = true;
+  //     });
+  //     this.childFeatureList.map((value1) => {
+  //       value1.isChecked = true;
+  //     })
+  //   } else {
+  //     this.OrgFeatureList.map((value) => {
+  //       value.isChecked = false;
+  //     });
+  //     this.childFeatureList.map((value1) => {
+  //       value1.isChecked = false;
+  //     })
+  //   }
+  // }
 
-  valueChange(index: any, value: any) {
+  onParentChange(index: any, value: any) {
     this.OrgFeatureList[index].isChecked = value.checked;
-    for (let feature of this.OrgFeatureList) {
-      if (!feature.isChecked) {
-        this.selectAll = false;
-        break;
-      } else {
-        this.selectAll = true;
+    for (let pfeature of this.OrgFeatureList) {
+      for (let cfeature of pfeature.child) {
+        if (pfeature.featureId == cfeature.parentId) {
+          if (!pfeature.isChecked) {
+            cfeature.isChecked = false;
+          }
+        }
       }
     }
   }
 
-  valueChange1(parentIndex: any, childIndex: any, value: any) {
+  onChildChange(parentIndex: any, childIndex: any, value: any) {
     this.OrgFeatureList[parentIndex].child[childIndex].isChecked = value.checked;
-    for (let childfeature of this.childFeatureList) {
-      if (!childfeature.isChecked) {
-        this.selectAll = false;
-        break;
-      } else {
-        this.selectAll = true;
-      }
-    }
     for (let pfeature of this.OrgFeatureList) {
       for (let cfeature of pfeature.child) {
         if (cfeature.parentId == pfeature.featureId) {
-          if (!cfeature.isChecked) {
-            pfeature.isChecked = false;
-          } else {
+          if (cfeature.isChecked) {
             pfeature.isChecked = true;
           }
         }

@@ -62,6 +62,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.users();
   }
 
+
   subcribedToFeatureService() {
     this.featureCode = [];
     this.orgFeatureList = [];
@@ -71,6 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.featurefromOrganization();
       }
     })
+
   }
 
   isCurrentUserSuperAdmin() {
@@ -81,8 +83,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/profile']);
   }
 
-  goToChangePass() {
-    this.router.navigate(['/profile/change-password']);
+  goToAdminChangePass() {
+    this.router.navigate(['/profile/admin-change-password']);
+  }
+
+  goToSuperAdminChangePass() {
+    this.router.navigate(['/profile/superadmin-change-password'])
   }
 
   logout() {

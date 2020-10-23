@@ -6,6 +6,9 @@ import { MatSnackBar } from '@angular/material';
 import { SpinnerService } from '../public service/spinner.service';
 import jsPDF from 'jspdf';
 import { DialogService } from '../public service/dialog.service';
+import { Subscription } from 'rxjs';
+import { RoleService } from '../modules/role/service/role.service';
+import { NavbarService } from '../public service/navbar.service';
 
 export interface Year {
   Id: number,
@@ -56,16 +59,22 @@ export class DashboardComponent implements OnInit {
   CategoryMaintainanceTitle: any;
   InstallLocAssetTitle: any;
   installationlocation: any;
+  featureCode: any[] = [];
+  orgFeatureList: any[] = [];
 
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private spinnerService: SpinnerService,
+    private NavbarService: NavbarService,
+    private roleService: RoleService,
   ) {
   }
 
   ngOnInit() {
+    this.featurefromOrganization();
+    this.subcribedToFeatureService();
     if (!this.router.url.includes('admin') && (JSON.parse(localStorage.getItem('currentUser')).data.role == 0)) {
       this.router.navigate(['/dashboard/superadmin']);
     }
@@ -80,6 +89,50 @@ export class DashboardComponent implements OnInit {
     this.categoryWiseAssets();
     this.categoryWiseMaintainance();
     this.installationLocWiseAsset();
+
+
+  }
+
+  navbarSubscription: Subscription = null;
+
+  subcribedToFeatureService() {
+    this.featureCode = [];
+    this.orgFeatureList = [];
+    this.navbarSubscription = this.NavbarService.getShouldReloadOrgFeatures().subscribe(res => {
+      if (res == true) {
+        this.NavbarService.setShouldReloadOrgFeatures(false);
+        this.featurefromOrganization();
+      }
+    })
+  }
+
+  featurefromOrganization() {
+    this.spinnerService.setSpinnerVisibility(true);
+    this.roleService.getFeatureList().subscribe(res => {
+      this.spinnerService.setSpinnerVisibility(false);
+      if (res.status) {
+        this.orgFeatureList = [];
+        this.orgFeatureList = res.features;
+        this.featureCode = [];
+        for (let feature of this.orgFeatureList) {
+          this.featureCode.push(feature.featureCode)
+        }
+        /* 
+                this.featureCode.forEach(element => {
+                  console.log('code', element);
+                }); */
+        /*  if (this.featureCode.includes('BN1')) {
+           console.log('user can add asset');
+         } */
+      } else {
+        //this.featureCode = [];
+        this.showSnackBar(res.message);
+      }
+    },
+      error => {
+        this.spinnerService.setSpinnerVisibility(false);
+        this.showSnackBar("Something went wrong..!!");
+      })
   }
 
   years: Year[] = [
@@ -667,6 +720,12 @@ export class DashboardComponent implements OnInit {
     doc.text(title, pageWidth / 2, 10, 'center');
 
     window.open(doc.output('bloburl'), '_blank');
+  }
+
+  ngOnDestroy(): void {
+    if (this.navbarSubscription) {
+      this.navbarSubscription.unsubscribe();
+    }
   }
 
 }

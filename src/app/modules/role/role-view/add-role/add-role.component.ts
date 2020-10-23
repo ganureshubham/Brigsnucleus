@@ -48,56 +48,59 @@ export class AddRoleComponent implements OnInit {
     this.getFeatureList();
   }
 
-  chkAllChange(event: any) {
-    this.selectAll = !this.selectAll;
-    if (this.selectAll) {
-      this.featureList.map((value) => {
-        value.isChecked = true;
-      });
-      // this.childFeatureList.map((value1) => {
-      //   value1.isChecked = true;
-      // })
-    } else {
-      this.featureList.map((value) => {
-        value.isChecked = false;
-      });
-      // this.childFeatureList.map((value1) => {
-      //   value1.isChecked = false;
-      // })
-    }
-  }
-
-  valueChange(index: any, value: any) {
-    this.featureList[index].isChecked = value.checked;
-    for (let feature of this.featureList) {
-      if (!feature.isChecked) {
-        this.selectAll = false;
-        break;
+  /*   chkAllChange(event: any) {
+      this.selectAll = !this.selectAll;
+      if (this.selectAll) {
+        this.featureList.map((value) => {
+          value.isChecked = true;
+        });
+        // this.childFeatureList.map((value1) => {
+        //   value1.isChecked = true;
+        // })
       } else {
-        this.selectAll = true;
+        this.featureList.map((value) => {
+          value.isChecked = false;
+        });
+        // this.childFeatureList.map((value1) => {
+        //   value1.isChecked = false;
+        // })
+      }
+    } */
+
+  onParentChange(index: any, value: any) {
+    this.featureList[index].isChecked = value.checked;
+    for (let pfeature of this.featureList) {
+      for (let cfeature of pfeature.child) {
+        if (pfeature.featureIdFK == cfeature.parentId) {
+          if (!pfeature.isChecked) {
+            cfeature.isChecked = false;
+          }
+        }
       }
     }
   }
 
-  valueChange1(parentIndex: any, childIndex: any, value: any) {
+  onChildChange(parentIndex: any, childIndex: any, value: any) {
     this.featureList[parentIndex].child[childIndex].isChecked = value.checked;
+    for (let pfeature of this.featureList) {
+      for (let cfeature of pfeature.child) {
+        if (cfeature.parentId == pfeature.featureIdFK) {
+          if (cfeature.isChecked) {
+            pfeature.isChecked = true;
+          }
+        }
+      }
+    }
+  }
+
+  /*********************************************************** Select All Feature ************************************************************/
+  onSelectAll() {
     for (let childfeature of this.childFeatureList) {
       if (!childfeature.isChecked) {
         this.selectAll = false;
         break;
       } else {
         this.selectAll = true;
-      }
-    }
-    for (let pfeature of this.featureList) {
-      for (let cfeature of pfeature.child) {
-        if (cfeature.parentId == pfeature.featureIdFK) {
-          if (!cfeature.isChecked) {
-            pfeature.isChecked = false;
-          } else {
-            pfeature.isChecked = true;
-          }
-        }
       }
     }
   }

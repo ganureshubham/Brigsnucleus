@@ -1,78 +1,72 @@
 <div class="width_90 margin_auto">
-  <mat-card>
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
-      <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
-        <div class="dashboard_part">
-          <ul>
-            <li><img src="assets/img/asset_icon.svg" alt="" srcset=""></li>
-            <li class="dash-text-color">Total Assetmate</li>
-            <li>
-              <h2 class="count">{{rows.totalAssetMate}}</h2>
-            </li>
-          </ul>
+  <div fxLayout="row" fxLayoutGap="30px" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
+    fxLayoutAlign="center center">
+
+    <div fxFlex.xs="25" fxFlex="25">
+      <mat-card *ngIf="featureCode.includes('BN4')" class="dashboard-mat-card" routerLink="/assetmate">
+        <div *ngIf="featureCode.includes('BN4')">
+          <div class="dashboard_part">
+            <ul>
+              <li><img src="assets/img/asset_icon.svg" alt="" srcset=""></li>
+              <li class="dash-text-color">Total Assetmate</li>
+              <li>
+                <h2 class="count">{{rows.totalAssetMate}}</h2>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <div class="cl"></div><button mat-button color="primary" routerLink="/assetmate" class="fr">More Info
-            <mat-icon>keyboard_arrow_right
-            </mat-icon></button>
-        </div>
-      </div>
-      <div class="verticle-divider" fxHide.lt-sm="true">
-      </div>
-      <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
-        <div class="dashboard_part">
-          <ul>
-            <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
-            <li>Total Documate</li>
-            <li>
-              <h2 class="count">{{rows.totalDocuMate}}</h2>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div class="cl"></div><button mat-button routerLink="/documate" color="primary" class="fr">More Info
-            <mat-icon>keyboard_arrow_right
-            </mat-icon></button>
-        </div>
-      </div>
-      <div class="verticle-divider" fxHide.lt-sm="true">
-      </div>
-      <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
-        <div class="dashboard_part">
-          <ul>
-            <li><img src="assets/img/task_icon.svg" alt="" srcset=""></li>
-            <li>Total Taskmate</li>
-            <li>
-              <h2 class="count">{{rows.totalTaskMate}}</h2>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div class="cl"></div><button mat-button routerLink="/taskmate" color="primary" class="fr">More Info
-            <mat-icon>keyboard_arrow_right
-            </mat-icon></button>
-        </div>
-      </div>
-      <div class="verticle-divider" fxHide.lt-sm="true">
-      </div>
-      <div fxFlex="20" fxFlex.lt-md="100" fxLayout="column">
-        <div class="dashboard_part">
-          <ul>
-            <li><img src="assets/img/complint_icon.svg" alt="" srcset=""></li>
-            <li>Total Complaints</li>
-            <li>
-              <h2 class="count">{{rows.totalComplaints}}</h2>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div class="cl"></div><button mat-button routerLink="/complaints" color="primary" class="fr">More Info
-            <mat-icon>keyboard_arrow_right
-            </mat-icon></button>
-        </div>
-      </div>
+      </mat-card>
     </div>
-  </mat-card>
+
+    <div fxFlex.xs="25" fxFlex="25">
+      <mat-card *ngIf="featureCode.includes('BN5')" class="dashboard-mat-card" routerLink="/documate">
+        <div *ngIf="featureCode.includes('BN5')">
+          <div class="dashboard_part">
+            <ul>
+              <li><img src="assets/img/doc_icon.svg" alt="" srcset=""></li>
+              <li>Total Documate</li>
+              <li>
+                <h2 class="count">{{rows.totalDocuMate}}</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div fxFlex.xs="25" fxFlex="25">
+      <mat-card *ngIf="featureCode.includes('BN6')" class="dashboard-mat-card" routerLink="/taskmate">
+        <div *ngIf="featureCode.includes('BN6')">
+          <div class="dashboard_part">
+            <ul>
+              <li><img src="assets/img/task_icon.svg" alt="" srcset=""></li>
+              <li>Total Taskmate</li>
+              <li>
+                <h2 class="count">{{rows.totalTaskMate}}</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div fxFlex.xs="25" fxFlex="25">
+      <mat-card *ngIf="featureCode.includes('BN7')" class="dashboard-mat-card" routerLink="/complaints">
+        <div>
+          <div class="dashboard_part">
+            <ul>
+              <li><img src="assets/img/complint_icon.svg" alt="" srcset=""></li>
+              <li>Total Complaints</li>
+              <li>
+                <h2 class="count">{{rows.totalComplaints}}</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
   <div class="graph-m-t" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="space-around"
     fxLayoutAlign="space-around center" fxLayoutGap="30px">
     <div fxFlex.xs="50" fxFlex="50">

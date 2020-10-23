@@ -14,31 +14,33 @@
     <ng-template #recordFound>
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="assetTitle">
-          <mat-header-cell fxLayoutAlign="start center" *matHeaderCellDef><strong>Asset Title</strong></mat-header-cell>
-          <mat-cell fxLayoutAlign="start center" *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
+          <mat-header-cell fxLayoutAlign.xs="start center" *matHeaderCellDef><strong>Asset Title</strong>
+          </mat-header-cell>
+          <mat-cell fxLayoutAlign.xs="start center" *matCellDef="let visit">{{ visit.assetTitle }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetCode">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n><strong>Asset Code</strong>
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef i18n><strong>Asset Code</strong>
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{visit.assetCode}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="companyAssetNo">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef i18n><strong>Company Asset
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef i18n><strong>Company Asset
               Number</strong>
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">
             {{visit.companyAssetNo != 'undefined' ? visit.companyAssetNo : 'NA'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="categoryName">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef><strong>Asset Category</strong>
+          <mat-header-cell fxLayoutAlign.xs="center center" *matHeaderCellDef><strong>Asset Category</strong>
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.categoryName }}
+          <mat-cell fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.categoryName }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="modelNumber">
-          <mat-header-cell fxHide.xs fxLayoutAlign="center center" *matHeaderCellDef><strong>Model Number</strong>
+          <mat-header-cell fxHide.xs fxLayoutAlign.xs="center center" *matHeaderCellDef><strong>Model Number</strong>
           </mat-header-cell>
-          <mat-cell fxHide.xs fxLayoutAlign="center center" *matCellDef="let visit">{{ visit.modelNumber }}</mat-cell>
+          <mat-cell fxHide.xs fxLayoutAlign.xs="center center" *matCellDef="let visit">{{ visit.modelNumber }}
+          </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row class="example-element-row" *matRowDef="let row; columns: displayedColumns;" (click)="viewAsset(row)">

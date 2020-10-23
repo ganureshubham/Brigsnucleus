@@ -61,7 +61,11 @@
             <mat-icon>person</mat-icon>
             <span>View Profile</span>
           </button>
-          <button *ngIf="!isCurrentUserSuperAdmin()" mat-menu-item (click)="goToChangePass()">
+          <button *ngIf="!isCurrentUserSuperAdmin()" mat-menu-item (click)="goToAdminChangePass()">
+            <mat-icon>lock_open</mat-icon>
+            <span>Change Password</span>
+          </button>
+          <button *ngIf="isCurrentUserSuperAdmin()" mat-menu-item (click)="goToSuperAdminChangePass()">
             <mat-icon>lock_open</mat-icon>
             <span>Change Password</span>
           </button>
@@ -210,6 +214,10 @@
           <a *ngIf="featureCode.includes('BN7')" mat-list-item routerLink="/complaints"
             routerLinkActive="is-active-mobile" (click)="snav.toggle()">
             <mat-icon color="primary">menu_book</mat-icon><span i18n>&nbsp; Complaint</span>
+          </a>
+          <a *ngIf="featureCode.includes('BN8')" mat-list-item routerLink="/reports" routerLinkActive="is-active-mobile"
+            (click)="snav.toggle()">
+            <mat-icon color="primary">style</mat-icon><span i18n>&nbsp; Reports</span>
           </a>
           <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState = true">
